@@ -1,7 +1,8 @@
 import { createHash } from 'node:crypto';
-import { readFile, readdir, writeFile } from 'node:fs/promises';
-import { resolve } from 'node:path';
-import { pathToFileURL } from 'node:url';
+import { readFile, readdir, stat, writeFile } from 'node:fs/promises';
+import { relative, resolve, sep } from 'node:path';
+import { fileURLToPath, pathToFileURL } from 'node:url';
+import { markdownToHast } from 'satteri';
 
 export const digest = content => createHash('sha256').update(content).digest('hex');
 export const roots = ['docs', 'internal/wtc/defaults', 'internal/wtc/release-notes'];
@@ -25,8 +26,40 @@ export async function inventory(root) {
 }
 const validPath = path => typeof path === 'string' && (path === 'README.md' || roots.some(root => path.startsWith(root + '/'))) && !path.split('/').includes('..') && !path.includes('\\');
 const pagePath = path => typeof path === 'string' && /^src\/pages\/(docs\/[a-z-]+[.]md|index[.]astro)$/.test(path);
+async function sourceLinkErrors(siteRoot) {
+  const files = ['README.md'], errors = [];
+  async function walk(dir) {
+    for (const item of await readdir(resolve(siteRoot, dir), { withFileTypes: true })) {
+      const path = dir + '/' + item.name;
+      if (item.isDirectory()) await walk(path);
+      else if (item.isFile() && path.endsWith('.md')) files.push(path);
+    }
+  }
+  await walk('docs');
+  for (const file of files) {
+    const source = resolve(siteRoot, file);
+    const tree = markdownToHast(await readFile(source, 'utf8'), { features: { rawHtml: true } });
+    async function visit(node) {
+      const target = node.tagName === 'a' ? node.properties?.href : node.tagName === 'img' ? node.properties?.src : undefined;
+      // Rendered routes and anchors are checked against the built site separately.
+      if (typeof target === 'string' && target && !/^(?:[a-z][a-z0-9+.-]*:|\/|#|\?)/i.test(target)) {
+        let destination;
+        try { destination = fileURLToPath(new URL(target, pathToFileURL(source))); }
+        catch { errors.push(file + ': invalid local target ' + target); }
+        if (destination) {
+          const path = relative(resolve(siteRoot), destination);
+          if (path === '..' || path.startsWith('..' + sep)) errors.push(file + ': local target escapes repository: ' + target);
+          else try { await stat(destination); } catch { errors.push(file + ': missing local target ' + target); }
+        }
+      }
+      for (const child of node.children ?? []) await visit(child);
+    }
+    await visit(tree);
+  }
+  return errors;
+}
 export async function check(manifest, siteRoot, upstream) {
-  const errors = [], seen = new Set();
+  const errors = await sourceLinkErrors(siteRoot), seen = new Set();
   if (manifest.schemaVersion !== 1 || !/^v[0-9]+[.][0-9]+[.][0-9]+$/.test(manifest.release) || !/^[a-f0-9]{40}$/.test(manifest.revision)) errors.push('Invalid baseline metadata');
   if (!Array.isArray(manifest.sources)) return [...errors, 'Missing sources array'];
   for (const source of manifest.sources) {
