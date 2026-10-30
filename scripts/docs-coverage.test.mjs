@@ -32,8 +32,9 @@ test('source links use Markdown syntax and ignore examples and web destinations'
  await f.put(f.site,'docs/assets/image.svg');
  await f.put(f.site,'README.md',[
   '[Guide](docs/guide%20with%20spaces.md?view=1#heading "Title")',
-  '[Reference][guide]', '[guide]: <docs/guide with spaces.md> "Title"',
+  '[Reference][guide]', '', '[guide]: <docs/guide with spaces.md> "Title"', '',
   '![Image](docs/assets/image.svg)', '<a href="docs/guide%20with%20spaces.md">HTML</a>',
+  '', '<p><a href="docs/guide%20with%20spaces.md">Block HTML</a></p>', '',
   '[Web](https://example.com/missing.md) [Route](/docs/guide/) [Anchor](#heading)',
   '`[Inline example](absent.md)`', '```md', '[Fenced example](absent.md)', '```',
  ].join(nl));
@@ -44,14 +45,14 @@ test('deleted targets in root and nested documents fail the shared CLI check',as
  const f=await fixture(t);
  await f.put(f.site,'docs/coverage.json',JSON.stringify(f.manifest));
  await f.put(f.site,'README.md','[Guide](docs/guide.md "Title")');
- await f.put(f.site,'docs/nested/usage.md','[Reference][guide]'+nl+'[guide]: ../guide.md'+nl+'![Image](../image.svg)'+nl+'<a href="../html.md">HTML</a>');
- for(const name of ['guide.md','image.svg','html.md']) await f.put(f.site,'docs/'+name);
+ await f.put(f.site,'docs/nested/usage.md','[Reference][guide]'+nl+nl+'[guide]: ../reference.md'+nl+nl+'![Image](../image.svg)'+nl+'<p><a href="../html.md">HTML</a></p>');
+ for(const name of ['guide.md','reference.md','image.svg','html.md']) await f.put(f.site,'docs/'+name);
  assert.deepEqual(await check(f.manifest,f.site),[]);
- for(const name of ['guide.md','image.svg','html.md']) await rm(join(f.site,'docs',name));
+ for(const name of ['guide.md','reference.md','image.svg','html.md']) await rm(join(f.site,'docs',name));
  const script=new URL('./docs-coverage.mjs',import.meta.url).pathname;
  const result=spawnSync(process.execPath,[script,'check'],{cwd:f.site,encoding:'utf8'});
  assert.equal(result.status,1);
- for(const target of ['README.md','docs/nested/usage.md','guide.md','image.svg','html.md']) assert(result.stderr.includes(target),result.stderr);
+ for(const target of ['README.md','docs/nested/usage.md','guide.md','reference.md','image.svg','html.md']) assert(result.stderr.includes(target),result.stderr);
 });
 test('source links cannot escape the repository or contain malformed escapes',async t=>{
  const f=await fixture(t);
