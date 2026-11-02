@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 480 390" fill="none" stroke="#285343" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+  <title>Shared configuration, linked into every task</title>
+  <desc>A central .config folder holds one .env file per repository. Repository worktrees in some-task and some-other-task use symlinks to those canonical files rather than duplicating secrets.</desc>
+  <defs><marker id="link-arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5" markerHeight="5" orient="auto"><path d="m2 2 6 3-6 3" fill="none" stroke="#285343" stroke-width="1.5"/></marker></defs>
+  <style>text{stroke:none;fill:#285343;font:13px ui-monospace,SFMono-Regular,Consolas,monospace}.note{fill:#66736b;font:12px system-ui,sans-serif}.label{fill:#66736b;font-size:10px;letter-spacing:1px}</style>
+  <circle cx="240" cy="183" r="163" fill="#eaf0df" stroke="none"/>
+  <rect x="39" y="22" width="402" height="137" rx="12" fill="#fbfcf6"/>
+  <path d="M39 63h402"/>
+  <path d="M58 37h10l4 5h16v13H58z" fill="#e4ebd4"/>
+  <text x="101" y="49">.config/</text>
+  <text class="label" x="302" y="48">SHARED SOURCE</text>
+  <rect x="57" y="80" width="172" height="59" rx="6" fill="#e4ebd4" stroke="#cbd7b9"/>
+  <rect x="251" y="80" width="172" height="59" rx="6" fill="#e4ebd4" stroke="#cbd7b9"/>
+  <text x="74" y="104">repo-a/</text><text x="91" y="126">.env</text>
+  <text x="268" y="104">repo-b/</text><text x="285" y="126">.env</text>
+  <g stroke-dasharray="4 5" marker-end="url(#link-arrow)"><path d="M125 236v-26q0-16 16-16h27v-28"/><path d="M355 236v-26q0-16-16-16h-27v-28"/></g>
+  <rect x="148" y="198" width="184" height="25" rx="12" fill="#f7f7f0" stroke="none"/>
+  <text class="note" x="240" y="215" text-anchor="middle">Symlinks, not secret copies</text>
+  <rect x="14" y="244" width="216" height="107" rx="10" fill="#fbfcf6"/>
+  <rect x="250" y="244" width="216" height="107" rx="10" fill="#fbfcf6"/>
+  <path d="M14 278h216m20 0h216" stroke="#cbd7b9"/>
+  <text x="31" y="266">some-task/</text><text x="267" y="266">some-other-task/</text>
+  <text x="31" y="306">↗ repo-a/.env</text><text x="31" y="332">↗ repo-b/.env</text>
+  <text x="267" y="306">↗ repo-a/.env</text><text x="267" y="332">↗ repo-b/.env</text>
+  <text class="note" x="240" y="379" text-anchor="middle">One canonical copy per repository. Shared by every task.</text>
+</svg>

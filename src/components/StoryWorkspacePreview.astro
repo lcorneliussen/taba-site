@@ -1,0 +1,242 @@
+---
+const base = import.meta.env.BASE_URL;
+---
+<dialog id="herdr-workspace-preview" class="workspace-dialog" aria-labelledby="workspace-preview-title" aria-describedby="workspace-preview-description">
+  <header class="workspace-header">
+    <div>
+      <p class="workspace-eyebrow">Herdr + worktree collections</p>
+      <h2 id="workspace-preview-title">The sketch, in real life.</h2>
+      <p id="workspace-preview-description">One place to switch tasks, talk to an agent and keep an eye on the work.</p>
+    </div>
+    <div class="workspace-actions">
+      <button type="button" data-workspace-zoom aria-pressed="false">Inspect full size</button>
+      <button type="button" data-workspace-close autofocus aria-label="Back to story (Escape)"><kbd>Esc</kbd> Back to story <span aria-hidden="true">×</span></button>
+    </div>
+  </header>
+  <div class="workspace-content">
+    <div class="workspace-visual">
+      <div class="workspace-screen">
+        <img src={`${base}media/why-taba/herdr-workspace-redacted.png`} width="1007" height="1562" alt="Herdr running worktree collections. The upper-left sidebar lists task spaces; the lower-left sidebar lists agents and their status across panes and tabs. The selected task has an agent conversation in the upper pane and a compact repository, service and PR overview in the lower pane. Conversation text and absolute filesystem paths are masked; task and agent labels remain visible." decoding="async" />
+        <div class="workspace-region region-spaces" aria-hidden="true"><span>1</span></div>
+        <div class="workspace-region region-agent" aria-hidden="true"><span>2</span></div>
+        <div class="workspace-region region-overview" aria-hidden="true"><span>3</span></div>
+        <div class="workspace-region region-agents" aria-hidden="true"><span>4</span></div>
+      </div>
+    </div>
+    <aside class="workspace-annotations" aria-label="A closer look at the workspace">
+      <p class="workspace-eyebrow">Same idea. Real work.</p>
+      <ol>
+        <li><button type="button" data-workspace-region="spaces"><span class="annotation-number">1</span><span><strong>A space for each task</strong><span class="annotation-copy">The upper sidebar switches between task collections, keeping their conversations separate.</span></span></button></li>
+        <li><button type="button" data-workspace-region="agent"><span class="annotation-number">2</span><span><strong>The conversation up front</strong><span class="annotation-copy">The agent gets the main pane: its work, tool output and the next thing you want to ask.</span></span></button></li>
+        <li><button type="button" data-workspace-region="overview"><span class="annotation-number">3</span><span><strong>The wider picture, nearby</strong><span class="annotation-copy">A second pane keeps repositories, running services and PRs in view. No need to interrupt the conversation to check.</span></span></button></li>
+        <li><button type="button" data-workspace-region="agents"><span class="annotation-number">4</span><span><strong>All agents, at a glance</strong><span class="annotation-copy">The lower sidebar lists all agents and their status across panes and tabs, not just the one you’re looking at.</span></span></button></li>
+      </ol>
+      <p class="workspace-footnote">A redacted capture, not a live session. Conversation text and absolute paths are hidden; task and agent labels remain visible.</p>
+    </aside>
+  </div>
+</dialog>
+<script>
+  const dialog = document.querySelector<HTMLDialogElement>('#herdr-workspace-preview');
+  const screen = dialog?.querySelector<HTMLElement>('.workspace-screen');
+  const screenshot = screen?.querySelector<HTMLImageElement>('img');
+  const content = dialog?.querySelector<HTMLElement>('.workspace-content');
+  const zoom = dialog?.querySelector<HTMLButtonElement>('[data-workspace-zoom]');
+  const closeButton = dialog?.querySelector<HTMLButtonElement>('[data-workspace-close]');
+  const motion = window.matchMedia('(prefers-reduced-motion: reduce)');
+  let opener: HTMLAnchorElement | null = null;
+  let previousOverflow = '';
+  let previousScroll = {left: 0, top: 0};
+  let returnHash = '#spaces';
+  let busy = false;
+  const previewHash = '#herdr-workspace';
+  const fullSizeHash = '#herdr-workspace-full-size';
+  const isPreviewLocation = () => location.hash === previewHash || location.hash === fullSizeHash;
+
+  function setZoom(enlarged: boolean) {
+    dialog?.classList.toggle('is-zoomed', enlarged);
+    if (zoom) {
+      zoom.setAttribute('aria-pressed', String(enlarged));
+      zoom.textContent = enlarged ? 'Fit to view' : 'Inspect full size';
+    }
+  }
+
+  function morphImage(src: string, from: DOMRect, to: DOMRect, opening: boolean) {
+    const ghost = document.createElement('img');
+    ghost.src = src;
+    ghost.alt = '';
+    ghost.setAttribute('aria-hidden', 'true');
+    ghost.className = 'workspace-morph';
+    dialog!.append(ghost);
+    const animation = ghost.animate([
+      { left: `${from.left}px`, top: `${from.top}px`, width: `${from.width}px`, height: `${from.height}px`, opacity: 1, borderRadius: '12px' },
+      { left: `${to.left}px`, top: `${to.top}px`, width: `${to.width}px`, height: `${to.height}px`, opacity: 0, borderRadius: opening ? '4px' : '12px' },
+    ], { duration: opening ? 600 : 340, easing: 'cubic-bezier(.22,.8,.25,1)', fill: 'forwards' });
+    return { ghost, animation };
+  }
+
+  async function openWorkspace(link: HTMLAnchorElement, animate: boolean) {
+    if (!dialog || !screen || !screenshot || !content || !closeButton || busy || dialog.open) return;
+    opener = link;
+    const source = opener.querySelector<HTMLImageElement>('img');
+    if (!source) return;
+    busy = true;
+    const from = source.getBoundingClientRect();
+    previousScroll = {left: window.scrollX, top: window.scrollY};
+    previousOverflow = document.documentElement.style.overflow;
+    document.documentElement.style.overflow = 'hidden';
+    const shouldAnimate = animate && !motion.matches;
+    screen.style.opacity = shouldAnimate ? '0' : '1';
+    dialog.showModal();
+    closeButton.focus({ preventScroll: true });
+    try {
+      await screenshot.decode();
+      await new Promise<void>(resolve => requestAnimationFrame(() => resolve()));
+      if (shouldAnimate) {
+        const { ghost, animation } = morphImage(source.src, from, screenshot.getBoundingClientRect(), true);
+        const fade = screen.animate([{ opacity: 0 }, { opacity: 1 }], { duration: 400, delay: 160, fill: 'forwards' });
+        await Promise.all([animation.finished, fade.finished]).catch(() => {});
+        screen.style.opacity = '1';
+        ghost.remove();
+        fade.cancel();
+      }
+    } catch {
+      screen.style.opacity = '1';
+    } finally {
+      busy = false;
+      syncWithLocation();
+    }
+  }
+
+  async function closeWorkspace() {
+    if (!dialog?.open || !screen || !screenshot || !content || busy) return;
+    busy = true;
+    const restorePosition = location.hash === returnHash;
+    if (restorePosition) window.scrollTo({...previousScroll, behavior: 'instant'});
+    if (restorePosition && !motion.matches && opener && !dialog.classList.contains('is-zoomed')) {
+      const source = opener.querySelector<HTMLImageElement>('img');
+      if (source) {
+        const { ghost, animation } = morphImage(screenshot.src, screenshot.getBoundingClientRect(), source.getBoundingClientRect(), false);
+        const fade = content.animate([{ opacity: 1 }, { opacity: 0 }], { duration: 220, fill: 'forwards' });
+        await animation.finished.catch(() => {});
+        ghost.remove();
+        fade.cancel();
+      }
+    }
+    dialog.close();
+    document.documentElement.style.overflow = previousOverflow;
+    if (restorePosition) {
+      await new Promise<void>(resolve => requestAnimationFrame(() => resolve()));
+      window.scrollTo({...previousScroll, behavior: 'instant'});
+    }
+    setZoom(false);
+    delete dialog.dataset.highlight;
+    opener?.focus({ preventScroll: true });
+    busy = false;
+    syncWithLocation();
+  }
+
+  function syncWithLocation() {
+    if (!dialog || busy) return;
+    if (isPreviewLocation()) {
+      setZoom(location.hash === fullSizeHash);
+      if (!dialog.open) {
+        const link = document.querySelector<HTMLAnchorElement>('[data-workspace-preview]');
+        if (link) {
+          returnHash = '#spaces';
+          link.scrollIntoView({ block: 'center', behavior: 'instant' });
+          void openWorkspace(link, false);
+        }
+      }
+    } else if (dialog.open) {
+      void closeWorkspace();
+    }
+  }
+
+  function requestClose() {
+    if (history.state?.storyWorkspacePreview) {
+      history.back();
+    } else {
+      history.replaceState(history.state, '', `${location.pathname}${location.search}#spaces`);
+      syncWithLocation();
+    }
+  }
+
+  document.querySelectorAll<HTMLAnchorElement>('[data-workspace-preview]').forEach(link => {
+    link.addEventListener('click', event => {
+      if (event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey || busy) return;
+      event.preventDefault();
+      returnHash = location.hash;
+      history.pushState({ ...history.state, storyWorkspacePreview: true }, '', previewHash);
+      setZoom(false);
+      void openWorkspace(link, true);
+    });
+  });
+  closeButton?.addEventListener('click', requestClose);
+  dialog?.addEventListener('cancel', event => { event.preventDefault(); requestClose(); });
+  dialog?.addEventListener('click', event => { if (event.target === dialog) requestClose(); });
+  zoom?.addEventListener('click', () => {
+    if (!dialog || busy) return;
+    const enlarged = !dialog.classList.contains('is-zoomed');
+    history.replaceState(history.state, '', enlarged ? fullSizeHash : previewHash);
+    setZoom(enlarged);
+  });
+  window.addEventListener('popstate', syncWithLocation);
+  window.addEventListener('hashchange', syncWithLocation);
+  syncWithLocation();
+  dialog?.querySelectorAll<HTMLButtonElement>('[data-workspace-region]').forEach(button => {
+    const highlight = () => { dialog.dataset.highlight = button.dataset.workspaceRegion; };
+    button.addEventListener('pointerenter', highlight);
+    button.addEventListener('focus', highlight);
+    button.addEventListener('click', highlight);
+    button.addEventListener('pointerleave', () => { if (document.activeElement !== button) delete dialog.dataset.highlight; });
+    button.addEventListener('blur', () => { delete dialog.dataset.highlight; });
+  });
+</script>
+<style>
+  .workspace-dialog { position: fixed; inset: 12px; box-sizing: border-box; width: calc(100% - 24px); height: calc(100dvh - 24px); max-width: none; max-height: none; margin: 0; padding: 24px 32px; border: 1px solid #7c906d; border-radius: 14px; box-shadow: 0 0 0 1px #b2c49b18, 0 24px 90px #0008; background: #161a18; color: #edf1e7; overflow: hidden; }
+  .workspace-dialog[open] { display: grid; grid-template-rows: auto minmax(0, 1fr); gap: 24px; }
+  .workspace-dialog::backdrop { background: #161a18e8; }
+  .workspace-header { display: flex; justify-content: space-between; align-items: start; gap: 24px; }
+  .workspace-eyebrow { margin: 0 0 9px; color: #b2c49b; font: 10px/1.5 var(--mono); letter-spacing: .1em; text-transform: uppercase; }
+  h2 { margin: 0; font: 600 clamp(24px, 3vw, 40px)/1.2 var(--display); letter-spacing: -.04em; }
+  #workspace-preview-description { margin: 9px 0 0; font-size: 13px; line-height: 1.6; color: #b0bbb0; }
+  .workspace-actions { display: flex; flex-shrink: 0; flex-wrap: wrap; justify-content: flex-end; align-items: center; gap: 12px; }
+  .workspace-actions kbd { display: inline-block; margin-right: 6px; padding: 2px 5px; border: 1px solid #718265; border-bottom-width: 2px; border-radius: 4px; color: #d5e4c1; font: 10px/1.4 var(--mono); }
+  .workspace-actions button { border: 1px solid #4d584d; border-radius: 7px; padding: 9px 13px; background: #232b23; color: #edf1e7; font: 12px/1.4 var(--mono); }
+  .workspace-actions button:hover { background: #344030; }
+  .workspace-actions span { margin-left: 12px; font-size: 18px; }
+  .workspace-content { display: grid; grid-template-columns: minmax(0, 1fr) 280px; gap: clamp(24px, 5vw, 80px); min-height: 0; max-width: 1400px; width: 100%; margin-inline: auto; }
+  .workspace-visual { display: flex; justify-content: center; min-height: 0; min-width: 0; overflow: auto; border: 1px solid #394539; border-radius: 8px; background: #101310; }
+  .workspace-screen { position: relative; height: 100%; max-width: 100%; aspect-ratio: 1007 / 1562; flex-shrink: 0; }
+  .workspace-screen > img { display: block; height: 100%; width: 100%; object-fit: contain; }
+  .workspace-region { position: absolute; border: 1px solid transparent; border-radius: 4px; pointer-events: none; transition: border-color 180ms, background 180ms; }
+  .region-spaces { inset: 1% auto auto 1.5%; width: 18.8%; height: 47%; }
+  .region-agents { inset: 50.5% auto auto 1.5%; width: 18.8%; height: 46%; }
+  .region-agent { inset: 2.8% auto auto 21.5%; width: 76%; height: 58.8%; }
+  .region-overview { inset: 62.8% auto auto 21.5%; width: 76%; height: 34.5%; }
+  .workspace-region > span, .annotation-number { display: grid; place-items: center; width: 24px; height: 24px; border: 1px solid #b2c49b; border-radius: 50%; background: #233022; color: #e3efcc; font: 11px var(--mono); }
+  .workspace-region > span { position: absolute; left: 4px; top: 4px; box-shadow: 0 2px 10px #0008; }
+  .workspace-dialog[data-highlight="spaces"] .region-spaces, .workspace-dialog[data-highlight="agent"] .region-agent, .workspace-dialog[data-highlight="overview"] .region-overview, .workspace-dialog[data-highlight="agents"] .region-agents { border-color: #d2e4af; background: #b2c49b12; }
+  .workspace-annotations { align-self: center; }
+  .workspace-annotations ol { list-style: none; margin: 18px 0 0; padding: 0; display: grid; gap: 18px; }
+  .workspace-annotations button { display: grid; grid-template-columns: 24px 1fr; gap: 13px; width: 100%; padding: 12px 0; border: 0; background: transparent; color: inherit; text-align: left; }
+  .workspace-annotations strong { display: block; font-size: 15px; font-weight: 550; line-height: 1.5; }
+  .annotation-copy { display: block; margin-top: 7px; color: #b0bbb0; font-size: 13px; line-height: 1.8; }
+  .workspace-footnote { margin-top: 32px; padding-top: 16px; border-top: 1px solid #394539; color: #9eab9e; font: 10px/1.7 var(--mono); }
+  .workspace-dialog.is-zoomed .workspace-visual { display: block; }
+  .workspace-dialog.is-zoomed .workspace-screen { width: 1007px; max-width: none; height: auto; }
+  .workspace-dialog :global(.workspace-morph) { position: fixed; z-index: 2; max-width: none; margin: 0; pointer-events: none; object-fit: fill; }
+  @media (max-width: 700px) {
+    .workspace-dialog { inset: 6px; width: calc(100% - 12px); height: calc(100dvh - 12px); padding: 16px 12px; border-radius: 10px; }
+    .workspace-actions { gap: 8px; }
+    .workspace-actions button { padding: 8px 10px; font-size: 11px; }
+    .workspace-dialog[open] { gap: 18px; }
+    .workspace-header { flex-direction: column-reverse; gap: 15px; }
+    .workspace-actions { align-self: flex-end; }
+    .workspace-content { display: block; overflow-y: auto; }
+    .workspace-visual { height: 65dvh; }
+    .workspace-annotations { margin-top: 24px; }
+    .workspace-annotations ol { gap: 8px; }
+  }
+  @media (prefers-reduced-motion: reduce) { .workspace-region { transition: none; } }
+</style>

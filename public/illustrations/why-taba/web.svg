@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 420 340" fill="none" stroke="#285343" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+  <title>A team workspace, with agents automating the handoffs</title>
+  <desc>Developers, operations and support share a workspace and agent context across repositories. Agents carry investigation, review and follow-up work through automated workflows, rather than people copying context between conversations.</desc>
+  <defs><marker id="workflow-arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5" markerHeight="5" orient="auto"><path d="m2 2 6 3-6 3" fill="none" stroke="#285343" stroke-width="1.5"/></marker></defs>
+  <style>text{stroke:none;fill:#285343;font:12px ui-monospace,SFMono-Regular,Consolas,monospace}.small{fill:#66736b;font:10px system-ui,sans-serif}.task{font-size:11px}</style>
+  <circle cx="210" cy="166" r="138" fill="#eaf0df" stroke="none"/>
+  <ellipse cx="210" cy="309" rx="151" ry="10" fill="#e1e8d4" stroke="none"/>
+  <g>
+    <circle cx="84" cy="30" r="11" fill="#fbfcf6"/><path d="M63 62q1-20 21-20t21 20"/>
+    <circle cx="210" cy="30" r="11" fill="#fbfcf6"/><path d="M189 62q1-20 21-20t21 20"/>
+    <circle cx="336" cy="30" r="11" fill="#fbfcf6"/><path d="M315 62q1-20 21-20t21 20"/>
+    <text class="small" x="84" y="78" text-anchor="middle">developers</text>
+    <text class="small" x="210" y="78" text-anchor="middle">operations</text>
+    <text class="small" x="336" y="78" text-anchor="middle">support</text>
+  </g>
+  <path d="M84 86v12m126-12v12m126-12v12" stroke-dasharray="3 4"/>
+  <rect x="40" y="104" width="340" height="93" rx="11" fill="#fbfcf6"/>
+  <path d="M40 134h340"/>
+  <circle cx="55" cy="119" r="3" fill="#82965c"/><circle cx="67" cy="119" r="3" fill="#cbd7b9"/>
+  <text x="87" y="123">Team + agents, one workspace</text>
+  <rect x="56" y="149" width="138" height="32" rx="6" fill="#e4ebd4"/>
+  <text x="78" y="170">Shared context</text>
+  <rect x="209" y="149" width="71" height="32" rx="6" fill="#f7f7f0" stroke="#cbd7b9"/>
+  <rect x="292" y="149" width="71" height="32" rx="6" fill="#f7f7f0" stroke="#cbd7b9"/>
+  <text class="task" x="225" y="170">repo-a</text><text class="task" x="308" y="170">repo-b</text>
+  <path d="M210 198v17" stroke-dasharray="4 5"/>
+  <g stroke-dasharray="4 5" marker-end="url(#workflow-arrow)"><path d="M210 215H78v24"/><path d="M210 215v24"/><path d="M210 215h132v24"/></g>
+  <rect x="119" y="204" width="182" height="22" rx="11" fill="#eaf0df" stroke="none"/>
+  <text class="small" x="210" y="219" text-anchor="middle">Automate the handoffs</text>
+  <g>
+    <rect x="22" y="246" width="112" height="57" rx="8" fill="#fbfcf6"/>
+    <path d="m69 264 5 5 10-11" stroke="#82965c"/><text class="task" x="78" y="289" text-anchor="middle">Investigate</text>
+    <rect x="154" y="246" width="112" height="57" rx="8" fill="#fbfcf6"/>
+    <path d="m201 264 5 5 10-11" stroke="#82965c"/><text class="task" x="210" y="289" text-anchor="middle">Review</text>
+    <rect x="286" y="246" width="112" height="57" rx="8" fill="#fbfcf6"/>
+    <path d="m333 264 5 5 10-11" stroke="#82965c"/><text class="task" x="342" y="289" text-anchor="middle">Follow up</text>
+  </g>
+  <text class="small" x="210" y="332" text-anchor="middle">People set direction. Agents carry it forward.</text>
+</svg>

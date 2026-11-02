@@ -1,0 +1,34 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 480 586" fill="none">
+  <title>One workspace, shared history, task-specific worktrees</title>
+  <desc>The workspace is a plain folder, not a Git repository. The .bare folder holds repo-a.git and repo-b.git. The some-task folder contains repo-a and repo-b worktrees. A second folder, some-other-task, has its contents abbreviated.</desc>
+  <style>
+    text{fill:#285343;font:14px ui-monospace,SFMono-Regular,Consolas,monospace}
+    .note{fill:#66736b;font:12px system-ui,sans-serif}
+    .label{fill:#66736b;font:10px ui-monospace,SFMono-Regular,Consolas,monospace;letter-spacing:1.5px}
+    .line{stroke:#a5b796;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round}
+  </style>
+  <rect x="3" y="3" width="474" height="580" rx="18" fill="#fbfcf6" stroke="#d0d9c5"/>
+  <path d="M3 86h474" stroke="#dce1d5"/>
+  <path d="M25 30h13l5 6h18v21H25z" fill="#e4ebd4" stroke="#285343" stroke-width="1.5" stroke-linejoin="round"/>
+  <text x="77" y="43">&lt;workspace-root&gt;/</text>
+  <text class="note" x="77" y="65">A plain folder. Not a Git repository.</text>
+  <path class="line" d="M35 107v394m0-368h24m-24 184h24m-24 184h24"/>
+  <rect x="59" y="107" width="397" height="161" rx="10" fill="#eaf0df" stroke="#cbd7b9"/>
+  <text class="label" x="77" y="130">SHARED HISTORY</text>
+  <text x="77" y="156">.bare/</text>
+  <path class="line" d="M87 169v54m0-36h17m-17 36h17"/>
+  <text x="116" y="191">repo-a.git</text>
+  <text x="116" y="227">repo-b.git</text>
+  <text class="note" x="116" y="251">Bare owners cloned from the forge</text>
+  <rect x="59" y="291" width="397" height="161" rx="10" fill="#f7f7f0" stroke="#d0d9c5"/>
+  <text class="label" x="77" y="315">ONE COLLECTION PER TASK</text>
+  <text x="77" y="342">some-task/</text>
+  <path class="line" d="M87 355v54m0-36h17m-17 36h17"/>
+  <text x="116" y="377">repo-a/</text>
+  <text x="116" y="413">repo-b/</text>
+  <text class="note" x="116" y="437">Worktrees · one sibling per repository</text>
+  <rect x="59" y="475" width="397" height="89" rx="10" fill="#f7f7f0" stroke="#d0d9c5"/>
+  <text x="77" y="506">some-other-task/</text>
+  <path class="line" d="M87 520v20h17"/>
+  <text x="116" y="544">…</text>
+</svg>

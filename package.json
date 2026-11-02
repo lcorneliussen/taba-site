@@ -15,7 +15,11 @@
     "check:coverage": "node scripts/docs-coverage.mjs check",
     "test:coverage": "node --test scripts/docs-coverage.test.mjs",
     "docs:propose": "node scripts/docs-coverage.mjs propose",
-    "demos:openclaw": "node scripts/record-openclaw.mjs"
+    "demos:openclaw": "node scripts/record-openclaw.mjs",
+    "demos:openclaw:interactions": "node scripts/record-openclaw-interactions.mjs",
+    "test:visual": "node --test scripts/openclaw-visual-audit.test.mjs scripts/record-openclaw-tui.test.mjs",
+    "demos:openclaw:buddy": "node scripts/record-openclaw-tui.mjs",
+    "test:story": "node scripts/why-taba-qa.mjs --dist"
   },
   "dependencies": {
     "astro": "^7.3.8"

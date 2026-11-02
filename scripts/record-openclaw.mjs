@@ -37,7 +37,7 @@ try {
  await page.waitForTimeout(800);
  await page.screenshot({path:join(out,'collection-card.png')});
  await page.waitForTimeout(2200);
- await page.getByTitle('Open the wtc Collection panel',{exact:true}).click();
+ await page.getByTitle(/^Open the (wtc|taba) Collection panel$/).click();
  await page.getByText('Repositories',{exact:true}).waitFor();
  await page.getByText('Add search endpoint',{exact:true}).waitFor();
  await page.waitForTimeout(800);
@@ -58,7 +58,7 @@ try {
  const small=await mobile.newPage();
  small.on('pageerror',error=>errors.push(error.message));
  await small.goto('https://demo.invalid/');
- await small.getByTitle('Open the wtc Collection panel',{exact:true}).click();
+ await small.getByTitle(/^Open the (wtc|taba) Collection panel$/).click();
  await small.getByText('Repositories',{exact:true}).waitFor();
  if(await small.evaluate(()=>document.documentElement.scrollWidth>innerWidth)) errors.push('Narrow demo overflows the viewport');
  await small.screenshot({path:join(out,'collection-mobile.png'),fullPage:true});

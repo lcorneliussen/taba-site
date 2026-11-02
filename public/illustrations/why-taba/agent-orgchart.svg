@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 480 390" fill="none" stroke="#285343" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+  <title>Where does the agent fit in the org chart?</title>
+  <desc>A team owner connects to developers and support. An AI agent sits between them with dashed, unresolved reporting lines. Is it a colleague, a tool or a service account? Who can direct it, approve its work and take responsibility?</desc>
+  <style>text{stroke:none;fill:#285343;font:13px ui-monospace,SFMono-Regular,Consolas,monospace}.note{fill:#66736b;font:12px system-ui,sans-serif}.small{font-size:10px}.question{fill:#ad7453;font-size:24px}</style>
+  <circle cx="240" cy="185" r="163" fill="#eaf0df" stroke="none"/>
+  <rect x="160" y="22" width="160" height="59" rx="9" fill="#fbfcf6"/>
+  <text x="240" y="47" text-anchor="middle">Team owner</text><text class="note" x="240" y="67" text-anchor="middle">Accountability</text>
+  <path d="M240 81v27H80v32m160-32h160v32" stroke="#a5b796"/>
+  <g>
+    <rect x="14" y="147" width="132" height="95" rx="10" fill="#fbfcf6"/>
+    <circle cx="80" cy="168" r="7" fill="#e4ebd4"/><path d="M67 188q1-12 13-12t13 12"/>
+    <text x="80" y="211" text-anchor="middle">Developers</text><text class="note" x="80" y="230" text-anchor="middle">Build + review</text>
+    <rect x="334" y="147" width="132" height="95" rx="10" fill="#fbfcf6"/>
+    <circle cx="400" cy="168" r="7" fill="#e4ebd4"/><path d="M387 188q1-12 13-12t13 12"/>
+    <text x="400" y="211" text-anchor="middle">Support</text><text class="note" x="400" y="230" text-anchor="middle">Ask + investigate</text>
+  </g>
+  <path d="M240 89v57m-94 48h16m156 0h16" stroke="#ad7453" stroke-dasharray="3 5"/>
+  <circle cx="240" cy="119" r="14" fill="#f7f7f0" stroke="none"/><text class="question" x="240" y="127" text-anchor="middle">?</text>
+  <rect x="162" y="153" width="156" height="111" rx="11" fill="#f4e5d9" stroke="#ad7453" stroke-dasharray="5 5"/>
+  <rect x="222" y="166" width="36" height="25" rx="6" fill="#fbfcf6"/>
+  <circle cx="232" cy="178" r="2" fill="#82965c"/><circle cx="248" cy="178" r="2" fill="#82965c"/>
+  <text x="240" y="214" text-anchor="middle">AI agent</text><text class="note" x="240" y="235" text-anchor="middle">Colleague? Tool?</text><text class="note" x="240" y="252" text-anchor="middle">Service account?</text>
+  <text class="note" x="240" y="300" text-anchor="middle">Who directs it? Who approves?</text>
+  <text class="note" x="240" y="321" text-anchor="middle">Who is responsible for its actions?</text>
+  <text x="240" y="368" text-anchor="middle">Where does it fit in the org chart?</text>
+</svg>

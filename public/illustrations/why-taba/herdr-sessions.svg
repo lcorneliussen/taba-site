@@ -1,0 +1,49 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 520 648" fill="none">
+  <title>Herdr: a client you can close, processes that keep running</title>
+  <desc>A terminal client has two spaces, some-task and other-task. The selected space has an agent pane above a shell pane. Attaching locally or over SSH connects the client to a persistent background server on the host machine. That server owns both spaces' agent and shell processes. Disconnecting the client does not stop those processes; the host and server must stay running.</desc>
+  <style>
+    text{fill:#285343;font:14px ui-monospace,SFMono-Regular,Consolas,monospace}
+    .note{fill:#66736b;font:13px system-ui,sans-serif}
+    .label{fill:#66736b;font:11px ui-monospace,SFMono-Regular,Consolas,monospace;letter-spacing:1.1px}
+    .line{stroke:#a5b796;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round}
+    .strong{font-weight:600}
+  </style>
+  <rect x="12" y="12" width="496" height="294" rx="13" fill="#fbfcf6" stroke="#cbd7b9"/>
+  <path d="M12 51h496" stroke="#dce1d5"/>
+  <circle cx="31" cy="32" r="3" fill="#82965c"/><circle cx="43" cy="32" r="3" fill="#cbd7b9"/><circle cx="55" cy="32" r="3" fill="#e1e8d4"/>
+  <text class="label" x="77" y="36">TERMINAL CLIENT · YOUR VIEW</text>
+  <path d="M163 51v255" stroke="#dce1d5"/>
+  <text class="label" x="29" y="79">SPACES</text>
+  <rect x="22" y="93" width="131" height="39" rx="6" fill="#e4ebd4"/>
+  <circle cx="36" cy="113" r="3" fill="#82965c"/>
+  <text x="47" y="118">some-task</text>
+  <circle cx="36" cy="157" r="3" fill="#82965c"/>
+  <text x="47" y="162">other-task</text>
+  <text class="note" x="29" y="278">Switch spaces</text>
+  <rect x="177" y="65" width="317" height="126" rx="7" fill="#f7f7f0" stroke="#dce1d5"/>
+  <text class="label" x="193" y="87">PANE 1 / AGENT</text>
+  <text x="193" y="116">› implement the next step</text>
+  <text class="note" x="193" y="144">Reading files, editing, testing…</text>
+  <circle cx="197" cy="171" r="3" fill="#82965c"/><text class="note" x="208" y="175">working</text>
+  <rect x="177" y="202" width="317" height="90" rx="7" fill="#f7f7f0" stroke="#dce1d5"/>
+  <text class="label" x="193" y="224">PANE 2 / SHELL</text>
+  <text x="193" y="250">$ npm run dev</text>
+  <text class="note" x="193" y="276">Watching for changes…</text>
+  <path class="line" d="M260 307v67m-5-61 5-6 5 6m-10 55 5 6 5-6" stroke-dasharray="4 5"/>
+  <rect x="105" y="326" width="310" height="29" rx="14" fill="#f7f7f0"/>
+  <text class="note" x="260" y="345" text-anchor="middle">Attach / detach · locally or over SSH</text>
+  <rect x="12" y="377" width="496" height="226" rx="13" fill="#eaf0df" stroke="#cbd7b9"/>
+  <rect x="29" y="393" width="29" height="24" rx="4" fill="#fbfcf6" stroke="#82965c"/>
+  <path class="line" d="M35 401h11m-11 8h11"/><circle cx="51" cy="401" r="1.5" fill="#82965c"/><circle cx="51" cy="409" r="1.5" fill="#82965c"/>
+  <text class="strong" x="70" y="404">Persistent background server</text>
+  <text class="note" x="70" y="425">On the machine doing the work</text>
+  <rect x="28" y="445" width="225" height="105" rx="8" fill="#fbfcf6" stroke="#cbd7b9"/>
+  <rect x="267" y="445" width="225" height="105" rx="8" fill="#fbfcf6" stroke="#cbd7b9"/>
+  <text x="44" y="468">some-task</text><text x="283" y="468">other-task</text>
+  <circle cx="47" cy="495" r="3" fill="#82965c"/><text class="note" x="58" y="499">Agent process</text>
+  <circle cx="47" cy="526" r="3" fill="#82965c"/><text class="note" x="58" y="530">Shell + dev server</text>
+  <circle cx="286" cy="495" r="3" fill="#82965c"/><text class="note" x="297" y="499">Agent process</text>
+  <circle cx="286" cy="526" r="3" fill="#82965c"/><text class="note" x="297" y="530">Shell process</text>
+  <text class="note strong" x="260" y="581" text-anchor="middle">Client disconnected? Processes keep running.</text>
+  <text class="note" x="260" y="632" text-anchor="middle">The host and server must stay running.</text>
+</svg>

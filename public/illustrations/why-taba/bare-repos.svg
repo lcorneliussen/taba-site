@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 420 340" fill="none" stroke="#285343" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+  <style>text{stroke:none;fill:#285343;font:12px ui-monospace,SFMono-Regular,Consolas,monospace}.small{font-size:10px}</style>
+  <circle cx="210" cy="166" r="138" fill="#eaf0df" stroke="none"/>
+  <ellipse cx="210" cy="305" rx="150" ry="10" fill="#e1e8d4" stroke="none"/>
+  <rect x="120" y="37" width="180" height="77" rx="10" fill="#fbfcf6"/>
+  <path d="M120 65h180"/>
+  <text x="185" y="56">.bare/</text>
+  <text x="138" y="92">api.git</text>
+  <text x="222" y="92">web.git</text>
+  <path d="M210 114v29m-108 30v-30h216v30" stroke-dasharray="4 5"/>
+  <g transform="rotate(-3 105 228)">
+    <rect x="21" y="173" width="168" height="112" rx="10" fill="#fbfcf6"/>
+    <path d="M21 205h168"/>
+    <text x="43" y="194">task-a/</text>
+    <rect x="39" y="222" width="58" height="41" rx="5" fill="#e4ebd4"/>
+    <rect x="111" y="222" width="58" height="41" rx="5" fill="#e4ebd4"/>
+    <text x="57" y="247">api</text><text x="129" y="247">web</text>
+  </g>
+  <g transform="rotate(3 315 228)">
+    <rect x="231" y="173" width="168" height="112" rx="10" fill="#fbfcf6"/>
+    <path d="M231 205h168"/>
+    <text x="253" y="194">task-b/</text>
+    <rect x="249" y="222" width="58" height="41" rx="5" fill="#e4ebd4"/>
+    <rect x="321" y="222" width="58" height="41" rx="5" fill="#e4ebd4"/>
+    <text x="267" y="247">api</text><text x="339" y="247">web</text>
+  </g>
+  <text class="small" x="138" y="332">all checkouts are worktrees</text>
+</svg>

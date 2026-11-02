@@ -1,0 +1,40 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 420 340" fill="none" stroke="#285343" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+  <title>Project copies sync with a central boilerplate</title>
+  <desc>Three projects each hold a local copy of the scripts and instructions. Each copy exchanges changes with the shared boilerplate, not directly with the other projects.</desc>
+  <defs><marker id="sync-arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse"><path d="m2 2 6 3-6 3" fill="none" stroke="#285343" stroke-width="1.5"/></marker></defs>
+  <style>text{stroke:none;fill:#285343;font:12px ui-monospace,SFMono-Regular,Consolas,monospace}.small{fill:#66736b;font:10px system-ui,sans-serif}.project{font-size:9.5px;text-anchor:middle}</style>
+  <circle cx="210" cy="166" r="138" fill="#eaf0df" stroke="none"/>
+  <ellipse cx="210" cy="322" rx="167" ry="9" fill="#e1e8d4" stroke="none"/>
+  <rect x="121" y="30" width="178" height="111" rx="10" fill="#fbfcf6"/>
+  <path d="M121 63h178"/>
+  <text x="210" y="52" text-anchor="middle">boilerplate-harness</text>
+  <path d="M141 82h70m-70 14h111" stroke="#82965c"/>
+  <text class="small" x="141" y="122">Shared scripts + instructions</text>
+  <g stroke-dasharray="4 5" marker-start="url(#sync-arrow)" marker-end="url(#sync-arrow)">
+    <path d="M165 149c0 31-100 23-100 67"/>
+    <path d="M210 149v67"/>
+    <path d="M255 149c0 31 100 23 100 67"/>
+  </g>
+  <text class="small" x="226" y="187">sync</text>
+  <g>
+    <rect x="10" y="225" width="110" height="86" rx="8" fill="#f7f8ef"/>
+    <path d="M10 255h110"/>
+    <text class="project" x="65" y="245">project-a-harness</text>
+    <path d="M27 271h68m-68 12h48" stroke="#82965c"/>
+    <text class="small" x="27" y="300">Local copy</text>
+  </g>
+  <g>
+    <rect x="155" y="225" width="110" height="86" rx="8" fill="#fbfcf6"/>
+    <path d="M155 255h110"/>
+    <text class="project" x="210" y="245">project-b-harness</text>
+    <path d="M172 271h68" stroke="#82965c"/><path d="M172 283h48" stroke="#ad7453"/>
+    <text class="small" x="172" y="300">Local copy</text>
+  </g>
+  <g>
+    <rect x="300" y="225" width="110" height="86" rx="8" fill="#f7f8ef"/>
+    <path d="M300 255h110"/>
+    <text class="project" x="355" y="245">project-c-harness</text>
+    <path d="M317 271h68m-68 12h48" stroke="#82965c"/>
+    <text class="small" x="317" y="300">Local copy</text>
+  </g>
+</svg>

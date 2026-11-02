@@ -1,0 +1,37 @@
+---
+import activity from '../data/story-activity.json';
+const periods = activity.phases.filter((phase, index, phases) =>
+  phases.findIndex(other => other.start === phase.start && other.end === phase.end) === index);
+---
+<dialog id="activity-method" aria-labelledby="activity-method-title">
+  <h2 id="activity-method-title" tabindex="-1" autofocus>About the numbers</h2>
+  <p><strong>{activity.baseline.label} baseline.</strong> The starting measurements are {activity.baseline.medianMergedPRs} merged PRs per week and {activity.baseline.checkouts} checkouts. The large figures show multiples of that baseline, rounded to one decimal place. The measurements appear underneath; the first period shows only its baseline values.</p>
+  <p><strong>PRs / week</strong> is the median across complete Monday–Sunday weeks within each rough story period, in Europe/Berlin. Zero weeks count; the current partial week does not. Periods overlap where the work overlaps.</p>
+  <p>PRs are attributed to confirmed author accounts on GitHub and in one accessible Bitbucket workspace, deduplicated by provider and PR. One supplied historical identity remains unresolved. These are merge events, not unique features or a measure of productivity. The event cutoff is 30 October 2026 at 08:25 CET.</p>
+  <p><strong>Checkouts</strong> counts still-present ordinary repo working folders plus linked worktrees, by folder creation date through each period’s end. Bare repositories are excluded. Cleaned-up folders are absent, and copies or migrations can change dates. The 30 October snapshot contains {activity.checkoutTotal} checkouts: {activity.ordinaryCheckoutTotal} ordinary folders and {activity.worktreeTotal} worktrees.</p>
+  <table>
+    <caption>Underlying measurements</caption>
+    <thead><tr><th scope="col">Period</th><th scope="col">Weeks</th><th scope="col">PRs / week</th><th scope="col">Checkouts</th></tr></thead>
+    <tbody>{periods.map(phase => <tr><th scope="row" title={`${phase.start} to ${phase.end}`}>{phase.label}</th><td>{phase.completeWeeks}</td><td>{phase.medianMergedPRs}</td><td>{phase.checkouts}</td></tr>)}</tbody>
+  </table>
+  <button type="button" class="button button-small">Close</button>
+</dialog>
+<style>
+  dialog { max-width: 560px; width: calc(100% - 40px); max-height: calc(100dvh - 40px); overflow: auto; padding: 24px; border: 1px solid var(--line); border-radius: 10px; color: var(--ink); background: var(--paper); }
+  dialog::backdrop { background: #15251d70; }
+  h2 { font: 650 28px/1.2 var(--display); letter-spacing: -.035em; margin: 0 0 24px; }
+  p { font-size: 14px; line-height: 1.8; margin-block: 18px; }
+  strong { font-weight: 600; }
+  button { border: 0; }
+  table { width: 100%; border-collapse: collapse; font-size: 11px; margin-block: 24px; }
+  caption { text-align: left; font-weight: 600; margin-bottom: 10px; }
+  th, td { padding: 8px 3px; border-bottom: 1px solid var(--line); text-align: right; }
+  th:first-child { text-align: left; }
+  :global(.story-metrics .metric-readout) { display: flex; align-items: baseline; justify-content: flex-end; gap: 2px; white-space: nowrap; }
+  :global(.story-metrics .metric-unit) { font-size: .6em; }
+  :global(.prose .story-metrics dl dd.metric-absolute) { display: grid; grid-template-columns: max-content max-content; justify-content: end; align-items: center; gap: 3px; }
+  :global(.story-metrics .metric-detail) { grid-column: 2; text-align: right; font: 11px/1.5 var(--mono); letter-spacing: 0; }
+  @media (max-width: 700px) {
+    :global(.prose .story-metrics dl dd.metric-absolute) { justify-content: start; }
+  }
+</style>

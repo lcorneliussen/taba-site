@@ -1,0 +1,262 @@
+---
+import Base from './Base.astro';
+import StoryActivityNotes from '../components/StoryActivityNotes.astro';
+import StoryWorkspacePreview from '../components/StoryWorkspacePreview.astro';
+
+interface Props {
+  frontmatter: { title: string; description: string; author: string; updated: string };
+}
+const { frontmatter } = Astro.props;
+const base = import.meta.env.BASE_URL;
+const installCommands = 'mise use -g github:lcorneliussen/wtc-cli@0.1.60\nwtc --version';
+const collectionCommands = 'mkdir fix-login && cd fix-login\nwtc init\nwtc add-repo ~/code/api\nwtc add-repo ~/code/web\nwtc status';
+const branchCommands = 'git -C api switch -c fix-login\ngit -C web switch -c fix-login';
+---
+<Base title={`${frontmatter.title} | taba`} description={frontmatter.description}>
+  <div class="story-progress" role="progressbar" aria-label="Reading progress" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" data-story-progress hidden><span></span></div>
+  <main class="wrap story" id="main" data-story>
+    <header class="story-header">
+      <h1>{frontmatter.title}<span class="brand-dot">.</span></h1>
+      <p class="story-byline">By {frontmatter.author} <span aria-hidden="true">/</span> First draft</p>
+    </header>
+    <article class="story-content" aria-label={frontmatter.title}>
+      <div class="prose"><slot /></div>
+    </article>
+    <section class="story-next" aria-labelledby="story-next-title">
+      <header>
+        <p class="story-next-eyebrow">Your first collection</p>
+        <h2 id="story-next-title">Try it on one real task.</h2>
+        <p>Pick two repos you already work on together. You don’t need a harness, Herdr or a new editor to try this.</p>
+      </header>
+      <p class="story-next-context">These steps are for a <strong>local terminal</strong> on macOS or Linux, with Git installed. Using OpenClaw? Follow the <a href={`${base}docs/openclaw/`}>gateway setup</a> instead—the gateway manages its own worktrees.</p>
+      <ol class="story-start-steps">
+        <li>
+          <h3>Install the CLI.</h3>
+          <p>The product is called taba; the released command is still <code>wtc</code>. With <a href="https://mise.jdx.dev/">mise</a>, install this verified release:</p>
+          <div class="story-command-heading"><span>Install with mise</span><button type="button" data-story-copy="story-install-commands" hidden>Copy commands</button></div>
+          <pre tabindex="0" aria-label="Install the released CLI"><code id="story-install-commands">{installCommands}</code></pre>
+          <p class="story-start-note">No mise? Download the binary for your platform from <a href="https://github.com/lcorneliussen/wtc-cli/releases">GitHub Releases</a> and put it on your <code>PATH</code>.</p>
+        </li>
+        <li>
+          <h3>Bring two repos into one task folder.</h3>
+          <p>Replace <code>~/code/api</code> and <code>~/code/web</code> with paths to two existing Git repositories. Start in a directory where you want the new task folder to live.</p>
+          <div class="story-command-heading"><span>Create a collection</span><button type="button" data-story-copy="story-collection-commands" hidden>Copy commands</button></div>
+          <pre tabindex="0" aria-label="Create a task collection from two repositories"><code id="story-collection-commands">{collectionCommands}</code></pre>
+          <p>You now have <code>api/</code> and <code>web/</code> worktrees inside <code>fix-login/</code>. Open that folder in your usual editor or agent. Each repo keeps its own Git history.</p>
+        </li>
+        <li>
+          <h3>Make a small change across them.</h3>
+          <p>Worktrees start detached at their target branch. Before committing, create a branch in each repo you change, using the folder names created above:</p>
+          <div class="story-command-heading"><span>Branch before committing</span><button type="button" data-story-copy="story-branch-commands" hidden>Copy commands</button></div>
+          <pre tabindex="0" aria-label="Create a working branch in each repository"><code id="story-branch-commands">{branchCommands}</code></pre>
+          <p>Run each project’s normal build, test and dev commands inside its worktree. Use <code>wtc status</code> to see both repos together. For the next task, <code>wtc new next-idea api web</code> creates a separate collection alongside this one.</p>
+        </li>
+      </ol>
+      <nav class="story-start-links" aria-label="Continue getting started"><a class="button" href={`${base}docs/getting-started/`}>Full setup guide <span aria-hidden="true">→</span></a><a class="text-link" href={`${base}docs/collections/`}>The collection workflow <span aria-hidden="true">→</span></a></nav>
+    </section>
+  </main>
+  <StoryActivityNotes />
+  <StoryWorkspacePreview />
+</Base>
+<script>
+  import '../scripts/story';
+
+  if (navigator.clipboard) {
+    document.querySelectorAll<HTMLButtonElement>('[data-story-copy]').forEach(button => {
+      button.hidden = false;
+      button.addEventListener('click', async () => {
+        const code = document.getElementById(button.dataset.storyCopy!);
+        if (!code) return;
+        try {
+          await navigator.clipboard.writeText(code.textContent ?? '');
+          button.textContent = 'Copied';
+          window.setTimeout(() => { button.textContent = 'Copy commands'; }, 2000);
+        } catch {
+          button.textContent = 'Select the commands to copy';
+        }
+      });
+    });
+  }
+
+  document.querySelectorAll<HTMLElement>('.file-preview').forEach((preview) => {
+    const trigger = preview.querySelector<HTMLElement>('.file-preview-trigger');
+    const editor = preview.querySelector<HTMLElement>('.file-preview-editor');
+    if (!trigger || !editor) return;
+    let closeTimer: ReturnType<typeof setTimeout>;
+    const position = () => {
+      const rect = trigger.getBoundingClientRect();
+      const width = editor.offsetWidth;
+      const height = editor.offsetHeight;
+      editor.style.left = `${Math.max(12, Math.min(rect.left, window.innerWidth - width - 12))}px`;
+      editor.style.top = `${Math.max(12, Math.min(rect.bottom + 8, window.innerHeight - height - 12))}px`;
+    };
+    const show = () => {
+      clearTimeout(closeTimer);
+      if (!editor.matches(':popover-open')) editor.showPopover();
+      position();
+    };
+    const scheduleClose = () => {
+      clearTimeout(closeTimer);
+      closeTimer = setTimeout(() => {
+        if (!preview.matches(':hover') && !preview.contains(document.activeElement) && editor.matches(':popover-open')) editor.hidePopover();
+      }, 150);
+    };
+    trigger.addEventListener('pointerenter', (event) => { if (event.pointerType === 'mouse') show(); });
+    trigger.addEventListener('focus', show);
+    trigger.addEventListener('click', (event) => {
+      if (trigger instanceof HTMLButtonElement) { event.preventDefault(); show(); }
+    });
+    preview.addEventListener('pointerleave', scheduleClose);
+    preview.addEventListener('focusout', scheduleClose);
+    editor.addEventListener('pointerenter', () => clearTimeout(closeTimer));
+    editor.addEventListener('pointerleave', scheduleClose);
+    editor.addEventListener('toggle', () => { if (editor.matches(':popover-open')) position(); });
+    window.addEventListener('resize', () => { if (editor.matches(':popover-open')) position(); });
+    window.addEventListener('scroll', () => { if (editor.matches(':popover-open')) editor.hidePopover(); }, { passive: true });
+  });
+</script>
+<style>
+  .story { max-width: 1160px; padding-block: 50px 80px; }
+  .story-header { display: flex; align-items: baseline; justify-content: space-between; gap: 25px; margin-bottom: 35px; }
+  h1 { font: 650 clamp(52px, 6vw, 76px)/1.08 var(--display); letter-spacing: -.06em; margin: 0; }
+  .story-byline { color: var(--muted); font-size: 11px; margin: 0; }
+  .story-byline span { padding-inline: 8px; }
+  .story-content { min-width: 0; }
+  .prose { font-size: 16px; line-height: 1.85; }
+  .prose :global(.problem-timeline) { --timeline-inset: 85px; position: relative; list-style: none; margin: 0 0 0 128px; padding: 0; }
+  .prose :global(.problem-timeline::before), .prose :global(.problem-timeline::after) { content: ''; position: absolute; left: -24px; top: var(--timeline-start, 95px); width: 1px; height: var(--timeline-length, calc(100% - 190px)); background: #c5d0b6; }
+  .prose :global(.problem-timeline::after) { background: var(--green); transform: scaleY(var(--story-progress, 0)); transform-origin: top; }
+  .prose :global(.problem) { position: relative; display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); grid-template-rows: auto; column-gap: 64px; align-content: start; min-height: 75svh; padding-block: 85px; border-bottom: 1px solid var(--line); scroll-margin-top: 130px; }
+  .prose :global(.problem-date) { position: absolute; left: -128px; top: var(--timeline-inset); width: 84px; margin: 0; text-align: right; color: var(--ink); font: 12px/20px var(--mono); }
+  .prose :global(.date-column) { position: absolute; left: -128px; top: var(--timeline-inset); bottom: var(--timeline-inset); width: 84px; }
+  .prose :global(.date-card) { position: sticky; top: 40px; }
+  .prose :global(.date-column .problem-date) { position: relative; left: 0; top: 0; width: 100%; }
+  .prose :global(.problem-date time) { display: block; color: var(--muted); font-size: 10px; }
+  .prose :global(.date-label) { display: block; margin-top: 5px; font-weight: 600; }
+  .prose :global(.date-range) { display: block; color: var(--muted); font-size: 10px; }
+  .prose :global(.problem-date .date-range time) { display: inline; }
+  .prose :global(.story-metrics) { margin-top: 26px; font: 11px/1.5 var(--mono); text-align: right; }
+  .prose :global(.story-metrics p) { margin: 0; }
+  .prose :global(.story-metrics dl) { display: grid; gap: 22px; margin: 18px 0; }
+  .prose :global(.story-metrics dl > div) { display: flex; flex-direction: column; }
+  .prose :global(.story-metrics dt) { color: var(--muted); }
+  .prose :global(.story-metrics dd) { display: flex; align-items: center; justify-content: flex-end; gap: 3px; margin: 0; font: 500 26px/1.2 var(--display); letter-spacing: -.035em; font-variant-numeric: tabular-nums; color: var(--muted); }
+  .prose :global(.story-metrics dd svg) { width: 17px; height: 17px; flex-shrink: 0; margin-right: 3px; opacity: .8; }
+  .prose :global(.metric-approximate) { font: 14px var(--mono); opacity: .75; }
+  .prose :global(.metrics-week time) { display: block; }
+  .prose :global(.metrics-partial) { color: var(--muted); }
+  .prose :global(.metrics-info) { padding: 0; margin-top: 12px; border: 0; background: none; color: var(--muted); font: inherit; text-decoration: underline; text-underline-offset: 3px; }
+  .prose :global(.problem-date a) { color: inherit; text-decoration: none; }
+  .prose :global(.problem-date a:hover), .prose :global(.problem-date a:focus-visible) { text-decoration: underline; text-underline-offset: 4px; }
+  .prose :global(.problem-date::after) { content: ''; position: absolute; left: calc(100% + 15.5px); top: 10px; width: 9px; height: 9px; box-sizing: border-box; border: 1px solid #91a17b; border-radius: 50%; background: var(--paper); transform: translateY(-50%); z-index: 1; }
+  .prose :global(.problem.is-past .problem-date::after), .prose :global(.problem.is-active .problem-date::after) { background: var(--green); border-color: var(--green); }
+  .prose :global(.problem.is-active .problem-date) { color: var(--green); }
+  .prose :global(.problem-body) { grid-column: 1; grid-row: 1; min-width: 0; }
+  .prose :global(.problem h2) { font: 650 clamp(38px, 4.8vw, 68px)/1.08 var(--display); letter-spacing: -.055em; color: var(--ink); margin: 0 0 25px; }
+  .prose :global(.problem-subline) { max-width: 470px; font-size: 18px; line-height: 1.7; margin: 0 0 25px; color: #5d7064; }
+  .prose :global(.scene-art) { grid-column: 2; grid-row: 1; align-self: center; transform: translate3d(0, var(--art-y, 0px), 0) rotate(var(--art-tilt, 0deg)); }
+  .prose :global(.scene-art img) { display: block; width: 100%; height: auto; max-width: 510px; margin-inline: auto; }
+  .prose :global(.problem:nth-child(even) .problem-body) { grid-column: 2; }
+  .prose :global(.problem:nth-child(even) .scene-art) { grid-column: 1; }
+  .prose :global(.problem .scene-art) { position: sticky; top: 50px; align-self: start; }
+  .prose :global(.detail-copy) { border-top: 1px solid var(--line); padding-top: 8px; margin-top: 26px; font-size: 15px; }
+  .prose :global(.detail-copy p) { margin-block: 20px; }
+  .prose :global(.workspace-preview-trigger) { position: relative; display: block; margin-block: 24px; border-radius: 12px; text-decoration: none; cursor: zoom-in; }
+  .prose :global(.workspace-preview-trigger > img) { display: block; width: 100%; height: auto; border-radius: 12px; }
+  .prose :global(.workspace-preview-hint) { position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); display: flex; justify-content: space-between; align-items: center; gap: 12px; width: max-content; max-width: calc(100% - 28px); padding: 11px 14px; border: 1px solid #9cad8c; border-radius: 7px; background: #f7f7f0f5; box-shadow: 0 5px 24px #203d3426; color: var(--green); font: 11px/1.6 var(--mono); pointer-events: none; opacity: 0; visibility: hidden; transition: opacity 180ms, visibility 180ms; }
+  .prose :global(.workspace-preview-trigger:hover .workspace-preview-hint), .prose :global(.workspace-preview-trigger:focus-visible .workspace-preview-hint) { opacity: 1; visibility: visible; }
+  @media (hover: none) { .prose :global(.workspace-preview-hint) { opacity: 1; visibility: visible; } }
+  .prose :global(.workspace-preview-hint > span) { font-size: 18px; }
+  .prose :global(.later-note) { margin-block: 28px; padding: 16px 19px; border-left: 2px solid #a5b796; border-radius: 0 8px 8px 0; background: #edf1e5; color: var(--muted); font-size: 13px; line-height: 1.75; }
+  .prose :global(.later-note-label) { display: block; margin-bottom: 7px; font: 10px/1.5 var(--mono); letter-spacing: .04em; }
+  .prose :global(.later-note p) { margin: 0; color: inherit; }
+  .prose :global(.conversation-preview) { position: relative; cursor: zoom-in; border-radius: 12px; }
+  .prose :global(.conversation-preview img) { display: block; width: 100%; height: auto; border-radius: 12px; }
+  .prose :global(.conversation-preview-expanded) { position: absolute; inset: 0 0 auto; z-index: 10; visibility: hidden; box-shadow: 0 16px 40px #0003; }
+  .prose :global(.conversation-preview:hover .conversation-preview-expanded), .prose :global(.conversation-preview:focus .conversation-preview-expanded) { visibility: visible; }
+  .prose :global(.conversation-preview:focus-visible) { outline: 2px solid var(--green); outline-offset: 4px; }
+  .prose :global(.file-preview-trigger) { padding: 0; border: 0; background: none; color: inherit; font: inherit; cursor: pointer; text-decoration: underline dotted; text-underline-offset: 4px; }
+  .prose :global(.file-preview-trigger:focus-visible) { outline: 2px solid var(--green); outline-offset: 4px; border-radius: 3px; }
+  .prose :global(.file-preview-editor) { position: fixed; inset: auto; box-sizing: border-box; width: min(760px, calc(100vw - 24px)); max-height: calc(100dvh - 24px); margin: 0; padding: 0; overflow: auto; border: 1px solid #3e4650; border-radius: 10px; background: #20252b; color: #e2e8df; box-shadow: 0 18px 60px #0005; font: 12px/1.7 var(--mono); text-align: left; }
+  .prose :global(.file-preview-title) { display: block; position: sticky; top: 0; padding: 11px 16px; border-bottom: 1px solid #3e4650; background: #2b3139; color: #c4cec1; font: inherit; }
+  .prose :global(.file-preview-title > span) { margin-right: 18px; color: #94a68c; letter-spacing: 3px; }
+  .prose :global(.quote-preview) { width: min(520px, calc(100vw - 24px)); padding: 24px; background: var(--paper); color: var(--ink); border-color: var(--line); font: 16px/1.75 var(--display); }
+  .prose :global(.quote-preview > q) { display: block; }
+  .prose :global(.quote-preview > cite) { display: block; margin-top: 16px; font: 12px/1.6 var(--mono); color: var(--muted); }
+  .prose :global(.file-preview-image) { display: block; width: 100%; height: auto; max-height: calc(100dvh - 80px); object-fit: contain; background: #fff; }
+  .prose :global(.file-preview-source) { display: block; padding: 18px; overflow-x: auto; border: 0; border-radius: 0; background: none; color: inherit; font: inherit; white-space: pre; }
+  .prose :global(.record-links) { border-top: 1px solid var(--line); margin-top: 30px; padding-top: 18px; font-size: 11px; line-height: 1.8; }
+  .prose :global(.record-links > span) { display: block; font: 9px/1.8 var(--mono); color: var(--muted); margin-bottom: 7px; }
+  .prose :global(.record-links ul) { list-style: none; padding: 0; margin: 0; }
+  .prose :global(.record-links li) { margin-top: 8px; }
+  .prose :global(.post-card) { margin: 30px 0; padding: 23px; border: 1px solid #d0d9c5; background: #fbfcf7; border-radius: 14px; font-size: 13px; }
+  .prose :global(.post-author) { display: flex; align-items: center; gap: 10px; }
+  .prose :global(.post-avatar) { display: grid; place-items: center; width: 34px; height: 34px; border-radius: 50%; background: #e3ebd5; color: var(--green); font: 11px var(--mono); }
+  .prose :global(.post-author strong) { display: block; font-size: 12px; color: var(--ink); }
+  .prose :global(.post-author small) { display: block; color: var(--muted); font-size: 10px; }
+  .prose :global(.post-card blockquote) { margin: 19px 0; padding: 0; border: 0; background: none; color: var(--ink); font-size: 16px; line-height: 1.7; }
+  .prose :global(.post-meta) { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 10px; font-size: 10px; color: var(--muted); }
+  .prose :global(.x-post) { margin-block: 30px; min-width: 0; }
+  .prose :global(.x-post .post-card) { margin: 0; }
+  .prose :global(.x-post iframe) { max-width: 100%; }
+  .prose :global(.scene-column) { position: relative; grid-column: 2; grid-row: 1; min-width: 0; align-self: start; }
+  .prose :global(.problem:nth-child(even) .scene-column) { grid-column: 1; }
+  .prose :global(.problem .scene-column > .scene-art) { position: static; }
+  .prose :global(.scene-posts) { display: block; margin-top: var(--posts-gap, 36px); opacity: 0; visibility: hidden; transform: translateY(16px); transition: opacity 500ms ease, transform 500ms ease, visibility 500ms; }
+  .prose :global(.scene-posts.is-revealed) { opacity: 1; visibility: visible; transform: none; }
+  .prose :global(.scene-posts > .x-post:first-child) { margin-top: 0; }
+  .prose :global(.scene-detail-art) { margin: var(--detail-gap, 36px) 0 0; }
+  .prose :global(.scene-detail-art img) { display: block; width: 100%; height: auto; }
+  .prose :global(.inline-story-art) { margin: 28px 0; }
+  .prose :global(.inline-story-art img) { display: block; width: 100%; height: auto; }
+  .story-next { margin: 48px 0 0 128px; padding: clamp(24px, 4vw, 48px); border: 1px solid #cbd7b9; border-radius: 14px; background: #edf1e5; }
+  .story-next h2 { margin: 0 0 18px; font: 600 clamp(30px, 4vw, 48px)/1.15 var(--display); letter-spacing: -.045em; }
+  .story-next p { font-size: 14px; line-height: 1.85; color: #56685d; }
+  .story-next a:not(.button) { text-decoration: underline; text-underline-offset: 3px; }
+  .story-next .story-next-eyebrow { margin: 0 0 14px; font: 10px/1.5 var(--mono); letter-spacing: .08em; text-transform: uppercase; color: var(--green); }
+  .story-next .story-next-context { margin-block: 24px 32px; padding-top: 20px; border-top: 1px solid #cbd7b9; font-size: 12px; }
+  .story-start-steps { margin: 0; padding-left: 25px; }
+  .story-start-steps > li { padding-left: 12px; margin-top: 34px; }
+  .story-start-steps > li::marker { font: 12px var(--mono); color: var(--green); }
+  .story-start-steps h3 { margin: 0 0 12px; font: 600 21px/1.4 var(--display); letter-spacing: -.025em; }
+  .story-next code { font: 12px/1.7 var(--mono); overflow-wrap: anywhere; }
+  .story-command-heading { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px; padding: 12px 16px; border: 1px solid #cbd7b9; border-bottom: 0; border-radius: 7px 7px 0 0; background: #e4ebd8; font: 10px/1.6 var(--mono); }
+  .story-command-heading button { border: 1px solid #b6c4a4; padding: 4px 8px; border-radius: 4px; background: #fbfcf6; font: inherit; }
+  .story-next pre { margin: 0 0 16px; padding: 18px 16px; overflow-x: auto; border: 1px solid #cbd7b9; border-radius: 0 0 7px 7px; background: #fbfcf6; line-height: 1.9; }
+  .story-next pre code { overflow-wrap: normal; }
+  .story-next .story-start-note { font-size: 12px; }
+  .story-start-links { display: flex; flex-wrap: wrap; gap: 24px; align-items: center; margin-top: 36px; }
+  @media (max-width: 900px) { .prose :global(.problem) { column-gap: 40px; } }
+  @media (max-width: 700px) {
+    .story { padding-top: 35px; }
+    .story-next { margin: 32px 0 0 24px; padding: 22px 18px; }
+    .story-start-steps { padding-left: 18px; }
+    .story-start-steps > li { padding-left: 5px; }
+    .story-header { display: block; margin-bottom: 28px; }
+    h1 { margin-bottom: 18px; }
+    .prose :global(.problem) { grid-template-columns: minmax(0, 1fr); row-gap: 0; min-height: 0; padding-block: 48px 55px; }
+    .prose :global(.problem-timeline) { --timeline-inset: 48px; margin-left: 24px; }
+    .prose :global(.date-column) { display: contents; }
+    .prose :global(.date-card) { display: contents; }
+    .prose :global(.problem .problem-date) { position: relative; left: auto; top: auto; width: auto; text-align: left; grid-column: 1; grid-row: 1; margin-bottom: 20px; font-size: 12px; }
+    .prose :global(.problem-date::after) { left: -28.5px; }
+    .prose :global(.problem .problem-body), .prose :global(.problem:nth-child(even) .problem-body) { display: contents; }
+    .prose :global(.problem h2) { grid-column: 1; grid-row: 2; font-size: clamp(36px, 9.5vw, 48px); }
+    .prose :global(.problem-subline) { grid-column: 1; grid-row: 3; font-size: 16px; }
+    .prose :global(.story-metrics) { grid-column: 1; grid-row: 4; margin: 5px 0 10px; padding-top: 18px; border-top: 1px solid var(--line); text-align: left; }
+    .prose :global(.story-metrics dl) { grid-template-columns: 1fr 1fr; gap: 24px; margin-block: 12px; }
+    .prose :global(.metrics-week time) { display: inline; }
+    .prose :global(.story-metrics dd) { justify-content: flex-start; }
+    .prose :global(.metrics-info) { margin-top: 8px; }
+    .prose :global(.detail-copy) { grid-column: 1; grid-row: 6; min-width: 0; }
+    .prose :global(.problem .scene-art), .prose :global(.problem:nth-child(even) .scene-art) { grid-column: 1; grid-row: 5; position: static; margin-top: 28px; }
+    .prose :global(.scene-art img) { max-width: 300px; }
+    .prose :global(.scene-column) { display: contents; }
+    .prose :global(.scene-detail-art) { grid-column: 1; grid-row: 8; min-width: 0; margin: 24px 0 0; }
+    .prose :global(.scene-posts) { grid-column: 1; grid-row: 7; margin-top: 24px; opacity: 1; visibility: visible; transform: none; transition: none; }
+    .prose :global(.post-card) { padding: 18px; }
+  }
+  @media (prefers-reduced-motion: reduce) { .prose :global(.scene-art) { transform: none !important; transition: none; } .prose :global(.scene-posts) { transform: none; transition: none; } }
+  @media print { .prose :global(.scene-posts) { opacity: 1; visibility: visible; transform: none; } }
+  @media print { .prose :global(.date-column) { display: contents; } .prose :global(.problem-timeline) { margin-left: 0; } .prose :global(.problem-timeline::before), .prose :global(.problem-timeline::after), .prose :global(.problem-date::after) { display: none; } .prose :global(.date-column .problem-date), .prose :global(.problem-date) { position: static; width: auto; text-align: left; margin-bottom: 16px; } .prose :global(.problem) { display: block; min-height: 0; padding-block: 30px; break-inside: avoid; } .prose :global(.scene-art) { position: static; transform: none; } }
+</style>

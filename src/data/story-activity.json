@@ -1,0 +1,135 @@
+{
+  "prCutoff": "2026-10-30T07:25:47.823631+00:00",
+  "snapshotDate": "2026-10-30",
+  "worktreeTotal": 603,
+  "ordinaryCheckoutTotal": 46,
+  "checkoutTotal": 649,
+  "baseline": {
+    "label": "Late 2025",
+    "medianMergedPRs": 1.5,
+    "checkouts": 32
+  },
+  "phases": [
+    {
+      "section": "ide-workflows",
+      "label": "Late 2025",
+      "start": "2025-10-01",
+      "end": "2025-12-31",
+      "completeWeeks": 12,
+      "firstWeek": "2025-10-06",
+      "lastWeek": "2025-12-22",
+      "medianMergedPRs": 1.5,
+      "checkouts": 32
+    },
+    {
+      "section": "parallel-features",
+      "label": "Mar\u2013Jun 2026",
+      "start": "2026-03-01",
+      "end": "2026-06-30",
+      "completeWeeks": 17,
+      "firstWeek": "2026-03-02",
+      "lastWeek": "2026-06-22",
+      "medianMergedPRs": 10,
+      "checkouts": 61
+    },
+    {
+      "section": "early",
+      "label": "Jul 2026",
+      "start": "2026-07-01",
+      "end": "2026-07-31",
+      "completeWeeks": 3,
+      "firstWeek": "2026-07-06",
+      "lastWeek": "2026-07-20",
+      "medianMergedPRs": 21,
+      "checkouts": 93
+    },
+    {
+      "section": "bare-repos",
+      "label": "Jul 2026",
+      "start": "2026-07-01",
+      "end": "2026-07-31",
+      "completeWeeks": 3,
+      "firstWeek": "2026-07-06",
+      "lastWeek": "2026-07-20",
+      "medianMergedPRs": 21,
+      "checkouts": 93
+    },
+    {
+      "section": "spaces",
+      "label": "Aug 2026",
+      "start": "2026-08-01",
+      "end": "2026-08-31",
+      "completeWeeks": 4,
+      "firstWeek": "2026-08-03",
+      "lastWeek": "2026-08-24",
+      "medianMergedPRs": 72.0,
+      "checkouts": 232
+    },
+    {
+      "section": "copies",
+      "label": "Late Aug\u2013Sep 2026",
+      "start": "2026-08-17",
+      "end": "2026-09-27",
+      "completeWeeks": 6,
+      "firstWeek": "2026-08-17",
+      "lastWeek": "2026-09-21",
+      "medianMergedPRs": 97.0,
+      "checkouts": 493
+    },
+    {
+      "section": "more-computers",
+      "label": "Late Aug\u2013Sep 2026",
+      "start": "2026-08-17",
+      "end": "2026-09-27",
+      "completeWeeks": 6,
+      "firstWeek": "2026-08-17",
+      "lastWeek": "2026-09-21",
+      "medianMergedPRs": 97.0,
+      "checkouts": 493
+    },
+    {
+      "section": "testing",
+      "label": "Sep 2026",
+      "start": "2026-09-01",
+      "end": "2026-09-30",
+      "completeWeeks": 3,
+      "firstWeek": "2026-09-07",
+      "lastWeek": "2026-09-21",
+      "medianMergedPRs": 91,
+      "checkouts": 531
+    },
+    {
+      "section": "variants",
+      "label": "Late Sep\u2013Oct 2026",
+      "start": "2026-09-28",
+      "end": "2026-10-30",
+      "completeWeeks": 4,
+      "firstWeek": "2026-09-28",
+      "lastWeek": "2026-10-19",
+      "medianMergedPRs": 91.5,
+      "checkouts": 649
+    },
+    {
+      "section": "reviews",
+      "label": "Late Sep\u2013Oct 2026",
+      "start": "2026-09-28",
+      "end": "2026-10-30",
+      "completeWeeks": 4,
+      "firstWeek": "2026-09-28",
+      "lastWeek": "2026-10-19",
+      "medianMergedPRs": 91.5,
+      "checkouts": 649
+    },
+    {
+      "section": "name",
+      "label": "Oct 2026",
+      "start": "2026-10-01",
+      "end": "2026-10-30",
+      "completeWeeks": 3,
+      "firstWeek": "2026-10-05",
+      "lastWeek": "2026-10-19",
+      "medianMergedPRs": 83,
+      "checkouts": 649
+    }
+  ]
+}

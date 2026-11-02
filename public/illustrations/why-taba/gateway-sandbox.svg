@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 480 548" fill="none" stroke="#285343" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+  <title>Caller identity crosses the boundary. Personal credentials do not.</title>
+  <desc>An illustrative configured OpenClaw setup: two signed-in people use a trusted gateway that checks identity and policy and holds personal credentials. The sandbox contains agent tools and working files, receives caller identity and task context, and requests privileged actions from the gateway. Personal credentials are not passed into the sandbox. This requires explicit sandbox and permission configuration.</desc>
+  <defs><marker id="boundary-arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5" markerHeight="5" orient="auto"><path d="m2 2 6 3-6 3" fill="none" stroke="#285343" stroke-width="1.5"/></marker></defs>
+  <style>text{stroke:none;fill:#285343;font:13px ui-monospace,SFMono-Regular,Consolas,monospace}.note{fill:#66736b;font:12px system-ui,sans-serif}.label{font-size:10px;letter-spacing:1px}.warning{fill:#ad7453}</style>
+  <circle cx="168" cy="23" r="10" fill="#fbfcf6"/><path d="M152 49q1-16 16-16t16 16"/>
+  <circle cx="312" cy="23" r="10" fill="#fbfcf6"/><path d="M296 49q1-16 16-16t16 16"/>
+  <text class="note" x="101" y="28">Person A</text><text class="note" x="333" y="28">Person B</text>
+  <path d="M168 55v18h144V55m-72 18v15" marker-end="url(#boundary-arrow)"/>
+  <rect x="20" y="97" width="440" height="155" rx="12" fill="#eaf0df" stroke="#a5b796"/>
+  <text class="label" x="39" y="122">GATEWAY · TRUSTED SIDE</text>
+  <text x="39" y="151">Check caller identity + policy</text>
+  <rect x="39" y="167" width="226" height="64" rx="7" fill="#fbfcf6" stroke="#cbd7b9"/>
+  <text class="note" x="53" y="191">Policy-approved operations</text><text class="note" x="53" y="213">Push · open PR · rerun build</text>
+  <rect x="280" y="167" width="160" height="64" rx="7" fill="#fbfcf6" stroke="#cbd7b9"/>
+  <rect x="294" y="189" width="14" height="13" rx="2"/><path d="M297 189v-5a4 4 0 0 1 8 0v5"/>
+  <text class="note" x="317" y="190">Personal</text><text class="note" x="317" y="210">credentials</text>
+  <path d="M123 259v96" marker-end="url(#boundary-arrow)"/>
+  <path d="M357 355v-96" marker-end="url(#boundary-arrow)"/>
+  <rect x="30" y="274" width="185" height="38" rx="7" fill="#f7f7f0" stroke="none"/>
+  <text class="note" x="123" y="290" text-anchor="middle">Caller identity</text><text class="note" x="123" y="307" text-anchor="middle">+ task context</text>
+  <rect x="263" y="274" width="188" height="38" rx="7" fill="#f7f7f0" stroke="none"/>
+  <text class="note" x="357" y="290" text-anchor="middle">Request an</text><text class="note" x="357" y="307" text-anchor="middle">authorized action</text>
+  <path d="M20 332h440" stroke="#ad7453" stroke-dasharray="4 6"/>
+  <rect x="145" y="321" width="190" height="22" rx="11" fill="#f7f7f0" stroke="none"/>
+  <text class="note warning" x="240" y="337" text-anchor="middle">No personal tokens cross</text>
+  <rect x="20" y="366" width="440" height="130" rx="12" fill="#fbfcf6" stroke="#a5b796"/>
+  <text class="label" x="39" y="391">SANDBOX · AGENT TOOLS + WORKTREE</text>
+  <text x="39" y="420">Code · tools · draft PR text</text>
+  <text class="note" x="39" y="447">Knows who is asking. Does not get their login.</text>
+  <text class="note" x="39" y="474">Read and tool access stay explicitly scoped.</text>
+  <text class="note" x="240" y="532" text-anchor="middle">An intended boundary, not a default security guarantee.</text>
+</svg>

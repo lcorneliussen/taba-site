@@ -1,0 +1,180 @@
+{
+  "weeks": [
+    {
+      "weekStart": "2025-10-06",
+      "mergedPRs": 1
+    },
+    {
+      "weekStart": "2025-10-13",
+      "mergedPRs": 2
+    },
+    {
+      "weekStart": "2025-10-20",
+      "mergedPRs": 4
+    },
+    {
+      "weekStart": "2025-10-27",
+      "mergedPRs": 3
+    },
+    {
+      "weekStart": "2025-11-03",
+      "mergedPRs": 5
+    },
+    {
+      "weekStart": "2025-11-10",
+      "mergedPRs": 0
+    },
+    {
+      "weekStart": "2025-11-17",
+      "mergedPRs": 2
+    },
+    {
+      "weekStart": "2025-11-24",
+      "mergedPRs": 3
+    },
+    {
+      "weekStart": "2025-12-01",
+      "mergedPRs": 0
+    },
+    {
+      "weekStart": "2025-12-08",
+      "mergedPRs": 0
+    },
+    {
+      "weekStart": "2025-12-15",
+      "mergedPRs": 1
+    },
+    {
+      "weekStart": "2025-12-22",
+      "mergedPRs": 0
+    },
+    {
+      "weekStart": "2026-03-02",
+      "mergedPRs": 10
+    },
+    {
+      "weekStart": "2026-03-09",
+      "mergedPRs": 21
+    },
+    {
+      "weekStart": "2026-03-16",
+      "mergedPRs": 7
+    },
+    {
+      "weekStart": "2026-03-23",
+      "mergedPRs": 14
+    },
+    {
+      "weekStart": "2026-03-30",
+      "mergedPRs": 4
+    },
+    {
+      "weekStart": "2026-04-06",
+      "mergedPRs": 10
+    },
+    {
+      "weekStart": "2026-04-13",
+      "mergedPRs": 18
+    },
+    {
+      "weekStart": "2026-04-20",
+      "mergedPRs": 17
+    },
+    {
+      "weekStart": "2026-04-27",
+      "mergedPRs": 10
+    },
+    {
+      "weekStart": "2026-05-04",
+      "mergedPRs": 0
+    },
+    {
+      "weekStart": "2026-05-11",
+      "mergedPRs": 6
+    },
+    {
+      "weekStart": "2026-05-18",
+      "mergedPRs": 9
+    },
+    {
+      "weekStart": "2026-05-25",
+      "mergedPRs": 13
+    },
+    {
+      "weekStart": "2026-06-01",
+      "mergedPRs": 7
+    },
+    {
+      "weekStart": "2026-06-08",
+      "mergedPRs": 13
+    },
+    {
+      "weekStart": "2026-06-15",
+      "mergedPRs": 8
+    },
+    {
+      "weekStart": "2026-06-22",
+      "mergedPRs": 11
+    },
+    {
+      "weekStart": "2026-07-06",
+      "mergedPRs": 40
+    },
+    {
+      "weekStart": "2026-07-13",
+      "mergedPRs": 21
+    },
+    {
+      "weekStart": "2026-07-20",
+      "mergedPRs": 6
+    },
+    {
+      "weekStart": "2026-08-03",
+      "mergedPRs": 11
+    },
+    {
+      "weekStart": "2026-08-10",
+      "mergedPRs": 51
+    },
+    {
+      "weekStart": "2026-08-17",
+      "mergedPRs": 101
+    },
+    {
+      "weekStart": "2026-08-24",
+      "mergedPRs": 93
+    },
+    {
+      "weekStart": "2026-08-31",
+      "mergedPRs": 171
+    },
+    {
+      "weekStart": "2026-09-07",
+      "mergedPRs": 120
+    },
+    {
+      "weekStart": "2026-09-14",
+      "mergedPRs": 91
+    },
+    {
+      "weekStart": "2026-09-21",
+      "mergedPRs": 66
+    },
+    {
+      "weekStart": "2026-09-28",
+      "mergedPRs": 306
+    },
+    {
+      "weekStart": "2026-10-05",
+      "mergedPRs": 71
+    },
+    {
+      "weekStart": "2026-10-12",
+      "mergedPRs": 83
+    },
+    {
+      "weekStart": "2026-10-19",
+      "mergedPRs": 100
+    }
+  ]
+}
