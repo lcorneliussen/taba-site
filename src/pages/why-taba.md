@@ -333,7 +333,7 @@ I've been using OpenClaw since its early days, so it's a natural place to try a 
 
 A shared agent raises a new question. If two people work in one conversation, whose account pushes the branch or opens the PR?
 
-In this setup, the agent prepares code and draft PRs in a sandbox. The gateway keeps personal credentials, identifies who's asking and handles publishing with that person's confirmation.
+In this setup, the agent prepares code and PR descriptions in a sandbox. The gateway keeps personal credentials, identifies who's asking and handles publishing with that person's confirmation.
 
 <figure class="inline-story-art"><img src="../illustrations/why-taba/gateway-sandbox.svg" alt="An intended gateway/sandbox boundary: the gateway checks caller identity and policy, holds personal credentials and performs authorized operations. The sandbox contains agent tools and a worktree, receives caller identity and task context, and requests privileged actions without receiving personal tokens. This requires explicit configuration." width="480" height="548" loading="lazy" decoding="async"></figure>
 
@@ -364,7 +364,7 @@ I'm still working on making the team agents safe and useful. The code is in the 
 
 <div class="detail-copy">
 
-I call the shared scripts and instructions the harness. People remember that word. The name wtc doesn't stick.
+I call the project repo that holds this setup the harness. People remember that word. The name wtc doesn't stick.
 
 A useful command still needs a name people remember. Taba gives it one, with commands like `taba open` and `taba status`. The site moved from `wtc.sh` to `taba.sh` soon afterward.
 
