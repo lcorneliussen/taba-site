@@ -261,7 +261,7 @@ But still, it is hard to keep in sync. Is status `./harness/tools/wtc-status-tui
 <p class="problem-date" data-rail-label="The CLI"><time datetime="2026-09-29">29 Sep 2026</time><span class="date-label">The CLI</span></p>
 <div class="problem-body">
 
-<h2 id="variants-title">Lets build a CLI</h2>
+<h2 id="variants-title">Let’s build a CLI</h2>
 <p class="problem-subline">Command by command is ported to the CLI.</p>
 
 <div class="detail-copy">
