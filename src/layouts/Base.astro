@@ -1,8 +1,10 @@
 ---
 import '../styles/global.css';
+import { protectCode } from '../lib/protect-code.mjs';
 interface Props { title?: string; description?: string; }
 const { title = 'taba — Make room for the whole task.', description = 'Git worktree collections for working across repositories, with agents or your favorite editor. A little structure. A lot more room to work. Formerly wtc.' } = Astro.props;
 const base = import.meta.env.BASE_URL;
+const content = protectCode(await Astro.slots.render('default'));
 ---
 <!doctype html>
 <html lang="en">
@@ -30,7 +32,7 @@ const base = import.meta.env.BASE_URL;
     </nav>
     <a class="button button-small header-cta" href={`${base}docs/getting-started/`}>Get started <span aria-hidden="true">↗</span></a>
   </header>
-  <slot />
+  <Fragment set:html={content} />
   <footer class="wrap"><a class="brand" href={base} aria-label="taba home"><span class="brand-mark" lang="ja" aria-hidden="true">束</span> <span>taba<span class="brand-dot">.</span></span></a><span>A little structure. A lot more room to work.</span><a href="https://github.com/lcorneliussen/wtc-site">Site source <span aria-hidden="true">↗</span></a><a href="https://github.com/lcorneliussen/wtc-cli">GitHub <span aria-hidden="true">↗</span></a></footer>
 </body>
 </html>
