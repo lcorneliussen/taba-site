@@ -2,6 +2,7 @@
 layout: ../layouts/Story.astro
 title: Why taba
 description: One task, several repositories. Parallel work needs more than separate worktrees. Taba helps keep the repos, environments and reviews together.
+lede: "Taba gives each task one workspace across all its repositories. This is how it came about..."
 author: Lars Corneliussen
 updated: '2026-10-30'
 ---
@@ -12,18 +13,12 @@ updated: '2026-10-30'
 <p class="problem-date" data-rail-label="IDEs"><time datetime="2025">Late 2025</time><span class="date-label">Living in IDEs</span></p>
 <div class="problem-body">
 
-<h2 id="ide-workflows-title">AI-first coding as usual</h2>
-<p class="problem-subline">Agents work across projects and repositories. Coordinating the branches, windows and running apps is still our job.</p>
+<h2 id="ide-workflows-title">Mostly driving from within IDEs</h2>
+<p class="problem-subline">Quite normal to launch one IDE per repo. But agents already work 'covertly' across multiple repositories. Coordinating the branches, windows and running apps is still our job.</p>
 
 <div class="detail-copy">
 
-The agents step on each other's toes, but OK, we can handle that.
-
-Review a change across several repos? Switch branches in each one, push each branch and open the PRs. We can handle that too.
-
-Then come the IDE windows and browser tabs. Which one belongs to this task? All fine. Business as usual, still.
-
-I use agents in IDEs and terminals. IDE-integrated agents often hesitate to change files outside the open project, so I usually end up in the terminal.
+IDE-integrated agents often hesitate to change files outside the open project, so I usually end up in the terminal.
 
 Agents do most of my coding. It's already <a href="https://x.com/dhh/status/2102936073642869121"><q>pencils down</q></a>, to borrow DHH's later phrase. Keeping track of the work is still manual.
 
@@ -49,7 +44,7 @@ Agents do most of my coding. It's already <a href="https://x.com/dhh/status/2102
 
 <div class="detail-copy">
 
-I started it in 2024. At this point, the whole app fits in one repo.
+I started it in 2024. At this point, the whole app still fits in one repo.
 
 With Claude Code and Codex, each conversation gets its own worktree, a separate checkout of that repo. Each gets a full running app, with a web server, a seeded database and Redis.
 
@@ -86,8 +81,6 @@ Where should the worktrees live? Each agent has its own layout. Claude Code uses
 
 What happens when I nest more repos under those worktrees? Or when I switch agents and want to open the same task in an IDE?
 
-For me, that doesn't work.
-
 <div class="x-post" data-x-post="2089078288043934198" data-x-media="hidden">
 <aside class="post-card" aria-label="Post by Lars Corneliussen">
 <div class="post-author"><span class="post-avatar" aria-hidden="true">LC</span><span><strong>Lars Corneliussen</strong><small>@lcorneliussen</small></span></div>
@@ -111,8 +104,6 @@ For me, that doesn't work.
 
 <div class="detail-copy">
 
-I want each task to start from a known branch, regardless of what's open in another task.
-
 A bare repository holds the Git history, with no checked-out files. I keep those repos in a shared `.bare/` folder. Every working checkout now belongs to a task.
 
 Each task gets one folder, with a worktree for every repo it needs. That's the worktree collection.
@@ -123,7 +114,7 @@ It's the <span class="file-preview"><a class="file-preview-trigger" href="https:
 
 Now I can open the task folder in Claude Code, Codex or an IDE. All the relevant repos are there.
 
-I'm still drowning in IDE windows, browser tabs and terminals. During a call, I find myself hunting for the right project to show a colleague.
+I'm still drowning in IDE windows, browser tabs and terminals.
 
 <div class="x-post" data-x-post="2105924161562423589" data-x-media="hidden">
 <aside class="post-card" aria-label="Post by Lars Corneliussen">
@@ -142,16 +133,14 @@ I'm still drowning in IDE windows, browser tabs and terminals. During a call, I 
 <p class="problem-date" data-rail-label="Workspaces"><time datetime="2026-08-11">11 Aug 2026</time><span class="date-label">Discovering Herdr</span></p>
 <div class="problem-body">
 
-<h2 id="spaces-title">Folders aren't enough</h2>
-<p class="problem-subline">I need to switch between tasks, find their conversations and see what's still running.</p>
+<h2 id="spaces-title">AI-chat first structure</h2>
+<p class="problem-subline">Quick switching between tasks with immediate visibility of the conversation status.</p>
 
 <div class="detail-copy">
 
-A task folder groups the repos. I want one place for the conversations and terminals working on them, too.
+With [Herdr](https://herdr.dev/) each worktree collection is represented as a space, with agents and status readily available. No more searching.
 
-With [Herdr](https://herdr.dev/), I can group each task's agent, terminals and status into one space. I can switch tasks without searching through windows.
-
-The processes run on a background server. I can close the terminal client and attach again later, locally or over SSH from another machine.
+The processes run on a background server. Closing the terminal leaves the agents running, and reconnecting locally or over SSH from another machine brings the conversations right back.
 
 <a class="workspace-preview-trigger" href="../media/why-taba/herdr-workspace-redacted.png" data-workspace-preview aria-haspopup="dialog" aria-controls="herdr-workspace-preview"><img src="../illustrations/why-taba/herdr-sessions.svg" alt="Herdr layout: two spaces with an agent pane above a shell pane, connected to a persistent background server. Click to see the real workspace." width="520" height="648" loading="lazy" decoding="async"><span class="workspace-preview-hint">Click to see the real workspace <span aria-hidden="true">↗</span></span></a>
 
@@ -179,13 +168,11 @@ Herdr is scriptable, so my `wtc-*` skills can create or retire a collection and 
 <div class="problem-body">
 
 <h2 id="copies-title">Setup keeps repeating</h2>
-<p class="problem-subline">The same setup now lives in four projects. Every improvement needs to reach all four.</p>
+<p class="problem-subline">The same setup now lives in four projects. Most improvements would benefit all four.</p>
 
 <div class="detail-copy">
 
-For a while, I copy scripts and agent instructions from project to project. It's faster than introducing a new tool while the approach is still changing.
-
-Each project has a harness repo for those scripts and instructions. The boilerplate is the common version I sync between them.
+Each project has a harness repo for scripts and instructions. The boilerplate is the common version I sync between them.
 
 Every improvement means finding the other copies, checking their differences and applying the change again. Agents help carry the changes across, but each sync needs testing.
 
@@ -261,7 +248,7 @@ The [Omarchy](https://omarchy.org/) community's enthusiasm for computers and age
 
 I bring improvements back from the project copies and add tests and CI to the boilerplate. It's still a set of Bash scripts, copied and changed in each project.
 
-Even the command names drift. Is status `./harness/tools/wtc-status-tui.sh` or `wtc-status.sh --tui` in this project?
+But still, it is hard to keep in sync. Is status `./harness/tools/wtc-status-tui.sh` or `wtc-status.sh --tui` in this project? Time to unify the efforts.
 
 <div class="record-links" data-scene-records><span>Public record</span><ul><li><a href="https://github.com/lcorneliussen/wtc-boilerplate/commit/97953ece09c317faf3f8acee93a2e8bbb2d79267">2 September. A test suite for the harness</a></li></ul></div>
 
@@ -274,8 +261,8 @@ Even the command names drift. Is status `./harness/tools/wtc-status-tui.sh` or `
 <p class="problem-date" data-rail-label="The CLI"><time datetime="2026-09-29">29 Sep 2026</time><span class="date-label">The CLI</span></p>
 <div class="problem-body">
 
-<h2 id="variants-title">I give up and build a CLI</h2>
-<p class="problem-subline">Keeping those copies consistent takes too much work. I turn the shared tooling into a versioned CLI.</p>
+<h2 id="variants-title">Lets build a CLI</h2>
+<p class="problem-subline">Command by command is ported to the CLI.</p>
 
 <div class="detail-copy">
 
