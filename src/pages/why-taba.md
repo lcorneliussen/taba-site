@@ -3,7 +3,7 @@ layout: ../layouts/Story.astro
 title: Why taba
 description: One task, several repositories. Parallel work needs more than separate worktrees. Taba helps keep the repos, environments and reviews together.
 author: Lars Corneliussen
-updated: '2026-10-29'
+updated: '2026-10-30'
 ---
 
 <ol class="problem-timeline">
@@ -13,11 +13,19 @@ updated: '2026-10-29'
 <div class="problem-body">
 
 <h2 id="ide-workflows-title">AI-first coding as usual</h2>
-<p class="problem-subline">...contributing in multiple companies, multiple repos each, different IDEs, different stacks. Agents work across them.
+<p class="problem-subline">Agents work across projects and repositories. Coordinating the branches, windows and running apps is still our job.</p>
 
 <div class="detail-copy">
 
-It’s already <a href="https://x.com/dhh/status/2102936073642869121"><q>pencils down</q></a>, to borrow DHH’s later phrase. Agents do 95% of the coding, but we still work in IDEs.
+The agents step on each other's toes, but OK, we can handle that.
+
+Review a change across several repos? Switch branches in each one, push each branch and open the PRs. We can handle that too.
+
+Then come the IDE windows and browser tabs. Which one belongs to this task? All fine. Business as usual, still.
+
+I use agents in IDEs and terminals. IDE-integrated agents often hesitate to change files outside the open project, so I usually end up in the terminal.
+
+Agents do most of my coding. It's already <a href="https://x.com/dhh/status/2102936073642869121"><q>pencils down</q></a>, to borrow DHH's later phrase. Keeping track of the work is still manual.
 
 <div class="x-post" data-x-post="2102936073642869121" data-x-media="hidden">
 <aside class="post-card" aria-label="Post by DHH">
@@ -26,14 +34,6 @@ It’s already <a href="https://x.com/dhh/status/2102936073642869121"><q>pencils
 <div class="post-meta"><time datetime="2026-09-24">24 Sep 2026</time><a href="https://x.com/dhh/status/2102936073642869121">View post <span aria-hidden="true">↗</span></a></div>
 </aside>
 </div>
-
-The tools are getting better and better at getting cross-repo work done. From the terminal, standalone or IDE-integrated, with Cursor, Copilot, Junie or the official Claude/Codex plugins or even their desktop apps.
-
-The IDE-integrated agents are often more wary to contribute outside the root folder of the project opened in the IDE. So for me the terminal or integrated terminal wins.
-
-The agents step on eachothers toes, but ok, we can handle that. We have to switch branches in multiple repos, because we need to review a set of dependent PRs? We can handle that too.
-
-We have to push branches and create PRs for multiple repos. Handle multiple open IDEs and lots of browser tabs? All fine. Business as usual, still.
 
 </div>
 </div>
@@ -45,24 +45,26 @@ We have to push branches and create PRs for multiple repos. Handle multiple open
 <div class="problem-body">
 
 <h2 id="parallel-features-title">Worktree per conversation</h2>
-<p class="problem-subline">Spending some more time with then-singlerepo app <a href="https://weeks.app/">Weeks</a>.</p>
+<p class="problem-subline">I spend a few weeks improving <a href="https://weeks.app/">Weeks</a>, my Ruby on Rails app.</p>
 
 <div class="detail-copy">
 
-[Weeks](https://weeks.app/) is built on Ruby on Rails, which is batteries included. So you get everything in one repo by default. I had started it in 2024 and am investing in improving it for a couple of weeks (pun intended).
+I started it in 2024. At this point, the whole app fits in one repo.
 
-The automatic worktree creation per conversation in Claude code and codex, combined with mobile access, is a main productivity booster.
+With Claude Code and Codex, each conversation gets its own worktree, a separate checkout of that repo. Each gets a full running app, with a web server, a seeded database and Redis.
 
-Each new conversation gets a full setup. Web server, Database with useful seeding, redis (*). Now I can quickly experiment, test in the browser, then iterate and PR or just throw the idea away and archive the conversation. No branch switching necessary. No manual management of environments.
+Now I can experiment, test in the browser, iterate and open a PR. Or throw the idea away and archive the conversation. Other conversations carry on in their own environments. No branch switching. No manual setup each time.
+
+Mobile access means I can check in away from the desk, too.
 
 <div class="conversation-preview" tabindex="0" aria-label="Agent conversations: hover or focus to reveal the full list.">
 <img class="conversation-preview-base" src="../media/why-taba/worktree-conversations.png" alt="Agent conversations for weeks-app, with separate tasks for email deliverability, slot assignments, a people checkbox, a canvas action catalog and API provider identities." width="692" height="438" loading="lazy" decoding="async">
 <img class="conversation-preview-expanded" src="../media/why-taba/worktree-conversations-hover.png" alt="Expanded weeks-app conversation list showing many more parallel tasks." width="692" height="1386" decoding="async">
 </div>
 
-For the database, redis and webserver to work Codex has <span class="file-preview"><button type="button" class="file-preview-trigger" popovertarget="codex-environment-preview"><code>.codex/environments/environment.toml</code></button><span id="codex-environment-preview" class="file-preview-editor" popover><span class="file-preview-title"><span aria-hidden="true">● ● ●</span> environment.toml</span><code class="file-preview-source"># THIS IS AUTOGENERATED. DO NOT EDIT MANUALLY&#10;version = 1&#10;name = &quot;weeks-app&quot;&#10;&#10;[setup]&#10;script = &quot;mise trust mise.toml &amp;&amp; mise install &amp;&amp; eval &#92;&quot;$(mise hook-env -s bash)&#92;&quot; &amp;&amp; WORKTREE_BOOTSTRAP_UNDER_MISE=1 ruby bin/worktree-bootstrap&quot;&#10;&#10;[[actions]]&#10;name = &quot;Run&quot;&#10;icon = &quot;run&quot;&#10;command = &quot;bin/launch&quot;&#10;&#10;[[actions]]&#10;name = &quot;Cleanup&quot;&#10;icon = &quot;tool&quot;&#10;command = &quot;bin/worktree-cleanup &#45;&#45;yes&quot;</code></span></span> where i was able to define scripts that run on each new worktree to setup the project + actions for running it and cleaning up the worktree.
+I define setup, run and cleanup actions in Codex's <span class="file-preview"><button type="button" class="file-preview-trigger" popovertarget="codex-environment-preview"><code>.codex/environments/environment.toml</code></button><span id="codex-environment-preview" class="file-preview-editor" popover><span class="file-preview-title"><span aria-hidden="true">● ● ●</span> environment.toml</span><code class="file-preview-source"># THIS IS AUTOGENERATED. DO NOT EDIT MANUALLY&#10;version = 1&#10;name = &quot;weeks-app&quot;&#10;&#10;[setup]&#10;script = &quot;mise trust mise.toml &amp;&amp; mise install &amp;&amp; eval &#92;&quot;$(mise hook-env -s bash)&#92;&quot; &amp;&amp; WORKTREE_BOOTSTRAP_UNDER_MISE=1 ruby bin/worktree-bootstrap&quot;&#10;&#10;[[actions]]&#10;name = &quot;Run&quot;&#10;icon = &quot;run&quot;&#10;command = &quot;bin/launch&quot;&#10;&#10;[[actions]]&#10;name = &quot;Cleanup&quot;&#10;icon = &quot;tool&quot;&#10;command = &quot;bin/worktree-cleanup &#45;&#45;yes&quot;</code></span></span>.
 
-It also helps creating PRs and has an internal browser in the sidebar wich helps a great deal to not confuse the many parallel instances of the app.
+Codex also helps open PRs and test each instance in its built-in browser.
 
 </div>
 </div>
@@ -74,15 +76,15 @@ It also helps creating PRs and has an internal browser in the sidebar wich helps
 <div class="problem-body">
 
 <h2 id="early-title">Agents, multirepos and worktrees</h2>
-<p class="problem-subline">Now I love worktrees. But how do i get them to work in setups with multiple repositories?</p>
+<p class="problem-subline">Now I love worktrees. How do I keep that flow when one task needs several repositories?</p>
 
 <div class="detail-copy">
 
-On larger projects, a frontend still needs its API. The dbt and airflow repos are split. Agents can edit both, but then where do you start? 
+On my other projects, a frontend still needs its API. The repos can use different stacks and different IDEs. Agents can edit across them, but where do I start the conversation?
 
-Which repository should own the conversation? Where should its worktrees live? Claude manages them in the project `./.claude/worktrees/*`. Codex prefers <span class="file-preview"><button type="button" class="file-preview-trigger" popovertarget="codex-worktrees-preview"><code>&#126;/.codex/worktrees/*</code></button><span id="codex-worktrees-preview" class="file-preview-editor" popover><span class="file-preview-title">&#126;/.codex/worktrees/</span><img class="file-preview-image" src="../media/why-taba/codex-worktree-folders.png" alt="Finder column view showing the .codex directory, its worktrees folder, and the generated worktree directory names." width="1458" height="1324" decoding="async"></span></span>. Cursor also uses home dir `~/.cursor/worktrees/*`.
+Where should the worktrees live? Each agent has its own layout. Claude Code uses `./.claude/worktrees/*`. Codex prefers <span class="file-preview"><button type="button" class="file-preview-trigger" popovertarget="codex-worktrees-preview"><code>&#126;/.codex/worktrees/*</code></button><span id="codex-worktrees-preview" class="file-preview-editor" popover><span class="file-preview-title">&#126;/.codex/worktrees/</span><img class="file-preview-image" src="../media/why-taba/codex-worktree-folders.png" alt="Finder column view showing the .codex directory, its worktrees folder, and the generated worktree directory names." width="1458" height="1324" decoding="async"></span></span>. Cursor uses `~/.cursor/worktrees/*`.
 
-But what when you start nesting? And what if you want to switch agents? What if you want to have a look with your favorite IDE?
+What happens when I nest more repos under those worktrees? Or when I switch agents and want to open the same task in an IDE?
 
 For me, that doesn't work.
 
@@ -109,17 +111,19 @@ For me, that doesn't work.
 
 <div class="detail-copy">
 
-There is a design concept called <span class="file-preview"><a class="file-preview-trigger" href="https://swyx.io/preemptive-pluralization" aria-details="pluralization-quote"><q>preemptive pluralization</q></a><span id="pluralization-quote" class="file-preview-editor quote-preview" popover><q>Before you write any code — ask if you could ever possibly want multiple kinds of the thing you are coding. If yes, just do it. Now, not later.</q><cite>— <a href="https://swyx.io/preemptive-pluralization">Preemptive Pluralization is (Probably) Not Evil</a></cite></span></span>. Why not apply that to worktrees? And even the repos we want to work on?
+I want each task to start from a known branch, regardless of what's open in another task.
 
-How?
+A bare repository holds the Git history, with no checked-out files. I keep those repos in a shared `.bare/` folder. Every working checkout now belongs to a task.
 
-A bare repository (basically just the `.git` folder) has the Git history, but no checked-out files. Keeping those repositories in a shared `.bare/` folder means every working checkout can be a worktree. No more main checkout.
+Each task gets one folder, with a worktree for every repo it needs. That's the worktree collection.
 
 <img class="workspace-tree" src="../illustrations/why-taba/workspace-tree.svg" alt="Workspace folder tree: .bare holds repo-a.git and repo-b.git; some-task contains repo-a and repo-b worktrees; some-other-task is shown beneath with its contents abbreviated." width="480" height="586" loading="lazy" decoding="async" style="display: block; width: 100%; height: auto; margin-block: 24px;">
 
-Now you can just open claude, codex or any IDE with that task folder, and it will do the right thing. Mostly.
+It's the <span class="file-preview"><a class="file-preview-trigger" href="https://swyx.io/preemptive-pluralization" aria-details="pluralization-quote"><q>preemptive pluralization</q></a><span id="pluralization-quote" class="file-preview-editor quote-preview" popover><q>Before you write any code — ask if you could ever possibly want multiple kinds of the thing you are coding. If yes, just do it. Now, not later.</q><cite>— <a href="https://swyx.io/preemptive-pluralization">Preemptive Pluralization is (Probably) Not Evil</a></cite></span></span> idea applied to repositories. Every task starts with room for more than one.
 
-But a new problem comes up: I'm drowning in IDE windows, browser tabs and terminals. And when in calls i can never find the right IDE, or the right browser tab for a quick glance together with colleagues.
+Now I can open the task folder in Claude Code, Codex or an IDE. All the relevant repos are there.
+
+I'm still drowning in IDE windows, browser tabs and terminals. During a call, I find myself hunting for the right project to show a colleague.
 
 <div class="x-post" data-x-post="2105924161562423589" data-x-media="hidden">
 <aside class="post-card" aria-label="Post by Lars Corneliussen">
@@ -135,18 +139,19 @@ But a new problem comes up: I'm drowning in IDE windows, browser tabs and termin
 </li>
 
 <li class="problem" id="spaces" aria-labelledby="spaces-title">
-<p class="problem-date" data-rail-label="Workspaces"><time datetime="2026-08-11">11 Aug 2026</time><span class="date-label">Discovering herdr</span></p>
+<p class="problem-date" data-rail-label="Workspaces"><time datetime="2026-08-11">11 Aug 2026</time><span class="date-label">Discovering Herdr</span></p>
 <div class="problem-body">
 
 <h2 id="spaces-title">Folders aren't enough</h2>
-<p class="problem-subline">Conversations and terminals need a better place to live. Also I need a way to track progress.</p>
+<p class="problem-subline">I need to switch between tasks, find their conversations and see what's still running.</p>
 
 <div class="detail-copy">
 
-Hitting usage limits of your agents can be a good thing: it forces me to stay agent agnostic.
+A task folder groups the repos. I want one place for the conversations and terminals working on them, too.
 
-So what is that [Herdr](https://herdr.dev/) thing?
-It is a terminal multiplexer. Instead of the shell in your actual terminal, it runs it on a persistent background server. The terminal you see just connects to it — locally or over SSH from another machine.
+With [Herdr](https://herdr.dev/), I can group each task's agent, terminals and status into one space. I can switch tasks without searching through windows.
+
+The processes run on a background server. I can close the terminal client and attach again later, locally or over SSH from another machine.
 
 <a class="workspace-preview-trigger" href="../media/why-taba/herdr-workspace-redacted.png" data-workspace-preview aria-haspopup="dialog" aria-controls="herdr-workspace-preview"><img src="../illustrations/why-taba/herdr-sessions.svg" alt="Herdr layout: two spaces with an agent pane above a shell pane, connected to a persistent background server. Click to see the real workspace." width="520" height="648" loading="lazy" decoding="async"><span class="workspace-preview-hint">Click to see the real workspace <span aria-hidden="true">↗</span></span></a>
 
@@ -154,9 +159,7 @@ It is a terminal multiplexer. Instead of the shell in your actual terminal, it r
 
 <aside class="later-note" aria-label="Added later"><span class="later-note-label">P.P.S. · Added later</span><p>Herdr now also has a <a href="https://herdr.dev/">native app</a>. The setup above is the <a href="https://herdr.dev/tui">terminal version</a> I started with.</p></aside>
 
-Since Herdr is very scriptable and also has direct channels to communicate with agents running in it, it offers great possibility to automatically control it.
-
-By now custom `wtc-*` skills spawn and retire new worktree collections (with auto-setup of herdr space, panes, and agent handover).
+Herdr is scriptable, so my `wtc-*` skills can create or retire a collection and its task space together. These are shared instructions that agents follow, including which panes to open and how to hand over a task.
 
 <div class="x-post" data-x-post="2094789074930250013" data-x-media="hidden">
 <aside class="post-card" aria-label="Post by Lars Corneliussen">
@@ -176,24 +179,19 @@ By now custom `wtc-*` skills spawn and retire new worktree collections (with aut
 <div class="problem-body">
 
 <h2 id="copies-title">Setup keeps repeating</h2>
-<p class="problem-subline">By now I'm using similar setups in four projects and keep copying/syncing functionality.</p>
+<p class="problem-subline">The same setup now lives in four projects. Every improvement needs to reach all four.</p>
 
 <div class="detail-copy">
 
-Copying a few scripts into the next project is easier than introducing another tool. It also makes iterations a lot faster. But it also easily leads to a mess.
+For a while, I copy scripts and agent instructions from project to project. It's faster than introducing a new tool while the approach is still changing.
 
-Every improvement needs another sync, impossible without Agents that do the leg work. And tests to verify they do it right.
+Each project has a harness repo for those scripts and instructions. The boilerplate is the common version I sync between them.
 
-Still it creates a mess. A mess that is worth it, though... at least for now.
+Every improvement means finding the other copies, checking their differences and applying the change again. Agents help carry the changes across, but each sync needs testing.
 
-With the mess come quite some features that build the foundation for the later cli:
+By now the scripts show which repos, branches and PRs belong to a task. Shared skills help agents create, refresh, review and retire collections. Setup hooks prepare each repo's environment, and generated port ranges let several tasks run at once.
 
-* **Status TUI** Repos, Branches, PRs, uncommitted changes, upstream changes, build errors, all just with an auto-refreshing bashscript.
-* **Reusable agent skills.** Nine shared procedures for starting, browsing, reviewing and retiring collections, linked into each collection so different agents can follow the same workflow.
-* **Catch-up.** A skill that fetches shared Git owners, advances eligible worktrees and refreshes secrets and skill links. Collections always stay fresh.
-* **Hooks.** Each repo hooks into initializing and tearing down its worktree and ressources.
-* **Port management.** Generated environment files give parallel copies their own port ranges, so running one task doesn’t mean stopping another.
-* **<span id="managed-config">Managed .env</span>** Configs and secrets sit in a `.config` folder (subfolder per repo) and get symlinked into the worktrees.
+<span id="managed-config">Config and secrets</span> live in a shared `.config` folder, with one subfolder per repo. Worktrees link to those files, so each task uses the same copy.
 
 <figure class="scene-detail-art" data-align-with="managed-config"><img src="../illustrations/why-taba/shared-config.svg" alt="A shared .config folder stores repo-a/.env and repo-b/.env. Worktrees in some-task and some-other-task link to those same files rather than copying secrets." width="480" height="390" loading="lazy" decoding="async"></figure>
 
@@ -223,21 +221,21 @@ With the mess come quite some features that build the foundation for the later c
 <div class="problem-body">
 
 <h2 id="more-computers-title">I need more computers</h2>
-<p class="problem-subline">The quite new MacBookPro M5 (64 GB RAM) is struggling to keep up. Sometimes just freezes.</p>
+<p class="problem-subline">Even a 64 GB laptop struggles with all these environments. Sometimes it just freezes.</p>
 
 <div class="detail-copy">
 
-Well, by now I'm shipping 65 times more weekly PRs (almost 100/PRs per Week) compared to when the adventure started. Mostly from many environments running in parallel and quickly exausting resources.
+More parallel conversations mean more apps, databases and browser tabs running at once. The machine is now the bottleneck.
 
-I had already bought a Beelink to fiddle with Omarchy back in 2025. With Omarchy Quattro just released, it is time to make the move, inch by inch.
+I bought a Beelink to try [Omarchy](https://omarchy.org/) in 2025. With Quattro released, I start moving my daily work over.
 
-My "old" MacBook Air M2 - also running Linux/Omarchy is now what I use when I'm on the road or work from home. And when I close the lid, the Agents keep grinding.
+The MacBook Pro stays at the office. My MacBook Air becomes the travel machine, also running Omarchy. When I close its lid, the agents keep running on the other machines.
 
 [Herdr](https://herdr.dev/) separates where I sit from where the agents run.
 
-[Tailscale](https://tailscale.com/) makes all my computers see eachother as if they were in the same network - which, thanks to Tailscale they are.
+[Tailscale](https://tailscale.com/) connects the machines. I can attach to the same Herdr spaces from home or on the road.
 
-Without the community around [Omarchy](https://omarchy.org/), the love for Computers, and the incredible enthusiasm for embracing the new Age of Agents I would be in a completely different place. Credits where credits are due.
+The [Omarchy](https://omarchy.org/) community's enthusiasm for computers and agents helped me make the move. Credit where credit is due.
 
 <div class="x-post" data-x-post="2089338151445708881" data-x-media="hidden">
 <aside class="post-card" aria-label="Post by Lars Corneliussen">
@@ -257,13 +255,13 @@ Without the community around [Omarchy](https://omarchy.org/), the love for Compu
 <div class="problem-body">
 
 <h2 id="testing-title">Boilerplate solidifies</h2>
-<p class="problem-subline">As I and other team members start relying on the <code>agent harness</code>, it needs to step up and become software.</p>
+<p class="problem-subline">More team members rely on the agent harness. It needs the testing and stability of a proper tool.</p>
 
 <div class="detail-copy">
 
-Functionality from the soft-forks is pulled into the boilerplate, the boilerplate now has CI/CD, and gets to a quite high test coverage. Still all bash scripts. Worse case: they are not even named the same in the various projects.
+I bring improvements back from the project copies and add tests and CI to the boilerplate. It's still a set of Bash scripts, copied and changed in each project.
 
-How do i get the status? `./harness/tools/wtc-status-tui.sh` or rather `wtc-status.sh --tui`?
+Even the command names drift. Is status `./harness/tools/wtc-status-tui.sh` or `wtc-status.sh --tui` in this project?
 
 <div class="record-links" data-scene-records><span>Public record</span><ul><li><a href="https://github.com/lcorneliussen/wtc-boilerplate/commit/97953ece09c317faf3f8acee93a2e8bbb2d79267">2 September. A test suite for the harness</a></li></ul></div>
 
@@ -277,11 +275,15 @@ How do i get the status? `./harness/tools/wtc-status-tui.sh` or rather `wtc-stat
 <div class="problem-body">
 
 <h2 id="variants-title">I give up and build a CLI</h2>
-<p class="problem-subline">Its just to much stress to keep everything working, and it is hard to iterate. The wtc-cli is born and a bunch of files moves to a compiled binary.</p>
+<p class="problem-subline">Keeping those copies consistent takes too much work. I turn the shared tooling into a versioned CLI.</p>
 
 <div class="detail-copy">
 
-The skills now all call cli commands. For a couple of rounds the bash scripts stay as shallow shims. The test suite grows and i put more time into polishing the functionality.
+Now I can test and release the common behavior once, then install the same version in each project. The CLI owns the shared code. Each project keeps its configuration and custom hooks.
+
+A project can start its databases and choose its agent through configuration and hooks, without changing the shared product code.
+
+The skills now call CLI commands. During the transition, thin Bash wrappers keep the old commands working.
 
 <div class="x-post" data-x-post="2107369079929545065" data-x-media="hidden">
 <aside class="post-card" aria-label="Post by Lars Corneliussen">
@@ -303,11 +305,15 @@ The skills now all call cli commands. For a couple of rounds the bash scripts st
 <div class="problem-body">
 
 <h2 id="reviews-title">Expanding to the web</h2>
-<p class="problem-subline">How do we go from personal productivity to growing as a team? And how do we get non-technical people along?</p>
+<p class="problem-subline">Support needs the same agent help as developers. A terminal and a pile of repositories are too much to ask.</p>
 
 <div class="detail-copy">
 
-As I'm am already using Open Claw since its early days it is a natural choice. I also tested Hermes, but I just don't get it.
+A support question comes in. A developer copies it into an agent and brings back the answer. Why does every question need that handoff?
+
+We try giving support a developer environment. The terminal and the many repos are too much to manage.
+
+I've been using OpenClaw since its early days, so it's a natural place to try a shared web conversation. The goal is for support to ask directly and bring a developer into the same session when needed.
 
 <div class="x-post" data-x-post="2088473882357530979" data-x-media="hidden">
 <aside class="post-card" aria-label="Post by Peter Steinberger">
@@ -325,28 +331,15 @@ As I'm am already using Open Claw since its early days it is a natural choice. I
 </aside>
 </div>
 
-A shared chat is useful, but it must not turn everyone’s credentials into a shared resource. If two people work with the same agent, whose account pushes the branch or opens the PR?
+A shared agent raises a new question. If two people work in one conversation, whose account pushes the branch or opens the PR?
 
-The immediate work is technical:
-
-* **Identify the person asking.** Use the signed-in gateway identity, rather than letting the model choose whose account to use.
-* **Scope the agent’s access.** Give its tools the worktrees and read access needed for the task, with sandbox and permission rules enforced outside the model.
-* **Keep personal credentials on the trusted side.** The agent can prepare work without receiving the user’s tokens. Publishing goes through the gateway, with explicit user confirmation.
-* **Separate drafting from privileged actions.** Let the agent write code and PR descriptions; let gateway-side code check who may push, open a PR or rerun a build.
-
-In this sandboxed setup, the agent’s tools and working files are isolated from personal credentials. Caller identity and permitted task context can cross that boundary; the user’s login does not.
+In this setup, the agent prepares code and PR descriptions in a sandbox. The gateway keeps personal credentials, identifies who's asking and handles publishing with that person's confirmation.
 
 <figure class="inline-story-art"><img src="../illustrations/why-taba/gateway-sandbox.svg" alt="An intended gateway/sandbox boundary: the gateway checks caller identity and policy, holds personal credentials and performs authorized operations. The sandbox contains agent tools and a worktree, receives caller identity and task context, and requests privileged actions without receiving personal tokens. This requires explicit configuration." width="480" height="548" loading="lazy" decoding="async"></figure>
 
-This boundary needs explicit sandbox and gateway configuration. Choosing the right person’s credentials is not, by itself, isolation between people. A model agreeing to follow the rules is not a security boundary either.
+This needs explicit sandbox and gateway configuration. Selecting a person's credentials doesn't isolate their files or tools from other users. A model agreeing to follow the rules is not a security boundary.
 
-That reduces flexibility, but it makes the shared tool’s permissions something we can inspect and test.
-
-Right now I have a couple of team claws deployed and I'm working on making them useful in a safe way. Most of the work goes into:
-
-* **[wtc-cli](https://github.com/lcorneliussen/wtc-cli)** — Multi-repo worktree collections and their OpenClaw integration. The [OpenClaw plugin](https://github.com/lcorneliussen/wtc-cli/tree/main/openclaw-plugin) is currently bundled here, but will most probably move to its own repository.
-* **[openclaw-bitbucket](https://github.com/lcorneliussen/openclaw-bitbucket)** — Bitbucket PRs, reviews and pipelines for OpenClaw, with personal logins and confirmed publishing through the gateway.
-* **[clawfather-boilerplate](https://github.com/lcorneliussen/clawfather-boilerplate)** — The place where I share the git-based OpenClaw setup. With continuous deployment support for infrastructure, agent identites and Taba integrations.
+I'm still working on making the team agents safe and useful. The code is in the [collection CLI](https://github.com/lcorneliussen/wtc-cli), its [OpenClaw plugin](https://github.com/lcorneliussen/wtc-cli/tree/main/openclaw-plugin), the [Bitbucket integration](https://github.com/lcorneliussen/openclaw-bitbucket) and the [deployment boilerplate](https://github.com/lcorneliussen/clawfather-boilerplate). The [OpenClaw guide](../docs/openclaw/) has the integration details.
 
 <div class="record-links"><span>Public record</span><ul><li><a href="https://github.com/lcorneliussen/wtc-boilerplate/commit/607b0a94de0b6e9958e1d45a6865ddf7ed226b73">29 September. Separate review before a draft PR became ready</a></li><li><a href="https://x.com/lcorneliussen/status/2110439039463751749">14 October. The collection plugin announcement</a></li><li><a href="https://github.com/lcorneliussen/wtc-cli/commit/b63857c0a84c573387d493c80ff4b9f041106068">14 October. One conversation across a collection</a></li><li><a href="https://github.com/lcorneliussen/wtc-cli/commit/2cb70fe6facb8fb4239ffbad81bec4586b3b22a0">19 October. The host-mode integration reached main</a></li></ul></div>
 
@@ -367,15 +360,15 @@ Right now I have a couple of team claws deployed and I'm working on making them 
 <div class="problem-body">
 
 <h2 id="name-title">wtc what?</h2>
-<p class="problem-subline">Ah, you mean the agent harness....</p>
+<p class="problem-subline">Ah, you mean the agent harness...</p>
 
 <div class="detail-copy">
 
-I called the special repo that contains the inventories of a taba project the `harness`, or often `project-agent-harness`.
+I call the project repo that holds this setup the harness. People remember that word. The name wtc doesn't stick.
 
 A useful command still needs a name people remember. Taba gives it one, with commands like `taba open` and `taba status`. The site moved from `wtc.sh` to `taba.sh` soon afterward.
 
-The [rename guide](../wtc-is-now-taba/) covers the command and configuration as the transition and is still in progress.
+The rename is still in progress. The [rename guide](../wtc-is-now-taba/) tracks the command and configuration changes.
 
 <div class="record-links"><span>Public record</span><ul><li><a href="https://x.com/lcorneliussen/status/2107368417787269264">6 October. “Horrible name.”</a></li><li><a href="https://github.com/lcorneliussen/wtc-site/commit/41853b3776c287d0f2320434b6c61e689c02df52">26 October. The site adopted the taba name</a></li></ul></div>
 
