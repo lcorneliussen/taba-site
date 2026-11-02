@@ -22,6 +22,7 @@ jobs:
       - uses: actions/setup-node@v6
         with:
           node-version: 24
+      - run: npm ci
       - run: npm run test:coverage
       - run: npm run check:coverage
       - name: Read reviewed source revision
@@ -45,6 +46,7 @@ jobs:
       - uses: actions/setup-node@v6
         with:
           node-version: 24
+      - run: npm ci
       - uses: actions/checkout@v7
         with:
           repository: lcorneliussen/wtc-cli

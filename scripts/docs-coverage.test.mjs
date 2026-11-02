@@ -12,6 +12,8 @@ async function fixture(t) {
  const put=async (base,path,text='example')=>{ const full=join(base,path); await mkdir(join(full,'..'),{recursive:true}); await writeFile(full,text); };
  for(const path of ['docs','internal/wtc/defaults','internal/wtc/release-notes/unreleased']) await mkdir(join(upstream,path),{recursive:true});
  for(const path of ['src/pages/index.astro','src/scripts/home.js','src/pages/docs/getting-started.md','src/pages/docs/team-harness.md']) await put(site,path);
+ await mkdir(join(site,'docs'),{recursive:true});
+ await put(site,'README.md');
  await put(upstream,'README.md');
  const manifest={schemaVersion:1,release:'v0.1.51',revision:'a'.repeat(40),sources:[{path:'README.md',sha256:digest('example'),status:'covered',reason:'Entry point',pages:['src/pages/index.astro','src/pages/docs/getting-started.md','src/pages/docs/team-harness.md']}]};
  return {site,upstream,manifest,put};
@@ -23,3 +25,39 @@ test('inconsistent install pins and missing rationale fail',async t=>{const f=aw
 test('release intake includes undocumented changes, sorted releases and upcoming fragments',async t=>{const f=await fixture(t);for(const v of ['0.1.10','0.1.9'])await f.put(f.upstream,'internal/wtc/release-notes/'+v+'.md',['# wtc '+v,'## OpenClaw','New gateway behavior'].join(nl));await f.put(f.upstream,'internal/wtc/release-notes/unreleased/change.md','## Runtime'+nl+'Service update');await f.put(f.upstream,'internal/wtc/release-notes/unreleased/README.md','Format');const queue=await releaseQueue(f.manifest,f.upstream);assert.deepEqual(queue.map(x=>x.version),['0.1.9','0.1.10','unreleased']);assert(queue[0].pages.includes('src/pages/docs/openclaw.md'));assert(queue[2].pages.includes('src/pages/docs/services.md'));const report=proposal(f.manifest,'main',[],queue);assert(report.includes('upcoming, not released'));assert(report.includes('keyword heuristic'));assert.throws(()=>proposal(f.manifest,'bad-ref',[],queue));});
 test('reviewed release suppressed but edited historical release reopens review',async t=>{const f=await fixture(t),path='internal/wtc/release-notes/0.1.51.md';await f.put(f.upstream,path,'old');f.manifest.sources.push({path,sha256:digest('old'),pages:['src/pages/docs/upgrades.md']});assert.equal((await releaseQueue(f.manifest,f.upstream)).length,0);await f.put(f.upstream,path,'new');assert.equal((await releaseQueue(f.manifest,f.upstream))[0].changed,true);});
 test('CLI check fails on drift and propose succeeds without modifying baseline',async t=>{const f=await fixture(t);await f.put(f.site,'docs/coverage.json',JSON.stringify(f.manifest));await f.put(f.upstream,'docs/new.md');const script=new URL('./docs-coverage.mjs',import.meta.url).pathname;const result=spawnSync(process.execPath,[script,'check',f.upstream],{cwd:f.site,encoding:'utf8'});assert.equal(result.status,1);assert(result.stderr.includes('New upstream:'));const before=await readFile(join(f.site,'docs/coverage.json'),'utf8');const report=join(f.site,'proposal.md');const proposed=spawnSync(process.execPath,[script,'propose',f.upstream,'main',report],{cwd:f.site,encoding:'utf8'});assert.equal(proposed.status,0,proposed.stderr);assert.equal(await readFile(join(f.site,'docs/coverage.json'),'utf8'),before);assert((await readFile(report,'utf8')).includes('docs/new.md'));});
+
+test('source links use Markdown syntax and ignore examples and web destinations',async t=>{
+ const f=await fixture(t);
+ await f.put(f.site,'docs/guide with spaces.md');
+ await f.put(f.site,'docs/assets/image.svg');
+ await f.put(f.site,'README.md',[
+  '[Guide](docs/guide%20with%20spaces.md?view=1#heading "Title")',
+  '[Reference][guide]', '', '[guide]: <docs/guide with spaces.md> "Title"', '',
+  '![Image](docs/assets/image.svg)', '<a href="docs/guide%20with%20spaces.md">HTML</a>',
+  '', '<p><a href="docs/guide%20with%20spaces.md">Block HTML</a></p>', '',
+  '[Web](https://example.com/missing.md) [Route](/docs/guide/) [Anchor](#heading)',
+  '`[Inline example](absent.md)`', '```md', '[Fenced example](absent.md)', '```',
+ ].join(nl));
+ await f.put(f.site,'docs/nested/usage.md','[Home](../../README.md)');
+ assert.deepEqual(await check(f.manifest,f.site),[]);
+});
+test('deleted targets in root and nested documents fail the shared CLI check',async t=>{
+ const f=await fixture(t);
+ await f.put(f.site,'docs/coverage.json',JSON.stringify(f.manifest));
+ await f.put(f.site,'README.md','[Guide](docs/guide.md "Title")');
+ await f.put(f.site,'docs/nested/usage.md','[Reference][guide]'+nl+nl+'[guide]: ../reference.md'+nl+nl+'![Image](../image.svg)'+nl+'<p><a href="../html.md">HTML</a></p>');
+ for(const name of ['guide.md','reference.md','image.svg','html.md']) await f.put(f.site,'docs/'+name);
+ assert.deepEqual(await check(f.manifest,f.site),[]);
+ for(const name of ['guide.md','reference.md','image.svg','html.md']) await rm(join(f.site,'docs',name));
+ const script=new URL('./docs-coverage.mjs',import.meta.url).pathname;
+ const result=spawnSync(process.execPath,[script,'check'],{cwd:f.site,encoding:'utf8'});
+ assert.equal(result.status,1);
+ for(const target of ['README.md','docs/nested/usage.md','guide.md','reference.md','image.svg','html.md']) assert(result.stderr.includes(target),result.stderr);
+});
+test('source links cannot escape the repository or contain malformed escapes',async t=>{
+ const f=await fixture(t);
+ await f.put(f.site,'README.md','[Outside](../outside.md) [Invalid](bad%ZZ.md)');
+ const errors=await check(f.manifest,f.site);
+ assert(errors.some(e=>e.includes('outside.md')&&e.includes('escapes repository')));
+ assert(errors.some(e=>e.includes('bad%ZZ.md')&&e.includes('invalid local target')));
+});
