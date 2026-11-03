@@ -1,5 +1,6 @@
 ---
 import '../styles/global.css';
+import BrandMark from '../components/BrandMark.astro';
 import { protectCode } from '../lib/protect-code.mjs';
 interface Props { title?: string; description?: string; }
 const { title = 'taba — Make room for the whole task.', description = 'Git worktree collections for working across repositories, with agents or your favorite editor. A little structure. A lot more room to work. Formerly wtc.' } = Astro.props;
@@ -23,7 +24,7 @@ const content = protectCode(await Astro.slots.render('default'));
 <body>
   <a class="skip-link" href="#main">Skip to content</a>
   <header class="site-header wrap">
-    <a class="brand" href={base} aria-label="taba home"><span class="brand-mark" lang="ja" aria-hidden="true">束</span> <span>taba<span class="brand-dot">.</span></span></a>
+    <a class="brand" href={base} aria-label="taba home"><BrandMark /> <span>taba<span class="brand-dot">.</span></span></a>
     <nav aria-label="Main navigation">
       <a href={`${base}#how-it-works`}>How it works</a>
       <a href={`${base}why-taba/`} aria-current={Astro.url.pathname.endsWith('/why-taba/') ? 'page' : undefined}>Why taba</a>
@@ -33,6 +34,6 @@ const content = protectCode(await Astro.slots.render('default'));
     <a class="button button-small header-cta" href={`${base}docs/getting-started/`}>Get started <span aria-hidden="true">↗</span></a>
   </header>
   <Fragment set:html={content} />
-  <footer class="wrap"><a class="brand" href={base} aria-label="taba home"><span class="brand-mark" lang="ja" aria-hidden="true">束</span> <span>taba<span class="brand-dot">.</span></span></a><span>A little structure. A lot more room to work.</span><a href="https://github.com/lcorneliussen/wtc-site">Site source <span aria-hidden="true">↗</span></a><a href="https://github.com/lcorneliussen/wtc-cli">GitHub <span aria-hidden="true">↗</span></a></footer>
+  <footer class="wrap"><a class="brand" href={base} aria-label="taba home"><BrandMark /> <span>taba<span class="brand-dot">.</span></span></a><span>A little structure. A lot more room to work.</span><a href="https://github.com/lcorneliussen/wtc-site">Site source <span aria-hidden="true">↗</span></a><a href="https://github.com/lcorneliussen/wtc-cli">GitHub <span aria-hidden="true">↗</span></a></footer>
 </body>
 </html>
