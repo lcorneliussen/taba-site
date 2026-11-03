@@ -29,7 +29,7 @@ During the planned compatibility window, the old `wtc` command will ship alongsi
 | --- | --- | --- |
 | Command | `wtc` | `taba`, with a temporary `wtc` alias |
 | Website | `wtc.sh` links | `taba.sh`; old links redirect with their paths preserved |
-| CLI repository / mise tool | `lcorneliussen/taba` | `lcorneliussen/taba` |
+| CLI repository / mise tool | `lcorneliussen/wtc-cli` | `lcorneliussen/taba` |
 | Harness pin | `.wtc-cli-version` | `.taba-version` |
 | Harness configuration | `wtc.toml` | `taba.toml` |
 | Generated collection data | `.wtc/` | `.taba/` |
