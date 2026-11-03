@@ -1,8 +1,13 @@
 ---
 // Vanity import path for the Go module taba.sh/taba.
-// `go install taba.sh/taba/cmd/taba@latest` asks taba.sh/taba?go-get=1 (and
-// longer paths, which 404) for this tag. GitHub Pages ignores the query string.
+// `go install taba.sh/taba/cmd/taba@latest` requests the full package path with
+// ?go-get=1 first, so the module root and each command get the same tags.
+// GitHub Pages ignores the query string.
+export function getStaticPaths() {
+  return [undefined, 'cmd/taba', 'cmd/wtc'].map(path => ({ params: { path } }));
+}
 const repo = 'https://github.com/lcorneliussen/taba';
+const canonical = new URL(Astro.url.pathname, Astro.site).href;
 ---
 <!doctype html>
 <html lang="en">
@@ -11,6 +16,7 @@ const repo = 'https://github.com/lcorneliussen/taba';
   <meta name="go-import" content={`taba.sh/taba git ${repo}`}>
   <meta name="go-source" content={`taba.sh/taba ${repo} ${repo}/tree/main{/dir} ${repo}/blob/main{/dir}/{file}#L{line}`}>
   <meta http-equiv="refresh" content="0; url=/">
+  <link rel="canonical" href={canonical}>
   <title>taba</title>
 </head>
 <body>
