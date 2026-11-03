@@ -29,7 +29,7 @@ During the planned compatibility window, the old `wtc` command will ship alongsi
 | --- | --- | --- |
 | Command | `wtc` | `taba`, with a temporary `wtc` alias |
 | Website | `wtc.sh` links | `taba.sh`; old links redirect with their paths preserved |
-| CLI repository / mise tool | `lcorneliussen/wtc-cli` | `lcorneliussen/taba` |
+| CLI repository / mise tool | `lcorneliussen/taba` | `lcorneliussen/taba` |
 | Harness pin | `.wtc-cli-version` | `.taba-version` |
 | Harness configuration | `wtc.toml` | `taba.toml` |
 | Generated collection data | `.wtc/` | `.taba/` |
@@ -41,7 +41,7 @@ The collection environment files, `.env.collection` and `.env.collection.local`,
 
 ## The timeline
 
-These are **release targets, not announced release dates**. The [rename plan](https://github.com/lcorneliussen/wtc-cli/issues/200) tracks the work and any changes to the schedule.
+These are **release targets, not announced release dates**. The [rename plan](https://github.com/lcorneliussen/taba/issues/200) tracks the work and any changes to the schedule.
 
 | Stage | Timing | What to expect |
 | --- | --- | --- |
@@ -57,7 +57,7 @@ The current proposal mentions **four minor releases / three months after the new
 
 Keep working with `wtc`. A new website address does not require changing a harness pin, renaming folders, or replacing commands in scripts.
 
-Use the [current installation guide](../docs/getting-started/) and [upgrade guide](../docs/upgrades/) for released versions. Check [GitHub Releases](https://github.com/lcorneliussen/wtc-cli/releases) when choosing an upgrade; a target version in this page's timeline is not proof that it has shipped.
+Use the [current installation guide](../docs/getting-started/) and [upgrade guide](../docs/upgrades/) for released versions. Check [GitHub Releases](https://github.com/lcorneliussen/taba/releases) when choosing an upgrade; a target version in this page's timeline is not proof that it has shipped.
 
 ## Upgrading a team harness
 
@@ -123,6 +123,6 @@ Don't plan a direct jump from `0.1.x` or `0.2.x` to the removal release. Move th
 
 ## Follow the transition
 
-We'll update this page as each phase ships. For the detailed plan and implementation status, see the [rename tracking issue](https://github.com/lcorneliussen/wtc-cli/issues/200) and its phase issues: [preparation](https://github.com/lcorneliussen/wtc-cli/issues/201), [first taba release](https://github.com/lcorneliussen/wtc-cli/issues/202), [new names](https://github.com/lcorneliussen/wtc-cli/issues/203), and [compatibility removal](https://github.com/lcorneliussen/wtc-cli/issues/204).
+We'll update this page as each phase ships. For the detailed plan and implementation status, see the [rename tracking issue](https://github.com/lcorneliussen/taba/issues/200) and its phase issues: [preparation](https://github.com/lcorneliussen/taba/issues/201), [first taba release](https://github.com/lcorneliussen/taba/issues/202), [new names](https://github.com/lcorneliussen/taba/issues/203), and [compatibility removal](https://github.com/lcorneliussen/taba/issues/204).
 
 Everyone deserves monorepos. Even those who don't have them.

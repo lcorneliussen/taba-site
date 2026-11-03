@@ -7,10 +7,10 @@ interface Props {
 const { frontmatter } = Astro.props;
 const base = import.meta.env.BASE_URL;
 ---
-<Base title={`${frontmatter.title} — wtc docs`} description={frontmatter.description}>
+<Base title={`${frontmatter.title} — taba docs`} description={frontmatter.description}>
   <main class="docs-shell wrap" id="main">
     <aside class="docs-sidebar">
-      <div class="docs-desktop-nav"><p class="eyebrow">THE WTC HANDBOOK</p><DocsNav /><a class="upstream" href="https://github.com/lcorneliussen/wtc-cli">WTC on GitHub ↗</a></div>
+      <div class="docs-desktop-nav"><p class="eyebrow">THE TABA HANDBOOK</p><DocsNav /><a class="upstream" href="https://github.com/lcorneliussen/taba">WTC on GitHub ↗</a></div>
       <details class="docs-mobile-nav"><summary>Browse the handbook</summary><DocsNav /></details>
     </aside>
     <article class="doc-content">

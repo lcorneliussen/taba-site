@@ -64,6 +64,6 @@ try {
  await small.screenshot({path:join(out,'collection-mobile.png'),fullPage:true});
  await mobile.close();
  if(errors.length) throw new Error(errors.join('\n'));
- await writeFile(join(out,'provenance.json'),JSON.stringify({kind:'Real plugin renderer with synthetic host responses; not a live gateway',repository:'https://github.com/lcorneliussen/wtc-cli',revision,modulePath,sha256:createHash('sha256').update(module).digest('hex'),playwright:JSON.parse(await readFile(join(root,'node_modules/playwright/package.json'),'utf8')).version,browser:browser.version(),scenario:['Expand collection card','Open Collection panel'],limitations:['Synthetic surrounding shell, theme and data','No clone, publish, catch-up or service backend is exercised']},null,2)+'\n');
+ await writeFile(join(out,'provenance.json'),JSON.stringify({kind:'Real plugin renderer with synthetic host responses; not a live gateway',repository:'https://github.com/lcorneliussen/taba',revision,modulePath,sha256:createHash('sha256').update(module).digest('hex'),playwright:JSON.parse(await readFile(join(root,'node_modules/playwright/package.json'),'utf8')).version,browser:browser.version(),scenario:['Expand collection card','Open Collection panel'],limitations:['Synthetic surrounding shell, theme and data','No clone, publish, catch-up or service backend is exercised']},null,2)+'\n');
  console.log(`Captured and verified plugin UI from ${revision} in ${out}`);
 } finally {await browser.close()}

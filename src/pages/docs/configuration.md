@@ -2,7 +2,7 @@
 layout: ../../layouts/Docs.astro
 title: Configuration and secrets
 description: Separate tracked project settings, generated environment, and private local values.
-source: https://github.com/lcorneliussen/wtc-cli/blob/v0.1.51/internal/wtc/defaults/instructions/customize.md
+source: https://github.com/lcorneliussen/taba/blob/v0.1.51/internal/wtc/defaults/instructions/customize.md
 ---
 
 ## Environment compatibility in v0.1.60
@@ -12,7 +12,7 @@ product settings. Within one source, the new spelling wins, including an
 explicit empty value; environment settings still take precedence over
 workspace-file defaults. Generated variables, commands and paths keep their
 current names in this increment. See the
-[compatibility guide](https://github.com/lcorneliussen/wtc-cli/blob/v0.1.60/docs/rename-compatibility.md)
+[compatibility guide](https://github.com/lcorneliussen/taba/blob/v0.1.60/docs/rename-compatibility.md)
 for the supported settings and conflict warnings. The guidance below retains
 its v0.1.51 baseline.
 

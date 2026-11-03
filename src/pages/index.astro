@@ -10,7 +10,7 @@ const base = import.meta.env.BASE_URL;
         <p class="eyebrow"><span class="tiny-branch" aria-hidden="true">⑂</span> GIT WORKTREE COLLECTIONS</p>
         <h1 id="hero-title">Make room for<br>the <em>whole task.</em></h1>
         <p class="hero-description">Your API. Your frontend. That shared library.<br class="desktop-break"> Bring them into one workspace, without bringing<br class="desktop-break"> every other task along.</p>
-        <div class="hero-actions"><a class="button" href="#install">Install wtc <span aria-hidden="true">↗</span></a><a class="text-link" href="#how-it-works">See how it works <span aria-hidden="true">↓</span></a></div>
+        <div class="hero-actions"><a class="button" href="#install">Install taba <span aria-hidden="true">↗</span></a><a class="text-link" href="#how-it-works">See how it works <span aria-hidden="true">↓</span></a></div>
         <Install />
         <p class="hero-note">Built on Git worktrees. Works with your tools.<br><a class="rename-link" href={`${base}wtc-is-now-taba/`}>wtc is now taba <span aria-hidden="true">→</span></a></p>
       </div>
@@ -29,7 +29,7 @@ const base = import.meta.env.BASE_URL;
           </div>
           <div class="collection-summary"><span><span class="status-dot" aria-hidden="true"></span> 3 repos. One task.</span><span>Isolated worktrees</span></div>
         </div>
-        <div class="demo-terminal"><span aria-hidden="true">$</span> <code id="demo-command">cd ../fix-login && wtc status</code><span class="terminal-caret" aria-hidden="true"></span></div>
+        <div class="demo-terminal"><span aria-hidden="true">$</span> <code id="demo-command">cd ../fix-login && taba status</code><span class="terminal-caret" aria-hidden="true"></span></div>
         <p class="demo-caption"><span aria-hidden="true">↖</span> Switch the task. Keep the context.</p>
       </div>
     </section>
@@ -37,29 +37,29 @@ const base = import.meta.env.BASE_URL;
     <section class="section wrap" id="how-it-works" aria-labelledby="how-title">
       <div class="section-heading"><div><p class="eyebrow">LESS WORKSPACE WRANGLING</p><h2 id="how-title">One task rarely lives<br>in one repository.</h2></div><p>Stop assembling the same workspace by hand.<br>Give each task a place of its own, then get<br class="desktop-break"> back to the interesting part.</p></div>
       <div class="feature-grid">
-        <article class="feature"><div class="feature-symbol" aria-hidden="true">⊞</div><span class="feature-number">01 / GATHER</span><h3>Bring the right repos.</h3><p>Put the repositories a task needs in a single folder. Add another when the scope grows. A monorepo is not a prerequisite.</p><code>wtc add-repo shared</code></article>
+        <article class="feature"><div class="feature-symbol" aria-hidden="true">⊞</div><span class="feature-number">01 / GATHER</span><h3>Bring the right repos.</h3><p>Put the repositories a task needs in a single folder. Add another when the scope grows. A monorepo is not a prerequisite.</p><code>taba add-repo shared</code></article>
         <article class="feature"><div class="feature-symbol" aria-hidden="true">⑂</div><span class="feature-number">02 / SEPARATE</span><h3>A fresh space for every task.</h3><p>Collections get their own worktrees, environment, and port assignments. Start the next task alongside the one already in progress.</p><code>wtc new new-checkout api web</code></article>
-        <article class="feature"><div class="feature-symbol" aria-hidden="true">≋</div><span class="feature-number">03 / KEEP TRACK</span><h3>The whole picture, together.</h3><p>See local changes and pull request status across your collection. When the task is done, retire its workspace with checks for local work.</p><code>wtc status</code></article>
+        <article class="feature"><div class="feature-symbol" aria-hidden="true">≋</div><span class="feature-number">03 / KEEP TRACK</span><h3>The whole picture, together.</h3><p>See local changes and pull request status across your collection. When the task is done, retire its workspace with checks for local work.</p><code>taba status</code></article>
       </div>
     </section>
     <section class="start-section" id="get-started" aria-labelledby="start-title">
       <div class="wrap start-grid">
-        <div class="start-copy"><p class="eyebrow">SMALL SETUP. MORE MOMENTUM.</p><h2 id="start-title">Your next task<br>starts here.</h2><p>Start with a few repositories. Add a team harness when you need shared configuration.</p><div class="requirements"><span>macOS & Linux</span><span>Git required</span><span>Mise optional</span></div><a class="text-link" href="https://github.com/lcorneliussen/wtc-cli/releases">Browse CLI releases <span aria-hidden="true">↗</span></a></div>
+        <div class="start-copy"><p class="eyebrow">SMALL SETUP. MORE MOMENTUM.</p><h2 id="start-title">Your next task<br>starts here.</h2><p>Start with a few repositories. Add a team harness when you need shared configuration.</p><div class="requirements"><span>macOS & Linux</span><span>Git required</span><span>Mise optional</span></div><a class="text-link" href="https://github.com/lcorneliussen/taba/releases">Browse CLI releases <span aria-hidden="true">↗</span></a></div>
         <div class="quickstart">
           <div class="quickstart-options" role="group" aria-label="Quick start environment"><button type="button" data-guide="local" aria-pressed="true" class="active">Local terminal</button><button type="button" data-guide="team" aria-pressed="false">Team harness</button><button type="button" data-guide="openclaw" aria-pressed="false">OpenClaw</button></div>
           <div class="code-heading"><span id="code-title">01 — CREATE A COLLECTION</span><button type="button" class="copy-button" id="copy-code" hidden>Copy commands <span aria-hidden="true">⧉</span></button></div>
           <pre tabindex="0" aria-label="Quick start commands"><code id="quickstart-code"># Install the CLI above, then check it
-wtc --version
+taba --version
 
 # Start a task in an empty folder
 mkdir fix-login && cd fix-login
-wtc init
+taba init
 
 # Use your own repo URL and local checkout
-wtc add-repo git@github.com:example-org/api.git
-wtc add-repo ~/code/web
-wtc status</code></pre>
-          <p class="code-note" id="guide-note">Examples follow the handbook’s v0.1.51 baseline. Worktrees start detached. Create a branch in each repository before committing. Open the collection in your editor or agent.</p>
+taba add-repo git@github.com:example-org/api.git
+taba add-repo ~/code/web
+taba status</code></pre>
+          <p class="code-note" id="guide-note">Examples use the taba command from 0.2.0; on older versions, type wtc instead. Worktrees start detached. Create a branch in each repository before committing. Open the collection in your editor or agent.</p>
           <a id="guide-link" class="quickstart-link" href={`${base}docs/getting-started/`}>Read the getting-started guide <span aria-hidden="true">↗</span></a>
           <p class="sr-only" id="copy-status" role="status"></p>
         </div>

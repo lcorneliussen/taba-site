@@ -2,7 +2,7 @@
 layout: ../../layouts/Docs.astro
 title: Getting started
 description: Install wtc, bring two repositories together, and start your first task. No harness or agent required.
-source: https://github.com/lcorneliussen/wtc-cli/blob/v0.1.51/docs/getting-started.md
+source: https://github.com/lcorneliussen/taba/blob/v0.1.51/docs/getting-started.md
 ---
 
 A **worktree collection** is a folder containing the repositories you need for one task. Each repository has its own Git worktree. Your build tools and development commands stay the same.
@@ -11,14 +11,14 @@ A **worktree collection** is a folder containing the repositories you need for o
 
 ## 1. Install the CLI
 
-You need **Git** and a macOS or Linux development environment. Download a binary for your platform from [GitHub Releases](https://github.com/lcorneliussen/wtc-cli/releases), put it on your `PATH`, and verify it with `wtc --version`.
+You need **Git** and a macOS or Linux development environment. Download a binary for your platform from [GitHub Releases](https://github.com/lcorneliussen/taba/releases), put it on your `PATH`, and verify it with `wtc --version`.
 
 For the published stable release and its installation command, see [Install wtc](../../#install).
 
 To reproduce the **v0.1.51 handbook baseline** with [mise](https://mise.jdx.dev/):
 
 ```sh
-mise use -g github:lcorneliussen/wtc-cli@0.1.51
+mise use -g github:lcorneliussen/taba@0.1.51
 wtc --version
 ```
 

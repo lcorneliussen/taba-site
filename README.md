@@ -1,6 +1,6 @@
-# wtc-site
+# taba-site
 
-The Astro website for **taba** (formerly wtc) and the getting-started handbook for [Worktree Collections](https://github.com/lcorneliussen/wtc-cli).
+The Astro website for **taba** (formerly wtc) and the getting-started handbook for [Worktree Collections](https://github.com/lcorneliussen/taba).
 
 ## Develop
 

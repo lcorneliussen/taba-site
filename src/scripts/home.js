@@ -18,7 +18,7 @@ for (const button of document.querySelectorAll('[data-collection]')) {
     document.querySelector('#shared-detail').textContent = collection.shared;
     document.querySelector('#api-port').textContent = `:${collection.ports[0]}`;
     document.querySelector('#web-port').textContent = `:${collection.ports[1]}`;
-    document.querySelector('#demo-command').textContent = `cd ../${collection.name} && wtc status`;
+    document.querySelector('#demo-command').textContent = `cd ../${collection.name} && taba status`;
   });
 }
 
@@ -28,12 +28,12 @@ const guides = {
   team: {
     title: '02 — SHARE YOUR CONFIGURATION',
     code: `# Scaffold a small, project-owned harness
-wtc harness init agent-harness \\
+taba harness init agent-harness \\
   --remote git@github.com:example-org/agent-harness.git \\
   --cli-version 0.1.51
 
 # Preview the scaffold without writing files
-wtc harness init another-harness \\
+taba harness init another-harness \\
   --remote git@github.com:example-org/another-harness.git \\
   --cli-version 0.1.51 --dry-run`,
     note: 'Replace the example remote with your own. This creates configuration files, not a Git repository. Follow the team guide to version and bootstrap your harness.',
@@ -42,14 +42,14 @@ wtc harness init another-harness \\
   openclaw: {
     title: '03 — WORK FROM A CONVERSATION',
     code: `# Agent workflow on an OpenClaw gateway
-wtc host
+taba host
 
 # Request a managed worktree (prints a tool plan)
-wtc add-repo your-org/api --worktree fix-login
+taba add-repo your-org/api --worktree fix-login
 
 # After the agent carries out that plan
-wtc status fix-login`,
-    note: 'Ask your OpenClaw agent to carry out the printed plan. The gateway owns worktrees and publishing. Do not run wtc init or wtc new under OpenClaw.',
+taba status fix-login`,
+    note: 'Ask your OpenClaw agent to carry out the printed plan. The gateway owns worktrees and publishing. Do not run taba init or taba new under OpenClaw.',
     link: 'openclaw', label: 'Read the OpenClaw workflow',
   },
 };

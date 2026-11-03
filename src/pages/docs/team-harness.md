@@ -2,7 +2,7 @@
 layout: ../../layouts/Docs.astro
 title: A harness for your team
 description: Put repository registration, tool versions, and project policy under version control.
-source: https://github.com/lcorneliussen/wtc-cli/blob/v0.1.51/docs/harness-design.md
+source: https://github.com/lcorneliussen/taba/blob/v0.1.51/docs/harness-design.md
 ---
 
 An ad-hoc collection is a good starting point. A **harness** makes the workspace setup reusable across a team. It is a small, project-owned repository, not a replacement for your application repositories.
@@ -32,7 +32,7 @@ The command creates six files and refuses to overwrite existing files. It **does
 
 ## Version it and bootstrap the workspace
 
-Commit the generated harness in your own Git repository and publish it to the remote you selected. Then follow the [versioned bootstrap guide](https://github.com/lcorneliussen/wtc-cli/blob/v0.1.51/internal/wtc/defaults/bootstrap.md) to create its bare owner and first collection.
+Commit the generated harness in your own Git repository and publish it to the remote you selected. Then follow the [versioned bootstrap guide](https://github.com/lcorneliussen/taba/blob/v0.1.51/internal/wtc/defaults/bootstrap.md) to create its bare owner and first collection.
 
 Add application repositories to the harness registry. Use `wtc add-repo` or `wtc new` to bring their worktrees into a local collection.
 

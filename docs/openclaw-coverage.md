@@ -1,7 +1,7 @@
 # OpenClaw plugin coverage and visual demos
 
 Audited 2026-10-26 against CLI commit
-[`9da4ba3057b00f1292f53b65f44bab58e1243029`](https://github.com/lcorneliussen/wtc-cli/tree/9da4ba3057b00f1292f53b65f44bab58e1243029).
+[`9da4ba3057b00f1292f53b65f44bab58e1243029`](https://github.com/lcorneliussen/taba/tree/9da4ba3057b00f1292f53b65f44bab58e1243029).
 The handbook's general reviewed baseline remains v0.1.51
 (`18652cbec6899bee283c16fb4f5e946013a65470`). A file on main is not proof
 of a published release. Newer plugin material is explicitly labeled and linked
