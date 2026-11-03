@@ -1,0 +1,19 @@
+---
+// Vanity import path for the Go module taba.sh/taba.
+// `go install taba.sh/taba/cmd/taba@latest` asks taba.sh/taba?go-get=1 (and
+// longer paths, which 404) for this tag. GitHub Pages ignores the query string.
+const repo = 'https://github.com/lcorneliussen/taba';
+---
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="go-import" content={`taba.sh/taba git ${repo}`}>
+  <meta name="go-source" content={`taba.sh/taba ${repo} ${repo}/tree/main{/dir} ${repo}/blob/main{/dir}/{file}#L{line}`}>
+  <meta http-equiv="refresh" content="0; url=/">
+  <title>taba</title>
+</head>
+<body>
+  <p>The source for taba.sh/taba is at <a href={repo}>{repo}</a>. The project site is at <a href="/">taba.sh</a>.</p>
+</body>
+</html>
