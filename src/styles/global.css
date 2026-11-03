@@ -6,25 +6,18 @@
 .rename-link { display: inline-block; margin-top: 9px; color: var(--green); text-decoration: underline; text-underline-offset: 3px; }
 .rename-link:hover { color: #66833b; }
 
-/* The brand mark is selectable Unicode, including when copied as plain text. */
+/* The brand mark: an inline SVG on the forest tile. */
 .brand-mark {
-  display: inline-grid;
-  place-items: center;
+  display: block;
   flex: 0 0 auto;
   width: 34px;
   height: 34px;
   border-radius: 10px;
   background: #234e42;
-  color: #f7f7ed;
-  font-family: 'Hiragino Kaku Gothic ProN', 'Yu Gothic', 'Noto Sans CJK JP', sans-serif;
-  font-size: 27px;
-  font-weight: 500;
-  letter-spacing: 0;
-  line-height: 1;
 }
-footer .brand-mark { width: 28px; height: 28px; border-radius: 8px; font-size: 22px; }
+footer .brand-mark { width: 28px; height: 28px; border-radius: 8px; }
 @media (max-width: 420px) {
-  .site-header .brand-mark { width: 29px; height: 29px; border-radius: 9px; font-size: 23px; }
+  .site-header .brand-mark { width: 29px; height: 29px; border-radius: 9px; }
 }
 
 /* Documentation shares the same visual language, with Markdown as its source. */
