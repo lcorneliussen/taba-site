@@ -5,7 +5,7 @@ The custom domain is now `taba.sh`. The previous `wtc.sh` domain redirects to it
 ## Owner checklist
 
 1. Verify `taba.sh` in the GitHub account’s Settings → Pages. Add the exact TXT record GitHub provides; retain it after verification.
-2. In [repository Settings → Pages](https://github.com/lcorneliussen/wtc-site/settings/pages), select **GitHub Actions**. Confirm the `github-pages` environment permits `main`.
+2. In [repository Settings → Pages](https://github.com/lcorneliussen/taba-site/settings/pages), select **GitHub Actions**. Confirm the `github-pages` environment permits `main`.
 3. Save **taba.sh** as the custom domain **before pointing DNS at GitHub**, avoiding an unclaimed-domain takeover window. Custom Actions deployments ignore CNAME files; the repository setting is required.
 4. Inspect existing DNS records. Preserve mail and verification records; replace only conflicting website records. Set apex `@` A records to all four GitHub Pages addresses:
 

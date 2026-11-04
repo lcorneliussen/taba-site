@@ -21,7 +21,7 @@ for (const [width, height] of [[1440,900],[1280,720],[390,844],[320,640]]) {
   const notes = page.locator('.install-heading a');
   const version = command.split('@').at(-1);
   assert.match(version, /^\d+\.\d+\.\d+$/);
-  assert.equal(await notes.getAttribute('href'), `https://github.com/lcorneliussen/wtc-cli/releases/tag/v${version}`);
+  assert.equal(await notes.getAttribute('href'), `https://github.com/lcorneliussen/taba/releases/tag/v${version}`);
   assert.match(await notes.innerText(), new RegExp(`v${version.replaceAll('.', '\\.')}`));
   const checked = page.locator('.release-check');
   const date = await checked.locator('time').getAttribute('datetime');

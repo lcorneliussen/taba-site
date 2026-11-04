@@ -280,7 +280,7 @@ The skills now call CLI commands. During the transition, thin Bash wrappers keep
 </aside>
 </div>
 
-<div class="record-links"><span>Public record</span><ul><li><a href="https://github.com/lcorneliussen/wtc-cli/commit/237def7cb6884f8c237f673b8a2c088fec89dd8f">29 September. The CLI skeleton</a></li><li><a href="https://github.com/lcorneliussen/wtc-cli/blob/579b66280f1b4cc391b4731dd0022703cb4ce651/docs/harness-design.md">6 October. A smaller harness with explicit project ownership</a></li></ul></div>
+<div class="record-links"><span>Public record</span><ul><li><a href="https://github.com/lcorneliussen/taba/commit/237def7cb6884f8c237f673b8a2c088fec89dd8f">29 September. The CLI skeleton</a></li><li><a href="https://github.com/lcorneliussen/taba/blob/579b66280f1b4cc391b4731dd0022703cb4ce651/docs/harness-design.md">6 October. A smaller harness with explicit project ownership</a></li></ul></div>
 
 </div>
 </div>
@@ -326,9 +326,9 @@ In this setup, the agent prepares code and PR descriptions in a sandbox. The gat
 
 This needs explicit sandbox and gateway configuration. Selecting a person's credentials doesn't isolate their files or tools from other users. A model agreeing to follow the rules is not a security boundary.
 
-I'm still working on making the team agents safe and useful. The code is in the [collection CLI](https://github.com/lcorneliussen/wtc-cli), its [OpenClaw plugin](https://github.com/lcorneliussen/wtc-cli/tree/main/openclaw-plugin), the [Bitbucket integration](https://github.com/lcorneliussen/openclaw-bitbucket) and the [deployment boilerplate](https://github.com/lcorneliussen/clawfather-boilerplate). The [OpenClaw guide](../docs/openclaw/) has the integration details.
+I'm still working on making the team agents safe and useful. The code is in the [collection CLI](https://github.com/lcorneliussen/taba), its [OpenClaw plugin](https://github.com/lcorneliussen/taba/tree/main/openclaw-plugin), the [Bitbucket integration](https://github.com/lcorneliussen/openclaw-bitbucket) and the [deployment boilerplate](https://github.com/lcorneliussen/clawfather-boilerplate). The [OpenClaw guide](../docs/openclaw/) has the integration details.
 
-<div class="record-links"><span>Public record</span><ul><li><a href="https://github.com/lcorneliussen/wtc-boilerplate/commit/607b0a94de0b6e9958e1d45a6865ddf7ed226b73">29 September. Separate review before a draft PR became ready</a></li><li><a href="https://x.com/lcorneliussen/status/2110439039463751749">14 October. The collection plugin announcement</a></li><li><a href="https://github.com/lcorneliussen/wtc-cli/commit/b63857c0a84c573387d493c80ff4b9f041106068">14 October. One conversation across a collection</a></li><li><a href="https://github.com/lcorneliussen/wtc-cli/commit/2cb70fe6facb8fb4239ffbad81bec4586b3b22a0">19 October. The host-mode integration reached main</a></li></ul></div>
+<div class="record-links"><span>Public record</span><ul><li><a href="https://github.com/lcorneliussen/wtc-boilerplate/commit/607b0a94de0b6e9958e1d45a6865ddf7ed226b73">29 September. Separate review before a draft PR became ready</a></li><li><a href="https://x.com/lcorneliussen/status/2110439039463751749">14 October. The collection plugin announcement</a></li><li><a href="https://github.com/lcorneliussen/taba/commit/b63857c0a84c573387d493c80ff4b9f041106068">14 October. One conversation across a collection</a></li><li><a href="https://github.com/lcorneliussen/taba/commit/2cb70fe6facb8fb4239ffbad81bec4586b3b22a0">19 October. The host-mode integration reached main</a></li></ul></div>
 
 <div class="x-post" data-x-post="2110439731540775194" data-x-media="hidden">
 <aside class="post-card" aria-label="Post by Lars Corneliussen">
@@ -357,7 +357,7 @@ A useful command still needs a name people remember. Taba gives it one, with com
 
 The rename is still in progress. The [rename guide](../wtc-is-now-taba/) tracks the command and configuration changes.
 
-<div class="record-links"><span>Public record</span><ul><li><a href="https://x.com/lcorneliussen/status/2107368417787269264">6 October. “Horrible name.”</a></li><li><a href="https://github.com/lcorneliussen/wtc-site/commit/41853b3776c287d0f2320434b6c61e689c02df52">26 October. The site adopted the taba name</a></li></ul></div>
+<div class="record-links"><span>Public record</span><ul><li><a href="https://x.com/lcorneliussen/status/2107368417787269264">6 October. “Horrible name.”</a></li><li><a href="https://github.com/lcorneliussen/taba-site/commit/41853b3776c287d0f2320434b6c61e689c02df52">26 October. The site adopted the taba name</a></li></ul></div>
 
 <div class="x-post" data-x-post="2114785403844850159" data-x-media="hidden">
 <aside class="post-card" aria-label="Post by Lars Corneliussen">

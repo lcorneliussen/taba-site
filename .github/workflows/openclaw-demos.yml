@@ -22,7 +22,7 @@ jobs:
         run: node -e "const p=require('./public/media/openclaw/provenance.json'); if(!/^[a-f0-9]{40}$/.test(p.revision)) process.exit(1); console.log('revision='+p.revision)" >> "$GITHUB_OUTPUT"
       - uses: actions/checkout@v7
         with:
-          repository: lcorneliussen/wtc-cli
+          repository: lcorneliussen/taba
           ref: ${{ steps.source.outputs.revision }}
           path: upstream
           persist-credentials: false

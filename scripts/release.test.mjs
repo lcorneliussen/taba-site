@@ -4,15 +4,15 @@ import { publishedRelease } from '../src/data/release.mjs';
 import { protectCode } from '../src/lib/protect-code.mjs';
 const response = (overrides = {}) => async () => ({ ok: true, json: async () => ({
   draft: false, prerelease: false, tag_name: 'v0.2.3',
-  html_url: 'https://github.com/lcorneliussen/wtc-cli/releases/tag/v0.2.3', ...overrides,
+  html_url: 'https://github.com/lcorneliussen/taba/releases/tag/v0.2.3', ...overrides,
 }) });
 
 test('one published stable tag determines the command and numbered notes', async () => {
   const release = await publishedRelease(response());
   assert.equal(release.live, true);
   assert.equal(release.tag, 'v0.2.3');
-  assert.equal(release.command, 'mise use -g github:lcorneliussen/wtc-cli@0.2.3');
-  assert.equal(release.notes, 'https://github.com/lcorneliussen/wtc-cli/releases/tag/v0.2.3');
+  assert.equal(release.command, 'mise use -g github:lcorneliussen/taba@0.2.3');
+  assert.equal(release.notes, 'https://github.com/lcorneliussen/taba/releases/tag/v0.2.3');
 });
 
 test('unavailable or untrusted release evidence uses the dated verified fallback', async () => {
