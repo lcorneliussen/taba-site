@@ -1,7 +1,7 @@
 {
-  "sourceRevision": "33c4c8ec1a59fb5cc9eaf96c0d9fac228feb86e5",
-  "sourceDigest": "47cbcee562c3348b9787e184f466205b2b8041d87ef17250752c77fa67a09588",
-  "fixtureDigest": "9bc709dc8db11425a0ed37501f3f6dff766cbc53ac9883eda2b40987c18e4ee7",
+  "sourceRevision": "6c0f3aabf6b1c778b3c64a9505c235d1cfbfbdcb",
+  "sourceDigest": "664a8e714c98c6f2ef88f6875ca06786452afb1570e19d4edb356e30b1886c61",
+  "fixtureDigest": "7ced8184844856354f05b3ab065e5327b3b3bc43a68509f6cbe77a7edb1e56b7",
   "renderer": "statusTUIModel.View",
   "synthetic": true,
   "actionsDispatched": false,
@@ -2635,6 +2635,56 @@
             }
           },
           {
+            "text": "       \n",
+            "style": {}
+          },
+          {
+            "text": "gadget  ",
+            "style": {
+              "fontWeight": "700"
+            }
+          },
+          {
+            "text": " feature… ",
+            "style": {}
+          },
+          {
+            "text": "#7     ↗",
+            "style": {
+              "color": "#56b6c2"
+            }
+          },
+          {
+            "text": " ",
+            "style": {}
+          },
+          {
+            "text": "✗",
+            "style": {
+              "color": "#dc6b73"
+            }
+          },
+          {
+            "text": " ",
+            "style": {}
+          },
+          {
+            "text": "✗",
+            "style": {
+              "color": "#dc6b73"
+            }
+          },
+          {
+            "text": " ",
+            "style": {}
+          },
+          {
+            "text": "✗",
+            "style": {
+              "color": "#dc6b73"
+            }
+          },
+          {
             "text": "       \n                                       \n",
             "style": {}
           },
@@ -2652,6 +2702,46 @@
             "text": "PR       REPO       STATE    TITLE     ",
             "style": {
               "opacity": ".65"
+            }
+          },
+          {
+            "text": "\n",
+            "style": {}
+          },
+          {
+            "text": "#7     ↗",
+            "style": {
+              "color": "#56b6c2"
+            }
+          },
+          {
+            "text": " ",
+            "style": {}
+          },
+          {
+            "text": "gadget    ",
+            "style": {
+              "fontWeight": "700"
+            }
+          },
+          {
+            "text": " ",
+            "style": {}
+          },
+          {
+            "text": "✗ confl…",
+            "style": {
+              "color": "#dc6b73"
+            }
+          },
+          {
+            "text": " ",
+            "style": {}
+          },
+          {
+            "text": "Improve t…",
+            "style": {
+              "fontWeight": "700"
             }
           },
           {
@@ -2695,7 +2785,7 @@
             }
           },
           {
-            "text": "\n                                       \n                                       \n                                       \n                                       \n                                       \n                                       \n                                       \n                                       \n",
+            "text": "\n                                       \n                                       \n                                       \n                                       \n                                       \n                                       \n",
             "style": {}
           },
           {
@@ -2705,7 +2795,7 @@
             }
           }
         ],
-        "plain": "taba/wtc status · example · 0s old · d…\n                                       \nREPO     BRANCH   PR       C M R       \nwidget   feature… #12345 ◇ ✓ ✗ ✓       \n                                       \nPRs                                    \nPR       REPO       STATE    TITLE     \n#12345 ↗ widget     ✗ confl… Improve t…\n                                       \n                                       \n                                       \n                                       \n                                       \n                                       \n                                       \n                                       \nn next actions · r refresh · l log · a…"
+        "plain": "taba/wtc status · example · 0s old · d…\n                                       \nREPO     BRANCH   PR       C M R       \nwidget   feature… #12345 ◇ ✓ ✗ ✓       \ngadget   feature… #7     ↗ ✗ ✗ ✗       \n                                       \nPRs                                    \nPR       REPO       STATE    TITLE     \n#7     ↗ gadget     ✗ confl… Improve t…\n#12345 ↗ widget     ✗ confl… Improve t…\n                                       \n                                       \n                                       \n                                       \n                                       \n                                       \nn next actions · r refresh · l log · a…"
       },
       "60": {
         "runs": [
@@ -2798,6 +2888,72 @@
             }
           },
           {
+            "text": "\n",
+            "style": {}
+          },
+          {
+            "text": "gadget          ",
+            "style": {
+              "fontWeight": "700"
+            }
+          },
+          {
+            "text": " feature/top… ",
+            "style": {}
+          },
+          {
+            "text": "#7     ↗",
+            "style": {
+              "color": "#56b6c2"
+            }
+          },
+          {
+            "text": " ",
+            "style": {}
+          },
+          {
+            "text": "✗",
+            "style": {
+              "color": "#dc6b73"
+            }
+          },
+          {
+            "text": " ",
+            "style": {}
+          },
+          {
+            "text": "✗",
+            "style": {
+              "color": "#dc6b73"
+            }
+          },
+          {
+            "text": " ",
+            "style": {}
+          },
+          {
+            "text": "✗",
+            "style": {
+              "color": "#dc6b73"
+            }
+          },
+          {
+            "text": " conflict",
+            "style": {
+              "color": "#dc6b73"
+            }
+          },
+          {
+            "text": "   ",
+            "style": {}
+          },
+          {
+            "text": "·   ",
+            "style": {
+              "opacity": ".65"
+            }
+          },
+          {
             "text": "\n                                                            \n",
             "style": {}
           },
@@ -2815,6 +2971,76 @@
             "text": "PR       REPO             STATE      C M R TITLE            ",
             "style": {
               "opacity": ".65"
+            }
+          },
+          {
+            "text": "\n",
+            "style": {}
+          },
+          {
+            "text": "#7     ↗",
+            "style": {
+              "color": "#56b6c2"
+            }
+          },
+          {
+            "text": " ",
+            "style": {}
+          },
+          {
+            "text": "gadget          ",
+            "style": {
+              "fontWeight": "700"
+            }
+          },
+          {
+            "text": " ",
+            "style": {}
+          },
+          {
+            "text": "✗ conflict",
+            "style": {
+              "color": "#dc6b73"
+            }
+          },
+          {
+            "text": " ",
+            "style": {}
+          },
+          {
+            "text": "✗",
+            "style": {
+              "color": "#dc6b73"
+            }
+          },
+          {
+            "text": " ",
+            "style": {}
+          },
+          {
+            "text": "✗",
+            "style": {
+              "color": "#dc6b73"
+            }
+          },
+          {
+            "text": " ",
+            "style": {}
+          },
+          {
+            "text": "✗",
+            "style": {
+              "color": "#dc6b73"
+            }
+          },
+          {
+            "text": " ",
+            "style": {}
+          },
+          {
+            "text": "Improve the gadg…",
+            "style": {
+              "fontWeight": "700"
             }
           },
           {
@@ -2888,7 +3114,7 @@
             }
           },
           {
-            "text": "\n                                                            \n                                                            \n                                                            \n                                                            \n                                                            \n                                                            \n                                                            \n                                                            \n",
+            "text": "\n                                                            \n                                                            \n                                                            \n                                                            \n                                                            \n                                                            \n",
             "style": {}
           },
           {
@@ -2898,7 +3124,7 @@
             }
           }
         ],
-        "plain": "taba/wtc status · example · 0s old · dev                    \n                                                            \nREPO             BRANCH       PR       C M R            ±   \nwidget           feature/top… #12345 ↗ ✓ ✗ ✓ conflict ◇ ·   \n                                                            \nPRs                                                         \nPR       REPO             STATE      C M R TITLE            \n#12345 ↗ widget           ✗ conflict ✓ ✗ ✓ Improve the widg…\n                                                            \n                                                            \n                                                            \n                                                            \n                                                            \n                                                            \n                                                            \n                                                            \nn next actions · r refresh · l log · a archived · ↗ link · …"
+        "plain": "taba/wtc status · example · 0s old · dev                    \n                                                            \nREPO             BRANCH       PR       C M R            ±   \nwidget           feature/top… #12345 ↗ ✓ ✗ ✓ conflict ◇ ·   \ngadget           feature/top… #7     ↗ ✗ ✗ ✗ conflict   ·   \n                                                            \nPRs                                                         \nPR       REPO             STATE      C M R TITLE            \n#7     ↗ gadget           ✗ conflict ✗ ✗ ✗ Improve the gadg…\n#12345 ↗ widget           ✗ conflict ✓ ✗ ✓ Improve the widg…\n                                                            \n                                                            \n                                                            \n                                                            \n                                                            \n                                                            \nn next actions · r refresh · l log · a archived · ↗ link · …"
       },
       "100": {
         "runs": [
@@ -3011,6 +3237,92 @@
             }
           },
           {
+            "text": "          \n",
+            "style": {}
+          },
+          {
+            "text": "gadget              ",
+            "style": {
+              "fontWeight": "700"
+            }
+          },
+          {
+            "text": " feature/topic                  ",
+            "style": {}
+          },
+          {
+            "text": "#7     ↗",
+            "style": {
+              "color": "#56b6c2"
+            }
+          },
+          {
+            "text": " ",
+            "style": {}
+          },
+          {
+            "text": "✗",
+            "style": {
+              "color": "#dc6b73"
+            }
+          },
+          {
+            "text": " ",
+            "style": {}
+          },
+          {
+            "text": "✗",
+            "style": {
+              "color": "#dc6b73"
+            }
+          },
+          {
+            "text": " ",
+            "style": {}
+          },
+          {
+            "text": "✗",
+            "style": {
+              "color": "#dc6b73"
+            }
+          },
+          {
+            "text": " conflict",
+            "style": {
+              "color": "#dc6b73"
+            }
+          },
+          {
+            "text": "   ",
+            "style": {}
+          },
+          {
+            "text": "·   ",
+            "style": {
+              "opacity": ".65"
+            }
+          },
+          {
+            "text": " ",
+            "style": {}
+          },
+          {
+            "text": "·  ",
+            "style": {
+              "opacity": ".65"
+            }
+          },
+          {
+            "text": " ",
+            "style": {}
+          },
+          {
+            "text": "✗  ",
+            "style": {
+              "color": "#dc6b73"
+            }
+          },
+          {
             "text": "          \n                                                                                                    \n",
             "style": {}
           },
@@ -3028,6 +3340,76 @@
             "text": "PR       REPO                 STATE      CHECKS MERGE REVIEWS TITLE                                 ",
             "style": {
               "opacity": ".65"
+            }
+          },
+          {
+            "text": "\n",
+            "style": {}
+          },
+          {
+            "text": "#7     ↗",
+            "style": {
+              "color": "#56b6c2"
+            }
+          },
+          {
+            "text": " ",
+            "style": {}
+          },
+          {
+            "text": "gadget              ",
+            "style": {
+              "fontWeight": "700"
+            }
+          },
+          {
+            "text": " ",
+            "style": {}
+          },
+          {
+            "text": "✗ conflict",
+            "style": {
+              "color": "#dc6b73"
+            }
+          },
+          {
+            "text": " ",
+            "style": {}
+          },
+          {
+            "text": "✗",
+            "style": {
+              "color": "#dc6b73"
+            }
+          },
+          {
+            "text": "      ",
+            "style": {}
+          },
+          {
+            "text": "✗",
+            "style": {
+              "color": "#dc6b73"
+            }
+          },
+          {
+            "text": "     ",
+            "style": {}
+          },
+          {
+            "text": "✗",
+            "style": {
+              "color": "#dc6b73"
+            }
+          },
+          {
+            "text": "       ",
+            "style": {}
+          },
+          {
+            "text": "Improve the gadget                    ",
+            "style": {
+              "fontWeight": "700"
             }
           },
           {
@@ -3101,7 +3483,7 @@
             }
           },
           {
-            "text": "\n                                                                                                    \n                                                                                                    \n                                                                                                    \n                                                                                                    \n                                                                                                    \n                                                                                                    \n                                                                                                    \n                                                                                                    \n",
+            "text": "\n                                                                                                    \n                                                                                                    \n                                                                                                    \n                                                                                                    \n                                                                                                    \n                                                                                                    \n",
             "style": {}
           },
           {
@@ -3115,7 +3497,7 @@
             "style": {}
           }
         ],
-        "plain": "taba/wtc status · example · 0s old · dev                                                            \n                                                                                                    \nREPO                 BRANCH                         PR       C M R            ±    ↑   ↓            \nwidget               feature/topic                  #12345 ↗ ✓ ✗ ✓ conflict ◇ ·    ·   ✗            \n                                                                                                    \nPRs                                                                                                 \nPR       REPO                 STATE      CHECKS MERGE REVIEWS TITLE                                 \n#12345 ↗ widget               ✗ conflict ✓      ✗     ✓       Improve the widget                    \n                                                                                                    \n                                                                                                    \n                                                                                                    \n                                                                                                    \n                                                                                                    \n                                                                                                    \n                                                                                                    \n                                                                                                    \nn next actions · r refresh · l log · a archived · ↗ link · ? help · q quit                          "
+        "plain": "taba/wtc status · example · 0s old · dev                                                            \n                                                                                                    \nREPO                 BRANCH                         PR       C M R            ±    ↑   ↓            \nwidget               feature/topic                  #12345 ↗ ✓ ✗ ✓ conflict ◇ ·    ·   ✗            \ngadget               feature/topic                  #7     ↗ ✗ ✗ ✗ conflict   ·    ·   ✗            \n                                                                                                    \nPRs                                                                                                 \nPR       REPO                 STATE      CHECKS MERGE REVIEWS TITLE                                 \n#7     ↗ gadget               ✗ conflict ✗      ✗     ✗       Improve the gadget                    \n#12345 ↗ widget               ✗ conflict ✓      ✗     ✓       Improve the widget                    \n                                                                                                    \n                                                                                                    \n                                                                                                    \n                                                                                                    \n                                                                                                    \n                                                                                                    \nn next actions · r refresh · l log · a archived · ↗ link · ? help · q quit                          "
       }
     },
     "checkout-conflict": {

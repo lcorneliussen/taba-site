@@ -42,9 +42,12 @@ export const scenarios = [
   {
     id: 'pr-conflict', group: 'Git and PRs', title: 'Clean checkout, conflicting draft PR',
     summary: 'The proposed merge can conflict even while the worktree has no local changes or merge in progress.',
-    read: [['Checkout', '· in ± means the working tree is clean. It does not predict a future merge.'], ['PR', 'The conflict warning belongs to the proposed source/base merge. Passing checks can remain visible beside it. ◇ is draft status.'], ['Narrow view', 'At 39 columns, draft state fits beside the number and the aligned M signal retains conflict state. At still narrower widths, leading markers can preserve state and identity while optional signals yield. Hidden columns are not missing source facts.']],
+    read: [['Checkout', '· in ± means both working trees are clean. It does not predict a future merge.'], ['PR', 'Both proposed merges conflict. #12345 is a draft with passing checks and approval; #7 also has failed checks and requested changes. ◇ is draft status.'], ['Narrow view', 'At 39 columns, draft state fits beside the number and the aligned M signals retain conflict state on both rows. At still narrower widths, leading markers can preserve state and identity while optional signals yield. Hidden columns are not missing source facts.']],
     inspect: 'Inspect the PR’s base and source commits. GitHub supplies mergeability; Bitbucket can use a local prediction when the exact reported commit objects are already available.',
-    snapshot: single(pr('12345', { merge: 'CONFLICTING', draft: true })), expect: ['conflict', '◇', '#12345'],
+    snapshot: snapshot(
+      [repo('widget', { pr: pr('12345', { merge: 'CONFLICTING', draft: true }) }), repo('gadget', { pr: pr('7', { url: 'https://example.invalid/gadget/pull/7', merge: 'DIRTY', checks: 'FAILURE', review: 'changes' }) })],
+      [enlisted(pr('12345', { merge: 'CONFLICTING', draft: true })), enlisted(pr('7', { url: 'https://example.invalid/gadget/pull/7', merge: 'DIRTY', checks: 'FAILURE', review: 'changes' }), { repo: 'gadget', title: 'Improve the gadget' })],
+    ), expect: ['conflict', '◇', '#12345', '#7', '✗ ✗ ✗'],
   },
   {
     id: 'checkout-conflict', group: 'Git and PRs', title: 'A merge conflict already exists in the checkout',
