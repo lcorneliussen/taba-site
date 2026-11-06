@@ -40,3 +40,12 @@ test('compact frames retain distinguishing state and closed-branch warnings', ()
     assert(plain('runtime').includes('SERVICES'));
   }
 });
+test('native frames distinguish one-tier builds and retained merged observations', () => {
+  const built = capture.frames.built[100].plain;
+  assert(built.includes('PROD') && built.includes('P✓#105'));
+  assert(!/\bTEST\b/.test(built));
+  const retained = capture.frames['retained-branch'][100].plain.split('\n').find(line => line.startsWith('#48'));
+  assert.match(retained, /⚠ catch-up.*✓ +· +✓/);
+  const followed = capture.frames['merged-waiting'][100].plain.split('\n').find(line => line.startsWith('#48'));
+  assert.match(followed, /→ test.*· +· +·/);
+});

@@ -8,7 +8,7 @@ const base = import.meta.env.BASE_URL;
 const frontmatter = {
   title: 'Reading status',
   description: 'Read the whole situation: your Git checkout, its pull request, review and check results, shared-branch builds, and what still needs attention.',
-  source: 'https://github.com/lcorneliussen/wtc-cli/blob/a4e97cd543a95cbb83d11af975d1cdf526ef2239/docs/status.md',
+  source: 'https://github.com/lcorneliussen/wtc-cli/blob/5b6a7c29ef8fa4ab9b5761af80b886cc15d47fc8/docs/status.md',
   sourceLabel: 'Read the complete CLI status guide',
 };
 ---
@@ -44,14 +44,26 @@ const frontmatter = {
       <tr><td><code>✗3</code> / <code>✗</code> in ↓</td><td>A local or PR conflict is present; a nonzero behind count is retained when available.</td><td>A PR conflict can mark this cell even when the local ± column is clean.</td></tr>
       <tr><td><code>#48</code> beside C/M/R</td><td>A PR identifier, followed by checks, mergeability and review facts.</td><td>Numbers are padded across the displayed cohort. Optional link space is reserved when it fits.</td></tr>
       <tr><td>CHECKS / MERGE / REVIEWS</td><td>Readable wide headings for C / M / R.</td><td>Each slot keeps its meaning even when another slot is unknown. A failure in one does not erase the others.</td></tr>
-      <tr><td>TEST <code>T✓#105</code></td><td>A successful build/run 105 for the configured <code>default_ref</code>.</td><td>The heading says TEST; T is its cell prefix. This is separate from the PR’s C result.</td></tr>
-      <tr><td>PROD <code>P●#53</code></td><td>A pending build/run 53 for <code>production_ref</code>, when configured.</td><td>Providers can supply a build label without a number. A build result does not independently verify a deployment.</td></tr>
+      <tr><td>TEST <code>T✓#105</code></td><td>A successful development-tier build/run 105, when development and production map to different branches.</td><td>The heading says TEST; T is its cell prefix. This is separate from the PR’s C result.</td></tr>
+      <tr><td>PROD <code>P●#53</code></td><td>A pending build/run 53 for the resolved production tier.</td><td>The branch can come from <code>production_ref</code>, <code>release_ref</code> or the mapping below. A build does not independently verify deployment.</td></tr>
       <tr><td><code>T○#104</code> / <code>P○#52</code></td><td>The build commit is known not to contain this repository row’s HEAD.</td><td>The hollow circle replaces the ordinary result glyph. Open the build or JSON for its underlying result and SHA. Unavailable ancestry stays unknown.</td></tr>
       <tr><td>STATE after merge</td><td><code>→ test</code>, <code>● test</code>, <code>✗ test</code>, <code>? test</code>; the same for prod; then <code>✓ built</code>.</td><td>Waiting for containment, pending, failed, attribution unknown, or followed available builds complete. Plain <code>merged</code> can mean no build follow-up was established.</td></tr>
       <tr><td>LOCAL / SERVICES</td><td>Task marks and the service/tunnel/resource detail table.</td><td>Names and state color belong together. Uppercase default tunnel marks indicate public/unknown exposure, not CI failure.</td></tr>
     </tbody>
   </table>
   <p>A normal build-result glyph can still appear when containment is unavailable. Only the hollow circle explicitly establishes that HEAD is outside the build. Inspect <code>head_in_build</code> in JSON to distinguish known containment from an unknown ancestry check.</p>
+
+  <h3>Which branch gets TEST or PROD?</h3>
+  <p>The production branch comes from <code>production_ref</code>, then <code>release_ref</code>. Without either, development branch <code>dev</code> uses <code>master</code> for production; other development branches use themselves. An empty <code>default_ref</code> falls back to <code>main</code>. If the branches coincide, only PROD exists. A different production branch also creates a TEST tier for the development branch. Columns still require a reported build and enough terminal width.</p>
+  <table>
+    <thead><tr><th>Configuration</th><th>Resulting tiers</th></tr></thead>
+    <tbody>
+      <tr><td><code>default_ref: origin/main</code>, no production/release ref</td><td>PROD: main only</td></tr>
+      <tr><td><code>default_ref: origin/dev</code>, no production/release ref</td><td>TEST: dev; PROD: master</td></tr>
+      <tr><td><code>default_ref: origin/main</code>, <code>release_ref: origin/release</code></td><td>TEST: main; PROD: release</td></tr>
+      <tr><td><code>default_ref: origin/main</code>, <code>production_ref: origin/main</code></td><td>PROD: main only</td></tr>
+    </tbody>
+  </table>
 
   <h3>Read the three PR signals as a sentence</h3>
   <p><code>✓ ↓ ●</code> means “checks passed, behind base, review waiting.” <code>● ✓ ✎</code> means “checks pending, clean mergeability, review commented.” Neither is a complete merge decision.</p>
@@ -63,7 +75,8 @@ const frontmatter = {
       <tr><td>R — reviews</td><td><code>✓</code> approved; <code>✗</code> changes requested; <code>●</code> waiting; <code>✎</code> commented; <code>∅</code> no reviewers; <code>·</code> absent/unknown/none.</td></tr>
     </tbody>
   </table>
-  <p><code>◇</code> adds draft state. Wide repository cells place the conflict label and draft marker after the three signal slots. A compact row can replace the long conflict suffix with a leading <code>✗</code> and put draft state before the identifier. In the PR table, conflict takes priority over draft in STATE; the repository cell can retain both markers. Completed PRs use dots in C/M/R and move follow-up information into STATE.</p>
+  <p><code>◇</code> adds draft state. Wide repository cells place the conflict label and draft marker after the three signal slots. A compact row can replace the long conflict suffix with a leading <code>✗</code> and put draft state before the identifier. In the PR table, conflict takes priority over draft in STATE; the repository cell can retain both markers.</p>
+  <p>In the PR table, merged entries no longer associated with their retained branch use dots in C/M/R and move build follow-up into STATE. A retained on-branch entry keeps its recorded C/M/R observations while STATE reports catch-up, extra commits or unknown landing evidence. Those observations are not a new post-merge gate. Build follow-up needs a recorded merge commit; it starts at the PR’s base tier, or the first tier when no base was recorded.</p>
 
   <h2 id="support">What is detected, and where it comes from</h2>
   <p>This walkthrough covers <strong>local terminal status</strong>. The <a href="../openclaw/">OpenClaw collection panel</a> has its own rendering and gateway-managed workflow; it is not a pixel-for-pixel copy of this table.</p>
@@ -75,7 +88,7 @@ const frontmatter = {
       <tr><td>PR checks</td><td>The PR’s status-check rollup. Observed failure wins; unfinished or unknown conclusions remain pending. Neutral/skipped conclusions count as settled positive observations.</td><td>Commit statuses and applicable head pipelines, tied to the reported PR head. Incomplete collection cannot claim a clean absence or success.</td></tr>
       <tr><td>Review summary</td><td><code>reviewDecision</code>, latest reviews, requests and draft state. Comments are distinct from approval.</td><td>Participant approval / changes-requested state. An approval can summarize as approved even when other review work remains; this is not a proof that every reviewer finished.</td></tr>
       <tr><td>Mergeability</td><td>The forge’s merge state; explicit conflicting mergeability takes precedence.</td><td>Unknown forge mergeability can be supplemented by <code>git merge-tree</code> on the exact reported source/base commits already present locally. No object fetch or actual merge is done for that prediction.</td></tr>
-      <tr><td>Shared-branch builds</td><td>Checks on the configured branch tip; a linked workflow run number where available.</td><td>Bitbucket Pipelines for configured branches. A project build hook can replace/refine either provider. Build columns appear only for tiers with reported observations and enough display width.</td></tr>
+      <tr><td>Shared-branch builds</td><td>Checks on the mapped tier’s branch tip; a linked workflow run number where available.</td><td>Bitbucket Pipelines for mapped branches. A project build hook can replace/refine either provider. Build columns appear only for tiers with reported observations and enough display width.</td></tr>
       <tr><td>Build containment / landing</td><td colspan="2">Local ancestry and available forge identities associate builds with HEAD/merge commits. Retained merged branches can report landed, follow-up or unknown, including squash history.</td></tr>
       <tr><td>Services and resources</td><td colspan="2">Opt-in local runtime declarations, runner observations, readiness, address/login problems, resource hooks and tunnel exposure. See <a href="../services/">services and previews</a>.</td></tr>
     </tbody>
@@ -101,7 +114,7 @@ wtc status --local --json  # local preview; no forge calls</code></pre>
   <details class="source-notes"><summary>Source and scope of this roundup</summary>
     <p>The synthetic examples are generated by <code>scripts/capture-status-guide.mjs</code> from the CLI’s existing recording adapter. That adapter calls the native view and refuses commands. Captures include wide (100), medium (60) and compact (39) column layouts.</p>
     <p>These terminal examples were captured from the renderer in <a href={`https://github.com/lcorneliussen/wtc-cli/tree/${replay.sourceRevision}`}>CLI source {replay.sourceRevision.slice(0, 7)}</a>. Their revision is recorded with the replay data.</p>
-    <p>Collection and provider explanations were checked against <a href="https://github.com/lcorneliussen/wtc-cli/tree/a4e97cd543a95cbb83d11af975d1cdf526ef2239">CLI source a4e97cd</a>: status Git/PR collection, forge checks/reviews, build providers and containment, runtime observations, and the existing <a href="https://github.com/lcorneliussen/wtc-cli/blob/a4e97cd543a95cbb83d11af975d1cdf526ef2239/docs/status-mergeability.md">mergeability</a>, <a href="https://github.com/lcorneliussen/wtc-cli/blob/a4e97cd543a95cbb83d11af975d1cdf526ef2239/docs/squash-status.md">squash landing</a> and <a href="https://github.com/lcorneliussen/wtc-cli/blob/a4e97cd543a95cbb83d11af975d1cdf526ef2239/docs/status-version.md">version</a> contracts. This guide changes no collector or readiness policy.</p>
+    <p>Collection and provider explanations were checked against <a href="https://github.com/lcorneliussen/wtc-cli/tree/5b6a7c29ef8fa4ab9b5761af80b886cc15d47fc8">CLI source 5b6a7c2</a>: status Git/PR collection, forge checks/reviews, build providers and containment, runtime observations, and the existing <a href="https://github.com/lcorneliussen/wtc-cli/blob/5b6a7c29ef8fa4ab9b5761af80b886cc15d47fc8/docs/status-mergeability.md">mergeability</a>, <a href="https://github.com/lcorneliussen/wtc-cli/blob/5b6a7c29ef8fa4ab9b5761af80b886cc15d47fc8/docs/squash-status.md">squash landing</a> and <a href="https://github.com/lcorneliussen/wtc-cli/blob/5b6a7c29ef8fa4ab9b5761af80b886cc15d47fc8/docs/status-version.md">version</a> contracts. This guide changes no collector or readiness policy.</p>
   </details>
 </Docs>
 <style>

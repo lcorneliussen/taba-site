@@ -56,7 +56,7 @@ export const scenarios = [
   {
     id: 'merged-waiting', group: 'After merge', title: 'Merged, awaiting a build that contains the merge',
     summary: 'The latest successful branch build may predate the PR. The PR row follows the merge rather than celebrating an unrelated green run.',
-    read: [['Repository', '⌂ main is a detached checkout. TEST and PROD describe the configured branch tiers, rather than the PR check run.'], ['PR state', '→ test means the observed test-tier build does not contain the merge. ● test means a containing build is pending; ✗ test means it failed.'], ['C/M/R', 'Completed PRs show · in these slots. The relevant delivery observation moves to STATE.']],
+    read: [['Repository', '⌂ main is a detached checkout. TEST and PROD describe the configured branch tiers, rather than the PR check run.'], ['PR state', '→ test means the observed test-tier build does not contain the merge. ● test means a containing build is pending; ✗ test means it failed.'], ['C/M/R', 'This merged PR is no longer on its retained branch, so these slots show ·. The relevant delivery observation moves to STATE. A retained on-branch PR instead keeps its recorded signals.']],
     inspect: 'Open the branch build and check its commit. If commit objects are unavailable, attribution stays unknown; a successful result alone cannot establish that it built the merge.',
     snapshot: merged({ stage: 'tip', checks: 'WAITING', build: '104' }, build('main', '104', 'SUCCESS', false), build('production', '52', 'SUCCESS', false)), expect: ['→ test', 'T○#104'],
   },
@@ -68,18 +68,18 @@ export const scenarios = [
     snapshot: merged({ stage: 'prod', checks: 'PENDING', build: '53' }, build('main', '105'), build('production', '53', 'PENDING')), expect: ['● prod', 'T✓#105', 'P●#53'],
   },
   {
-    id: 'built', group: 'After merge', title: 'Observed build follow-up is complete',
-    summary: '✓ built means the followed, available build tiers passed with the merge contained in their commits.',
-    read: [['PR state', '✓ built replaces the waiting/failing tier label once the followed builds pass.'], ['Scope of that result', 'A missing build provider or a tier that reports no build does not turn this into a universal release certificate. The collector follows available configured observations.'], ['Archive', 'Older merged entries move behind the a archive toggle after the configured age; hidden does not mean deleted.']],
+    id: 'built', group: 'After merge', title: 'One shared branch, production-tier build complete',
+    summary: 'With default_ref origin/main and no production/release ref, main maps to PROD only. ✓ built means the followed, available build passed with the merge contained.',
+    read: [['PR state', '✓ built replaces the waiting/failing tier label once the followed builds pass.'], ['Tier mapping', 'P✓#105 is build 105 of main. There is no TEST tier when development and production resolve to the same branch; the missing TEST column is intentional.'], ['Scope of that result', 'A missing build provider or a tier that reports no build does not turn this into a universal release certificate. The collector follows available configured observations.']],
     inspect: 'Verify any required deployment or release separately. For the exact configured follow-up facts, inspect status JSON and the linked builds.',
-    snapshot: merged({ stage: 'done', checks: 'SUCCESS' }, build('main', '105'), build('production', '53')), expect: ['✓ built', 'T✓#105', 'P✓#53'],
+    snapshot: merged({ stage: 'done', checks: 'SUCCESS' }, null, build('main', '105')), expect: ['✓ built', 'P✓#105'],
   },
   {
     id: 'retained-branch', group: 'After merge', title: 'Merged PR, retained branch, nonzero ahead count',
     summary: 'Commit identities can differ after squash landing. A residual count alone cannot establish unpublished work or data loss.',
-    read: [['Branch', 'The checkout is still on the old feature branch. Its upstream is reported gone.'], ['PR state', '⚠ catch-up means the merged PR is still associated with that branch. The title explains established landing. ⚠ extra would instead flag follow-up commits; unknown means the evidence cannot establish landing.'], ['↑5', 'These are raw commits relative to origin/main in this fixture. They are not five changed files or proof that five commits must be pushed.']],
+    read: [['Branch', 'The checkout is still on the old feature branch. Its upstream is reported gone.'], ['PR state', '⚠ catch-up means the merged PR is still associated with that branch. The title explains established landing. ⚠ extra would instead flag follow-up commits; unknown means the evidence cannot establish landing.'], ['C/M/R', 'The on-branch entry keeps its recorded checks and review: ✓ · ✓ here. MERGED uses the merge-slot fallback dot; this does not mean the PR’s merged state is unknown. These are retained observations, not a new post-merge gate.'], ['↑5', 'These are raw commits relative to origin/main in this fixture. They are not five changed files or proof that five commits must be pushed.']],
     inspect: 'Inspect ahead_ref, ahead_basis and landing in status JSON before returning to the development tip. The display does not authorize forced cleanup.',
-    snapshot: snapshot([repo('widget', { branch_display: 'feature/topic [gone]', ahead: 5, ahead_ref: 'origin/main', ahead_basis: 'development-tip', upstream_state: 'gone', landing: { state: 'landed', reason: 'full historical landing established' } })], [{ repo: 'widget', number: '48', url: url('48'), state: 'MERGED', merge: 'MERGED', merged_on: '2026-01-05T10:00:00Z', on_branch: true, title: 'Improve the widget — fully landed; catch-up', landing: { state: 'landed', reason: 'full historical landing established' } }]),
+    snapshot: snapshot([repo('widget', { branch_display: 'feature/topic [gone]', ahead: 5, ahead_ref: 'origin/main', ahead_basis: 'development-tip', upstream_state: 'gone', landing: { state: 'landed', reason: 'full historical landing established' } })], [{ repo: 'widget', number: '48', url: url('48'), state: 'MERGED', merge: 'MERGED', checks: 'SUCCESS', review: 'approved', merged_on: '2026-01-05T10:00:00Z', on_branch: true, title: 'Improve the widget — fully landed; catch-up', landing: { state: 'landed', reason: 'full historical landing established' } }]),
     expect: ['[gone]', '⚠ catch-up'],
   },
   {
