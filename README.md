@@ -48,7 +48,7 @@ The link check validates every generated HTML page’s internal links, fragments
 
 Local-terminal examples follow the upstream CLI getting-started guide and explicitly pin v0.1.51. OpenClaw guidance is separately labeled for the gateway-integrated build; it must not suggest `wtc init` or `wtc new` on a gateway. Reconcile both with their upstream instructions when updating commands.
 
-## Documentation coverage and release intake
+## Reading status
 
 The interactive [Reading status](src/pages/docs/status.astro) guide uses complete
 synthetic snapshots rendered by the CLI, with separate explanations of Git, PR,
@@ -113,6 +113,10 @@ Inspect the artifacts before sharing. For a local walkthrough, an optional
 gallery link to the guide. That path is ignored by Git; remove it before a local
 production build, which copies public assets. CI and production need no capture
 tool or generated media.
+
+## Documentation coverage and release intake
+
+Validate the handbook baseline or prepare an upstream intake report:
 
 ```sh
 npm run test:coverage
