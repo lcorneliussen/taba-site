@@ -82,6 +82,38 @@ npm run test:status:browser -- "http://127.0.0.1:${WTC_SITE_PORT}/"
 This checks all scenario/width choices, navigation, direct links, mobile overflow
 and the no-JavaScript fallback. It starts no server or application action.
 
+For an independent native recording check, the optional bridge also accepts the
+capture tool from [CLI PR #341](https://github.com/lcorneliussen/wtc-cli/pull/341)
+([recording issue #325](https://github.com/lcorneliussen/wtc-cli/issues/325)).
+Inspect that tool before running it. Until it lands, use a read-only source
+export and pass its full revision; the bridge verifies the tool's bytes against
+that commit in the CLI object store. This is not a site build dependency.
+
+With the tool's Python dependencies (`pyte`, `wcwidth`), Go, Node and an installed
+headless Chrome available:
+
+```sh
+npm run status:verify-native -- --cli-root ../wtc-cli \
+  --capture-tool /path/to/reviewed-export/tools/visual-evidence/capture.py \
+  --tool-revision 81830dc4e566997c8cfc4ee9cf2b2e9e0b56ca04 \
+  --out /path/outside-both-repos/native-status-evidence \
+  --chrome /path/to/chrome-headless-shell
+```
+
+The output directory must be empty. All 36 native frames must pass the tool's
+semantic and terminal-cell roundtrip assertions and match the committed replay
+text exactly. A source fingerprint must remain stable across every batch. The
+gallery retains native ANSI, PNG cell previews and manifests with assertions,
+artifact hashes, source fingerprints and tool versions. These are real renderer
+outputs with synthetic inputs; they do not exercise live collectors or provider
+accounts, and PNG fonts/styles can differ from a terminal.
+
+Inspect the artifacts before sharing. For a local walkthrough, an optional
+`public/status-evidence` symlink to the inspected output adds a development-only
+gallery link to the guide. That path is ignored by Git; remove it before a local
+production build, which copies public assets. CI and production need no capture
+tool or generated media.
+
 ```sh
 npm run test:coverage
 npm run check:coverage

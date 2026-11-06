@@ -1,6 +1,9 @@
 ---
 import Docs from '../../layouts/Docs.astro';
 import StatusExplorer from '../../components/StatusExplorer.astro';
+import { existsSync } from 'node:fs';
+const hasLocalEvidence = import.meta.env.DEV && existsSync(new URL('../../../public/status-evidence/report.json', import.meta.url));
+const base = import.meta.env.BASE_URL;
 const frontmatter = {
   title: 'Reading status',
   description: 'Read the whole situation: your Git checkout, its pull request, review and check results, shared-branch builds, and what still needs attention.',
@@ -28,6 +31,7 @@ const frontmatter = {
   <h2 id="walkthrough">Try complete situations</h2>
   <p>Choose a situation, then compare wide and compact terminals. These are outputs of the actual renderer, with synthetic facts. Optional columns yield on narrower screens; a hidden signal is not a newly unknown fact.</p>
   <StatusExplorer />
+  {hasLocalEvidence && <p><a href={`${base}status-evidence/`}>Inspect the actual native capture files →</a> This local evidence set includes PNG terminal-cell previews, raw native ANSI, source fingerprints and per-frame assertions. Every captured frame is checked against the guide’s replay text.</p>}
 
   <h2 id="columns">Columns and numbers in context</h2>
   <table>
