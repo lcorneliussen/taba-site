@@ -50,6 +50,25 @@ Local-terminal examples follow the upstream CLI getting-started guide and explic
 
 ## Documentation coverage and release intake
 
+The interactive [Reading status](src/pages/docs/status.astro) guide uses complete
+synthetic snapshots rendered by the CLI, with separate explanations of Git, PR,
+review, build and runtime observations. Its development-source boundary is
+explicit; it does not upgrade the release-pinned handbook baseline.
+
+To regenerate its selectable terminal examples from a clean CLI source checkout:
+
+```sh
+npm run status:capture -- ../wtc-cli
+```
+
+The source must include the status presentation described by the guide. The
+capture records its exact revision and source digest, checks the scenario's
+expected representations, and uses the existing recording-only Go adapter at
+100, 60 and 39 columns. It executes no collector, action or agent handoff. Go
+test binaries stay in a temporary directory; the site's text replay data is
+`src/data/status-frames.json`. Inspect all situations and widths in the local
+preview after regeneration. Unreleased examples stay labeled as development.
+
 ```sh
 npm run test:coverage
 npm run check:coverage

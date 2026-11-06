@@ -19,9 +19,10 @@
       "pages": [
         "src/pages/docs/commands.md",
         "src/pages/docs/collections.md",
-        "src/pages/docs/troubleshooting.md"
+        "src/pages/docs/troubleshooting.md",
+        "src/pages/docs/status.astro"
       ],
-      "reason": "Handbook summarizes the user workflow; full versioned contract remains upstream."
+      "reason": "Handbook summarizes the command workflow; full versioned contract remains upstream. Reading status additionally labels a separately pinned current-development renderer walkthrough; it does not change this release baseline."
     },
     {
       "path": "docs/demos/README.md",

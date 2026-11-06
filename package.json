@@ -19,7 +19,8 @@
     "demos:openclaw:interactions": "node scripts/record-openclaw-interactions.mjs",
     "test:visual": "node --test scripts/openclaw-visual-audit.test.mjs scripts/record-openclaw-tui.test.mjs",
     "demos:openclaw:buddy": "node scripts/record-openclaw-tui.mjs",
-    "test:story": "node scripts/why-taba-qa.mjs --dist"
+    "test:story": "node scripts/why-taba-qa.mjs --dist",
+    "status:capture": "node scripts/capture-status-guide.mjs"
   },
   "dependencies": {
     "astro": "^7.3.8"
