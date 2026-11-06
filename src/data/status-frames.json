@@ -1,6 +1,6 @@
 {
-  "sourceRevision": "5b6a7c29ef8fa4ab9b5761af80b886cc15d47fc8",
-  "sourceDigest": "8b0bc3c077abaf7062ee402c83c92ea797874a50e7f3931c11878dfd28614606",
+  "sourceRevision": "33c4c8ec1a59fb5cc9eaf96c0d9fac228feb86e5",
+  "sourceDigest": "47cbcee562c3348b9787e184f466205b2b8041d87ef17250752c77fa67a09588",
   "fixtureDigest": "9bc709dc8db11425a0ed37501f3f6dff766cbc53ac9883eda2b40987c18e4ee7",
   "renderer": "statusTUIModel.View",
   "synthetic": true,
@@ -2593,25 +2593,49 @@
             "style": {}
           },
           {
-            "text": "✗ ",
+            "text": "#12345",
             "style": {
-              "color": "#dc6b73"
+              "color": "#56b6c2"
             }
           },
           {
-            "text": "◇ ",
+            "text": " ◇",
             "style": {
               "opacity": ".65"
             }
           },
           {
-            "text": "#12345",
+            "text": " ",
+            "style": {}
+          },
+          {
+            "text": "✓",
             "style": {
-              "fontWeight": "700"
+              "color": "#98c379"
             }
           },
           {
-            "text": "           \n                                       \n",
+            "text": " ",
+            "style": {}
+          },
+          {
+            "text": "✗",
+            "style": {
+              "color": "#dc6b73"
+            }
+          },
+          {
+            "text": " ",
+            "style": {}
+          },
+          {
+            "text": "✓",
+            "style": {
+              "color": "#98c379"
+            }
+          },
+          {
+            "text": "       \n                                       \n",
             "style": {}
           },
           {
@@ -2681,7 +2705,7 @@
             }
           }
         ],
-        "plain": "taba/wtc status · example · 0s old · d…\n                                       \nREPO     BRANCH   PR       C M R       \nwidget   feature… ✗ ◇ #12345           \n                                       \nPRs                                    \nPR       REPO       STATE    TITLE     \n#12345 ↗ widget     ✗ confl… Improve t…\n                                       \n                                       \n                                       \n                                       \n                                       \n                                       \n                                       \n                                       \nn next actions · r refresh · l log · a…"
+        "plain": "taba/wtc status · example · 0s old · d…\n                                       \nREPO     BRANCH   PR       C M R       \nwidget   feature… #12345 ◇ ✓ ✗ ✓       \n                                       \nPRs                                    \nPR       REPO       STATE    TITLE     \n#12345 ↗ widget     ✗ confl… Improve t…\n                                       \n                                       \n                                       \n                                       \n                                       \n                                       \n                                       \n                                       \nn next actions · r refresh · l log · a…"
       },
       "60": {
         "runs": [

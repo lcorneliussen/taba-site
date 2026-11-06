@@ -42,7 +42,7 @@ export const scenarios = [
   {
     id: 'pr-conflict', group: 'Git and PRs', title: 'Clean checkout, conflicting draft PR',
     summary: 'The proposed merge can conflict even while the worktree has no local changes or merge in progress.',
-    read: [['Checkout', '· in ± means the working tree is clean. It does not predict a future merge.'], ['PR', 'The conflict warning belongs to the proposed source/base merge. Passing checks can remain visible beside it. ◇ is draft status.'], ['Narrow view', 'The 39-column row keeps the draft/conflict markers and identifier ahead of optional signals. Hidden columns are not missing source facts.']],
+    read: [['Checkout', '· in ± means the working tree is clean. It does not predict a future merge.'], ['PR', 'The conflict warning belongs to the proposed source/base merge. Passing checks can remain visible beside it. ◇ is draft status.'], ['Narrow view', 'At 39 columns, draft state fits beside the number and the aligned M signal retains conflict state. At still narrower widths, leading markers can preserve state and identity while optional signals yield. Hidden columns are not missing source facts.']],
     inspect: 'Inspect the PR’s base and source commits. GitHub supplies mergeability; Bitbucket can use a local prediction when the exact reported commit objects are already available.',
     snapshot: single(pr('12345', { merge: 'CONFLICTING', draft: true })), expect: ['conflict', '◇', '#12345'],
   },

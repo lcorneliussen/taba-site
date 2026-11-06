@@ -33,6 +33,7 @@ test('compact frames retain distinguishing state and closed-branch warnings', ()
   for (const width of [60, 39]) {
     const plain = id => capture.frames[id][width].plain;
     for (const mark of ['#12345', '✗', '◇']) assert(plain('pr-conflict').includes(mark));
+    assert(plain('pr-conflict').includes('✓ ✗ ✓'));
     assert(plain('built').includes('✓ built'));
     assert(plain('production-pending').includes('● prod'));
     assert(plain('unavailable').includes('unknown'));
