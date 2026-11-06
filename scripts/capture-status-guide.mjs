@@ -37,7 +37,8 @@ try {
   if (git(['rev-parse', 'HEAD']) !== revision || git(['status', '--porcelain', '--', 'cmd', 'internal', 'go.mod', 'go.sum'])) throw Error('CLI source changed during capture');
   const sourceHash = createHash('sha256');
   for (const path of ['cmd/wtc/status_tui.go', 'cmd/wtc/status_tui_style.go', 'cmd/wtc/status_runtime.go', 'cmd/wtc/status_recording_test.go']) sourceHash.update(path).update(await readFile(join(upstream, path)));
-  await writeFile(output, JSON.stringify({ sourceRevision: revision, sourceDigest: sourceHash.digest('hex'), renderer: 'statusTUIModel.View', synthetic: true, actionsDispatched: false, columns: [100, 60, 39], rows: 18, frames }, null, 2) + '\n');
+  const fixtureDigest = createHash('sha256').update(JSON.stringify(scenarios.map(({ id, snapshot }) => ({ id, snapshot })))).digest('hex');
+  await writeFile(output, JSON.stringify({ sourceRevision: revision, sourceDigest: sourceHash.digest('hex'), fixtureDigest, renderer: 'statusTUIModel.View', synthetic: true, actionsDispatched: false, columns: [100, 60, 39], rows: 18, frames }, null, 2) + '\n');
   console.log(`Captured ${scenarios.length} native scenarios at three widths from ${revision.slice(0, 7)}`);
 } finally {
   await rm(temporary, { recursive: true, force: true });

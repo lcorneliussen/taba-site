@@ -69,6 +69,19 @@ test binaries stay in a temporary directory; the site's text replay data is
 `src/data/status-frames.json`. Inspect all situations and widths in the local
 preview after regeneration. Unreleased examples stay labeled as development.
 
+`npm run test:status` checks the committed replay against a digest of its
+authored snapshot inputs, all wide expectations, and compact identity/state
+invariants; CI runs it without a CLI checkout. The source digest records the
+bounded renderer files, not a complete compiler-input audit. To repeat the
+interaction checks against an already running supervised preview:
+
+```sh
+npm run test:status:browser -- "http://127.0.0.1:${WTC_SITE_PORT}/"
+```
+
+This checks all scenario/width choices, navigation, direct links, mobile overflow
+and the no-JavaScript fallback. It starts no server or application action.
+
 ```sh
 npm run test:coverage
 npm run check:coverage

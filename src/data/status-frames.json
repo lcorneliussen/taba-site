@@ -1,6 +1,7 @@
 {
   "sourceRevision": "a4e97cd543a95cbb83d11af975d1cdf526ef2239",
   "sourceDigest": "5bdc22513c7358a2973065c989d4d9a7e1745251dff371f6a339cf6f49f12de2",
+  "fixtureDigest": "a54b39f3f390ebade3c1b4a78628d6be96447b697459e479423621e2e32ed771",
   "renderer": "statusTUIModel.View",
   "synthetic": true,
   "actionsDispatched": false,

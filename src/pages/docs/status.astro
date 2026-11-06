@@ -58,7 +58,7 @@ const frontmatter = {
       <tr><td>R — reviews</td><td><code>✓</code> approved; <code>✗</code> changes requested; <code>●</code> waiting; <code>✎</code> commented; <code>∅</code> no reviewers; <code>·</code> absent/unknown/none.</td></tr>
     </tbody>
   </table>
-  <p><code>◇</code> adds draft state. A compact row can replace a long conflict suffix with a leading <code>✗</code>. In the PR table, conflict takes priority over draft in STATE; the repository cell can retain both markers. Completed PRs use dots in C/M/R and move follow-up information into STATE.</p>
+  <p><code>◇</code> adds draft state. Wide repository cells place the conflict label and draft marker after the three signal slots. A compact row can replace the long conflict suffix with a leading <code>✗</code> and put draft state before the identifier. In the PR table, conflict takes priority over draft in STATE; the repository cell can retain both markers. Completed PRs use dots in C/M/R and move follow-up information into STATE.</p>
 
   <h2 id="support">What is detected, and where it comes from</h2>
   <p>This walkthrough covers <strong>local terminal status</strong>. The <a href="../openclaw/">OpenClaw collection panel</a> has its own rendering and gateway-managed workflow; it is not a pixel-for-pixel copy of this table.</p>

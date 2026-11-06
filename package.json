@@ -20,7 +20,9 @@
     "test:visual": "node --test scripts/openclaw-visual-audit.test.mjs scripts/record-openclaw-tui.test.mjs",
     "demos:openclaw:buddy": "node scripts/record-openclaw-tui.mjs",
     "test:story": "node scripts/why-taba-qa.mjs --dist",
-    "status:capture": "node scripts/capture-status-guide.mjs"
+    "status:capture": "node scripts/capture-status-guide.mjs",
+    "test:status": "node --test scripts/status-guide.test.mjs",
+    "test:status:browser": "node scripts/status-guide-browser.mjs"
   },
   "dependencies": {
     "astro": "^7.3.8"
