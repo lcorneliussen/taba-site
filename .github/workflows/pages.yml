@@ -26,6 +26,7 @@ jobs:
       - run: npm ci --include=dev
       - run: node --test scripts/release.test.mjs
       - run: npm run check
+      - run: npm run test:status
       - run: npm run build
       - run: npm run test:links
       - uses: actions/upload-pages-artifact@v4

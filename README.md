@@ -48,7 +48,75 @@ The link check validates every generated HTML page’s internal links, fragments
 
 Local-terminal examples follow the upstream CLI getting-started guide and explicitly pin v0.1.51. OpenClaw guidance is separately labeled for the gateway-integrated build; it must not suggest `wtc init` or `wtc new` on a gateway. Reconcile both with their upstream instructions when updating commands.
 
+## Reading status
+
+The interactive [Reading status](src/pages/docs/status.astro) guide uses complete
+synthetic snapshots rendered by the CLI, with separate explanations of Git, PR,
+review, build and runtime observations. Its development-source boundary is
+explicit; it does not upgrade the release-pinned handbook baseline.
+
+To regenerate its selectable terminal examples from a clean CLI source checkout:
+
+```sh
+npm run status:capture -- ../wtc-cli
+```
+
+The source must include the status presentation described by the guide. The
+capture records its exact revision and source digest, checks the scenario's
+expected representations, and uses the existing recording-only Go adapter at
+100, 60 and 39 columns. It executes no collector, action or agent handoff. Go
+test binaries stay in a temporary directory; the site's text replay data is
+`src/data/status-frames.json`. Inspect all situations and widths in the local
+preview after regeneration. Unreleased examples stay labeled as development.
+
+`npm run test:status` checks the committed replay against a digest of its
+authored snapshot inputs, all wide expectations, and compact identity/state
+invariants; CI runs it without a CLI checkout. The source digest records the
+bounded renderer files, not a complete compiler-input audit. To repeat the
+interaction checks against an already running supervised preview:
+
+```sh
+npm run test:status:browser -- "http://127.0.0.1:${WTC_SITE_PORT}/"
+```
+
+This checks all scenario/width choices, navigation, direct links, mobile overflow
+and the no-JavaScript fallback. It starts no server or application action.
+
+For an independent native recording check, the optional bridge also accepts the
+capture tool from [CLI PR #341](https://github.com/lcorneliussen/wtc-cli/pull/341)
+([recording issue #325](https://github.com/lcorneliussen/wtc-cli/issues/325)).
+Inspect that tool before running it. Until it lands, use a read-only source
+export and pass its full revision; the bridge verifies the tool's bytes against
+that commit in the CLI object store. This is not a site build dependency.
+
+With the tool's Python dependencies (`pyte`, `wcwidth`), Go, Node and an installed
+headless Chrome available:
+
+```sh
+npm run status:verify-native -- --cli-root ../wtc-cli \
+  --capture-tool /path/to/reviewed-export/tools/visual-evidence/capture.py \
+  --tool-revision 81830dc4e566997c8cfc4ee9cf2b2e9e0b56ca04 \
+  --out /path/outside-both-repos/native-status-evidence \
+  --chrome /path/to/chrome-headless-shell
+```
+
+The output directory must be empty. All 36 native frames must pass the tool's
+semantic and terminal-cell roundtrip assertions and match the committed replay
+text exactly. A source fingerprint must remain stable across every batch. The
+gallery retains native ANSI, PNG cell previews and manifests with assertions,
+artifact hashes, source fingerprints and tool versions. These are real renderer
+outputs with synthetic inputs; they do not exercise live collectors or provider
+accounts, and PNG fonts/styles can differ from a terminal.
+
+Inspect the artifacts before sharing. For a local walkthrough, an optional
+`public/status-evidence` symlink to the inspected output adds a development-only
+gallery link to the guide. That path is ignored by Git; remove it before a local
+production build, which copies public assets. CI and production need no capture
+tool or generated media.
+
 ## Documentation coverage and release intake
+
+Validate the handbook baseline or prepare an upstream intake report:
 
 ```sh
 npm run test:coverage
