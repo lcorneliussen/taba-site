@@ -1,6 +1,6 @@
 {
-  "sourceRevision": "a4e97cd543a95cbb83d11af975d1cdf526ef2239",
-  "sourceDigest": "5bdc22513c7358a2973065c989d4d9a7e1745251dff371f6a339cf6f49f12de2",
+  "sourceRevision": "8bf8fe14b8cea574726c30eb2c9bd1a97e96046d",
+  "sourceDigest": "8b0bc3c077abaf7062ee402c83c92ea797874a50e7f3931c11878dfd28614606",
   "fixtureDigest": "a54b39f3f390ebade3c1b4a78628d6be96447b697459e479423621e2e32ed771",
   "renderer": "statusTUIModel.View",
   "synthetic": true,
@@ -2573,7 +2573,7 @@
             "style": {}
           },
           {
-            "text": "REPO     BRANCH   PR   C M R           ",
+            "text": "REPO     BRANCH   PR       C M R       ",
             "style": {
               "fontWeight": "700"
             }
@@ -2681,7 +2681,7 @@
             }
           }
         ],
-        "plain": "taba/wtc status · example · 0s old · d…\n                                       \nREPO     BRANCH   PR   C M R           \nwidget   feature… ✗ ◇ #12345           \n                                       \nPRs                                    \nPR       REPO       STATE    TITLE     \n#12345 ↗ widget     ✗ confl… Improve t…\n                                       \n                                       \n                                       \n                                       \n                                       \n                                       \n                                       \n                                       \nn next actions · r refresh · l log · a…"
+        "plain": "taba/wtc status · example · 0s old · d…\n                                       \nREPO     BRANCH   PR       C M R       \nwidget   feature… ✗ ◇ #12345           \n                                       \nPRs                                    \nPR       REPO       STATE    TITLE     \n#12345 ↗ widget     ✗ confl… Improve t…\n                                       \n                                       \n                                       \n                                       \n                                       \n                                       \n                                       \n                                       \nn next actions · r refresh · l log · a…"
       },
       "60": {
         "runs": [
