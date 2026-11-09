@@ -18,7 +18,7 @@ test('one published stable tag determines the command and numbered notes', async
 test('unavailable or untrusted release evidence uses the dated verified fallback', async () => {
   const unavailable = await publishedRelease(async () => { throw new Error('offline'); });
   assert.equal(unavailable.live, false);
-  assert.equal(unavailable.checked, '2026-10-29');
+  assert.equal(unavailable.checked, '2026-11-09');
   for (const fetchRelease of [
     async () => ({ ok: false }), response({ draft: true }), response({ prerelease: true }),
     response({ tag_name: 'v0.2.3-rc.1' }), response({ tag_name: 'dev' }),

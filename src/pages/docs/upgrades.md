@@ -7,7 +7,7 @@ source: https://github.com/lcorneliussen/taba/blob/v0.1.51/docs/release-notes.md
 
 ## Review the target, not just the installed binary
 
-For the rename's planned upgrade sequence and timeline, read [wtc is now taba](../../wtc-is-now-taba/). The CLI transition has not shipped yet; this guide covers released WTC versions.
+For the rename's upgrade sequence and timeline, read [wtc is now taba](../../wtc-is-now-taba/). The first taba release, 0.2.0, ships both `taba` and `wtc`; this guide's examples still use `wtc`, which keeps working.
 
 This handbook's examples target **v0.1.51**. That is a reviewed baseline, not a promise that it is the latest release.
 
