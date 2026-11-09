@@ -2,7 +2,7 @@
 layout: ../../layouts/Docs.astro
 title: Troubleshooting
 description: Diagnose host, workspace, and runtime issues without discarding work.
-source: https://github.com/lcorneliussen/wtc-cli/blob/v0.1.51/docs/commands.md
+source: https://github.com/lcorneliussen/taba/blob/v0.1.51/docs/commands.md
 ---
 
 ## First checks
@@ -42,4 +42,4 @@ Retirement can be blocked by local work, an unconfirmed runner stop, or failed r
 
 ## Report a bug
 
-Include WTC version, host mode, OS, command, expected result, and a minimal reproduction in the [CLI issue tracker](https://github.com/lcorneliussen/wtc-cli/issues). Redact credentials, private repository names, environment values, and application logs before sharing.
+Include WTC version, host mode, OS, command, expected result, and a minimal reproduction in the [CLI issue tracker](https://github.com/lcorneliussen/taba/issues). Redact credentials, private repository names, environment values, and application logs before sharing.

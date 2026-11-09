@@ -2,7 +2,7 @@
 layout: ../../layouts/Docs.astro
 title: Working with agents
 description: Give an agent the repositories and project context needed for a task, without changing how your projects build.
-source: https://github.com/lcorneliussen/wtc-cli/blob/v0.1.51/internal/wtc/defaults/instructions/skills.md
+source: https://github.com/lcorneliussen/taba/blob/v0.1.51/internal/wtc/defaults/instructions/skills.md
 ---
 
 ## Start at the collection

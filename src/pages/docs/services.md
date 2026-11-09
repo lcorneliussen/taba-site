@@ -2,7 +2,7 @@
 layout: ../../layouts/Docs.astro
 title: Services and previews
 description: Run existing development commands with collection-local ports, logs, and optional tunnels.
-source: https://github.com/lcorneliussen/wtc-cli/blob/v0.1.51/internal/wtc/defaults/instructions/runtime.md
+source: https://github.com/lcorneliussen/taba/blob/v0.1.51/internal/wtc/defaults/instructions/runtime.md
 ---
 
 ## Optional, not a new build system
@@ -41,8 +41,8 @@ Disable self-daemonization: the command must stay in the foreground. Local defin
 
 ## Discovery before first start in v0.1.62
 
-[Published v0.1.62](https://github.com/lcorneliussen/wtc-cli/releases/tag/v0.1.62)
-includes [service declaration discovery](https://github.com/lcorneliussen/wtc-cli/blob/v0.1.62/docs/service-discovery.md),
+[Published v0.1.62](https://github.com/lcorneliussen/taba/releases/tag/v0.1.62)
+includes [service declaration discovery](https://github.com/lcorneliussen/taba/blob/v0.1.62/docs/service-discovery.md),
 verified on 2026-10-28. The behavior below applies from v0.1.62; setup and start
 examples elsewhere on this page retain their labeled release baselines.
 
@@ -104,10 +104,10 @@ Public exposure (`--public`) is a separate choice. Check authentication and expo
 
 ## Remembered tunnel choices in v0.1.61
 
-[Published v0.1.61](https://github.com/lcorneliussen/wtc-cli/releases/tag/v0.1.61)
+[Published v0.1.61](https://github.com/lcorneliussen/taba/releases/tag/v0.1.61)
 includes collection-local tunnel intent, verified on 2026-10-27. This behavior
 applies from v0.1.61; the examples above retain their v0.1.51 baseline. See the
-[v0.1.61 runtime contract](https://github.com/lcorneliussen/wtc-cli/blob/v0.1.61/internal/wtc/defaults/instructions/runtime.md)
+[v0.1.61 runtime contract](https://github.com/lcorneliussen/taba/blob/v0.1.61/internal/wtc/defaults/instructions/runtime.md)
 for the released behavior.
 
 After you enable a tunnel with `wtc svc tunnel`, ordinary `wtc svc down web`

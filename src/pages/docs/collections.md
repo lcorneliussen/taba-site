@@ -2,7 +2,7 @@
 layout: ../../layouts/Docs.astro
 title: Working with collections
 description: Keep the workspace aligned with the task, from the first repository to cleanup.
-source: https://github.com/lcorneliussen/wtc-cli/blob/v0.1.51/docs/commands.md
+source: https://github.com/lcorneliussen/taba/blob/v0.1.51/docs/commands.md
 ---
 
 ## One folder, related worktrees
