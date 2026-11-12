@@ -1,8 +1,8 @@
-const repository = 'https://github.com/lcorneliussen/wtc-cli';
-const api = 'https://api.github.com/repos/lcorneliussen/wtc-cli/releases/latest';
+const repository = 'https://github.com/lcorneliussen/taba';
+const api = 'https://api.github.com/repos/lcorneliussen/taba/releases/latest';
 
 // Verified against the published release API; this is a dated fallback, not latest.
-const fallback = { tag: 'v0.1.62', checked: '2026-10-29', live: false };
+const fallback = { tag: 'v0.2.2', checked: '2026-11-11', live: false };
 
 export async function publishedRelease(fetchRelease = fetch) {
   let release = fallback;
@@ -24,7 +24,7 @@ export async function publishedRelease(fetchRelease = fetch) {
   }
   return {
     ...release,
-    command: `mise use -g github:lcorneliussen/wtc-cli@${release.tag.slice(1)}`,
+    command: `mise use -g github:lcorneliussen/taba@${release.tag.slice(1)}`,
     notes: `${repository}/releases/tag/${release.tag}`,
   };
 }

@@ -2,7 +2,7 @@
 layout: ../../layouts/Docs.astro
 title: Under OpenClaw
 description: Work across repositories from one conversation, with worktrees and publishing managed by the gateway.
-source: https://github.com/lcorneliussen/wtc-cli/blob/v0.1.51/internal/wtc/defaults/instructions/openclaw.md
+source: https://github.com/lcorneliussen/taba/blob/v0.1.51/internal/wtc/defaults/instructions/openclaw.md
 ---
 
 > This guide describes the gateway-integrated WTC build. It is separate from the local-terminal quick start. Confirm the installed behavior with `wtc docs instructions/openclaw.md`.
@@ -45,7 +45,7 @@ back to the standard composer if you do not want the collection card.
 
 [View the Collection panel screenshot](../../media/openclaw/collection-panel.png).
 The visuals use the renderer at
-[CLI commit 9da4ba3](https://github.com/lcorneliussen/wtc-cli/tree/9da4ba3057b00f1292f53b65f44bab58e1243029/openclaw-plugin),
+[CLI commit 9da4ba3](https://github.com/lcorneliussen/taba/tree/9da4ba3057b00f1292f53b65f44bab58e1243029/openclaw-plugin),
 newer than this handbook's v0.1.51 baseline. Gateway styling and your installed
 version may differ. These examples demonstrate the UI, not backend operations.
 
@@ -67,7 +67,7 @@ instead of installing into a running container.
 
 The gateway needs Git and `gh`; agents need the collection instructions in their
 workspace `AGENTS.md`. For prerequisites, image setup and sandbox configuration,
-follow the [upstream setup guide](https://github.com/lcorneliussen/wtc-cli/blob/24b0702c56e820314836e10b53c7df32030e6f4d/docs/openclaw.md#install).
+follow the [upstream setup guide](https://github.com/lcorneliussen/taba/blob/24b0702c56e820314836e10b53c7df32030e6f4d/docs/openclaw.md#install).
 For personal publishing, connect **Settings → Profile → GitHub connections →
 For me**. The first **↑** prepares a push; **confirm ↑** identifies the account
 and confirms it. The shared account used by an agent's CLI is not your personal
@@ -117,7 +117,7 @@ The card may suggest a project before a collection exists. Unsent drafts are wor
 ### Parallel work: check your installed version
 
 The v0.1.51 baseline described `--worker` collections. In the
-[current reviewed source](https://github.com/lcorneliussen/wtc-cli/blob/24b0702c56e820314836e10b53c7df32030e6f4d/docs/openclaw.md#parallel-work-and-sub-sessions),
+[current reviewed source](https://github.com/lcorneliussen/taba/blob/24b0702c56e820314836e10b53c7df32030e6f4d/docs/openclaw.md#parallel-work-and-sub-sessions),
 that option is deprecated: a separate implementation task belongs in its own
 conversation and collection. Read-only reviewers can use the existing checkout.
 Use `wtc docs instructions/openclaw.md` for your installed release's procedure.
@@ -146,7 +146,7 @@ merge. Do not run `git push` yourself in a GitHub-managed worktree.
 
 ### Upcoming publication feedback
 
-Development builds from the [publication-clarity change](https://github.com/lcorneliussen/wtc-cli/blob/24b0702c56e820314836e10b53c7df32030e6f4d/docs/openclaw.md)
+Development builds from the [publication-clarity change](https://github.com/lcorneliussen/taba/blob/24b0702c56e820314836e10b53c7df32030e6f4d/docs/openclaw.md)
 name whether a push created a draft PR or updated an existing PR. A result that
 only supplies a URL does not claim a new PR was created.
 
@@ -183,7 +183,7 @@ a refused publication is an error rather than a muted status message.
 After a completed GitHub branch returns to the tip, its pull request moves
 into the pull request list. Another publication round still needs a fresh
 managed worktree and owner; returning to the tip does not rebind the old
-owner. See the [v0.1.60 gateway contract](https://github.com/lcorneliussen/wtc-cli/blob/v0.1.60/docs/openclaw.md)
+owner. See the [v0.1.60 gateway contract](https://github.com/lcorneliussen/taba/blob/v0.1.60/docs/openclaw.md)
 for details. The handbook baseline remains v0.1.51; newer plugin guidance and
 visuals above are linked to their reviewed source version.
 
@@ -202,8 +202,8 @@ The command must listen on the port supplied by `PORT`; wrap the existing launch
 
 ## Compact next steps (v0.1.62)
 
-These controls are included in [v0.1.62](https://github.com/lcorneliussen/wtc-cli/releases/tag/v0.1.62).
-See the [released compact-controls contract](https://github.com/lcorneliussen/wtc-cli/blob/v0.1.62/docs/openclaw.md#select-next-actions).
+These controls are included in [v0.1.62](https://github.com/lcorneliussen/taba/releases/tag/v0.1.62).
+See the [released compact-controls contract](https://github.com/lcorneliussen/taba/blob/v0.1.62/docs/openclaw.md#select-next-actions).
 The screenshots above retain their documented historical source.
 
 The card keeps dense repository rows without visible column headers. At normal

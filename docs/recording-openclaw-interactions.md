@@ -233,7 +233,7 @@ The current TUI has a keyboard Next actions view: `n` opens it, arrows or
 `j/k` move, Space selects, `s` selects suggestions, Right chooses an alternative,
 and Enter runs or reviews the selection. The recording stops before Enter.
 Direct table actions remain separate; their preparation belongs with the
-[upstream interaction contract](https://github.com/lcorneliussen/wtc-cli/blob/269-explicit-action-feedback/docs/openclaw.md#alignment-and-compact-views).
+[upstream interaction contract](https://github.com/lcorneliussen/taba/blob/269-explicit-action-feedback/docs/openclaw.md#alignment-and-compact-views).
 
 ## Compare perceived sections with the intended structure
 

@@ -2,7 +2,7 @@
 layout: ../../layouts/Docs.astro
 title: Command reference
 description: A compact map of everyday WTC commands, with a clear boundary between local and OpenClaw workflows.
-source: https://github.com/lcorneliussen/wtc-cli/blob/v0.1.51/docs/commands.md
+source: https://github.com/lcorneliussen/taba/blob/v0.1.51/docs/commands.md
 ---
 
 For complete options, use `wtc --help`, a command’s `--help`, or the upstream reference linked below. Available commands depend on the installed version.
@@ -27,8 +27,8 @@ Worktrees start detached. Create a branch before committing.
 
 ### Retirement assessment in v0.1.62
 
-[Published v0.1.62](https://github.com/lcorneliussen/wtc-cli/releases/tag/v0.1.62)
-includes the [retirement assessment](https://github.com/lcorneliussen/wtc-cli/blob/v0.1.62/docs/retirement.md),
+[Published v0.1.62](https://github.com/lcorneliussen/taba/releases/tag/v0.1.62)
+includes the [retirement assessment](https://github.com/lcorneliussen/taba/blob/v0.1.62/docs/retirement.md),
 verified on 2026-10-28. The behavior below applies from v0.1.62; the execution
 example in the table above retains its older baseline.
 
@@ -80,14 +80,14 @@ agent for the named skill. When no idle agent is available, the terminal
 shows the instruction to give it. The view rechecks status before acting;
 refreshing alone does not run actions.
 
-See the [upstream command contract](https://github.com/lcorneliussen/wtc-cli/blob/v0.1.60/docs/commands.md)
+See the [upstream command contract](https://github.com/lcorneliussen/taba/blob/v0.1.60/docs/commands.md)
 for the v0.1.60 behavior. Other examples on this page retain their labeled
 v0.1.51 baseline.
 
 ### Running CLI version in v0.1.62
 
-The running-version display from [CLI #261](https://github.com/lcorneliussen/wtc-cli/pull/261)
-is available in [published v0.1.62](https://github.com/lcorneliussen/wtc-cli/releases/tag/v0.1.62),
+The running-version display from [CLI #261](https://github.com/lcorneliussen/taba/pull/261)
+is available in [published v0.1.62](https://github.com/lcorneliussen/taba/releases/tag/v0.1.62),
 verified on 2026-10-28. Other examples on this page retain their labeled release
 baselines.
 
@@ -104,13 +104,13 @@ a newer installed binary. Local JSON adds the optional `cli_version` field to
 schema 1; Markdown and one-shot tables show the snapshot producer too.
 `--cached` preserves that producer's version, while the live TUI always shows
 its own running version. Older snapshots without the field have an unknown
-producer. See the [v0.1.62 status-version contract](https://github.com/lcorneliussen/wtc-cli/blob/v0.1.62/docs/status-version.md)
+producer. See the [v0.1.62 status-version contract](https://github.com/lcorneliussen/taba/blob/v0.1.62/docs/status-version.md)
 for the complete behavior and limits.
 
 ### Ahead counts and squash landing in v0.1.62
 
-[Published v0.1.62](https://github.com/lcorneliussen/wtc-cli/releases/tag/v0.1.62)
-adds [ahead and landing diagnostics](https://github.com/lcorneliussen/wtc-cli/blob/v0.1.62/docs/squash-status.md).
+[Published v0.1.62](https://github.com/lcorneliussen/taba/releases/tag/v0.1.62)
+adds [ahead and landing diagnostics](https://github.com/lcorneliussen/taba/blob/v0.1.62/docs/squash-status.md).
 Ahead/behind remain raw commit counts, rather than changed-file counts or proof
 of unpushed work. `ahead_ref` names the actual comparison ref; `ahead_basis`
 distinguishes `upstream` from the `development-tip` fallback. A configured
@@ -189,8 +189,8 @@ The handbook summarizes these surfaces rather than duplicating every flag. Use t
 
 ### Verified enlisted identities in v0.1.62
 
-[Published v0.1.62](https://github.com/lcorneliussen/wtc-cli/releases/tag/v0.1.62)
-includes the [repository identity rules](https://github.com/lcorneliussen/wtc-cli/blob/v0.1.62/docs/enlisted-repository-identity.md),
+[Published v0.1.62](https://github.com/lcorneliussen/taba/releases/tag/v0.1.62)
+includes the [repository identity rules](https://github.com/lcorneliussen/taba/blob/v0.1.62/docs/enlisted-repository-identity.md),
 verified on 2026-10-28. They align PR enlistment, status enrichment and enlisted
 branch matching.
 
@@ -224,7 +224,7 @@ exact-name matching without guessing aliases.
 
 ### Review pane in v0.1.61
 
-The [review pane](https://github.com/lcorneliussen/wtc-cli/blob/v0.1.61/docs/review-pane.md) is available in [published v0.1.61](https://github.com/lcorneliussen/wtc-cli/releases/tag/v0.1.61), verified on 2026-10-27. The behavior below applies from v0.1.61; v0.1.60 does not support `--add review`. Other examples on this page retain their labeled baselines.
+The [review pane](https://github.com/lcorneliussen/taba/blob/v0.1.61/docs/review-pane.md) is available in [published v0.1.61](https://github.com/lcorneliussen/taba/releases/tag/v0.1.61), verified on 2026-10-27. The behavior below applies from v0.1.61; v0.1.60 does not support `--add review`. Other examples on this page retain their labeled baselines.
 
 For local collections using herdr, add a review viewer on demand:
 
@@ -246,7 +246,7 @@ The review family also includes `activity`, `status`, `bundle`, `run`, `post`, `
 
 #### Progress-post recovery in v0.1.62
 
-[Published v0.1.62](https://github.com/lcorneliussen/wtc-cli/releases/tag/v0.1.62)
+[Published v0.1.62](https://github.com/lcorneliussen/taba/releases/tag/v0.1.62)
 keeps independent concerns and the lead running locally if the initial progress
 comment from `wtc review run <bundle> --post` fails. The command reports the
 posting error immediately, returns exit status 1 after the local run, and keeps
@@ -260,14 +260,14 @@ have succeeded. A saved `comment.id` is updated rather than replaced; a
 `comment.create-pending` marker blocks duplicate creates until the outcome is
 reconciled. Save a verified existing comment ID for an update; remove the marker
 only after verifying that no comment was created. An unconfirmed outcome must
-keep it. See the [v0.1.62 recovery contract](https://github.com/lcorneliussen/wtc-cli/blob/v0.1.62/docs/review-progress-errors.md)
+keep it. See the [v0.1.62 recovery contract](https://github.com/lcorneliussen/taba/blob/v0.1.62/docs/review-progress-errors.md)
 for the exact procedure. Automatic recovery of an unknown created ID and full
 Bitbucket writable-contract certification remain separate work.
 
 #### Review audience defaults in v0.1.61
 
-The [review audience defaults](https://github.com/lcorneliussen/wtc-cli/blob/v0.1.61/docs/review-audiences.md)
-are available from [published v0.1.61](https://github.com/lcorneliussen/wtc-cli/releases/tag/v0.1.61)
+The [review audience defaults](https://github.com/lcorneliussen/taba/blob/v0.1.61/docs/review-audiences.md)
+are available from [published v0.1.61](https://github.com/lcorneliussen/taba/releases/tag/v0.1.61)
 and are also included in v0.1.62, verified on 2026-10-28. In published v0.1.60,
 bundles default to private mode: explicitly pass `--public` for public or unknown
 targets.
@@ -276,6 +276,6 @@ From v0.1.61, the default is public mode for public or unknown repository visibi
 
 Public mode takes concerns from the target repository's review base commit, or CLI defaults, and uses embedded prompts. It excludes harness overlays, other repository snapshots, related patches, and private review rounds. `--public` forces isolation; `--private` explicitly includes harness context for local analysis. Progress and verdict comments show the mode, and posting a private bundle requires fresh private visibility. `--force` cannot bypass that check.
 
-Normally the upstream project runs its own gate. A consuming harness should not impose its internal rules on an upstream contribution. Public mode still requires inspection of generated prose. See the [v0.1.61 audience contract](https://github.com/lcorneliussen/wtc-cli/blob/v0.1.61/docs/review-audiences.md) for details.
+Normally the upstream project runs its own gate. A consuming harness should not impose its internal rules on an upstream contribution. Public mode still requires inspection of generated prose. See the [v0.1.61 audience contract](https://github.com/lcorneliussen/taba/blob/v0.1.61/docs/review-audiences.md) for details.
 
-See the [complete upstream command reference](https://github.com/lcorneliussen/wtc-cli/blob/v0.1.51/docs/commands.md) for these advanced workflows.
+See the [complete upstream command reference](https://github.com/lcorneliussen/taba/blob/v0.1.51/docs/commands.md) for these advanced workflows.
