@@ -25,7 +25,7 @@ export async function inventory(root) {
   return files.sort();
 }
 const validPath = path => typeof path === 'string' && (path === 'README.md' || roots.some(root => path.startsWith(root + '/'))) && !path.split('/').includes('..') && !path.includes('\\');
-const pagePath = path => typeof path === 'string' && /^src\/pages\/(docs\/[a-z-]+[.]md|index[.]astro)$/.test(path);
+const pagePath = path => typeof path === 'string' && /^src\/pages\/(docs\/[a-z-]+[.](?:md|astro)|index[.]astro)$/.test(path);
 async function sourceLinkErrors(siteRoot) {
   const files = ['README.md'], errors = [];
   async function walk(dir) {

@@ -15,7 +15,16 @@ async function walk(dir) {
   return (await Promise.all(entries.map(entry => entry.isDirectory()
     ? walk(resolve(dir, entry.name)) : resolve(dir, entry.name)))).flat();
 }
-const files = (await walk(root)).filter(file => file.endsWith('.html'));
+const outputFiles = await walk(root);
+for (const file of outputFiles) {
+  const path = relative(root, file);
+  if (path.split(/[\\/]/).includes('status-evidence')) errors.push('Production contains a local evidence gallery');
+  if (/\.(?:html|js|css|json|map|txt|svg)$/.test(file)) {
+    const text = await readFile(file, 'utf8');
+    if (text.includes(process.cwd()) || /(?:file:\/\/\/|\/Users\/[^/]+\/|\/private\/(?:var|tmp)\/)/.test(text)) errors.push(path + ': production contains a local filesystem path');
+  }
+}
+const files = outputFiles.filter(file => file.endsWith('.html'));
 for (const file of files) {
   const html = await readFile(file, 'utf8');
   const pagePath = relative(root, file).replace(/index\.html$/, '');

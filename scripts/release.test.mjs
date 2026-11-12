@@ -18,7 +18,13 @@ test('one published stable tag determines the command and numbered notes', async
 test('unavailable or untrusted release evidence uses the dated verified fallback', async () => {
   const unavailable = await publishedRelease(async () => { throw new Error('offline'); });
   assert.equal(unavailable.live, false);
-  assert.equal(unavailable.checked, '2026-11-11');
+  assert.match(unavailable.tag, /^v\d+\.\d+\.\d+$/);
+  assert.match(unavailable.checked, /^\d{4}-\d{2}-\d{2}$/);
+  const checked = new Date(`${unavailable.checked}T00:00:00.000Z`);
+  assert.equal(checked.toISOString().slice(0, 10), unavailable.checked);
+  assert(unavailable.checked <= new Date().toISOString().slice(0, 10));
+  assert.equal(unavailable.command, `mise use -g github:lcorneliussen/taba@${unavailable.tag.slice(1)}`);
+  assert.equal(unavailable.notes, `https://github.com/lcorneliussen/taba/releases/tag/${unavailable.tag}`);
   for (const fetchRelease of [
     async () => ({ ok: false }), response({ draft: true }), response({ prerelease: true }),
     response({ tag_name: 'v0.2.3-rc.1' }), response({ tag_name: 'dev' }),

@@ -48,7 +48,78 @@ The link check validates every generated HTML page’s internal links, fragments
 
 Local-terminal examples follow the upstream CLI getting-started guide and explicitly pin v0.1.51. OpenClaw guidance is separately labeled for the gateway-integrated build; it must not suggest `wtc init` or `wtc new` on a gateway. Reconcile both with their upstream instructions when updating commands.
 
+## Reading status
+
+The interactive [Reading status](src/pages/docs/status.astro) guide uses complete
+synthetic snapshots rendered by the CLI, with separate explanations of Git, PR,
+review, build and runtime observations. Its examples identify their published
+CLI source; they do not upgrade the other release-pinned handbook pages.
+
+To regenerate its selectable terminal examples from a clean CLI source checkout:
+
+```sh
+npm run status:capture -- /path/to/clean-cli-checkout
+```
+
+Without a checkout argument, capture uses `../wtc-cli`. It reuses the site's
+existing terminal ANSI decoder, whose digest is recorded with the examples.
+
+The source must include the status presentation described by the guide. The
+capture records its exact revision and source digest, checks the scenario's
+expected representations, and uses the existing recording-only Go adapter at
+100, 60 and 39 columns. It executes no collector, action or agent handoff. Go
+test binaries stay in a temporary directory; the site's text replay data is
+`src/data/status-frames.json`. Inspect all situations and widths in the local
+preview after regeneration. Unreleased examples stay labeled as development.
+
+`npm run test:status` checks the committed replay against a digest of its
+authored snapshot inputs, all wide expectations, and compact identity/state
+invariants; CI runs it without a CLI checkout. The source digest records tracked command-package/internal inputs and Go
+module files; the parser has its own digest. Captures require a clean checkout
+and a stable source fingerprint. To repeat the
+interaction checks against an already running supervised preview:
+
+```sh
+npm run test:status:browser -- "http://127.0.0.1:${WTC_SITE_PORT}/"
+```
+
+This checks all scenario/width choices, navigation, direct links, mobile overflow
+and the no-JavaScript fallback. It starts no server or application action.
+
+For an independent native recording check, use the capture tool included in
+that same clean CLI checkout. The bridge verifies its bytes against the replay's
+full source revision before running it. An explicit `--capture-tool` export may
+also be supplied with its full `--tool-revision`. Missing tools, a dirty or
+mismatched source checkout, changed parser, failed assertions, changed source
+fingerprints, and mismatched replay text/styles fail explicitly.
+
+With the tool's Python dependencies (`pyte`, `wcwidth`), Go, Node and an installed
+headless Chrome available:
+
+```sh
+npm run status:verify-native -- --cli-root /path/to/the-same-clean-cli-checkout \
+  --out /path/outside-both-repos/native-status-evidence \
+  --chrome /path/to/chrome-headless-shell
+```
+
+The output directory must be empty. All 36 native frames must pass the tool's
+semantic and terminal-cell assertions and match the committed replay text and
+decoded styles. Source fingerprints must stay stable across every batch. PNG,
+ANSI and provenance files remain outside Git. These are real renderer outputs
+with synthetic inputs; they do not test live collectors or provider accounts.
+PNG fonts/styles can differ from a terminal.
+
+An optional ignored `public/status-evidence` symlink exposes inspected local
+captures in development. Its source is labeled; earlier evidence is not claimed
+to match a newer replay. Preserve existing evidence and use a clean Git export
+or CI checkout for production builds, which excludes ignored local galleries
+without disturbing a running preview. The production link check rejects local
+gallery assets and filesystem paths. Normal site build/CI needs no CLI checkout
+or capture tool.
+
 ## Documentation coverage and release intake
+
+Validate the handbook baseline or prepare an upstream intake report:
 
 ```sh
 npm run test:coverage

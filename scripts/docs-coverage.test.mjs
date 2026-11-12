@@ -19,6 +19,17 @@ async function fixture(t) {
  return {site,upstream,manifest,put};
 }
 test('baseline passes and semver ordering is numeric',async t=>{const f=await fixture(t); assert.deepEqual(await check(f.manifest,f.site,f.upstream),[]);assert(compareVersions('0.1.9','0.1.10')<0);});
+test('interactive Astro documentation is mapped while non-page paths stay invalid',async t=>{
+ const f=await fixture(t);
+ await f.put(f.site,'src/pages/docs/status.astro');
+ assert((await check(f.manifest,f.site)).includes('Unmapped website page: src/pages/docs/status.astro'));
+ f.manifest.sources[0].pages.push('src/pages/docs/status.astro');
+ assert.deepEqual(await check(f.manifest,f.site),[]);
+ f.manifest.sources[0].pages.push('src/pages/docs/../private.astro','src/pages/docs/status.ts');
+ const errors=await check(f.manifest,f.site);
+ assert(errors.includes('Invalid page path: src/pages/docs/../private.astro'));
+ assert(errors.includes('Invalid page path: src/pages/docs/status.ts'));
+});
 test('changed, new and removed source files are detected',async t=>{const f=await fixture(t);await f.put(f.upstream,'README.md','changed');await f.put(f.upstream,'docs/new.md');let errors=await check(f.manifest,f.site,f.upstream);assert(errors.includes('Changed upstream: README.md'));assert(errors.includes('New upstream: docs/new.md'));await rm(join(f.upstream,'README.md'));errors=await check(f.manifest,f.site,f.upstream);assert(errors.includes('Removed upstream: README.md'));});
 test('missing targets, unmapped pages, duplicate paths and unsafe paths fail',async t=>{const f=await fixture(t);f.manifest.sources[0].pages.push('src/pages/docs/missing.md');await f.put(f.site,'src/pages/docs/new.md');f.manifest.sources.push({...f.manifest.sources[0]});f.manifest.sources.push({path:'docs/../../secret'});const errors=await check(f.manifest,f.site);assert(errors.some(e=>e.startsWith('Missing page:')));assert(errors.some(e=>e.startsWith('Unmapped website page:')));assert(errors.some(e=>e.startsWith('Duplicate source:')));assert(errors.some(e=>e.startsWith('Invalid source path:')));});
 test('inconsistent install pins and missing rationale fail',async t=>{const f=await fixture(t);await f.put(f.site,'src/scripts/home.js','--cli-version 0.1.48');f.manifest.sources[0].reason='';const errors=await check(f.manifest,f.site);assert(errors.some(e=>e.startsWith('Install baseline mismatch:')));assert(errors.some(e=>e.startsWith('Missing coverage rationale:')));});

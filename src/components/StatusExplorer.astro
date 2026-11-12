@@ -1,0 +1,111 @@
+---
+import { scenarios } from '../data/status-scenarios.mjs';
+import capture from '../data/status-frames.json';
+type TerminalRun = { text: string; style: Record<string, string | undefined> };
+const frames = capture.frames as Record<string, Record<string, { runs: TerminalRun[]; plain: string }>>;
+---
+<div class="status-explorer" data-status-explorer>
+  <div class="explorer-controls" data-controls hidden>
+    <label class="scenario-choice">Choose a situation
+      <select data-scenario-select>
+        {scenarios.map((scenario, index) => <option value={scenario.id}>{index + 1}. {scenario.title}</option>)}
+      </select>
+    </label>
+    <div class="explorer-navigation">
+      <button type="button" data-previous aria-label="Previous situation">← Previous</button>
+      <span data-position aria-live="polite">1 of {scenarios.length}</span>
+      <button type="button" data-next aria-label="Next situation">Next →</button>
+    </div>
+    <fieldset class="terminal-widths">
+      <legend>Terminal width</legend>
+      {capture.columns.map(width => <label><input type="radio" name="status-width" value={width} checked={width === 100} /> {width} columns</label>)}
+    </fieldset>
+  </div>
+  {scenarios.map(scenario => <section class="status-situation" id={`example-${scenario.id}`} data-situation={scenario.id} aria-labelledby={`title-${scenario.id}`}>
+    <p class="situation-group">{scenario.group}</p>
+    <h3 id={`title-${scenario.id}`}>{scenario.title}</h3>
+    <p class="situation-summary">{scenario.summary}</p>
+    {capture.columns.map(width => <details class="terminal-variant" data-width={width} open={width === 100}>
+      <summary>{width}-column native terminal example</summary>
+      <div class="terminal-scroll" tabindex="0" role="region" aria-label={`${scenario.title}, ${width} columns. Scroll horizontally if needed.`}>
+        <pre class="native-terminal" aria-label="Actual terminal text">{frames[scenario.id][String(width)].runs.map(run => <span style={Object.entries(run.style).filter(([, value]) => value !== undefined).map(([key, value]) => `${key.replace(/[A-Z]/g, letter => `-${letter.toLowerCase()}`)}:${value}`).join(';')}>{run.text}</span>)}</pre>
+      </div>
+    </details>)}
+    <dl class="situation-reading">
+      {scenario.read.map(([label, explanation]) => <div><dt>{label}</dt><dd>{explanation}</dd></div>)}
+    </dl>
+    <p class="inspect-next"><strong>What to inspect next</strong> {scenario.inspect}</p>
+  </section>)}
+  <p class="capture-note">Read-only synthetic snapshots, captured from the actual CLI renderer at <a href={`https://github.com/lcorneliussen/taba/tree/${capture.sourceRevision}`}>{capture.sourceRevision.slice(0, 7)}</a>. Changing the example or width does not contact a forge or run an action. Terminal fonts and colors can differ.</p>
+</div>
+<script>
+  for (const explorer of document.querySelectorAll<HTMLElement>('[data-status-explorer]')) {
+    const controls = explorer.querySelector<HTMLElement>('[data-controls]')!;
+    const select = explorer.querySelector<HTMLSelectElement>('[data-scenario-select]')!;
+    const situations = [...explorer.querySelectorAll<HTMLElement>('[data-situation]')];
+    const previous = explorer.querySelector<HTMLButtonElement>('[data-previous]')!;
+    const next = explorer.querySelector<HTMLButtonElement>('[data-next]')!;
+    const position = explorer.querySelector<HTMLElement>('[data-position]')!;
+    const widths = [...explorer.querySelectorAll<HTMLInputElement>('input[name="status-width"]')];
+    const show = (id: string, updateHash = false) => {
+      const index = Math.max(0, situations.findIndex(situation => situation.dataset.situation === id));
+      const width = widths.find(input => input.checked)?.value ?? '100';
+      select.value = situations[index].dataset.situation!;
+      situations.forEach((situation, at) => {
+        situation.hidden = at !== index;
+        for (const variant of situation.querySelectorAll<HTMLDetailsElement>('[data-width]')) {
+          variant.hidden = variant.dataset.width !== width;
+          variant.open = true;
+        }
+      });
+      previous.disabled = index === 0;
+      next.disabled = index === situations.length - 1;
+      position.textContent = `${index + 1} of ${situations.length}`;
+      if (updateHash) history.replaceState(null, '', `#example-${select.value}`);
+    };
+    const fromHash = () => {
+      const id = location.hash.replace(/^#example-/, '');
+      if (situations.some(situation => situation.dataset.situation === id)) show(id);
+    };
+    select.addEventListener('change', () => show(select.value, true));
+    previous.addEventListener('click', () => show(situations[select.selectedIndex - 1].dataset.situation!, true));
+    next.addEventListener('click', () => show(situations[select.selectedIndex + 1].dataset.situation!, true));
+    widths.forEach(input => input.addEventListener('change', () => show(select.value)));
+    window.addEventListener('hashchange', fromHash);
+    controls.hidden = false;
+    show(select.value);
+    fromHash();
+  }
+</script>
+<style>
+  .status-explorer { margin-block: 1.8rem; border: 1px solid var(--line); border-radius: 12px; overflow: hidden; background: #fcfdf8; }
+  .explorer-controls { padding: 1.2rem; background: #edf2e7; border-bottom: 1px solid var(--line); }
+  .scenario-choice { display: grid; gap: .45rem; font-size: .8rem; font-weight: 650; color: var(--ink); }
+  select { min-width: 0; width: 100%; padding: .7rem; border: 1px solid #bac9b7; border-radius: 5px; background: white; color: var(--ink); font: inherit; font-size: .9rem; }
+  .explorer-navigation { display: flex; align-items: center; justify-content: space-between; gap: .7rem; margin-top: .9rem; }
+  .explorer-navigation button { border: 1px solid #becab8; border-radius: 4px; background: #fcfdf8; padding: .35rem .6rem; color: var(--green); font: inherit; font-size: .8rem; cursor: pointer; }
+  .explorer-navigation button:disabled { opacity: .4; cursor: default; }
+  [data-position] { font: .75rem var(--mono); white-space: nowrap; }
+  .terminal-widths { display: flex; gap: 1rem; flex-wrap: wrap; margin: 1rem 0 0; padding: .5rem 0 0; border: 0; }
+  .terminal-widths legend { font-size: .75rem; color: var(--muted); }
+  .terminal-widths label { display: flex; align-items: center; gap: .3rem; font-size: .75rem; white-space: nowrap; }
+  input { accent-color: var(--green); }
+  .status-situation { padding: 1.3rem; border-bottom: 1px solid var(--line); scroll-margin-top: 1rem; }
+  .situation-group { font: .7rem var(--mono); letter-spacing: .07em; text-transform: uppercase; color: var(--green); margin: 0; }
+  .status-situation h3 { font-size: 1.25rem; line-height: 1.4; letter-spacing: -.025em; margin: .5rem 0 .7rem; }
+  .situation-summary { font-size: .95rem; line-height: 1.7; }
+  .terminal-variant { margin: 1rem -1.3rem; background: #161920; color: #d4d4d4; }
+  .terminal-variant summary { padding: .65rem 1.3rem; font: .7rem var(--mono); color: #c7d6cd; cursor: pointer; border-bottom: 1px solid #303641; }
+  .terminal-scroll { overflow: auto; padding: .85rem 1rem; }
+  .terminal-scroll:focus-visible { outline: 3px solid #82b8a0; outline-offset: -3px; }
+  .native-terminal { min-width: max-content; width: max-content; margin: 0; padding: 0; border: 0; border-radius: 0; background: #161920 !important; color: #d4d4d4; font: 11px/1.7 'SFMono-Regular', Menlo, Consolas, 'Liberation Mono', monospace; white-space: pre; tab-size: 4; }
+  .situation-reading { display: grid; gap: .9rem; margin: 1.2rem 0; font-size: .88rem; line-height: 1.75; }
+  .situation-reading > div { display: grid; grid-template-columns: 100px minmax(0, 1fr); gap: 1rem; }
+  dt { font-weight: 700; color: var(--ink); }
+  dd { margin: 0; color: #56685d; }
+  .inspect-next { padding: .9rem 1rem; border-left: 3px solid #7e9f85; background: #edf2e7; font-size: .85rem; line-height: 1.75; }
+  .inspect-next strong { display: block; color: var(--ink); margin-bottom: .25rem; }
+  .capture-note { padding: 1rem 1.3rem; margin: 0; font-size: .75rem; line-height: 1.7; }
+  button:focus-visible, select:focus-visible, input:focus-visible { outline: 3px solid #7d9a71; outline-offset: 3px; }
+  @media (max-width: 520px) { .status-situation { padding: 1rem; } .terminal-variant { margin-inline: -1rem; } .situation-reading > div { grid-template-columns: 1fr; gap: .15rem; } .terminal-widths { gap: .55rem; } .explorer-navigation button { font-size: .7rem; } }
+</style>
