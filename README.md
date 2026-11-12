@@ -58,7 +58,7 @@ explicit; it does not upgrade the release-pinned handbook baseline.
 To regenerate its selectable terminal examples from a clean CLI source checkout:
 
 ```sh
-npm run status:capture -- ../wtc-cli
+npm run status:capture -- /path/to/clean-cli-checkout
 ```
 
 The source must include the status presentation described by the guide. The
@@ -71,8 +71,9 @@ preview after regeneration. Unreleased examples stay labeled as development.
 
 `npm run test:status` checks the committed replay against a digest of its
 authored snapshot inputs, all wide expectations, and compact identity/state
-invariants; CI runs it without a CLI checkout. The source digest records the
-bounded renderer files, not a complete compiler-input audit. To repeat the
+invariants; CI runs it without a CLI checkout. The source digest records tracked command-package/internal inputs and Go
+module files; the parser has its own digest. Captures require a clean checkout
+and a stable source fingerprint. To repeat the
 interaction checks against an already running supervised preview:
 
 ```sh
@@ -82,37 +83,36 @@ npm run test:status:browser -- "http://127.0.0.1:${WTC_SITE_PORT}/"
 This checks all scenario/width choices, navigation, direct links, mobile overflow
 and the no-JavaScript fallback. It starts no server or application action.
 
-For an independent native recording check, the optional bridge also accepts the
-capture tool from [CLI PR #341](https://github.com/lcorneliussen/wtc-cli/pull/341)
-([recording issue #325](https://github.com/lcorneliussen/wtc-cli/issues/325)).
-Inspect that tool before running it. Until it lands, use a read-only source
-export and pass its full revision; the bridge verifies the tool's bytes against
-that commit in the CLI object store. This is not a site build dependency.
+For an independent native recording check, use the capture tool included in
+that same clean CLI checkout. The bridge verifies its bytes against the replay's
+full source revision before running it. An explicit `--capture-tool` export may
+also be supplied with its full `--tool-revision`. Missing tools, a dirty or
+mismatched source checkout, changed parser, failed assertions, changed source
+fingerprints, and mismatched replay text/styles fail explicitly.
 
 With the tool's Python dependencies (`pyte`, `wcwidth`), Go, Node and an installed
 headless Chrome available:
 
 ```sh
-npm run status:verify-native -- --cli-root ../wtc-cli \
-  --capture-tool /path/to/reviewed-export/tools/visual-evidence/capture.py \
-  --tool-revision 81830dc4e566997c8cfc4ee9cf2b2e9e0b56ca04 \
+npm run status:verify-native -- --cli-root /path/to/the-same-clean-cli-checkout \
   --out /path/outside-both-repos/native-status-evidence \
   --chrome /path/to/chrome-headless-shell
 ```
 
 The output directory must be empty. All 36 native frames must pass the tool's
-semantic and terminal-cell roundtrip assertions and match the committed replay
-text exactly. A source fingerprint must remain stable across every batch. The
-gallery retains native ANSI, PNG cell previews and manifests with assertions,
-artifact hashes, source fingerprints and tool versions. These are real renderer
-outputs with synthetic inputs; they do not exercise live collectors or provider
-accounts, and PNG fonts/styles can differ from a terminal.
+semantic and terminal-cell assertions and match the committed replay text and
+decoded styles. Source fingerprints must stay stable across every batch. PNG,
+ANSI and provenance files remain outside Git. These are real renderer outputs
+with synthetic inputs; they do not test live collectors or provider accounts.
+PNG fonts/styles can differ from a terminal.
 
-Inspect the artifacts before sharing. For a local walkthrough, an optional
-`public/status-evidence` symlink to the inspected output adds a development-only
-gallery link to the guide. That path is ignored by Git; remove it before a local
-production build, which copies public assets. CI and production need no capture
-tool or generated media.
+An optional ignored `public/status-evidence` symlink exposes inspected local
+captures in development. Its source is labeled; earlier evidence is not claimed
+to match a newer replay. Preserve existing evidence and use a clean Git export
+or CI checkout for production builds, which excludes ignored local galleries
+without disturbing a running preview. The production link check rejects local
+gallery assets and filesystem paths. Normal site build/CI needs no CLI checkout
+or capture tool.
 
 ## Documentation coverage and release intake
 

@@ -1,7 +1,10 @@
 {
-  "sourceRevision": "6c0f3aabf6b1c778b3c64a9505c235d1cfbfbdcb",
-  "sourceDigest": "664a8e714c98c6f2ef88f6875ca06786452afb1570e19d4edb356e30b1886c61",
-  "fixtureDigest": "7ced8184844856354f05b3ab065e5327b3b3bc43a68509f6cbe77a7edb1e56b7",
+  "sourceRevision": "dcb099ca3efaa0a318550594d85c5cb3194a04e8",
+  "sourceDigest": "fcaa589e089600b8c1236fa80cc9202a84860b037d29485d0d8aa43991d832e8",
+  "sourceScope": "tracked command package, internal, go.mod and go.sum",
+  "commandPackage": "cmd/taba",
+  "parserDigest": "2e635a6eed3ef40963aa6a5012580531b10d61024f87b8132f57e8532a0ce51d",
+  "fixtureDigest": "4a6f214520350ed50fcb49c73d0bda18918619dc5321781cd790f03c4d86da66",
   "renderer": "statusTUIModel.View",
   "synthetic": true,
   "actionsDispatched": false,
@@ -10,7 +13,7 @@
     60,
     39
   ],
-  "rows": 18,
+  "rows": 24,
   "frames": {
     "work-in-progress": {
       "39": {
@@ -158,7 +161,7 @@
             }
           },
           {
-            "text": "\n                                       \n                                       \n                                       \n                                       \n                                       \n                                       \n                                       \n                                       \n",
+            "text": "\n                                       \n                                       \n                                       \n                                       \n                                       \n                                       \n                                       \n                                       \n                                       \n                                       \n                                       \n                                       \n                                       \n                                       \n",
             "style": {}
           },
           {
@@ -168,7 +171,7 @@
             }
           }
         ],
-        "plain": "taba/wtc status · example · 0s old · d…\n                                       \nREPO     BRANCH    PR   C M R      ±   \nwidget   feature/… #7 ↗ ● ✓ ●      ±3  \n                                       \nPRs                                    \nPR    REPO       STATE    TITLE        \n#7  ↗ widget     open     Improve the …\n                                       \n                                       \n                                       \n                                       \n                                       \n                                       \n                                       \n                                       \nn next actions · r refresh · l log · a…"
+        "plain": "taba/wtc status · example · 0s old · d…\n                                       \nREPO     BRANCH    PR   C M R      ±   \nwidget   feature/… #7 ↗ ● ✓ ●      ±3  \n                                       \nPRs                                    \nPR    REPO       STATE    TITLE        \n#7  ↗ widget     open     Improve the …\n                                       \n                                       \n                                       \n                                       \n                                       \n                                       \n                                       \n                                       \n                                       \n                                       \n                                       \n                                       \n                                       \n                                       \nn next actions · r refresh · l log · a…"
       },
       "60": {
         "runs": [
@@ -365,7 +368,7 @@
             }
           },
           {
-            "text": "\n                                                            \n                                                            \n                                                            \n                                                            \n                                                            \n                                                            \n                                                            \n                                                            \n",
+            "text": "\n                                                            \n                                                            \n                                                            \n                                                            \n                                                            \n                                                            \n                                                            \n                                                            \n                                                            \n                                                            \n                                                            \n                                                            \n                                                            \n                                                            \n",
             "style": {}
           },
           {
@@ -375,7 +378,7 @@
             }
           }
         ],
-        "plain": "taba/wtc status · example · 0s old · dev                    \n                                                            \nREPO             BRANCH         PR   C M R      ±    ↑   ↓  \nwidget           feature/topic  #7 ↗ ● ✓ ●      ±3   2   1  \n                                                            \nPRs                                                         \nPR    REPO             STATE      C M R TITLE               \n#7  ↗ widget           open       ● ✓ ● Improve the widget  \n                                                            \n                                                            \n                                                            \n                                                            \n                                                            \n                                                            \n                                                            \n                                                            \nn next actions · r refresh · l log · a archived · ↗ link · …"
+        "plain": "taba/wtc status · example · 0s old · dev                    \n                                                            \nREPO             BRANCH         PR   C M R      ±    ↑   ↓  \nwidget           feature/topic  #7 ↗ ● ✓ ●      ±3   2   1  \n                                                            \nPRs                                                         \nPR    REPO             STATE      C M R TITLE               \n#7  ↗ widget           open       ● ✓ ● Improve the widget  \n                                                            \n                                                            \n                                                            \n                                                            \n                                                            \n                                                            \n                                                            \n                                                            \n                                                            \n                                                            \n                                                            \n                                                            \n                                                            \n                                                            \nn next actions · r refresh · l log · a archived · ↗ link · …"
       },
       "100": {
         "runs": [
@@ -582,7 +585,7 @@
             }
           },
           {
-            "text": "\n                                                                                                    \n                                                                                                    \n                                                                                                    \n                                                                                                    \n                                                                                                    \n                                                                                                    \n                                                                                                    \n                                                                                                    \n",
+            "text": "\n                                                                                                    \n                                                                                                    \n                                                                                                    \n                                                                                                    \n                                                                                                    \n                                                                                                    \n                                                                                                    \n                                                                                                    \n                                                                                                    \n                                                                                                    \n                                                                                                    \n                                                                                                    \n                                                                                                    \n                                                                                                    \n",
             "style": {}
           },
           {
@@ -596,7 +599,7 @@
             "style": {}
           }
         ],
-        "plain": "taba/wtc status · example · 0s old · dev                                                            \n                                                                                                    \nREPO                 BRANCH                         PR   C M R      ±    ↑   ↓   TEST               \nwidget               feature/topic                  #7 ↗ ● ✓ ●      ±3   2   1   T○#104             \n                                                                                                    \nPRs                                                                                                 \nPR    REPO                 STATE      CHECKS MERGE REVIEWS TITLE                                    \n#7  ↗ widget               open       ●      ✓     ●       Improve the widget                       \n                                                                                                    \n                                                                                                    \n                                                                                                    \n                                                                                                    \n                                                                                                    \n                                                                                                    \n                                                                                                    \n                                                                                                    \nn next actions · r refresh · l log · a archived · ↗ link · ? help · q quit                          "
+        "plain": "taba/wtc status · example · 0s old · dev                                                            \n                                                                                                    \nREPO                 BRANCH                         PR   C M R      ±    ↑   ↓   TEST               \nwidget               feature/topic                  #7 ↗ ● ✓ ●      ±3   2   1   T○#104             \n                                                                                                    \nPRs                                                                                                 \nPR    REPO                 STATE      CHECKS MERGE REVIEWS TITLE                                    \n#7  ↗ widget               open       ●      ✓     ●       Improve the widget                       \n                                                                                                    \n                                                                                                    \n                                                                                                    \n                                                                                                    \n                                                                                                    \n                                                                                                    \n                                                                                                    \n                                                                                                    \n                                                                                                    \n                                                                                                    \n                                                                                                    \n                                                                                                    \n                                                                                                    \n                                                                                                    \nn next actions · r refresh · l log · a archived · ↗ link · ? help · q quit                          "
       }
     },
     "checks-failed": {
@@ -745,7 +748,7 @@
             }
           },
           {
-            "text": "\n                                       \n                                       \n                                       \n                                       \n                                       \n                                       \n                                       \n                                       \n",
+            "text": "\n                                       \n                                       \n                                       \n                                       \n                                       \n                                       \n                                       \n                                       \n                                       \n                                       \n                                       \n                                       \n                                       \n                                       \n",
             "style": {}
           },
           {
@@ -755,7 +758,7 @@
             }
           }
         ],
-        "plain": "taba/wtc status · example · 0s old · d…\n                                       \nREPO     BRANCH    PR   C M R      ±   \nwidget   feature/… #7 ↗ ✗ ✓ ✓      ·   \n                                       \nPRs                                    \nPR    REPO       STATE    TITLE        \n#7  ↗ widget     open     Improve the …\n                                       \n                                       \n                                       \n                                       \n                                       \n                                       \n                                       \n                                       \nn next actions · r refresh · l log · a…"
+        "plain": "taba/wtc status · example · 0s old · d…\n                                       \nREPO     BRANCH    PR   C M R      ±   \nwidget   feature/… #7 ↗ ✗ ✓ ✓      ·   \n                                       \nPRs                                    \nPR    REPO       STATE    TITLE        \n#7  ↗ widget     open     Improve the …\n                                       \n                                       \n                                       \n                                       \n                                       \n                                       \n                                       \n                                       \n                                       \n                                       \n                                       \n                                       \n                                       \n                                       \nn next actions · r refresh · l log · a…"
       },
       "60": {
         "runs": [
@@ -952,7 +955,7 @@
             }
           },
           {
-            "text": "\n                                                            \n                                                            \n                                                            \n                                                            \n                                                            \n                                                            \n                                                            \n                                                            \n",
+            "text": "\n                                                            \n                                                            \n                                                            \n                                                            \n                                                            \n                                                            \n                                                            \n                                                            \n                                                            \n                                                            \n                                                            \n                                                            \n                                                            \n                                                            \n",
             "style": {}
           },
           {
@@ -962,7 +965,7 @@
             }
           }
         ],
-        "plain": "taba/wtc status · example · 0s old · dev                    \n                                                            \nREPO             BRANCH         PR   C M R      ±    ↑   ↓  \nwidget           feature/topic  #7 ↗ ✗ ✓ ✓      ·    ·   ·  \n                                                            \nPRs                                                         \nPR    REPO             STATE      C M R TITLE               \n#7  ↗ widget           open       ✗ ✓ ✓ Improve the widget  \n                                                            \n                                                            \n                                                            \n                                                            \n                                                            \n                                                            \n                                                            \n                                                            \nn next actions · r refresh · l log · a archived · ↗ link · …"
+        "plain": "taba/wtc status · example · 0s old · dev                    \n                                                            \nREPO             BRANCH         PR   C M R      ±    ↑   ↓  \nwidget           feature/topic  #7 ↗ ✗ ✓ ✓      ·    ·   ·  \n                                                            \nPRs                                                         \nPR    REPO             STATE      C M R TITLE               \n#7  ↗ widget           open       ✗ ✓ ✓ Improve the widget  \n                                                            \n                                                            \n                                                            \n                                                            \n                                                            \n                                                            \n                                                            \n                                                            \n                                                            \n                                                            \n                                                            \n                                                            \n                                                            \n                                                            \nn next actions · r refresh · l log · a archived · ↗ link · …"
       },
       "100": {
         "runs": [
@@ -1159,7 +1162,7 @@
             }
           },
           {
-            "text": "\n                                                                                                    \n                                                                                                    \n                                                                                                    \n                                                                                                    \n                                                                                                    \n                                                                                                    \n                                                                                                    \n                                                                                                    \n",
+            "text": "\n                                                                                                    \n                                                                                                    \n                                                                                                    \n                                                                                                    \n                                                                                                    \n                                                                                                    \n                                                                                                    \n                                                                                                    \n                                                                                                    \n                                                                                                    \n                                                                                                    \n                                                                                                    \n                                                                                                    \n                                                                                                    \n",
             "style": {}
           },
           {
@@ -1173,7 +1176,7 @@
             "style": {}
           }
         ],
-        "plain": "taba/wtc status · example · 0s old · dev                                                            \n                                                                                                    \nREPO                 BRANCH                         PR   C M R      ±    ↑   ↓                      \nwidget               feature/topic                  #7 ↗ ✗ ✓ ✓      ·    ·   ·                      \n                                                                                                    \nPRs                                                                                                 \nPR    REPO                 STATE      CHECKS MERGE REVIEWS TITLE                                    \n#7  ↗ widget               open       ✗      ✓     ✓       Improve the widget                       \n                                                                                                    \n                                                                                                    \n                                                                                                    \n                                                                                                    \n                                                                                                    \n                                                                                                    \n                                                                                                    \n                                                                                                    \nn next actions · r refresh · l log · a archived · ↗ link · ? help · q quit                          "
+        "plain": "taba/wtc status · example · 0s old · dev                                                            \n                                                                                                    \nREPO                 BRANCH                         PR   C M R      ±    ↑   ↓                      \nwidget               feature/topic                  #7 ↗ ✗ ✓ ✓      ·    ·   ·                      \n                                                                                                    \nPRs                                                                                                 \nPR    REPO                 STATE      CHECKS MERGE REVIEWS TITLE                                    \n#7  ↗ widget               open       ✗      ✓     ✓       Improve the widget                       \n                                                                                                    \n                                                                                                    \n                                                                                                    \n                                                                                                    \n                                                                                                    \n                                                                                                    \n                                                                                                    \n                                                                                                    \n                                                                                                    \n                                                                                                    \n                                                                                                    \n                                                                                                    \n                                                                                                    \n                                                                                                    \nn next actions · r refresh · l log · a archived · ↗ link · ? help · q quit                          "
       }
     },
     "review-distinctions": {
@@ -1522,7 +1525,7 @@
             }
           },
           {
-            "text": "\n                                       \n                                       \n                                       \n                                       \n",
+            "text": "\n                                       \n                                       \n                                       \n                                       \n                                       \n                                       \n                                       \n                                       \n                                       \n                                       \n",
             "style": {}
           },
           {
@@ -1532,7 +1535,7 @@
             }
           }
         ],
-        "plain": "taba/wtc status · example · 0s old · d…\n                                       \nREPO     BRANCH    PR       C M R  ±   \nwidget   feature/… #7     ↗ ✓ ✓ ✗  ·   \ngadget   feature/… #48    ↗ ✓ ✓ ✎  ·   \ntoolkit  feature/… #12345 ↗ ✓ ✓ ∅  ·   \n                                       \nPRs                                    \nPR       REPO       STATE    TITLE     \n#7     ↗ widget     open     Improve t…\n#48    ↗ gadget     open     Improve t…\n#12345 ↗ toolkit    open     Improve t…\n                                       \n                                       \n                                       \n                                       \nn next actions · r refresh · l log · a…"
+        "plain": "taba/wtc status · example · 0s old · d…\n                                       \nREPO     BRANCH    PR       C M R  ±   \nwidget   feature/… #7     ↗ ✓ ✓ ✗  ·   \ngadget   feature/… #48    ↗ ✓ ✓ ✎  ·   \ntoolkit  feature/… #12345 ↗ ✓ ✓ ∅  ·   \n                                       \nPRs                                    \nPR       REPO       STATE    TITLE     \n#7     ↗ widget     open     Improve t…\n#48    ↗ gadget     open     Improve t…\n#12345 ↗ toolkit    open     Improve t…\n                                       \n                                       \n                                       \n                                       \n                                       \n                                       \n                                       \n                                       \n                                       \n                                       \nn next actions · r refresh · l log · a…"
       },
       "60": {
         "runs": [
@@ -2029,7 +2032,7 @@
             }
           },
           {
-            "text": "\n                                                            \n                                                            \n                                                            \n                                                            \n",
+            "text": "\n                                                            \n                                                            \n                                                            \n                                                            \n                                                            \n                                                            \n                                                            \n                                                            \n                                                            \n                                                            \n",
             "style": {}
           },
           {
@@ -2039,7 +2042,7 @@
             }
           }
         ],
-        "plain": "taba/wtc status · example · 0s old · dev                    \n                                                            \nREPO             BRANCH         PR       C M R  ±    ↑   ↓  \nwidget           feature/topic  #7     ↗ ✓ ✓ ✗  ·    ·   ·  \ngadget           feature/topic  #48    ↗ ✓ ✓ ✎  ·    ·   ·  \ntoolkit          feature/topic  #12345 ↗ ✓ ✓ ∅  ·    ·   ·  \n                                                            \nPRs                                                         \nPR       REPO             STATE      C M R TITLE            \n#7     ↗ widget           open       ✓ ✓ ✗ Improve the widg…\n#48    ↗ gadget           open       ✓ ✓ ✎ Improve the widg…\n#12345 ↗ toolkit          open       ✓ ✓ ∅ Improve the widg…\n                                                            \n                                                            \n                                                            \n                                                            \nn next actions · r refresh · l log · a archived · ↗ link · …"
+        "plain": "taba/wtc status · example · 0s old · dev                    \n                                                            \nREPO             BRANCH         PR       C M R  ±    ↑   ↓  \nwidget           feature/topic  #7     ↗ ✓ ✓ ✗  ·    ·   ·  \ngadget           feature/topic  #48    ↗ ✓ ✓ ✎  ·    ·   ·  \ntoolkit          feature/topic  #12345 ↗ ✓ ✓ ∅  ·    ·   ·  \n                                                            \nPRs                                                         \nPR       REPO             STATE      C M R TITLE            \n#7     ↗ widget           open       ✓ ✓ ✗ Improve the widg…\n#48    ↗ gadget           open       ✓ ✓ ✎ Improve the widg…\n#12345 ↗ toolkit          open       ✓ ✓ ∅ Improve the widg…\n                                                            \n                                                            \n                                                            \n                                                            \n                                                            \n                                                            \n                                                            \n                                                            \n                                                            \n                                                            \nn next actions · r refresh · l log · a archived · ↗ link · …"
       },
       "100": {
         "runs": [
@@ -2536,7 +2539,7 @@
             }
           },
           {
-            "text": "\n                                                                                                    \n                                                                                                    \n                                                                                                    \n                                                                                                    \n",
+            "text": "\n                                                                                                    \n                                                                                                    \n                                                                                                    \n                                                                                                    \n                                                                                                    \n                                                                                                    \n                                                                                                    \n                                                                                                    \n                                                                                                    \n                                                                                                    \n",
             "style": {}
           },
           {
@@ -2550,7 +2553,7 @@
             "style": {}
           }
         ],
-        "plain": "taba/wtc status · example · 0s old · dev                                                            \n                                                                                                    \nREPO                 BRANCH                         PR       C M R  ±    ↑   ↓                      \nwidget               feature/topic                  #7     ↗ ✓ ✓ ✗  ·    ·   ·                      \ngadget               feature/topic                  #48    ↗ ✓ ✓ ✎  ·    ·   ·                      \ntoolkit              feature/topic                  #12345 ↗ ✓ ✓ ∅  ·    ·   ·                      \n                                                                                                    \nPRs                                                                                                 \nPR       REPO                 STATE      CHECKS MERGE REVIEWS TITLE                                 \n#7     ↗ widget               open       ✓      ✓     ✗       Improve the widget                    \n#48    ↗ gadget               open       ✓      ✓     ✎       Improve the widget                    \n#12345 ↗ toolkit              open       ✓      ✓     ∅       Improve the widget                    \n                                                                                                    \n                                                                                                    \n                                                                                                    \n                                                                                                    \nn next actions · r refresh · l log · a archived · ↗ link · ? help · q quit                          "
+        "plain": "taba/wtc status · example · 0s old · dev                                                            \n                                                                                                    \nREPO                 BRANCH                         PR       C M R  ±    ↑   ↓                      \nwidget               feature/topic                  #7     ↗ ✓ ✓ ✗  ·    ·   ·                      \ngadget               feature/topic                  #48    ↗ ✓ ✓ ✎  ·    ·   ·                      \ntoolkit              feature/topic                  #12345 ↗ ✓ ✓ ∅  ·    ·   ·                      \n                                                                                                    \nPRs                                                                                                 \nPR       REPO                 STATE      CHECKS MERGE REVIEWS TITLE                                 \n#7     ↗ widget               open       ✓      ✓     ✗       Improve the widget                    \n#48    ↗ gadget               open       ✓      ✓     ✎       Improve the widget                    \n#12345 ↗ toolkit              open       ✓      ✓     ∅       Improve the widget                    \n                                                                                                    \n                                                                                                    \n                                                                                                    \n                                                                                                    \n                                                                                                    \n                                                                                                    \n                                                                                                    \n                                                                                                    \n                                                                                                    \n                                                                                                    \nn next actions · r refresh · l log · a archived · ↗ link · ? help · q quit                          "
       }
     },
     "pr-conflict": {
@@ -2785,7 +2788,7 @@
             }
           },
           {
-            "text": "\n                                       \n                                       \n                                       \n                                       \n                                       \n                                       \n",
+            "text": "\n                                       \n                                       \n                                       \n                                       \n                                       \n                                       \n                                       \n                                       \n                                       \n                                       \n                                       \n                                       \n",
             "style": {}
           },
           {
@@ -2795,7 +2798,7 @@
             }
           }
         ],
-        "plain": "taba/wtc status · example · 0s old · d…\n                                       \nREPO     BRANCH   PR       C M R       \nwidget   feature… #12345 ◇ ✓ ✗ ✓       \ngadget   feature… #7     ↗ ✗ ✗ ✗       \n                                       \nPRs                                    \nPR       REPO       STATE    TITLE     \n#7     ↗ gadget     ✗ confl… Improve t…\n#12345 ↗ widget     ✗ confl… Improve t…\n                                       \n                                       \n                                       \n                                       \n                                       \n                                       \nn next actions · r refresh · l log · a…"
+        "plain": "taba/wtc status · example · 0s old · d…\n                                       \nREPO     BRANCH   PR       C M R       \nwidget   feature… #12345 ◇ ✓ ✗ ✓       \ngadget   feature… #7     ↗ ✗ ✗ ✗       \n                                       \nPRs                                    \nPR       REPO       STATE    TITLE     \n#7     ↗ gadget     ✗ confl… Improve t…\n#12345 ↗ widget     ✗ confl… Improve t…\n                                       \n                                       \n                                       \n                                       \n                                       \n                                       \n                                       \n                                       \n                                       \n                                       \n                                       \n                                       \nn next actions · r refresh · l log · a…"
       },
       "60": {
         "runs": [
@@ -3114,7 +3117,7 @@
             }
           },
           {
-            "text": "\n                                                            \n                                                            \n                                                            \n                                                            \n                                                            \n                                                            \n",
+            "text": "\n                                                            \n                                                            \n                                                            \n                                                            \n                                                            \n                                                            \n                                                            \n                                                            \n                                                            \n                                                            \n                                                            \n                                                            \n",
             "style": {}
           },
           {
@@ -3124,7 +3127,7 @@
             }
           }
         ],
-        "plain": "taba/wtc status · example · 0s old · dev                    \n                                                            \nREPO             BRANCH       PR       C M R            ±   \nwidget           feature/top… #12345 ↗ ✓ ✗ ✓ conflict ◇ ·   \ngadget           feature/top… #7     ↗ ✗ ✗ ✗ conflict   ·   \n                                                            \nPRs                                                         \nPR       REPO             STATE      C M R TITLE            \n#7     ↗ gadget           ✗ conflict ✗ ✗ ✗ Improve the gadg…\n#12345 ↗ widget           ✗ conflict ✓ ✗ ✓ Improve the widg…\n                                                            \n                                                            \n                                                            \n                                                            \n                                                            \n                                                            \nn next actions · r refresh · l log · a archived · ↗ link · …"
+        "plain": "taba/wtc status · example · 0s old · dev                    \n                                                            \nREPO             BRANCH       PR       C M R            ±   \nwidget           feature/top… #12345 ↗ ✓ ✗ ✓ conflict ◇ ·   \ngadget           feature/top… #7     ↗ ✗ ✗ ✗ conflict   ·   \n                                                            \nPRs                                                         \nPR       REPO             STATE      C M R TITLE            \n#7     ↗ gadget           ✗ conflict ✗ ✗ ✗ Improve the gadg…\n#12345 ↗ widget           ✗ conflict ✓ ✗ ✓ Improve the widg…\n                                                            \n                                                            \n                                                            \n                                                            \n                                                            \n                                                            \n                                                            \n                                                            \n                                                            \n                                                            \n                                                            \n                                                            \nn next actions · r refresh · l log · a archived · ↗ link · …"
       },
       "100": {
         "runs": [
@@ -3483,7 +3486,7 @@
             }
           },
           {
-            "text": "\n                                                                                                    \n                                                                                                    \n                                                                                                    \n                                                                                                    \n                                                                                                    \n                                                                                                    \n",
+            "text": "\n                                                                                                    \n                                                                                                    \n                                                                                                    \n                                                                                                    \n                                                                                                    \n                                                                                                    \n                                                                                                    \n                                                                                                    \n                                                                                                    \n                                                                                                    \n                                                                                                    \n                                                                                                    \n",
             "style": {}
           },
           {
@@ -3497,7 +3500,7 @@
             "style": {}
           }
         ],
-        "plain": "taba/wtc status · example · 0s old · dev                                                            \n                                                                                                    \nREPO                 BRANCH                         PR       C M R            ±    ↑   ↓            \nwidget               feature/topic                  #12345 ↗ ✓ ✗ ✓ conflict ◇ ·    ·   ✗            \ngadget               feature/topic                  #7     ↗ ✗ ✗ ✗ conflict   ·    ·   ✗            \n                                                                                                    \nPRs                                                                                                 \nPR       REPO                 STATE      CHECKS MERGE REVIEWS TITLE                                 \n#7     ↗ gadget               ✗ conflict ✗      ✗     ✗       Improve the gadget                    \n#12345 ↗ widget               ✗ conflict ✓      ✗     ✓       Improve the widget                    \n                                                                                                    \n                                                                                                    \n                                                                                                    \n                                                                                                    \n                                                                                                    \n                                                                                                    \nn next actions · r refresh · l log · a archived · ↗ link · ? help · q quit                          "
+        "plain": "taba/wtc status · example · 0s old · dev                                                            \n                                                                                                    \nREPO                 BRANCH                         PR       C M R            ±    ↑   ↓            \nwidget               feature/topic                  #12345 ↗ ✓ ✗ ✓ conflict ◇ ·    ·   ✗            \ngadget               feature/topic                  #7     ↗ ✗ ✗ ✗ conflict   ·    ·   ✗            \n                                                                                                    \nPRs                                                                                                 \nPR       REPO                 STATE      CHECKS MERGE REVIEWS TITLE                                 \n#7     ↗ gadget               ✗ conflict ✗      ✗     ✗       Improve the gadget                    \n#12345 ↗ widget               ✗ conflict ✓      ✗     ✓       Improve the widget                    \n                                                                                                    \n                                                                                                    \n                                                                                                    \n                                                                                                    \n                                                                                                    \n                                                                                                    \n                                                                                                    \n                                                                                                    \n                                                                                                    \n                                                                                                    \n                                                                                                    \n                                                                                                    \nn next actions · r refresh · l log · a archived · ↗ link · ? help · q quit                          "
       }
     },
     "checkout-conflict": {
@@ -3520,7 +3523,7 @@
             "style": {}
           },
           {
-            "text": "REPO     BRANCH    PR  C M R       ±   ",
+            "text": "REPO     BRANCH           PR C M R ±   ",
             "style": {
               "fontWeight": "700"
             }
@@ -3536,7 +3539,7 @@
             }
           },
           {
-            "text": " feature/… ·               ",
+            "text": " feature/topic    ·        ",
             "style": {}
           },
           {
@@ -3566,7 +3569,7 @@
             }
           },
           {
-            "text": "\n(none enlisted)                        \n                                       \n                                       \n                                       \n                                       \n                                       \n                                       \n                                       \n                                       \n",
+            "text": "\n(none enlisted)                        \n                                       \n                                       \n                                       \n                                       \n                                       \n                                       \n                                       \n                                       \n                                       \n                                       \n                                       \n                                       \n                                       \n                                       \n",
             "style": {}
           },
           {
@@ -3576,7 +3579,7 @@
             }
           }
         ],
-        "plain": "taba/wtc status · example · 0s old · d…\n                                       \nREPO     BRANCH    PR  C M R       ±   \nwidget   feature/… ·               ✗   \n                                       \nPRs                                    \nPR    REPO       STATE    TITLE        \n(none enlisted)                        \n                                       \n                                       \n                                       \n                                       \n                                       \n                                       \n                                       \n                                       \nn next actions · r refresh · l log · a…"
+        "plain": "taba/wtc status · example · 0s old · d…\n                                       \nREPO     BRANCH           PR C M R ±   \nwidget   feature/topic    ·        ✗   \n                                       \nPRs                                    \nPR    REPO       STATE    TITLE        \n(none enlisted)                        \n                                       \n                                       \n                                       \n                                       \n                                       \n                                       \n                                       \n                                       \n                                       \n                                       \n                                       \n                                       \n                                       \n                                       \nn next actions · r refresh · l log · a…"
       },
       "60": {
         "runs": [
@@ -3663,7 +3666,7 @@
             }
           },
           {
-            "text": "\n(none enlisted)                                             \n                                                            \n                                                            \n                                                            \n                                                            \n                                                            \n                                                            \n                                                            \n                                                            \n",
+            "text": "\n(none enlisted)                                             \n                                                            \n                                                            \n                                                            \n                                                            \n                                                            \n                                                            \n                                                            \n                                                            \n                                                            \n                                                            \n                                                            \n                                                            \n                                                            \n                                                            \n",
             "style": {}
           },
           {
@@ -3673,7 +3676,7 @@
             }
           }
         ],
-        "plain": "taba/wtc status · example · 0s old · dev                    \n                                                            \nREPO             BRANCH         PR  C M R       ±    ↑   ↓  \nwidget           feature/topic  ·               ✗    ·   ✗2 \n                                                            \nPRs                                                         \nPR    REPO             STATE      C M R TITLE               \n(none enlisted)                                             \n                                                            \n                                                            \n                                                            \n                                                            \n                                                            \n                                                            \n                                                            \n                                                            \nn next actions · r refresh · l log · a archived · ↗ link · …"
+        "plain": "taba/wtc status · example · 0s old · dev                    \n                                                            \nREPO             BRANCH         PR  C M R       ±    ↑   ↓  \nwidget           feature/topic  ·               ✗    ·   ✗2 \n                                                            \nPRs                                                         \nPR    REPO             STATE      C M R TITLE               \n(none enlisted)                                             \n                                                            \n                                                            \n                                                            \n                                                            \n                                                            \n                                                            \n                                                            \n                                                            \n                                                            \n                                                            \n                                                            \n                                                            \n                                                            \n                                                            \nn next actions · r refresh · l log · a archived · ↗ link · …"
       },
       "100": {
         "runs": [
@@ -3760,7 +3763,7 @@
             }
           },
           {
-            "text": "\n(none enlisted)                                                                                     \n                                                                                                    \n                                                                                                    \n                                                                                                    \n                                                                                                    \n                                                                                                    \n                                                                                                    \n                                                                                                    \n                                                                                                    \n",
+            "text": "\n(none enlisted)                                                                                     \n                                                                                                    \n                                                                                                    \n                                                                                                    \n                                                                                                    \n                                                                                                    \n                                                                                                    \n                                                                                                    \n                                                                                                    \n                                                                                                    \n                                                                                                    \n                                                                                                    \n                                                                                                    \n                                                                                                    \n                                                                                                    \n",
             "style": {}
           },
           {
@@ -3774,7 +3777,7 @@
             "style": {}
           }
         ],
-        "plain": "taba/wtc status · example · 0s old · dev                                                            \n                                                                                                    \nREPO                 BRANCH                         PR  C M R       ±    ↑   ↓                      \nwidget               feature/topic                  ·               ✗    ·   ✗2                     \n                                                                                                    \nPRs                                                                                                 \nPR    REPO                 STATE      CHECKS MERGE REVIEWS TITLE                                    \n(none enlisted)                                                                                     \n                                                                                                    \n                                                                                                    \n                                                                                                    \n                                                                                                    \n                                                                                                    \n                                                                                                    \n                                                                                                    \n                                                                                                    \nn next actions · r refresh · l log · a archived · ↗ link · ? help · q quit                          "
+        "plain": "taba/wtc status · example · 0s old · dev                                                            \n                                                                                                    \nREPO                 BRANCH                         PR  C M R       ±    ↑   ↓                      \nwidget               feature/topic                  ·               ✗    ·   ✗2                     \n                                                                                                    \nPRs                                                                                                 \nPR    REPO                 STATE      CHECKS MERGE REVIEWS TITLE                                    \n(none enlisted)                                                                                     \n                                                                                                    \n                                                                                                    \n                                                                                                    \n                                                                                                    \n                                                                                                    \n                                                                                                    \n                                                                                                    \n                                                                                                    \n                                                                                                    \n                                                                                                    \n                                                                                                    \n                                                                                                    \n                                                                                                    \n                                                                                                    \nn next actions · r refresh · l log · a archived · ↗ link · ? help · q quit                          "
       }
     },
     "merged-waiting": {
@@ -3797,7 +3800,7 @@
             "style": {}
           },
           {
-            "text": "REPO     BRANCH    PR  C M R       ±   ",
+            "text": "REPO     BRANCH           PR C M R ±   ",
             "style": {
               "fontWeight": "700"
             }
@@ -3817,13 +3820,13 @@
             "style": {}
           },
           {
-            "text": "⌂ main   ",
+            "text": "⌂ main          ",
             "style": {
               "opacity": ".65"
             }
           },
           {
-            "text": " ·               ",
+            "text": " ·        ",
             "style": {}
           },
           {
@@ -3893,7 +3896,7 @@
             }
           },
           {
-            "text": "\n                                       \n                                       \n                                       \n                                       \n                                       \n                                       \n                                       \n                                       \n",
+            "text": "\n                                       \n                                       \n                                       \n                                       \n                                       \n                                       \n                                       \n                                       \n                                       \n                                       \n                                       \n                                       \n                                       \n                                       \n",
             "style": {}
           },
           {
@@ -3903,7 +3906,7 @@
             }
           }
         ],
-        "plain": "taba/wtc status · example · 0s old · d…\n                                       \nREPO     BRANCH    PR  C M R       ±   \nwidget   ⌂ main    ·               ·   \n                                       \nPRs                                    \nPR    REPO       STATE    TITLE        \n#48 ↗ widget     → test   Improve the …\n                                       \n                                       \n                                       \n                                       \n                                       \n                                       \n                                       \n                                       \nn next actions · r refresh · l log · a…"
+        "plain": "taba/wtc status · example · 0s old · d…\n                                       \nREPO     BRANCH           PR C M R ±   \nwidget   ⌂ main           ·        ·   \n                                       \nPRs                                    \nPR    REPO       STATE    TITLE        \n#48 ↗ widget     → test   Improve the …\n                                       \n                                       \n                                       \n                                       \n                                       \n                                       \n                                       \n                                       \n                                       \n                                       \n                                       \n                                       \n                                       \n                                       \nn next actions · r refresh · l log · a…"
       },
       "60": {
         "runs": [
@@ -4070,7 +4073,7 @@
             }
           },
           {
-            "text": "\n                                                            \n                                                            \n                                                            \n                                                            \n                                                            \n                                                            \n                                                            \n                                                            \n",
+            "text": "\n                                                            \n                                                            \n                                                            \n                                                            \n                                                            \n                                                            \n                                                            \n                                                            \n                                                            \n                                                            \n                                                            \n                                                            \n                                                            \n                                                            \n",
             "style": {}
           },
           {
@@ -4080,7 +4083,7 @@
             }
           }
         ],
-        "plain": "taba/wtc status · example · 0s old · dev                    \n                                                            \nREPO             BRANCH         PR  C M R       ±    ↑   ↓  \nwidget           ⌂ main         ·               ·    ·   ·  \n                                                            \nPRs                                                         \nPR    REPO             STATE      C M R TITLE               \n#48 ↗ widget           → test     · · · Improve the widget  \n                                                            \n                                                            \n                                                            \n                                                            \n                                                            \n                                                            \n                                                            \n                                                            \nn next actions · r refresh · l log · a archived · ↗ link · …"
+        "plain": "taba/wtc status · example · 0s old · dev                    \n                                                            \nREPO             BRANCH         PR  C M R       ±    ↑   ↓  \nwidget           ⌂ main         ·               ·    ·   ·  \n                                                            \nPRs                                                         \nPR    REPO             STATE      C M R TITLE               \n#48 ↗ widget           → test     · · · Improve the widget  \n                                                            \n                                                            \n                                                            \n                                                            \n                                                            \n                                                            \n                                                            \n                                                            \n                                                            \n                                                            \n                                                            \n                                                            \n                                                            \n                                                            \nn next actions · r refresh · l log · a archived · ↗ link · …"
       },
       "100": {
         "runs": [
@@ -4267,7 +4270,7 @@
             }
           },
           {
-            "text": "\n                                                                                                    \n                                                                                                    \n                                                                                                    \n                                                                                                    \n                                                                                                    \n                                                                                                    \n                                                                                                    \n                                                                                                    \n",
+            "text": "\n                                                                                                    \n                                                                                                    \n                                                                                                    \n                                                                                                    \n                                                                                                    \n                                                                                                    \n                                                                                                    \n                                                                                                    \n                                                                                                    \n                                                                                                    \n                                                                                                    \n                                                                                                    \n                                                                                                    \n                                                                                                    \n",
             "style": {}
           },
           {
@@ -4281,7 +4284,7 @@
             "style": {}
           }
         ],
-        "plain": "taba/wtc status · example · 0s old · dev                                                            \n                                                                                                    \nREPO                 BRANCH                         PR  C M R       ±    ↑   ↓   TEST     PROD      \nwidget               ⌂ main                         ·               ·    ·   ·   T○#104   P○#52     \n                                                                                                    \nPRs                                                                                                 \nPR    REPO                 STATE      CHECKS MERGE REVIEWS TITLE                                    \n#48 ↗ widget               → test     ·      ·     ·       Improve the widget                       \n                                                                                                    \n                                                                                                    \n                                                                                                    \n                                                                                                    \n                                                                                                    \n                                                                                                    \n                                                                                                    \n                                                                                                    \nn next actions · r refresh · l log · a archived · ↗ link · ? help · q quit                          "
+        "plain": "taba/wtc status · example · 0s old · dev                                                            \n                                                                                                    \nREPO                 BRANCH                         PR  C M R       ±    ↑   ↓   TEST     PROD      \nwidget               ⌂ main                         ·               ·    ·   ·   T○#104   P○#52     \n                                                                                                    \nPRs                                                                                                 \nPR    REPO                 STATE      CHECKS MERGE REVIEWS TITLE                                    \n#48 ↗ widget               → test     ·      ·     ·       Improve the widget                       \n                                                                                                    \n                                                                                                    \n                                                                                                    \n                                                                                                    \n                                                                                                    \n                                                                                                    \n                                                                                                    \n                                                                                                    \n                                                                                                    \n                                                                                                    \n                                                                                                    \n                                                                                                    \n                                                                                                    \n                                                                                                    \nn next actions · r refresh · l log · a archived · ↗ link · ? help · q quit                          "
       }
     },
     "production-pending": {
@@ -4304,7 +4307,7 @@
             "style": {}
           },
           {
-            "text": "REPO     BRANCH    PR  C M R       ±   ",
+            "text": "REPO     BRANCH           PR C M R ±   ",
             "style": {
               "fontWeight": "700"
             }
@@ -4324,13 +4327,13 @@
             "style": {}
           },
           {
-            "text": "⌂ main   ",
+            "text": "⌂ main          ",
             "style": {
               "opacity": ".65"
             }
           },
           {
-            "text": " ·               ",
+            "text": " ·        ",
             "style": {}
           },
           {
@@ -4400,7 +4403,7 @@
             }
           },
           {
-            "text": "\n                                       \n                                       \n                                       \n                                       \n                                       \n                                       \n                                       \n                                       \n",
+            "text": "\n                                       \n                                       \n                                       \n                                       \n                                       \n                                       \n                                       \n                                       \n                                       \n                                       \n                                       \n                                       \n                                       \n                                       \n",
             "style": {}
           },
           {
@@ -4410,7 +4413,7 @@
             }
           }
         ],
-        "plain": "taba/wtc status · example · 0s old · d…\n                                       \nREPO     BRANCH    PR  C M R       ±   \nwidget   ⌂ main    ·               ·   \n                                       \nPRs                                    \nPR    REPO       STATE    TITLE        \n#48 ↗ widget     ● prod   Improve the …\n                                       \n                                       \n                                       \n                                       \n                                       \n                                       \n                                       \n                                       \nn next actions · r refresh · l log · a…"
+        "plain": "taba/wtc status · example · 0s old · d…\n                                       \nREPO     BRANCH           PR C M R ±   \nwidget   ⌂ main           ·        ·   \n                                       \nPRs                                    \nPR    REPO       STATE    TITLE        \n#48 ↗ widget     ● prod   Improve the …\n                                       \n                                       \n                                       \n                                       \n                                       \n                                       \n                                       \n                                       \n                                       \n                                       \n                                       \n                                       \n                                       \n                                       \nn next actions · r refresh · l log · a…"
       },
       "60": {
         "runs": [
@@ -4577,7 +4580,7 @@
             }
           },
           {
-            "text": "\n                                                            \n                                                            \n                                                            \n                                                            \n                                                            \n                                                            \n                                                            \n                                                            \n",
+            "text": "\n                                                            \n                                                            \n                                                            \n                                                            \n                                                            \n                                                            \n                                                            \n                                                            \n                                                            \n                                                            \n                                                            \n                                                            \n                                                            \n                                                            \n",
             "style": {}
           },
           {
@@ -4587,7 +4590,7 @@
             }
           }
         ],
-        "plain": "taba/wtc status · example · 0s old · dev                    \n                                                            \nREPO             BRANCH         PR  C M R       ±    ↑   ↓  \nwidget           ⌂ main         ·               ·    ·   ·  \n                                                            \nPRs                                                         \nPR    REPO             STATE      C M R TITLE               \n#48 ↗ widget           ● prod     · · · Improve the widget  \n                                                            \n                                                            \n                                                            \n                                                            \n                                                            \n                                                            \n                                                            \n                                                            \nn next actions · r refresh · l log · a archived · ↗ link · …"
+        "plain": "taba/wtc status · example · 0s old · dev                    \n                                                            \nREPO             BRANCH         PR  C M R       ±    ↑   ↓  \nwidget           ⌂ main         ·               ·    ·   ·  \n                                                            \nPRs                                                         \nPR    REPO             STATE      C M R TITLE               \n#48 ↗ widget           ● prod     · · · Improve the widget  \n                                                            \n                                                            \n                                                            \n                                                            \n                                                            \n                                                            \n                                                            \n                                                            \n                                                            \n                                                            \n                                                            \n                                                            \n                                                            \n                                                            \nn next actions · r refresh · l log · a archived · ↗ link · …"
       },
       "100": {
         "runs": [
@@ -4774,7 +4777,7 @@
             }
           },
           {
-            "text": "\n                                                                                                    \n                                                                                                    \n                                                                                                    \n                                                                                                    \n                                                                                                    \n                                                                                                    \n                                                                                                    \n                                                                                                    \n",
+            "text": "\n                                                                                                    \n                                                                                                    \n                                                                                                    \n                                                                                                    \n                                                                                                    \n                                                                                                    \n                                                                                                    \n                                                                                                    \n                                                                                                    \n                                                                                                    \n                                                                                                    \n                                                                                                    \n                                                                                                    \n                                                                                                    \n",
             "style": {}
           },
           {
@@ -4788,7 +4791,7 @@
             "style": {}
           }
         ],
-        "plain": "taba/wtc status · example · 0s old · dev                                                            \n                                                                                                    \nREPO                 BRANCH                         PR  C M R       ±    ↑   ↓   TEST     PROD      \nwidget               ⌂ main                         ·               ·    ·   ·   T✓#105   P●#53     \n                                                                                                    \nPRs                                                                                                 \nPR    REPO                 STATE      CHECKS MERGE REVIEWS TITLE                                    \n#48 ↗ widget               ● prod     ·      ·     ·       Improve the widget                       \n                                                                                                    \n                                                                                                    \n                                                                                                    \n                                                                                                    \n                                                                                                    \n                                                                                                    \n                                                                                                    \n                                                                                                    \nn next actions · r refresh · l log · a archived · ↗ link · ? help · q quit                          "
+        "plain": "taba/wtc status · example · 0s old · dev                                                            \n                                                                                                    \nREPO                 BRANCH                         PR  C M R       ±    ↑   ↓   TEST     PROD      \nwidget               ⌂ main                         ·               ·    ·   ·   T✓#105   P●#53     \n                                                                                                    \nPRs                                                                                                 \nPR    REPO                 STATE      CHECKS MERGE REVIEWS TITLE                                    \n#48 ↗ widget               ● prod     ·      ·     ·       Improve the widget                       \n                                                                                                    \n                                                                                                    \n                                                                                                    \n                                                                                                    \n                                                                                                    \n                                                                                                    \n                                                                                                    \n                                                                                                    \n                                                                                                    \n                                                                                                    \n                                                                                                    \n                                                                                                    \n                                                                                                    \n                                                                                                    \nn next actions · r refresh · l log · a archived · ↗ link · ? help · q quit                          "
       }
     },
     "built": {
@@ -4811,7 +4814,7 @@
             "style": {}
           },
           {
-            "text": "REPO     BRANCH    PR  C M R       ±   ",
+            "text": "REPO     BRANCH           PR C M R ±   ",
             "style": {
               "fontWeight": "700"
             }
@@ -4831,13 +4834,13 @@
             "style": {}
           },
           {
-            "text": "⌂ main   ",
+            "text": "⌂ main          ",
             "style": {
               "opacity": ".65"
             }
           },
           {
-            "text": " ·               ",
+            "text": " ·        ",
             "style": {}
           },
           {
@@ -4907,7 +4910,7 @@
             }
           },
           {
-            "text": "\n                                       \n                                       \n                                       \n                                       \n                                       \n                                       \n                                       \n                                       \n",
+            "text": "\n                                       \n                                       \n                                       \n                                       \n                                       \n                                       \n                                       \n                                       \n                                       \n                                       \n                                       \n                                       \n                                       \n                                       \n",
             "style": {}
           },
           {
@@ -4917,7 +4920,7 @@
             }
           }
         ],
-        "plain": "taba/wtc status · example · 0s old · d…\n                                       \nREPO     BRANCH    PR  C M R       ±   \nwidget   ⌂ main    ·               ·   \n                                       \nPRs                                    \nPR    REPO       STATE    TITLE        \n#48 ↗ widget     ✓ built  Improve the …\n                                       \n                                       \n                                       \n                                       \n                                       \n                                       \n                                       \n                                       \nn next actions · r refresh · l log · a…"
+        "plain": "taba/wtc status · example · 0s old · d…\n                                       \nREPO     BRANCH           PR C M R ±   \nwidget   ⌂ main           ·        ·   \n                                       \nPRs                                    \nPR    REPO       STATE    TITLE        \n#48 ↗ widget     ✓ built  Improve the …\n                                       \n                                       \n                                       \n                                       \n                                       \n                                       \n                                       \n                                       \n                                       \n                                       \n                                       \n                                       \n                                       \n                                       \nn next actions · r refresh · l log · a…"
       },
       "60": {
         "runs": [
@@ -5084,7 +5087,7 @@
             }
           },
           {
-            "text": "\n                                                            \n                                                            \n                                                            \n                                                            \n                                                            \n                                                            \n                                                            \n                                                            \n",
+            "text": "\n                                                            \n                                                            \n                                                            \n                                                            \n                                                            \n                                                            \n                                                            \n                                                            \n                                                            \n                                                            \n                                                            \n                                                            \n                                                            \n                                                            \n",
             "style": {}
           },
           {
@@ -5094,7 +5097,7 @@
             }
           }
         ],
-        "plain": "taba/wtc status · example · 0s old · dev                    \n                                                            \nREPO             BRANCH         PR  C M R       ±    ↑   ↓  \nwidget           ⌂ main         ·               ·    ·   ·  \n                                                            \nPRs                                                         \nPR    REPO             STATE      C M R TITLE               \n#48 ↗ widget           ✓ built    · · · Improve the widget  \n                                                            \n                                                            \n                                                            \n                                                            \n                                                            \n                                                            \n                                                            \n                                                            \nn next actions · r refresh · l log · a archived · ↗ link · …"
+        "plain": "taba/wtc status · example · 0s old · dev                    \n                                                            \nREPO             BRANCH         PR  C M R       ±    ↑   ↓  \nwidget           ⌂ main         ·               ·    ·   ·  \n                                                            \nPRs                                                         \nPR    REPO             STATE      C M R TITLE               \n#48 ↗ widget           ✓ built    · · · Improve the widget  \n                                                            \n                                                            \n                                                            \n                                                            \n                                                            \n                                                            \n                                                            \n                                                            \n                                                            \n                                                            \n                                                            \n                                                            \n                                                            \n                                                            \nn next actions · r refresh · l log · a archived · ↗ link · …"
       },
       "100": {
         "runs": [
@@ -5271,7 +5274,7 @@
             }
           },
           {
-            "text": "\n                                                                                                    \n                                                                                                    \n                                                                                                    \n                                                                                                    \n                                                                                                    \n                                                                                                    \n                                                                                                    \n                                                                                                    \n",
+            "text": "\n                                                                                                    \n                                                                                                    \n                                                                                                    \n                                                                                                    \n                                                                                                    \n                                                                                                    \n                                                                                                    \n                                                                                                    \n                                                                                                    \n                                                                                                    \n                                                                                                    \n                                                                                                    \n                                                                                                    \n                                                                                                    \n",
             "style": {}
           },
           {
@@ -5285,7 +5288,7 @@
             "style": {}
           }
         ],
-        "plain": "taba/wtc status · example · 0s old · dev                                                            \n                                                                                                    \nREPO                 BRANCH                         PR  C M R       ±    ↑   ↓   PROD               \nwidget               ⌂ main                         ·               ·    ·   ·   P✓#105             \n                                                                                                    \nPRs                                                                                                 \nPR    REPO                 STATE      CHECKS MERGE REVIEWS TITLE                                    \n#48 ↗ widget               ✓ built    ·      ·     ·       Improve the widget                       \n                                                                                                    \n                                                                                                    \n                                                                                                    \n                                                                                                    \n                                                                                                    \n                                                                                                    \n                                                                                                    \n                                                                                                    \nn next actions · r refresh · l log · a archived · ↗ link · ? help · q quit                          "
+        "plain": "taba/wtc status · example · 0s old · dev                                                            \n                                                                                                    \nREPO                 BRANCH                         PR  C M R       ±    ↑   ↓   PROD               \nwidget               ⌂ main                         ·               ·    ·   ·   P✓#105             \n                                                                                                    \nPRs                                                                                                 \nPR    REPO                 STATE      CHECKS MERGE REVIEWS TITLE                                    \n#48 ↗ widget               ✓ built    ·      ·     ·       Improve the widget                       \n                                                                                                    \n                                                                                                    \n                                                                                                    \n                                                                                                    \n                                                                                                    \n                                                                                                    \n                                                                                                    \n                                                                                                    \n                                                                                                    \n                                                                                                    \n                                                                                                    \n                                                                                                    \n                                                                                                    \n                                                                                                    \nn next actions · r refresh · l log · a archived · ↗ link · ? help · q quit                          "
       }
     },
     "retained-branch": {
@@ -5308,7 +5311,7 @@
             "style": {}
           },
           {
-            "text": "REPO     BRANCH    PR  C M R       ±   ",
+            "text": "REPO     BRANCH           PR C M R ±   ",
             "style": {
               "fontWeight": "700"
             }
@@ -5324,7 +5327,27 @@
             }
           },
           {
-            "text": " feature/… ·               ",
+            "text": " feature/topic [… ·        ",
+            "style": {}
+          },
+          {
+            "text": "·   ",
+            "style": {
+              "opacity": ".65"
+            }
+          },
+          {
+            "text": "\n",
+            "style": {}
+          },
+          {
+            "text": "gadget  ",
+            "style": {
+              "fontWeight": "700"
+            }
+          },
+          {
+            "text": " feature/other    ·        ",
             "style": {}
           },
           {
@@ -5394,7 +5417,57 @@
             }
           },
           {
-            "text": "\n                                       \nwidget: ↑5 vs origin/main (commit      \nhistory; upstream gone; fully landed   \nresiduals)                             \n                                       \n                                       \n                                       \n                                       \n",
+            "text": "\n",
+            "style": {}
+          },
+          {
+            "text": "#7  ↗",
+            "style": {
+              "color": "#56b6c2"
+            }
+          },
+          {
+            "text": " ",
+            "style": {}
+          },
+          {
+            "text": "gadget    ",
+            "style": {
+              "fontWeight": "700"
+            }
+          },
+          {
+            "text": " ",
+            "style": {}
+          },
+          {
+            "text": "merged  ",
+            "style": {
+              "color": "#e5c07b"
+            }
+          },
+          {
+            "text": " ",
+            "style": {}
+          },
+          {
+            "text": "A long retai…",
+            "style": {
+              "fontWeight": "700"
+            }
+          },
+          {
+            "text": "\n",
+            "style": {}
+          },
+          {
+            "text": "landing unknown; inspect branch",
+            "style": {
+              "color": "#e5c07b"
+            }
+          },
+          {
+            "text": "        \n                                       \nwidget: ↑5 vs origin/main (commit      \nhistory; upstream gone; fully landed   \nresiduals)                             \n                                       \n                                       \n                                       \n                                       \n                                       \n                                       \n                                       \n",
             "style": {}
           },
           {
@@ -5404,7 +5477,7 @@
             }
           }
         ],
-        "plain": "taba/wtc status · example · 0s old · d…\n                                       \nREPO     BRANCH    PR  C M R       ±   \nwidget   feature/… ·               ·   \n                                       \nPRs                                    \nPR    REPO       STATE    TITLE        \n#48 ↗ widget     ⚠ catch… Improve the …\n                                       \nwidget: ↑5 vs origin/main (commit      \nhistory; upstream gone; fully landed   \nresiduals)                             \n                                       \n                                       \n                                       \n                                       \nn next actions · r refresh · l log · a…"
+        "plain": "taba/wtc status · example · 0s old · d…\n                                       \nREPO     BRANCH           PR C M R ±   \nwidget   feature/topic [… ·        ·   \ngadget   feature/other    ·        ·   \n                                       \nPRs                                    \nPR    REPO       STATE    TITLE        \n#48 ↗ widget     ⚠ catch… Improve the …\n#7  ↗ gadget     merged   A long retai…\nlanding unknown; inspect branch        \n                                       \nwidget: ↑5 vs origin/main (commit      \nhistory; upstream gone; fully landed   \nresiduals)                             \n                                       \n                                       \n                                       \n                                       \n                                       \n                                       \n                                       \nn next actions · r refresh · l log · a…"
       },
       "60": {
         "runs": [
@@ -5458,6 +5531,46 @@
             "text": "5  ",
             "style": {
               "color": "#98c379"
+            }
+          },
+          {
+            "text": " ",
+            "style": {}
+          },
+          {
+            "text": "·  ",
+            "style": {
+              "opacity": ".65"
+            }
+          },
+          {
+            "text": "\n",
+            "style": {}
+          },
+          {
+            "text": "gadget          ",
+            "style": {
+              "fontWeight": "700"
+            }
+          },
+          {
+            "text": " feature/other  ·               ",
+            "style": {}
+          },
+          {
+            "text": "·   ",
+            "style": {
+              "opacity": ".65"
+            }
+          },
+          {
+            "text": " ",
+            "style": {}
+          },
+          {
+            "text": "·  ",
+            "style": {
+              "opacity": ".65"
             }
           },
           {
@@ -5561,7 +5674,87 @@
             }
           },
           {
-            "text": "\n                                                            \nwidget: ↑5 vs origin/main (commit history; upstream gone;   \nfully landed residuals)                                     \n                                                            \n                                                            \n                                                            \n                                                            \n                                                            \n",
+            "text": "\n",
+            "style": {}
+          },
+          {
+            "text": "#7  ↗",
+            "style": {
+              "color": "#56b6c2"
+            }
+          },
+          {
+            "text": " ",
+            "style": {}
+          },
+          {
+            "text": "gadget          ",
+            "style": {
+              "fontWeight": "700"
+            }
+          },
+          {
+            "text": " ",
+            "style": {}
+          },
+          {
+            "text": "merged    ",
+            "style": {
+              "color": "#e5c07b"
+            }
+          },
+          {
+            "text": " ",
+            "style": {}
+          },
+          {
+            "text": "✓",
+            "style": {
+              "color": "#98c379"
+            }
+          },
+          {
+            "text": " ",
+            "style": {}
+          },
+          {
+            "text": "·",
+            "style": {
+              "opacity": ".65"
+            }
+          },
+          {
+            "text": " ",
+            "style": {}
+          },
+          {
+            "text": "✓",
+            "style": {
+              "color": "#98c379"
+            }
+          },
+          {
+            "text": " ",
+            "style": {}
+          },
+          {
+            "text": "A long retained pul…",
+            "style": {
+              "fontWeight": "700"
+            }
+          },
+          {
+            "text": "\n",
+            "style": {}
+          },
+          {
+            "text": "landing unknown; inspect branch",
+            "style": {
+              "color": "#e5c07b"
+            }
+          },
+          {
+            "text": "                             \n                                                            \nwidget: ↑5 vs origin/main (commit history; upstream gone;   \nfully landed residuals)                                     \n                                                            \n                                                            \n                                                            \n                                                            \n                                                            \n                                                            \n                                                            \n                                                            \n",
             "style": {}
           },
           {
@@ -5571,7 +5764,7 @@
             }
           }
         ],
-        "plain": "taba/wtc status · example · 0s old · dev                    \n                                                            \nREPO             BRANCH         PR  C M R       ±    ↑   ↓  \nwidget           feature/topic… ·               ·    5   ·  \n                                                            \nPRs                                                         \nPR    REPO             STATE      C M R TITLE               \n#48 ↗ widget           ⚠ catch-up ✓ · ✓ Improve the widget …\n                                                            \nwidget: ↑5 vs origin/main (commit history; upstream gone;   \nfully landed residuals)                                     \n                                                            \n                                                            \n                                                            \n                                                            \n                                                            \nn next actions · r refresh · l log · a archived · ↗ link · …"
+        "plain": "taba/wtc status · example · 0s old · dev                    \n                                                            \nREPO             BRANCH         PR  C M R       ±    ↑   ↓  \nwidget           feature/topic… ·               ·    5   ·  \ngadget           feature/other  ·               ·    ·   ·  \n                                                            \nPRs                                                         \nPR    REPO             STATE      C M R TITLE               \n#48 ↗ widget           ⚠ catch-up ✓ · ✓ Improve the widget …\n#7  ↗ gadget           merged     ✓ · ✓ A long retained pul…\nlanding unknown; inspect branch                             \n                                                            \nwidget: ↑5 vs origin/main (commit history; upstream gone;   \nfully landed residuals)                                     \n                                                            \n                                                            \n                                                            \n                                                            \n                                                            \n                                                            \n                                                            \n                                                            \nn next actions · r refresh · l log · a archived · ↗ link · …"
       },
       "100": {
         "runs": [
@@ -5625,6 +5818,46 @@
             "text": "5  ",
             "style": {
               "color": "#98c379"
+            }
+          },
+          {
+            "text": " ",
+            "style": {}
+          },
+          {
+            "text": "·  ",
+            "style": {
+              "opacity": ".65"
+            }
+          },
+          {
+            "text": "                    \n",
+            "style": {}
+          },
+          {
+            "text": "gadget              ",
+            "style": {
+              "fontWeight": "700"
+            }
+          },
+          {
+            "text": " feature/other                  ·               ",
+            "style": {}
+          },
+          {
+            "text": "·   ",
+            "style": {
+              "opacity": ".65"
+            }
+          },
+          {
+            "text": " ",
+            "style": {}
+          },
+          {
+            "text": "·  ",
+            "style": {
+              "opacity": ".65"
             }
           },
           {
@@ -5728,7 +5961,87 @@
             }
           },
           {
-            "text": "\n                                                                                                    \nwidget: ↑5 vs origin/main (commit history; upstream gone; fully landed residuals)                   \n                                                                                                    \n                                                                                                    \n                                                                                                    \n                                                                                                    \n                                                                                                    \n                                                                                                    \n",
+            "text": "\n",
+            "style": {}
+          },
+          {
+            "text": "#7  ↗",
+            "style": {
+              "color": "#56b6c2"
+            }
+          },
+          {
+            "text": " ",
+            "style": {}
+          },
+          {
+            "text": "gadget              ",
+            "style": {
+              "fontWeight": "700"
+            }
+          },
+          {
+            "text": " ",
+            "style": {}
+          },
+          {
+            "text": "merged    ",
+            "style": {
+              "color": "#e5c07b"
+            }
+          },
+          {
+            "text": " ",
+            "style": {}
+          },
+          {
+            "text": "✓",
+            "style": {
+              "color": "#98c379"
+            }
+          },
+          {
+            "text": "      ",
+            "style": {}
+          },
+          {
+            "text": "·",
+            "style": {
+              "opacity": ".65"
+            }
+          },
+          {
+            "text": "     ",
+            "style": {}
+          },
+          {
+            "text": "✓",
+            "style": {
+              "color": "#98c379"
+            }
+          },
+          {
+            "text": "       ",
+            "style": {}
+          },
+          {
+            "text": "A long retained pull-request title for t…",
+            "style": {
+              "fontWeight": "700"
+            }
+          },
+          {
+            "text": "\n",
+            "style": {}
+          },
+          {
+            "text": "landing unknown; inspect branch",
+            "style": {
+              "color": "#e5c07b"
+            }
+          },
+          {
+            "text": "                                                                     \n                                                                                                    \nwidget: ↑5 vs origin/main (commit history; upstream gone; fully landed residuals)                   \n                                                                                                    \n                                                                                                    \n                                                                                                    \n                                                                                                    \n                                                                                                    \n                                                                                                    \n                                                                                                    \n                                                                                                    \n                                                                                                    \n",
             "style": {}
           },
           {
@@ -5742,7 +6055,7 @@
             "style": {}
           }
         ],
-        "plain": "taba/wtc status · example · 0s old · dev                                                            \n                                                                                                    \nREPO                 BRANCH                         PR  C M R       ±    ↑   ↓                      \nwidget               feature/topic [gone]           ·               ·    5   ·                      \n                                                                                                    \nPRs                                                                                                 \nPR    REPO                 STATE      CHECKS MERGE REVIEWS TITLE                                    \n#48 ↗ widget               ⚠ catch-up ✓      ·     ✓       Improve the widget — fully landed; catch…\n                                                                                                    \nwidget: ↑5 vs origin/main (commit history; upstream gone; fully landed residuals)                   \n                                                                                                    \n                                                                                                    \n                                                                                                    \n                                                                                                    \n                                                                                                    \n                                                                                                    \nn next actions · r refresh · l log · a archived · ↗ link · ? help · q quit                          "
+        "plain": "taba/wtc status · example · 0s old · dev                                                            \n                                                                                                    \nREPO                 BRANCH                         PR  C M R       ±    ↑   ↓                      \nwidget               feature/topic [gone]           ·               ·    5   ·                      \ngadget               feature/other                  ·               ·    ·   ·                      \n                                                                                                    \nPRs                                                                                                 \nPR    REPO                 STATE      CHECKS MERGE REVIEWS TITLE                                    \n#48 ↗ widget               ⚠ catch-up ✓      ·     ✓       Improve the widget — fully landed; catch…\n#7  ↗ gadget               merged     ✓      ·     ✓       A long retained pull-request title for t…\nlanding unknown; inspect branch                                                                     \n                                                                                                    \nwidget: ↑5 vs origin/main (commit history; upstream gone; fully landed residuals)                   \n                                                                                                    \n                                                                                                    \n                                                                                                    \n                                                                                                    \n                                                                                                    \n                                                                                                    \n                                                                                                    \n                                                                                                    \n                                                                                                    \nn next actions · r refresh · l log · a archived · ↗ link · ? help · q quit                          "
       }
     },
     "unavailable": {
@@ -6091,7 +6404,7 @@
             }
           },
           {
-            "text": "\n                                       \n                                       \n                                       \n                                       \n",
+            "text": "\n                                       \n                                       \n                                       \n                                       \n                                       \n                                       \n                                       \n                                       \n                                       \n                                       \n",
             "style": {}
           },
           {
@@ -6101,7 +6414,7 @@
             }
           }
         ],
-        "plain": "taba/wtc status · example · 0s old · d…\n                                       \nREPO     BRANCH    PR       C M R  ±   \nwidget   feature/… #7     ↗ · · ·  ·   \ngadget   feature/… #48    ↗ ✓ ⊘ ●  ·   \ntoolkit  feature/… #12345 ↗ ✓ ↓ ✓  ·   \n                                       \nPRs                                    \nPR       REPO       STATE    TITLE     \n#7     ↗ widget     unknown  Improve t…\n#48    ↗ gadget     open     Improve t…\n#12345 ↗ toolkit    open     Improve t…\n                                       \n                                       \n                                       \n                                       \nn next actions · r refresh · l log · a…"
+        "plain": "taba/wtc status · example · 0s old · d…\n                                       \nREPO     BRANCH    PR       C M R  ±   \nwidget   feature/… #7     ↗ · · ·  ·   \ngadget   feature/… #48    ↗ ✓ ⊘ ●  ·   \ntoolkit  feature/… #12345 ↗ ✓ ↓ ✓  ·   \n                                       \nPRs                                    \nPR       REPO       STATE    TITLE     \n#7     ↗ widget     unknown  Improve t…\n#48    ↗ gadget     open     Improve t…\n#12345 ↗ toolkit    open     Improve t…\n                                       \n                                       \n                                       \n                                       \n                                       \n                                       \n                                       \n                                       \n                                       \n                                       \nn next actions · r refresh · l log · a…"
       },
       "60": {
         "runs": [
@@ -6598,7 +6911,7 @@
             }
           },
           {
-            "text": "\n                                                            \n                                                            \n                                                            \n                                                            \n",
+            "text": "\n                                                            \n                                                            \n                                                            \n                                                            \n                                                            \n                                                            \n                                                            \n                                                            \n                                                            \n                                                            \n",
             "style": {}
           },
           {
@@ -6608,7 +6921,7 @@
             }
           }
         ],
-        "plain": "taba/wtc status · example · 0s old · dev                    \n                                                            \nREPO             BRANCH         PR       C M R  ±    ↑   ↓  \nwidget           feature/topic  #7     ↗ · · ·  ·    ·   ·  \ngadget           feature/topic  #48    ↗ ✓ ⊘ ●  ·    ·   ·  \ntoolkit          feature/topic  #12345 ↗ ✓ ↓ ✓  ·    ·   ·  \n                                                            \nPRs                                                         \nPR       REPO             STATE      C M R TITLE            \n#7     ↗ widget           unknown    · · · Improve the widg…\n#48    ↗ gadget           open       ✓ ⊘ ● Improve the widg…\n#12345 ↗ toolkit          open       ✓ ↓ ✓ Improve the widg…\n                                                            \n                                                            \n                                                            \n                                                            \nn next actions · r refresh · l log · a archived · ↗ link · …"
+        "plain": "taba/wtc status · example · 0s old · dev                    \n                                                            \nREPO             BRANCH         PR       C M R  ±    ↑   ↓  \nwidget           feature/topic  #7     ↗ · · ·  ·    ·   ·  \ngadget           feature/topic  #48    ↗ ✓ ⊘ ●  ·    ·   ·  \ntoolkit          feature/topic  #12345 ↗ ✓ ↓ ✓  ·    ·   ·  \n                                                            \nPRs                                                         \nPR       REPO             STATE      C M R TITLE            \n#7     ↗ widget           unknown    · · · Improve the widg…\n#48    ↗ gadget           open       ✓ ⊘ ● Improve the widg…\n#12345 ↗ toolkit          open       ✓ ↓ ✓ Improve the widg…\n                                                            \n                                                            \n                                                            \n                                                            \n                                                            \n                                                            \n                                                            \n                                                            \n                                                            \n                                                            \nn next actions · r refresh · l log · a archived · ↗ link · …"
       },
       "100": {
         "runs": [
@@ -7105,7 +7418,7 @@
             }
           },
           {
-            "text": "\n                                                                                                    \n                                                                                                    \n                                                                                                    \n                                                                                                    \n",
+            "text": "\n                                                                                                    \n                                                                                                    \n                                                                                                    \n                                                                                                    \n                                                                                                    \n                                                                                                    \n                                                                                                    \n                                                                                                    \n                                                                                                    \n                                                                                                    \n",
             "style": {}
           },
           {
@@ -7119,7 +7432,7 @@
             "style": {}
           }
         ],
-        "plain": "taba/wtc status · example · 0s old · dev                                                            \n                                                                                                    \nREPO                 BRANCH                         PR       C M R  ±    ↑   ↓                      \nwidget               feature/topic                  #7     ↗ · · ·  ·    ·   ·                      \ngadget               feature/topic                  #48    ↗ ✓ ⊘ ●  ·    ·   ·                      \ntoolkit              feature/topic                  #12345 ↗ ✓ ↓ ✓  ·    ·   ·                      \n                                                                                                    \nPRs                                                                                                 \nPR       REPO                 STATE      CHECKS MERGE REVIEWS TITLE                                 \n#7     ↗ widget               unknown    ·      ·     ·       Improve the widget                    \n#48    ↗ gadget               open       ✓      ⊘     ●       Improve the widget                    \n#12345 ↗ toolkit              open       ✓      ↓     ✓       Improve the widget                    \n                                                                                                    \n                                                                                                    \n                                                                                                    \n                                                                                                    \nn next actions · r refresh · l log · a archived · ↗ link · ? help · q quit                          "
+        "plain": "taba/wtc status · example · 0s old · dev                                                            \n                                                                                                    \nREPO                 BRANCH                         PR       C M R  ±    ↑   ↓                      \nwidget               feature/topic                  #7     ↗ · · ·  ·    ·   ·                      \ngadget               feature/topic                  #48    ↗ ✓ ⊘ ●  ·    ·   ·                      \ntoolkit              feature/topic                  #12345 ↗ ✓ ↓ ✓  ·    ·   ·                      \n                                                                                                    \nPRs                                                                                                 \nPR       REPO                 STATE      CHECKS MERGE REVIEWS TITLE                                 \n#7     ↗ widget               unknown    ·      ·     ·       Improve the widget                    \n#48    ↗ gadget               open       ✓      ⊘     ●       Improve the widget                    \n#12345 ↗ toolkit              open       ✓      ↓     ✓       Improve the widget                    \n                                                                                                    \n                                                                                                    \n                                                                                                    \n                                                                                                    \n                                                                                                    \n                                                                                                    \n                                                                                                    \n                                                                                                    \n                                                                                                    \n                                                                                                    \nn next actions · r refresh · l log · a archived · ↗ link · ? help · q quit                          "
       }
     },
     "closed-pr": {
@@ -7142,7 +7455,7 @@
             "style": {}
           },
           {
-            "text": "REPO     BRANCH    PR  C M R       ±   ",
+            "text": "REPO     BRANCH           PR C M R ±   ",
             "style": {
               "fontWeight": "700"
             }
@@ -7158,7 +7471,7 @@
             }
           },
           {
-            "text": " feature/… ·               ",
+            "text": " feature/topic    ·        ",
             "style": {}
           },
           {
@@ -7198,7 +7511,7 @@
             }
           },
           {
-            "text": "\n                                       \n                                       \n                                       \n                                       \n                                       \n                                       \n                                       \n",
+            "text": "\n                                       \n                                       \n                                       \n                                       \n                                       \n                                       \n                                       \n                                       \n                                       \n                                       \n                                       \n                                       \n                                       \n",
             "style": {}
           },
           {
@@ -7208,7 +7521,7 @@
             }
           }
         ],
-        "plain": "taba/wtc status · example · 0s old · d…\n                                       \nREPO     BRANCH    PR  C M R       ±   \nwidget   feature/… ·               ·   \n                                       \nPRs                                    \nPR    REPO       STATE    TITLE        \n(none enlisted)                        \n⚠ widget on feature/topic: PR CLOSED; …\n                                       \n                                       \n                                       \n                                       \n                                       \n                                       \n                                       \nn next actions · r refresh · l log · a…"
+        "plain": "taba/wtc status · example · 0s old · d…\n                                       \nREPO     BRANCH           PR C M R ±   \nwidget   feature/topic    ·        ·   \n                                       \nPRs                                    \nPR    REPO       STATE    TITLE        \n(none enlisted)                        \n⚠ widget on feature/topic: PR CLOSED; …\n                                       \n                                       \n                                       \n                                       \n                                       \n                                       \n                                       \n                                       \n                                       \n                                       \n                                       \n                                       \n                                       \nn next actions · r refresh · l log · a…"
       },
       "60": {
         "runs": [
@@ -7305,7 +7618,7 @@
             }
           },
           {
-            "text": "\n                                                            \n                                                            \n                                                            \n                                                            \n                                                            \n                                                            \n                                                            \n",
+            "text": "\n                                                            \n                                                            \n                                                            \n                                                            \n                                                            \n                                                            \n                                                            \n                                                            \n                                                            \n                                                            \n                                                            \n                                                            \n                                                            \n",
             "style": {}
           },
           {
@@ -7315,7 +7628,7 @@
             }
           }
         ],
-        "plain": "taba/wtc status · example · 0s old · dev                    \n                                                            \nREPO             BRANCH         PR  C M R       ±    ↑   ↓  \nwidget           feature/topic  ·               ·    ·   ·  \n                                                            \nPRs                                                         \nPR    REPO             STATE      C M R TITLE               \n(none enlisted)                                             \n⚠ widget on feature/topic: PR CLOSED; catch-up              \n                                                            \n                                                            \n                                                            \n                                                            \n                                                            \n                                                            \n                                                            \nn next actions · r refresh · l log · a archived · ↗ link · …"
+        "plain": "taba/wtc status · example · 0s old · dev                    \n                                                            \nREPO             BRANCH         PR  C M R       ±    ↑   ↓  \nwidget           feature/topic  ·               ·    ·   ·  \n                                                            \nPRs                                                         \nPR    REPO             STATE      C M R TITLE               \n(none enlisted)                                             \n⚠ widget on feature/topic: PR CLOSED; catch-up              \n                                                            \n                                                            \n                                                            \n                                                            \n                                                            \n                                                            \n                                                            \n                                                            \n                                                            \n                                                            \n                                                            \n                                                            \n                                                            \nn next actions · r refresh · l log · a archived · ↗ link · …"
       },
       "100": {
         "runs": [
@@ -7412,7 +7725,7 @@
             }
           },
           {
-            "text": "\n                                                                                                    \n                                                                                                    \n                                                                                                    \n                                                                                                    \n                                                                                                    \n                                                                                                    \n                                                                                                    \n",
+            "text": "\n                                                                                                    \n                                                                                                    \n                                                                                                    \n                                                                                                    \n                                                                                                    \n                                                                                                    \n                                                                                                    \n                                                                                                    \n                                                                                                    \n                                                                                                    \n                                                                                                    \n                                                                                                    \n                                                                                                    \n",
             "style": {}
           },
           {
@@ -7426,7 +7739,7 @@
             "style": {}
           }
         ],
-        "plain": "taba/wtc status · example · 0s old · dev                                                            \n                                                                                                    \nREPO                 BRANCH                         PR  C M R       ±    ↑   ↓                      \nwidget               feature/topic                  ·               ·    ·   ·                      \n                                                                                                    \nPRs                                                                                                 \nPR    REPO                 STATE      CHECKS MERGE REVIEWS TITLE                                    \n(none enlisted)                                                                                     \n⚠ widget on feature/topic: PR CLOSED; catch-up                                                      \n                                                                                                    \n                                                                                                    \n                                                                                                    \n                                                                                                    \n                                                                                                    \n                                                                                                    \n                                                                                                    \nn next actions · r refresh · l log · a archived · ↗ link · ? help · q quit                          "
+        "plain": "taba/wtc status · example · 0s old · dev                                                            \n                                                                                                    \nREPO                 BRANCH                         PR  C M R       ±    ↑   ↓                      \nwidget               feature/topic                  ·               ·    ·   ·                      \n                                                                                                    \nPRs                                                                                                 \nPR    REPO                 STATE      CHECKS MERGE REVIEWS TITLE                                    \n(none enlisted)                                                                                     \n⚠ widget on feature/topic: PR CLOSED; catch-up                                                      \n                                                                                                    \n                                                                                                    \n                                                                                                    \n                                                                                                    \n                                                                                                    \n                                                                                                    \n                                                                                                    \n                                                                                                    \n                                                                                                    \n                                                                                                    \n                                                                                                    \n                                                                                                    \n                                                                                                    \nn next actions · r refresh · l log · a archived · ↗ link · ? help · q quit                          "
       }
     },
     "runtime": {
@@ -7449,7 +7762,7 @@
             "style": {}
           },
           {
-            "text": "REPO     BRANCH    PR  C M R       ±   ",
+            "text": "REPO     BRANCH           PR C M R ±   ",
             "style": {
               "fontWeight": "700"
             }
@@ -7469,13 +7782,13 @@
             "style": {}
           },
           {
-            "text": "⌂ main   ",
+            "text": "⌂ main          ",
             "style": {
               "opacity": ".65"
             }
           },
           {
-            "text": " ·               ",
+            "text": " ·        ",
             "style": {}
           },
           {
@@ -7631,7 +7944,7 @@
             }
           },
           {
-            "text": "\n(none enlisted)                        \n                                       \n                                       \n                                       \n",
+            "text": "\n(none enlisted)                        \n                                       \n                                       \n                                       \n                                       \n                                       \n                                       \n                                       \n                                       \n                                       \n",
             "style": {}
           },
           {
@@ -7641,7 +7954,7 @@
             }
           }
         ],
-        "plain": "taba/wtc status · example · 0s old · d…\n                                       \nREPO     BRANCH    PR  C M R       ±   \nwidget   ⌂ main    ·               ·   \n                                       \nSERVICES                               \nKEY REPO       NAME    STATE       URL…\nw/T widget     web     ready       :30…\nb   widget     backgr… failed         …\n                                       \nPRs                                    \nPR    REPO       STATE    TITLE        \n(none enlisted)                        \n                                       \n                                       \n                                       \nn next actions · r refresh · l log · a…"
+        "plain": "taba/wtc status · example · 0s old · d…\n                                       \nREPO     BRANCH           PR C M R ±   \nwidget   ⌂ main           ·        ·   \n                                       \nSERVICES                               \nKEY REPO       NAME    STATE       URL…\nw/T widget     web     ready       :30…\nb   widget     backgr… failed         …\n                                       \nPRs                                    \nPR    REPO       STATE    TITLE        \n(none enlisted)                        \n                                       \n                                       \n                                       \n                                       \n                                       \n                                       \n                                       \n                                       \n                                       \nn next actions · r refresh · l log · a…"
       },
       "60": {
         "runs": [
@@ -7886,7 +8199,7 @@
             }
           },
           {
-            "text": "\n(none enlisted)                                             \n                                                            \n                                                            \n                                                            \n",
+            "text": "\n(none enlisted)                                             \n                                                            \n                                                            \n                                                            \n                                                            \n                                                            \n                                                            \n                                                            \n                                                            \n                                                            \n",
             "style": {}
           },
           {
@@ -7896,7 +8209,7 @@
             }
           }
         ],
-        "plain": "taba/wtc status · example · 0s old · dev                    \n                                                            \nREPO             BRANCH          LOCAL  PR  C M R       ±   \nwidget           ⌂ main          w/T b  ·               ·   \n                                                            \nSERVICES                                                    \nKEY REPO             NAME       STATE       URL   CLOUDFLAR…\nw/T widget           web        ready       :3000 example […\nb   widget           background failed                     …\n                                                            \nPRs                                                         \nPR    REPO             STATE      C M R TITLE               \n(none enlisted)                                             \n                                                            \n                                                            \n                                                            \nn next actions · r refresh · l log · a archived · ↗ link · …"
+        "plain": "taba/wtc status · example · 0s old · dev                    \n                                                            \nREPO             BRANCH          LOCAL  PR  C M R       ±   \nwidget           ⌂ main          w/T b  ·               ·   \n                                                            \nSERVICES                                                    \nKEY REPO             NAME       STATE       URL   CLOUDFLAR…\nw/T widget           web        ready       :3000 example […\nb   widget           background failed                     …\n                                                            \nPRs                                                         \nPR    REPO             STATE      C M R TITLE               \n(none enlisted)                                             \n                                                            \n                                                            \n                                                            \n                                                            \n                                                            \n                                                            \n                                                            \n                                                            \n                                                            \nn next actions · r refresh · l log · a archived · ↗ link · …"
       },
       "100": {
         "runs": [
@@ -8157,7 +8470,7 @@
             }
           },
           {
-            "text": "\n(none enlisted)                                                                                     \n                                                                                                    \n                                                                                                    \n                                                                                                    \n",
+            "text": "\n(none enlisted)                                                                                     \n                                                                                                    \n                                                                                                    \n                                                                                                    \n                                                                                                    \n                                                                                                    \n                                                                                                    \n                                                                                                    \n                                                                                                    \n                                                                                                    \n",
             "style": {}
           },
           {
@@ -8171,7 +8484,7 @@
             "style": {}
           }
         ],
-        "plain": "taba/wtc status · example · 0s old · dev                                                            \n                                                                                                    \nREPO                 BRANCH                         LOCAL  PR  C M R       ±    ↑   ↓               \nwidget               ⌂ main                         w/T b  ·               ·    ·   ·               \n                                                                                                    \nSERVICES                                                                                            \nKEY REPO                 NAME       STATE       URL   CLOUDFLARE                                    \nw/T widget               web        ready       :3000 example [public]                              \nb   widget               background failed                                                          \n                                                                                                    \nPRs                                                                                                 \nPR    REPO                 STATE      CHECKS MERGE REVIEWS TITLE                                    \n(none enlisted)                                                                                     \n                                                                                                    \n                                                                                                    \n                                                                                                    \nn next actions · r refresh · l log · a archived · ↗ link · ? help · q quit                          "
+        "plain": "taba/wtc status · example · 0s old · dev                                                            \n                                                                                                    \nREPO                 BRANCH                         LOCAL  PR  C M R       ±    ↑   ↓               \nwidget               ⌂ main                         w/T b  ·               ·    ·   ·               \n                                                                                                    \nSERVICES                                                                                            \nKEY REPO                 NAME       STATE       URL   CLOUDFLARE                                    \nw/T widget               web        ready       :3000 example [public]                              \nb   widget               background failed                                                          \n                                                                                                    \nPRs                                                                                                 \nPR    REPO                 STATE      CHECKS MERGE REVIEWS TITLE                                    \n(none enlisted)                                                                                     \n                                                                                                    \n                                                                                                    \n                                                                                                    \n                                                                                                    \n                                                                                                    \n                                                                                                    \n                                                                                                    \n                                                                                                    \n                                                                                                    \nn next actions · r refresh · l log · a archived · ↗ link · ? help · q quit                          "
       }
     }
   }

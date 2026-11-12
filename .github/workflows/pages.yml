@@ -27,6 +27,7 @@ jobs:
       - run: node --test scripts/release.test.mjs
       - run: npm run check
       - run: npm run test:status
+      - run: npm run test:links:guards
       - run: npm run build
       - run: npm run test:links
       - uses: actions/upload-pages-artifact@v4

@@ -1,6 +1,9 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { readFile } from 'node:fs/promises';
+import { readFile, mkdtemp, rm, access } from 'node:fs/promises';
+import { tmpdir } from 'node:os';
+import { join } from 'node:path';
+import { spawnSync } from 'node:child_process';
 import { createHash } from 'node:crypto';
 import { scenarios } from '../src/data/status-scenarios.mjs';
 
@@ -10,6 +13,9 @@ test('native replay matches authored snapshot inputs and bounded source metadata
   assert.equal(capture.fixtureDigest, digest, 'Snapshot inputs changed: regenerate the native replay');
   assert.match(capture.sourceRevision, /^[a-f0-9]{40}$/);
   assert.match(capture.sourceDigest, /^[a-f0-9]{64}$/);
+  assert.equal(capture.commandPackage, 'cmd/taba');
+  assert.match(capture.parserDigest, /^[a-f0-9]{64}$/);
+  assert(!/\/(?:Users|home|private)\//.test(JSON.stringify(capture)), 'Replay metadata must not expose local paths');
   assert.equal(capture.renderer, 'statusTUIModel.View');
   assert.equal(capture.actionsDispatched, false);
   assert.equal(capture.synthetic, true);
@@ -49,4 +55,41 @@ test('native frames distinguish one-tier builds and retained merged observations
   assert.match(retained, /⚠ catch-up.*✓ +· +✓/);
   const followed = capture.frames['merged-waiting'][100].plain.split('\n').find(line => line.startsWith('#48'));
   assert.match(followed, /→ test.*· +· +·/);
+});
+
+test('parser provenance matches the executable terminal decoder', async () => {
+  const parser = await readFile(new URL('./record-openclaw-tui.mjs', import.meta.url));
+  assert.equal(capture.parserDigest, createHash('sha256').update(parser).digest('hex'));
+});
+test('known merged identity stays separate from unknown branch landing at every width', () => {
+  for (const width of capture.columns) {
+    const plain = capture.frames['retained-branch'][width].plain;
+    const row = plain.split('\n').find(line => /^#7 +/.test(line));
+    assert(row?.includes('merged'), `${width}: known merge became unknown`);
+    assert(plain.includes('landing unknown; inspect branch'), `${width}: landing hint was clipped`);
+  }
+});
+test('wide PR signal headings align with their observations across mixed-digit identifiers', () => {
+  const lines = capture.frames['review-distinctions'][100].plain.split('\n');
+  const header = lines[lines.findIndex(line => line.trim() === 'PRs') + 1];
+  const columns = ['CHECKS', 'MERGE', 'REVIEWS'].map(label => header.indexOf(label));
+  assert(columns.every(column => column >= 0));
+  for (const [number, expected] of [['7', ['✓', '✓', '✗']], ['48', ['✓', '✓', '✎']], ['12345', ['✓', '✓', '∅']]]) {
+    const row = lines.find(line => line.startsWith('#' + number + ' '));
+    assert(row, `Missing full PR identifier #${number}`);
+    assert.deepEqual(columns.map(column => row[column]), expected);
+  }
+});
+
+test('native verification fails explicitly when its external capture tool is missing', async () => {
+  const temporary = await mkdtemp(join(tmpdir(), 'status-missing-tool-'));
+  try {
+    const output = join(temporary, 'output');
+    const result = spawnSync('python3', ['-B', 'scripts/verify-native-status.py', '--cli-root', temporary, '--capture-tool', join(temporary, 'missing.py'), '--out', output, '--chrome', 'unused'], { encoding: 'utf8' });
+    assert.equal(result.status, 2);
+    assert.match(result.stderr, /Supply the native-evidence tool/);
+    await assert.rejects(access(output));
+  } finally {
+    await rm(temporary, { recursive: true, force: true });
+  }
 });

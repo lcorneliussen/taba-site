@@ -23,7 +23,8 @@
     "status:capture": "node scripts/capture-status-guide.mjs",
     "test:status": "node --test scripts/status-guide.test.mjs",
     "test:status:browser": "node scripts/status-guide-browser.mjs",
-    "status:verify-native": "python3 -B scripts/verify-native-status.py"
+    "status:verify-native": "python3 -B scripts/verify-native-status.py",
+    "test:links:guards": "node --test scripts/check-links.test.mjs"
   },
   "dependencies": {
     "astro": "^7.3.8"
