@@ -52,8 +52,8 @@ Local-terminal examples follow the upstream CLI getting-started guide and explic
 
 The interactive [Reading status](src/pages/docs/status.astro) guide uses complete
 synthetic snapshots rendered by the CLI, with separate explanations of Git, PR,
-review, build and runtime observations. Its development-source boundary is
-explicit; it does not upgrade the release-pinned handbook baseline.
+review, build and runtime observations. Its examples identify their published
+CLI source; they do not upgrade the other release-pinned handbook pages.
 
 To regenerate its selectable terminal examples from a clean CLI source checkout:
 

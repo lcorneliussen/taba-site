@@ -1,6 +1,6 @@
 {
-  "sourceRevision": "dcb099ca3efaa0a318550594d85c5cb3194a04e8",
-  "sourceDigest": "fcaa589e089600b8c1236fa80cc9202a84860b037d29485d0d8aa43991d832e8",
+  "sourceRevision": "0761dee90b986d9614a49be1fb5ba368742ab601",
+  "sourceDigest": "e4a91f19441fb1b557734e3eef859537a8666cc37e38a42fc5bdb830b42b75c1",
   "sourceScope": "tracked command package, internal, go.mod and go.sum",
   "commandPackage": "cmd/taba",
   "parserDigest": "2e635a6eed3ef40963aa6a5012580531b10d61024f87b8132f57e8532a0ce51d",
