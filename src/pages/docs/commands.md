@@ -9,8 +9,8 @@ For complete options, use `wtc --help`, a command’s `--help`, or the upstream 
 
 For a complete representation walkthrough, see [Reading status](../status/):
 Git differences, PR checks and reviews, shared-branch builds, follow-up after
-merge, missing facts and compact layouts. That guide explicitly labels its
-development-source examples; the release baselines below remain unchanged.
+merge, missing facts and compact layouts. That guide labels its examples with
+their own source baseline; the release baselines below remain unchanged.
 
 ## Local collections
 

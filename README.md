@@ -61,6 +61,9 @@ To regenerate its selectable terminal examples from a clean CLI source checkout:
 npm run status:capture -- /path/to/clean-cli-checkout
 ```
 
+Without a checkout argument, capture uses `../wtc-cli`. It reuses the site's
+existing terminal ANSI decoder, whose digest is recorded with the examples.
+
 The source must include the status presentation described by the guide. The
 capture records its exact revision and source digest, checks the scenario's
 expected representations, and uses the existing recording-only Go adapter at

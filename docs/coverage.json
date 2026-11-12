@@ -22,7 +22,7 @@
         "src/pages/docs/troubleshooting.md",
         "src/pages/docs/status.astro"
       ],
-      "reason": "Handbook summarizes the command workflow; full versioned contract remains upstream. Reading status additionally labels a separately pinned current-development renderer walkthrough; it does not change this release baseline."
+      "reason": "Handbook summarizes the command workflow; full versioned contract remains upstream. Reading status additionally labels a separately pinned renderer walkthrough with its own source baseline; it does not change this release baseline."
     },
     {
       "path": "docs/demos/README.md",
