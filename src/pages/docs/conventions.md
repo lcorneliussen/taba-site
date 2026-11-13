@@ -1,26 +1,15 @@
 ---
 layout: ../../layouts/Docs.astro
 title: Rename conventions
-description: Every wtc name a project may still use, its taba name, what each release supports, and how to migrate.
+description: Every wtc name a project may still use, its taba name, what 0.2.x supports, and how to migrate.
 source: https://github.com/lcorneliussen/taba/blob/main/docs/conventions.md
 ---
 
-wtc is now taba. A project still depends on names from the wtc days: harness and collection files, user directories, skill names, environment variables, and scripts that call `wtc`. This page lists each of these conventions, the taba name that replaces it, what each release supports, and how to migrate.
+wtc is now taba. A project still depends on names from the wtc days: harness and collection files, user directories, skill names, environment variables, and scripts that call `wtc`. This page lists each of these conventions, the taba name that replaces it, what 0.2.x supports, and how to migrate.
 
 > **This page describes the next 0.2.x release after 0.2.3,** which ships the `taba-*` skills ([#351](https://github.com/lcorneliussen/taba/issues/351)) and these checks ([#375](https://github.com/lcorneliussen/taba/issues/375)). On 0.2.0 to 0.2.3, `taba doctor` does not report conventions, `harness init` and `skills render` still write the old names, and a harness skill override renamed to `taba-<name>` stops applying. Check the [release notes](https://github.com/lcorneliussen/taba/releases) for that release before migrating.
 
-## Phases of a taba project
-
-A project moves through these stages at its own pace ([#375](https://github.com/lcorneliussen/taba/issues/375)):
-
-| Stage | Release | What holds |
-|---|---|---|
-| 1 | wtc `0.1.x` | Only the wtc conventions. |
-| 2 | taba `0.2.x`, with wtc conventions | Both names work. Nothing has to change. |
-| 3 | taba `0.2.x`, all wtc conventions migrated | `taba doctor` reports nothing left to migrate. |
-| 4 | taba `0.2.x`, with the project flag | The harness's `taba.toml` turns off wtc conventions for the project, and `taba doctor` fails while any remain (planned). |
-| 5 | taba `0.3.x` | wtc conventions are detected, and taba stops with upgrade instructions instead of using them (planned). |
-| 6 | taba `0.4.x` | No wtc logic is left; leftover wtc conventions are ignored (planned). |
+> **Future taba releases drop the wtc names.** 0.2.x still supports them; later releases are planned to stop with upgrade instructions and then ignore wtc names. See [the stages of the rename](../../wtc-is-now-taba/#the-timeline).
 
 Not every convention has a taba name yet. Those are marked "Old name only" below, and `taba doctor` reports them as *waiting* rather than asking you to migrate them.
 
