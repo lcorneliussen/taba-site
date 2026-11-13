@@ -73,9 +73,10 @@
       "sha256": "d7d07d878183aaa57dc820a23865f67b1c1fe6b9a8b0b48ea4e582d7c7800199",
       "status": "covered",
       "pages": [
-        "src/pages/docs/upgrades.md"
+        "src/pages/docs/upgrades.md",
+        "src/pages/docs/conventions.md"
       ],
-      "reason": "Handbook summarizes the user workflow; full versioned contract remains upstream."
+      "reason": "Handbook summarizes the user workflow; full versioned contract remains upstream. Rename conventions follows the unreleased docs/conventions.md (#375) until the baseline includes it."
     },
     {
       "path": "docs/released-bootstrap.md",
