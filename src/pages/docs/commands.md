@@ -152,6 +152,7 @@ counts alone establish neither data loss nor permission for forced cleanup.
 | `wtc svc logs web` | Read logs, including after shutdown |
 | `wtc svc down web` | Stop a service while retaining logs and data |
 | `wtc doctor` | Check configuration and dependencies |
+| `taba doctor --all` / `taba conventions` (v0.2.4) | Report workspace naming migrations / list supported conventions; [published reference](https://github.com/lcorneliussen/taba/blob/v0.2.4/docs/conventions.md) |
 | `wtc release-notes --since <old-pin>` | Review changes before upgrading |
 
 Read [Services and previews](../services/) for the opt-in runtime prerequisites and [Troubleshooting](../troubleshooting/) for common failures.

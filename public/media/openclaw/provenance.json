@@ -1,9 +1,23 @@
 {
   "kind": "Real plugin renderer with synthetic host responses; not a live gateway",
-  "repository": "https://github.com/lcorneliussen/wtc-cli",
-  "revision": "9da4ba3057b00f1292f53b65f44bab58e1243029",
+  "repository": "https://github.com/lcorneliussen/taba",
+  "revision": "2191843cc2b3c28ac16fe7a09f731c992fabbc22",
   "modulePath": "openclaw-plugin/dist/control-ui/v1/index.js",
-  "sha256": "286846a90d123c57eabd275583413c6db5187d363b55167bd3654d88786c29b0",
+  "modules": [
+    {
+      "modulePath": "openclaw-plugin/dist/control-ui/v1/index.js",
+      "sha256": "dcb19a14122403f7204cf10a5c3e5d988d07604cb4b7b1d60f53e97026ef8b21"
+    },
+    {
+      "modulePath": "openclaw-plugin/dist/control-ui/v1/pr-preview.js",
+      "sha256": "1e2b2091f9c471a8ec6f89b3f932a85e0fbc6178251f13724bc14b7c21bb2bd6"
+    },
+    {
+      "modulePath": "openclaw-plugin/dist/control-ui/v1/vendor/marked.esm.js",
+      "sha256": "162194ea902a9d6eca6011bb42b5732991ca650e017d0375b76f4204810c6c14"
+    }
+  ],
+  "sha256": "dcb19a14122403f7204cf10a5c3e5d988d07604cb4b7b1d60f53e97026ef8b21",
   "playwright": "1.64.1",
   "browser": "156.0.8078.4",
   "scenario": [

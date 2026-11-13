@@ -124,7 +124,7 @@ async function main() {
   const { values, positionals } = parseArgs({ allowPositionals: true, options: { columns: { type: 'string', default: '96' }, rows: { type: 'string', default: '24' }, 'font-size': { type: 'string', default: '16' } } });
   if (positionals.length < 2 || positionals.length > 3) throw Error('Usage: npm run demos:openclaw:buddy -- /path/to/wtc-cli /path/to/take [output] [--columns 96] [--rows 24] [--font-size 16]');
   const upstream = resolve(positionals[0]), take = resolve(positionals[1]), output = resolve(positionals[2] ?? join(take, 'buddy'));
-  if (execFileSync('git', ['-C', upstream, 'status', '--porcelain', '--', 'cmd/wtc', 'internal', 'go.mod', 'go.sum'], { encoding: 'utf8' }).trim()) throw Error('Native TUI source must be committed before recording');
+  if (execFileSync('git', ['-C', upstream, 'status', '--porcelain', '--', 'cmd/taba', 'internal', 'go.mod', 'go.sum'], { encoding: 'utf8' }).trim()) throw Error('Native TUI source must be committed before recording');
   const columns = Number(values.columns), rows = Number(values.rows), fontSize = Number(values['font-size']);
   if (![columns, rows, fontSize].every(Number.isInteger) || columns < 30 || columns > 200 || rows < 10 || rows > 80 || fontSize < 14 || fontSize > 24) throw Error('Invalid native terminal dimensions');
   await mkdir(output, { recursive: true }); if ((await readdir(output)).length) throw Error('Output directory must be empty');
@@ -134,7 +134,7 @@ async function main() {
   const request = terminalRecordingRequest(recording, columns, rows), input = join(output, 'native-request.json'), result = join(output, 'native-frames.json');
   await writeFile(input, JSON.stringify(request, null, 2));
   const env = { ...process.env, WTC_RECORDING_INPUT: input, WTC_RECORDING_OUTPUT: result }; delete env.GOROOT;
-  execFileSync('go', ['test', '-tags', 'recording', './cmd/wtc', '-run', '^TestStatusRecordingFrames$', '-count=1'], { cwd: upstream, env, stdio: ['ignore', 'pipe', 'pipe'] });
+  execFileSync('go', ['test', '-tags', 'recording', './cmd/taba', '-run', '^TestStatusRecordingFrames$', '-count=1'], { cwd: upstream, env, stdio: ['ignore', 'pipe', 'pipe'] });
   const native = JSON.parse(await readFile(result, 'utf8')), frames = native.frames.filter(frame => !frame.phase.startsWith('selection-')), selection = native.frames.filter(frame => frame.phase.startsWith('selection-'));
   const writeCast = async (name, items, offset = 0) => {
     const header = { version: 2, width: columns, height: rows, title: 'Native wtc status renderer; synthetic shared snapshots', env: { TERM: 'xterm-256color' } };

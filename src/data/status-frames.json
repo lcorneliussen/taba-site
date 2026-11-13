@@ -1,10 +1,10 @@
 {
-  "sourceRevision": "0761dee90b986d9614a49be1fb5ba368742ab601",
-  "sourceDigest": "e4a91f19441fb1b557734e3eef859537a8666cc37e38a42fc5bdb830b42b75c1",
+  "sourceRevision": "2191843cc2b3c28ac16fe7a09f731c992fabbc22",
+  "sourceDigest": "af87c425027267cea2ce1029fba4fedb5d1b8e68df1353ec5c994d12702b0484",
   "sourceScope": "tracked command package, internal, go.mod and go.sum",
   "commandPackage": "cmd/taba",
-  "parserDigest": "2e635a6eed3ef40963aa6a5012580531b10d61024f87b8132f57e8532a0ce51d",
-  "fixtureDigest": "4a6f214520350ed50fcb49c73d0bda18918619dc5321781cd790f03c4d86da66",
+  "parserDigest": "8a59c1d7483322124ee27ca7d97f5fee0fd17ba15a411b2a0b83f2df07d5637c",
+  "fixtureDigest": "57b41881b9e4da58fcf240afc61e37139ba8a456a92b6db48970ff9880a45dea",
   "renderer": "statusTUIModel.View",
   "synthetic": true,
   "actionsDispatched": false,
@@ -7740,6 +7740,1383 @@
           }
         ],
         "plain": "taba/wtc status · example · 0s old · dev                                                            \n                                                                                                    \nREPO                 BRANCH                         PR  C M R       ±    ↑   ↓                      \nwidget               feature/topic                  ·               ·    ·   ·                      \n                                                                                                    \nPRs                                                                                                 \nPR    REPO                 STATE      CHECKS MERGE REVIEWS TITLE                                    \n(none enlisted)                                                                                     \n⚠ widget on feature/topic: PR CLOSED; catch-up                                                      \n                                                                                                    \n                                                                                                    \n                                                                                                    \n                                                                                                    \n                                                                                                    \n                                                                                                    \n                                                                                                    \n                                                                                                    \n                                                                                                    \n                                                                                                    \n                                                                                                    \n                                                                                                    \n                                                                                                    \nn next actions · r refresh · l log · a archived · ↗ link · ? help · q quit                          "
+      }
+    },
+    "freshness": {
+      "39": {
+        "runs": [
+          {
+            "text": "taba/wtc status · example · 0s old",
+            "style": {
+              "fontWeight": "700"
+            }
+          },
+          {
+            "text": " · d…",
+            "style": {
+              "opacity": ".65"
+            }
+          },
+          {
+            "text": "\n                                       \n",
+            "style": {}
+          },
+          {
+            "text": "REPO     BRANCH    PR       C M R      ",
+            "style": {
+              "fontWeight": "700"
+            }
+          },
+          {
+            "text": "\n",
+            "style": {}
+          },
+          {
+            "text": "widget  ",
+            "style": {
+              "fontWeight": "700"
+            }
+          },
+          {
+            "text": " feature/… ",
+            "style": {}
+          },
+          {
+            "text": "#7     ↗",
+            "style": {
+              "color": "#56b6c2"
+            }
+          },
+          {
+            "text": " stale      \n",
+            "style": {}
+          },
+          {
+            "text": "gadget  ",
+            "style": {
+              "fontWeight": "700"
+            }
+          },
+          {
+            "text": " feature/… ",
+            "style": {}
+          },
+          {
+            "text": "#48    ↗",
+            "style": {
+              "color": "#56b6c2"
+            }
+          },
+          {
+            "text": " deferred   \n",
+            "style": {}
+          },
+          {
+            "text": "toolkit ",
+            "style": {
+              "fontWeight": "700"
+            }
+          },
+          {
+            "text": " feature/… ",
+            "style": {}
+          },
+          {
+            "text": "#12345 ↗",
+            "style": {
+              "color": "#56b6c2"
+            }
+          },
+          {
+            "text": " unavailable\n",
+            "style": {}
+          },
+          {
+            "text": "library ",
+            "style": {
+              "fontWeight": "700"
+            }
+          },
+          {
+            "text": " feature/… ·                   \n                                       \n",
+            "style": {}
+          },
+          {
+            "text": "PRs",
+            "style": {
+              "fontWeight": "700"
+            }
+          },
+          {
+            "text": "                                    \n",
+            "style": {}
+          },
+          {
+            "text": "PR       REPO       STATE    TITLE     ",
+            "style": {
+              "opacity": ".65"
+            }
+          },
+          {
+            "text": "\n",
+            "style": {}
+          },
+          {
+            "text": "#7     ↗",
+            "style": {
+              "color": "#56b6c2"
+            }
+          },
+          {
+            "text": " ",
+            "style": {}
+          },
+          {
+            "text": "widget    ",
+            "style": {
+              "fontWeight": "700"
+            }
+          },
+          {
+            "text": " ",
+            "style": {}
+          },
+          {
+            "text": "stale   ",
+            "style": {
+              "opacity": ".65"
+            }
+          },
+          {
+            "text": " ",
+            "style": {}
+          },
+          {
+            "text": "stale: la…",
+            "style": {
+              "fontWeight": "700"
+            }
+          },
+          {
+            "text": "\n",
+            "style": {}
+          },
+          {
+            "text": "#48    ↗",
+            "style": {
+              "color": "#56b6c2"
+            }
+          },
+          {
+            "text": " ",
+            "style": {}
+          },
+          {
+            "text": "gadget    ",
+            "style": {
+              "fontWeight": "700"
+            }
+          },
+          {
+            "text": " ",
+            "style": {}
+          },
+          {
+            "text": "deferred",
+            "style": {
+              "opacity": ".65"
+            }
+          },
+          {
+            "text": " ",
+            "style": {}
+          },
+          {
+            "text": "deferred:…",
+            "style": {
+              "fontWeight": "700"
+            }
+          },
+          {
+            "text": "\n",
+            "style": {}
+          },
+          {
+            "text": "#12345 ↗",
+            "style": {
+              "color": "#56b6c2"
+            }
+          },
+          {
+            "text": " ",
+            "style": {}
+          },
+          {
+            "text": "toolkit   ",
+            "style": {
+              "fontWeight": "700"
+            }
+          },
+          {
+            "text": " ",
+            "style": {}
+          },
+          {
+            "text": "unavail…",
+            "style": {
+              "opacity": ".65"
+            }
+          },
+          {
+            "text": " ",
+            "style": {}
+          },
+          {
+            "text": "unavailab…",
+            "style": {
+              "fontWeight": "700"
+            }
+          },
+          {
+            "text": "\n",
+            "style": {}
+          },
+          {
+            "text": "#23    ↗",
+            "style": {
+              "color": "#56b6c2"
+            }
+          },
+          {
+            "text": " ",
+            "style": {}
+          },
+          {
+            "text": "library   ",
+            "style": {
+              "fontWeight": "700"
+            }
+          },
+          {
+            "text": " ",
+            "style": {}
+          },
+          {
+            "text": "merged  ",
+            "style": {
+              "color": "#e5c07b"
+            }
+          },
+          {
+            "text": " ",
+            "style": {}
+          },
+          {
+            "text": "Improve t…",
+            "style": {
+              "fontWeight": "700"
+            }
+          },
+          {
+            "text": "\n",
+            "style": {}
+          },
+          {
+            "text": "landing unknown; inspect branch",
+            "style": {
+              "color": "#e5c07b"
+            }
+          },
+          {
+            "text": "        \n                                       \n                                       \n                                       \n                                       \n                                       \n                                       \n                                       \n",
+            "style": {}
+          },
+          {
+            "text": "n next actions · r refresh · l log · a…",
+            "style": {
+              "opacity": ".65"
+            }
+          }
+        ],
+        "plain": "taba/wtc status · example · 0s old · d…\n                                       \nREPO     BRANCH    PR       C M R      \nwidget   feature/… #7     ↗ stale      \ngadget   feature/… #48    ↗ deferred   \ntoolkit  feature/… #12345 ↗ unavailable\nlibrary  feature/… ·                   \n                                       \nPRs                                    \nPR       REPO       STATE    TITLE     \n#7     ↗ widget     stale    stale: la…\n#48    ↗ gadget     deferred deferred:…\n#12345 ↗ toolkit    unavail… unavailab…\n#23    ↗ library    merged   Improve t…\nlanding unknown; inspect branch        \n                                       \n                                       \n                                       \n                                       \n                                       \n                                       \n                                       \nn next actions · r refresh · l log · a…"
+      },
+      "60": {
+        "runs": [
+          {
+            "text": "taba/wtc status · example · 0s old",
+            "style": {
+              "fontWeight": "700"
+            }
+          },
+          {
+            "text": " · dev",
+            "style": {
+              "opacity": ".65"
+            }
+          },
+          {
+            "text": "                    \n                                                            \n",
+            "style": {}
+          },
+          {
+            "text": "REPO             BRANCH    PR       C M R       ±    ↑   ↓  ",
+            "style": {
+              "fontWeight": "700"
+            }
+          },
+          {
+            "text": "\n",
+            "style": {}
+          },
+          {
+            "text": "widget          ",
+            "style": {
+              "fontWeight": "700"
+            }
+          },
+          {
+            "text": " feature/… ",
+            "style": {}
+          },
+          {
+            "text": "#7     ↗",
+            "style": {
+              "color": "#56b6c2"
+            }
+          },
+          {
+            "text": " stale       ",
+            "style": {}
+          },
+          {
+            "text": "·   ",
+            "style": {
+              "opacity": ".65"
+            }
+          },
+          {
+            "text": " ",
+            "style": {}
+          },
+          {
+            "text": "·  ",
+            "style": {
+              "opacity": ".65"
+            }
+          },
+          {
+            "text": " ",
+            "style": {}
+          },
+          {
+            "text": "·  ",
+            "style": {
+              "opacity": ".65"
+            }
+          },
+          {
+            "text": "\n",
+            "style": {}
+          },
+          {
+            "text": "gadget          ",
+            "style": {
+              "fontWeight": "700"
+            }
+          },
+          {
+            "text": " feature/… ",
+            "style": {}
+          },
+          {
+            "text": "#48    ↗",
+            "style": {
+              "color": "#56b6c2"
+            }
+          },
+          {
+            "text": " deferred    ",
+            "style": {}
+          },
+          {
+            "text": "·   ",
+            "style": {
+              "opacity": ".65"
+            }
+          },
+          {
+            "text": " ",
+            "style": {}
+          },
+          {
+            "text": "·  ",
+            "style": {
+              "opacity": ".65"
+            }
+          },
+          {
+            "text": " ",
+            "style": {}
+          },
+          {
+            "text": "·  ",
+            "style": {
+              "opacity": ".65"
+            }
+          },
+          {
+            "text": "\n",
+            "style": {}
+          },
+          {
+            "text": "toolkit         ",
+            "style": {
+              "fontWeight": "700"
+            }
+          },
+          {
+            "text": " feature/… ",
+            "style": {}
+          },
+          {
+            "text": "#12345 ↗",
+            "style": {
+              "color": "#56b6c2"
+            }
+          },
+          {
+            "text": " unavailable ",
+            "style": {}
+          },
+          {
+            "text": "·   ",
+            "style": {
+              "opacity": ".65"
+            }
+          },
+          {
+            "text": " ",
+            "style": {}
+          },
+          {
+            "text": "·  ",
+            "style": {
+              "opacity": ".65"
+            }
+          },
+          {
+            "text": " ",
+            "style": {}
+          },
+          {
+            "text": "·  ",
+            "style": {
+              "opacity": ".65"
+            }
+          },
+          {
+            "text": "\n",
+            "style": {}
+          },
+          {
+            "text": "library         ",
+            "style": {
+              "fontWeight": "700"
+            }
+          },
+          {
+            "text": " feature/… ·                    ",
+            "style": {}
+          },
+          {
+            "text": "·   ",
+            "style": {
+              "opacity": ".65"
+            }
+          },
+          {
+            "text": " ",
+            "style": {}
+          },
+          {
+            "text": "·  ",
+            "style": {
+              "opacity": ".65"
+            }
+          },
+          {
+            "text": " ",
+            "style": {}
+          },
+          {
+            "text": "·  ",
+            "style": {
+              "opacity": ".65"
+            }
+          },
+          {
+            "text": "\n                                                            \n",
+            "style": {}
+          },
+          {
+            "text": "PRs",
+            "style": {
+              "fontWeight": "700"
+            }
+          },
+          {
+            "text": "                                                         \n",
+            "style": {}
+          },
+          {
+            "text": "PR       REPO             STATE      C M R TITLE            ",
+            "style": {
+              "opacity": ".65"
+            }
+          },
+          {
+            "text": "\n",
+            "style": {}
+          },
+          {
+            "text": "#7     ↗",
+            "style": {
+              "color": "#56b6c2"
+            }
+          },
+          {
+            "text": " ",
+            "style": {}
+          },
+          {
+            "text": "widget          ",
+            "style": {
+              "fontWeight": "700"
+            }
+          },
+          {
+            "text": " ",
+            "style": {}
+          },
+          {
+            "text": "stale     ",
+            "style": {
+              "opacity": ".65"
+            }
+          },
+          {
+            "text": " ",
+            "style": {}
+          },
+          {
+            "text": "✓",
+            "style": {
+              "color": "#98c379"
+            }
+          },
+          {
+            "text": " ",
+            "style": {}
+          },
+          {
+            "text": "✓",
+            "style": {
+              "color": "#98c379"
+            }
+          },
+          {
+            "text": " ",
+            "style": {}
+          },
+          {
+            "text": "✓",
+            "style": {
+              "color": "#98c379"
+            }
+          },
+          {
+            "text": " ",
+            "style": {}
+          },
+          {
+            "text": "stale: last open…",
+            "style": {
+              "fontWeight": "700"
+            }
+          },
+          {
+            "text": "\n",
+            "style": {}
+          },
+          {
+            "text": "#48    ↗",
+            "style": {
+              "color": "#56b6c2"
+            }
+          },
+          {
+            "text": " ",
+            "style": {}
+          },
+          {
+            "text": "gadget          ",
+            "style": {
+              "fontWeight": "700"
+            }
+          },
+          {
+            "text": " ",
+            "style": {}
+          },
+          {
+            "text": "deferred  ",
+            "style": {
+              "opacity": ".65"
+            }
+          },
+          {
+            "text": " ",
+            "style": {}
+          },
+          {
+            "text": "✓",
+            "style": {
+              "color": "#98c379"
+            }
+          },
+          {
+            "text": " ",
+            "style": {}
+          },
+          {
+            "text": "✓",
+            "style": {
+              "color": "#98c379"
+            }
+          },
+          {
+            "text": " ",
+            "style": {}
+          },
+          {
+            "text": "✓",
+            "style": {
+              "color": "#98c379"
+            }
+          },
+          {
+            "text": " ",
+            "style": {}
+          },
+          {
+            "text": "deferred: last o…",
+            "style": {
+              "fontWeight": "700"
+            }
+          },
+          {
+            "text": "\n",
+            "style": {}
+          },
+          {
+            "text": "#12345 ↗",
+            "style": {
+              "color": "#56b6c2"
+            }
+          },
+          {
+            "text": " ",
+            "style": {}
+          },
+          {
+            "text": "toolkit         ",
+            "style": {
+              "fontWeight": "700"
+            }
+          },
+          {
+            "text": " ",
+            "style": {}
+          },
+          {
+            "text": "unavailab…",
+            "style": {
+              "opacity": ".65"
+            }
+          },
+          {
+            "text": " ",
+            "style": {}
+          },
+          {
+            "text": "·",
+            "style": {
+              "opacity": ".65"
+            }
+          },
+          {
+            "text": " ",
+            "style": {}
+          },
+          {
+            "text": "·",
+            "style": {
+              "opacity": ".65"
+            }
+          },
+          {
+            "text": " ",
+            "style": {}
+          },
+          {
+            "text": "·",
+            "style": {
+              "opacity": ".65"
+            }
+          },
+          {
+            "text": " ",
+            "style": {}
+          },
+          {
+            "text": "unavailable: not…",
+            "style": {
+              "fontWeight": "700"
+            }
+          },
+          {
+            "text": "\n",
+            "style": {}
+          },
+          {
+            "text": "#23    ↗",
+            "style": {
+              "color": "#56b6c2"
+            }
+          },
+          {
+            "text": " ",
+            "style": {}
+          },
+          {
+            "text": "library         ",
+            "style": {
+              "fontWeight": "700"
+            }
+          },
+          {
+            "text": " ",
+            "style": {}
+          },
+          {
+            "text": "merged    ",
+            "style": {
+              "color": "#e5c07b"
+            }
+          },
+          {
+            "text": " ",
+            "style": {}
+          },
+          {
+            "text": "·",
+            "style": {
+              "opacity": ".65"
+            }
+          },
+          {
+            "text": " ",
+            "style": {}
+          },
+          {
+            "text": "·",
+            "style": {
+              "opacity": ".65"
+            }
+          },
+          {
+            "text": " ",
+            "style": {}
+          },
+          {
+            "text": "·",
+            "style": {
+              "opacity": ".65"
+            }
+          },
+          {
+            "text": " ",
+            "style": {}
+          },
+          {
+            "text": "Improve the libr…",
+            "style": {
+              "fontWeight": "700"
+            }
+          },
+          {
+            "text": "\n",
+            "style": {}
+          },
+          {
+            "text": "landing unknown; inspect branch",
+            "style": {
+              "color": "#e5c07b"
+            }
+          },
+          {
+            "text": "                             \n                                                            \n                                                            \n                                                            \n                                                            \n                                                            \n                                                            \n                                                            \n",
+            "style": {}
+          },
+          {
+            "text": "n next actions · r refresh · l log · a archived · ↗ link · …",
+            "style": {
+              "opacity": ".65"
+            }
+          }
+        ],
+        "plain": "taba/wtc status · example · 0s old · dev                    \n                                                            \nREPO             BRANCH    PR       C M R       ±    ↑   ↓  \nwidget           feature/… #7     ↗ stale       ·    ·   ·  \ngadget           feature/… #48    ↗ deferred    ·    ·   ·  \ntoolkit          feature/… #12345 ↗ unavailable ·    ·   ·  \nlibrary          feature/… ·                    ·    ·   ·  \n                                                            \nPRs                                                         \nPR       REPO             STATE      C M R TITLE            \n#7     ↗ widget           stale      ✓ ✓ ✓ stale: last open…\n#48    ↗ gadget           deferred   ✓ ✓ ✓ deferred: last o…\n#12345 ↗ toolkit          unavailab… · · · unavailable: not…\n#23    ↗ library          merged     · · · Improve the libr…\nlanding unknown; inspect branch                             \n                                                            \n                                                            \n                                                            \n                                                            \n                                                            \n                                                            \n                                                            \nn next actions · r refresh · l log · a archived · ↗ link · …"
+      },
+      "100": {
+        "runs": [
+          {
+            "text": "taba/wtc status · example · 0s old",
+            "style": {
+              "fontWeight": "700"
+            }
+          },
+          {
+            "text": " · dev",
+            "style": {
+              "opacity": ".65"
+            }
+          },
+          {
+            "text": "                                                            \n                                                                                                    \n",
+            "style": {}
+          },
+          {
+            "text": "REPO                 BRANCH                         PR       C M R       ±    ↑   ↓  ",
+            "style": {
+              "fontWeight": "700"
+            }
+          },
+          {
+            "text": "               \n",
+            "style": {}
+          },
+          {
+            "text": "widget              ",
+            "style": {
+              "fontWeight": "700"
+            }
+          },
+          {
+            "text": " feature/topic                  ",
+            "style": {}
+          },
+          {
+            "text": "#7     ↗",
+            "style": {
+              "color": "#56b6c2"
+            }
+          },
+          {
+            "text": " stale       ",
+            "style": {}
+          },
+          {
+            "text": "·   ",
+            "style": {
+              "opacity": ".65"
+            }
+          },
+          {
+            "text": " ",
+            "style": {}
+          },
+          {
+            "text": "·  ",
+            "style": {
+              "opacity": ".65"
+            }
+          },
+          {
+            "text": " ",
+            "style": {}
+          },
+          {
+            "text": "·  ",
+            "style": {
+              "opacity": ".65"
+            }
+          },
+          {
+            "text": "               \n",
+            "style": {}
+          },
+          {
+            "text": "gadget              ",
+            "style": {
+              "fontWeight": "700"
+            }
+          },
+          {
+            "text": " feature/topic                  ",
+            "style": {}
+          },
+          {
+            "text": "#48    ↗",
+            "style": {
+              "color": "#56b6c2"
+            }
+          },
+          {
+            "text": " deferred    ",
+            "style": {}
+          },
+          {
+            "text": "·   ",
+            "style": {
+              "opacity": ".65"
+            }
+          },
+          {
+            "text": " ",
+            "style": {}
+          },
+          {
+            "text": "·  ",
+            "style": {
+              "opacity": ".65"
+            }
+          },
+          {
+            "text": " ",
+            "style": {}
+          },
+          {
+            "text": "·  ",
+            "style": {
+              "opacity": ".65"
+            }
+          },
+          {
+            "text": "               \n",
+            "style": {}
+          },
+          {
+            "text": "toolkit             ",
+            "style": {
+              "fontWeight": "700"
+            }
+          },
+          {
+            "text": " feature/topic                  ",
+            "style": {}
+          },
+          {
+            "text": "#12345 ↗",
+            "style": {
+              "color": "#56b6c2"
+            }
+          },
+          {
+            "text": " unavailable ",
+            "style": {}
+          },
+          {
+            "text": "·   ",
+            "style": {
+              "opacity": ".65"
+            }
+          },
+          {
+            "text": " ",
+            "style": {}
+          },
+          {
+            "text": "·  ",
+            "style": {
+              "opacity": ".65"
+            }
+          },
+          {
+            "text": " ",
+            "style": {}
+          },
+          {
+            "text": "·  ",
+            "style": {
+              "opacity": ".65"
+            }
+          },
+          {
+            "text": "               \n",
+            "style": {}
+          },
+          {
+            "text": "library             ",
+            "style": {
+              "fontWeight": "700"
+            }
+          },
+          {
+            "text": " feature/topic                  ·                    ",
+            "style": {}
+          },
+          {
+            "text": "·   ",
+            "style": {
+              "opacity": ".65"
+            }
+          },
+          {
+            "text": " ",
+            "style": {}
+          },
+          {
+            "text": "·  ",
+            "style": {
+              "opacity": ".65"
+            }
+          },
+          {
+            "text": " ",
+            "style": {}
+          },
+          {
+            "text": "·  ",
+            "style": {
+              "opacity": ".65"
+            }
+          },
+          {
+            "text": "               \n                                                                                                    \n",
+            "style": {}
+          },
+          {
+            "text": "PRs",
+            "style": {
+              "fontWeight": "700"
+            }
+          },
+          {
+            "text": "                                                                                                 \n",
+            "style": {}
+          },
+          {
+            "text": "PR       REPO                 STATE      CHECKS MERGE REVIEWS TITLE                                 ",
+            "style": {
+              "opacity": ".65"
+            }
+          },
+          {
+            "text": "\n",
+            "style": {}
+          },
+          {
+            "text": "#7     ↗",
+            "style": {
+              "color": "#56b6c2"
+            }
+          },
+          {
+            "text": " ",
+            "style": {}
+          },
+          {
+            "text": "widget              ",
+            "style": {
+              "fontWeight": "700"
+            }
+          },
+          {
+            "text": " ",
+            "style": {}
+          },
+          {
+            "text": "stale     ",
+            "style": {
+              "opacity": ".65"
+            }
+          },
+          {
+            "text": " ",
+            "style": {}
+          },
+          {
+            "text": "✓",
+            "style": {
+              "color": "#98c379"
+            }
+          },
+          {
+            "text": "      ",
+            "style": {}
+          },
+          {
+            "text": "✓",
+            "style": {
+              "color": "#98c379"
+            }
+          },
+          {
+            "text": "     ",
+            "style": {}
+          },
+          {
+            "text": "✓",
+            "style": {
+              "color": "#98c379"
+            }
+          },
+          {
+            "text": "       ",
+            "style": {}
+          },
+          {
+            "text": "stale: last open; observed 2026-01-05…",
+            "style": {
+              "fontWeight": "700"
+            }
+          },
+          {
+            "text": "\n",
+            "style": {}
+          },
+          {
+            "text": "#48    ↗",
+            "style": {
+              "color": "#56b6c2"
+            }
+          },
+          {
+            "text": " ",
+            "style": {}
+          },
+          {
+            "text": "gadget              ",
+            "style": {
+              "fontWeight": "700"
+            }
+          },
+          {
+            "text": " ",
+            "style": {}
+          },
+          {
+            "text": "deferred  ",
+            "style": {
+              "opacity": ".65"
+            }
+          },
+          {
+            "text": " ",
+            "style": {}
+          },
+          {
+            "text": "✓",
+            "style": {
+              "color": "#98c379"
+            }
+          },
+          {
+            "text": "      ",
+            "style": {}
+          },
+          {
+            "text": "✓",
+            "style": {
+              "color": "#98c379"
+            }
+          },
+          {
+            "text": "     ",
+            "style": {}
+          },
+          {
+            "text": "✓",
+            "style": {
+              "color": "#98c379"
+            }
+          },
+          {
+            "text": "       ",
+            "style": {}
+          },
+          {
+            "text": "deferred: last open; observed 2026-01…",
+            "style": {
+              "fontWeight": "700"
+            }
+          },
+          {
+            "text": "\n",
+            "style": {}
+          },
+          {
+            "text": "#12345 ↗",
+            "style": {
+              "color": "#56b6c2"
+            }
+          },
+          {
+            "text": " ",
+            "style": {}
+          },
+          {
+            "text": "toolkit             ",
+            "style": {
+              "fontWeight": "700"
+            }
+          },
+          {
+            "text": " ",
+            "style": {}
+          },
+          {
+            "text": "unavailab…",
+            "style": {
+              "opacity": ".65"
+            }
+          },
+          {
+            "text": " ",
+            "style": {}
+          },
+          {
+            "text": "·",
+            "style": {
+              "opacity": ".65"
+            }
+          },
+          {
+            "text": "      ",
+            "style": {}
+          },
+          {
+            "text": "·",
+            "style": {
+              "opacity": ".65"
+            }
+          },
+          {
+            "text": "     ",
+            "style": {}
+          },
+          {
+            "text": "·",
+            "style": {
+              "opacity": ".65"
+            }
+          },
+          {
+            "text": "       ",
+            "style": {}
+          },
+          {
+            "text": "unavailable: not yet observed; Improv…",
+            "style": {
+              "fontWeight": "700"
+            }
+          },
+          {
+            "text": "\n",
+            "style": {}
+          },
+          {
+            "text": "#23    ↗",
+            "style": {
+              "color": "#56b6c2"
+            }
+          },
+          {
+            "text": " ",
+            "style": {}
+          },
+          {
+            "text": "library             ",
+            "style": {
+              "fontWeight": "700"
+            }
+          },
+          {
+            "text": " ",
+            "style": {}
+          },
+          {
+            "text": "merged    ",
+            "style": {
+              "color": "#e5c07b"
+            }
+          },
+          {
+            "text": " ",
+            "style": {}
+          },
+          {
+            "text": "·",
+            "style": {
+              "opacity": ".65"
+            }
+          },
+          {
+            "text": "      ",
+            "style": {}
+          },
+          {
+            "text": "·",
+            "style": {
+              "opacity": ".65"
+            }
+          },
+          {
+            "text": "     ",
+            "style": {}
+          },
+          {
+            "text": "·",
+            "style": {
+              "opacity": ".65"
+            }
+          },
+          {
+            "text": "       ",
+            "style": {}
+          },
+          {
+            "text": "Improve the library                   ",
+            "style": {
+              "fontWeight": "700"
+            }
+          },
+          {
+            "text": "\n",
+            "style": {}
+          },
+          {
+            "text": "landing unknown; inspect branch",
+            "style": {
+              "color": "#e5c07b"
+            }
+          },
+          {
+            "text": "                                                                     \n                                                                                                    \n                                                                                                    \n                                                                                                    \n                                                                                                    \n                                                                                                    \n                                                                                                    \n                                                                                                    \n",
+            "style": {}
+          },
+          {
+            "text": "n next actions · r refresh · l log · a archived · ↗ link · ? help · q quit",
+            "style": {
+              "opacity": ".65"
+            }
+          },
+          {
+            "text": "                          ",
+            "style": {}
+          }
+        ],
+        "plain": "taba/wtc status · example · 0s old · dev                                                            \n                                                                                                    \nREPO                 BRANCH                         PR       C M R       ±    ↑   ↓                 \nwidget               feature/topic                  #7     ↗ stale       ·    ·   ·                 \ngadget               feature/topic                  #48    ↗ deferred    ·    ·   ·                 \ntoolkit              feature/topic                  #12345 ↗ unavailable ·    ·   ·                 \nlibrary              feature/topic                  ·                    ·    ·   ·                 \n                                                                                                    \nPRs                                                                                                 \nPR       REPO                 STATE      CHECKS MERGE REVIEWS TITLE                                 \n#7     ↗ widget               stale      ✓      ✓     ✓       stale: last open; observed 2026-01-05…\n#48    ↗ gadget               deferred   ✓      ✓     ✓       deferred: last open; observed 2026-01…\n#12345 ↗ toolkit              unavailab… ·      ·     ·       unavailable: not yet observed; Improv…\n#23    ↗ library              merged     ·      ·     ·       Improve the library                   \nlanding unknown; inspect branch                                                                     \n                                                                                                    \n                                                                                                    \n                                                                                                    \n                                                                                                    \n                                                                                                    \n                                                                                                    \n                                                                                                    \nn next actions · r refresh · l log · a archived · ↗ link · ? help · q quit                          "
       }
     },
     "runtime": {

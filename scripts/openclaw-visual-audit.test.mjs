@@ -16,6 +16,7 @@ test('hierarchy reports density and clipped labels without turning taste into a 
   assert.equal(audit.errors.length, 0); assert.equal(audit.warnings.length, 2);
 });
 test('empty fact lanes need a real reservation', () => {
+  assert.equal(inspectVisualMeasurements(measurements({ rows: [{ name: 'api', width: 300, height: 64, emptyFactBand: true, factReservation: true }] })).errors.length, 0);
   assert.equal(inspectVisualMeasurements(measurements({ rows: [{ name: 'api', width: 300, height: 64, emptyFactBand: true }] })).errors.length, 1);
 });
 test('one fixed spatial crop contains every expansion without changing the timeline', () => {

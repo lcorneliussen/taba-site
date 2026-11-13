@@ -103,6 +103,23 @@ export const scenarios = [
     snapshot: snapshot([repo('widget')], [], { orphans: [{ repo: 'widget', branch: 'feature/topic', state: 'CLOSED' }] }), expect: ['PR CLOSED; catch-up'],
   },
   {
+    id: 'freshness', group: 'Missing facts', title: 'Deferred lookups and retained observations',
+    summary: 'A lookup can be delayed or unavailable without erasing an earlier observation. PR identity, freshness and branch landing are separate facts.',
+    read: [['#7', 'stale retains the last open observation and its timestamp; it is not a current confirmation that the PR remains open.'], ['#48 and #12345', 'deferred means the lookup waited for shared request limits; unavailable means no usable state was observed. Neither permits a branch action or retirement.'], ['#23', 'The confirmed merge remains merged while landing this retained branch is unknown. A missing branch-landing result does not undo the merge.']],
+    inspect: 'Inspect freshness, observation_source and observed_at in status JSON and the refresh log. Wait for a confirmed state before a branch action; inspect branch landing separately.',
+    snapshot: snapshot([
+      repo('widget', { pr_unconfirmed: true, pr: pr('7', { freshness: 'stale', observation_source: 'cache', observed_at: '2026-01-05T10:00:00Z' }) }),
+      repo('gadget', { pr_unconfirmed: true, pr: pr('48', { freshness: 'deferred', observation_source: 'cache', observed_at: '2026-01-05T10:00:00Z' }) }),
+      repo('toolkit', { pr_unconfirmed: true, pr: pr('12345', { freshness: 'unavailable', checks: 'UNKNOWN', merge: 'UNKNOWN', review: 'none' }) }),
+      repo('library', { landing: { state: 'unknown' } }),
+    ], [
+      enlisted(pr('7', { freshness: 'stale', observation_source: 'cache', observed_at: '2026-01-05T10:00:00Z' })),
+      enlisted(pr('48', { freshness: 'deferred', observation_source: 'cache', observed_at: '2026-01-05T10:00:00Z' }), { repo: 'gadget' }),
+      enlisted(pr('12345', { freshness: 'unavailable', checks: null, merge: null, review: null }), { repo: 'toolkit', state: 'UNKNOWN' }),
+      { repo: 'library', number: '23', url: url('23'), state: 'MERGED', merge: 'MERGED', on_branch: true, title: 'Improve the library', landing: { state: 'unknown' } },
+    ]), expect: ['stale', 'deferred', 'unavailable', 'merged', 'landing unknown; inspect branch'],
+  },
+  {
     id: 'runtime', group: 'Local services', title: 'A ready service, a public tunnel, and a failed worker',
     summary: 'Runtime marks identify tasks; their color and the SERVICES row describe state. They are separate from PR or CI status.',
     read: [['LOCAL', 'w/T groups the web service with its public tunnel. b identifies the background service. Marks can be configured; they are names, not universal status glyphs.'], ['SERVICES', 'The detail table shows the service name, the member needing attention, local address and tunnel provider. Public or unknown exposure is labeled explicitly.'], ['Readiness', 'ready starts with a successful startup probe. A later address or login problem can still appear as no answer or login. Provisioned resources are distinct from running services.']],

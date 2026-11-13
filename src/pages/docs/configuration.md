@@ -5,6 +5,12 @@ description: Separate tracked project settings, generated environment, and priva
 source: https://github.com/lcorneliussen/taba/blob/v0.1.51/internal/wtc/defaults/instructions/customize.md
 ---
 
+## Names in v0.2.4
+
+In [v0.2.4](https://github.com/lcorneliussen/taba/releases/tag/v0.2.4), a new harness uses `taba.toml` and `.taba-version`; rendered skills use `taba-*`. Existing old-name files and harness overrides remain supported during 0.2.x. Where both file spellings exist, the old one wins; supported environment variables instead prefer `TABA_*`. Keep one intended file, and preserve team overrides when migrating.
+
+Use `taba doctor` for this collection or `taba doctor --all` for the workspace, including from its root. Each finding explains whether it can migrate now or must wait; findings do not fail doctor during 0.2.x. `taba conventions` lists the installed release's names. Follow the [published compatibility table and migration order](https://github.com/lcorneliussen/taba/blob/v0.2.4/docs/conventions.md); the sections below retain their labeled older baselines.
+
 ## Environment compatibility in v0.1.60
 
 Starting with v0.1.60, WTC accepts the `TABA_` prefix alongside `WTC_` for supported
