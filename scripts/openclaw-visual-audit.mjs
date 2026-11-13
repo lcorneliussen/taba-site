@@ -133,7 +133,7 @@ export function collectVisualMeasurements(selector) {
     }
   }
   for (const [i, grid] of all('.wtc-table').entries()) {
-    const cols = Number(grid.getAttribute('data-columns')), cells = [...grid.children];
+    const cols = Number(grid.getAttribute('data-columns')), cells = [...grid.children].filter(node => !node.classList.contains('wtc-action-preview-wash'));
     for (let start = cols; start < cells.length; start += cols) {
       const firstLine = cells.slice(start, start + cols);
       group(`table ${i + 1} row ${start / cols} baseline`, 'y', firstLine, item => item.baseline);

@@ -7,12 +7,13 @@ import { resolve, sep } from 'node:path';
 import { pathToFileURL, fileURLToPath } from 'node:url';
 import { parseArgs } from 'node:util';
 import { loadControlUISource, serveControlUIAsset } from './control-ui-source.mjs';
+import { loadOpenClawHostSource, hostStyles } from './openclaw-host-source.mjs';
 import { collectVisualMeasurements, inspectVisualMeasurements, visualGuideSvg, visualAuditReport, recordingCrop } from './openclaw-visual-audit.mjs';
 
-const usage = 'Usage: npm run demos:openclaw:interactions -- /path/to/wtc-cli [output-directory] [push|stale|individual|batch|collapsed-push|collapsed-catch-up|all] [--view card|chat|sidebar|split] [--width 390] [--sidebar-width 320]';
-const { values, positionals } = parseArgs({ allowPositionals: true, options: { help: { type: 'boolean' }, view: { type: 'string', default: 'card' }, width: { type: 'string', default: '1120' }, 'sidebar-width': { type: 'string', default: '420' } } });
+const usage = 'Usage: npm run demos:openclaw:interactions -- /path/to/wtc-cli [output-directory] [push|stale|individual|batch|collapsed-push|collapsed-catch-up|all] --host-source /path/to/openclaw-2026.10.2 [--view card|chat|sidebar|split] [--width 390] [--sidebar-width 320]';
+const { values, positionals } = parseArgs({ allowPositionals: true, options: { help: { type: 'boolean' }, 'host-source': { type: 'string' }, view: { type: 'string', default: 'card' }, width: { type: 'string', default: '1120' }, 'sidebar-width': { type: 'string', default: '420' } } });
 if (values.help) { console.log(usage); process.exit(0); }
-if (!positionals[0] || positionals.length > 3) throw Error(usage);
+if (!positionals[0] || positionals.length > 3 || !values['host-source']) throw Error(usage);
 const view = values.view, width = Number(values.width), sidebarWidth = Number(values['sidebar-width']);
 if (!['card', 'chat', 'sidebar', 'split'].includes(view) || !Number.isInteger(width) || width < 320 || width > 2560) throw Error(usage);
 if (!Number.isInteger(sidebarWidth) || sidebarWidth < 320 || sidebarWidth > 800) throw Error(usage);
@@ -20,6 +21,7 @@ if (view === 'split' && (width < 900 || width - sidebarWidth < 320)) throw Error
 const siteRoot = new URL('../', import.meta.url);
 const upstream = resolve(positionals[0]);
 const runtime = await loadControlUISource(upstream);
+const hostSource = await loadOpenClawHostSource(resolve(values['host-source']));
 const { modulePath, revision, entry: renderer } = runtime;
 const openKey = renderer.match(/const OPEN_KEY = "([^"]+)"/)?.[1];
 if (!openKey) throw Error('Renderer open-state contract changed; update the fixture');
@@ -52,6 +54,7 @@ manifest.recorder = {
   sourceLoaderSha256: createHash('sha256').update(await readFile(new URL('scripts/control-ui-source.mjs',siteRoot))).digest('hex'),
   fixtureSha256: createHash('sha256').update(template).digest('hex'),
 };
+manifest.host = hostSource.provenance;
 try {
   for (const [id, title, mode] of scenarios.filter(s => (!selected || s[2] === selected) && !(view === 'sidebar' && s[2].startsWith('collapsed-')))) {
     manifest.status = 'recording'; manifest.activeScenario = id;
@@ -107,12 +110,15 @@ const request = async (method, params) => {
     html = inject(html, '<div id="card">', '<div id="recording-chat"><div class="recording-bubble recording-user">Please update the collection and its pull request.</div><div class="recording-bubble recording-assistant">I’ll check the repositories and preserve your work.</div></div><div id="card">');
     if (view === 'split') html = inject(html, "document.querySelector('#card').hidden=true;", "document.body.classList.add('split');");
     if (view === 'sidebar' || view === 'split') html = inject(html, "mounts.card(document.querySelector('#card'),ctx);", "mounts.card(document.querySelector('#card'),ctx); host.ui.openPanel();");
+    html = inject(html, '</style>', '</style>' + hostStyles);
     const context = await browser.newContext({ locale: 'en-US', timezoneId: 'UTC', deviceScaleFactor: 1, viewport: { width, height: 900 } });
     await context.addInitScript(({ key, collapsed }) => localStorage.setItem(key, collapsed ? '0' : '1'), { key: openKey, collapsed });
     const errors=[];
     await context.route('**/*', route => {
       const url=route.request().url();
       if(url==='https://demo.invalid/')return route.fulfill({contentType:'text/html',body:html});
+      const hostAsset = hostSource.assets.get(url);
+      if(hostAsset)return route.fulfill(hostAsset);
       return serveControlUIAsset(route, runtime.assets, url => errors.push('Unexpected network: '+url));
     });
     const page = await context.newPage(); page.on('pageerror', e => errors.push(e.message));
@@ -182,7 +188,6 @@ const request = async (method, params) => {
       });
       await writeFile(new URL(phase+'.measurements.json',dir),JSON.stringify(sample,null,2));
       await page.screenshot({path:fileURLToPath(new URL(phase+'.png',dir))});
-      for(const group of sample.baselines)if(group.spread>.25)throw Error(`Text baselines differ: ${view}/${mode}/${phase}/${group.name}: ${JSON.stringify(group.values)}`);
       const visualAudit=inspectVisualMeasurements(await page.evaluate(collectVisualMeasurements,view==='sidebar'?'#panel':'#card'));
       if(view==='split'){
         const side=inspectVisualMeasurements(await page.evaluate(collectVisualMeasurements,'#panel'));
@@ -190,11 +195,18 @@ const request = async (method, params) => {
         visualAudit.sections.push(...side.sections.map(section=>({...section,id:'sidebar:'+section.id,parent:section.parent==null?null:'sidebar:'+section.parent,label:'Sidebar '+section.label})));
         for(const key of ['opticalPairs','rows','hierarchy','errors','warnings'])visualAudit[key].push(...side[key]);
       }
-      if(visualAudit.errors.length)throw Error(`Visual alignment: ${view}/${mode}/${phase}: ${visualAudit.errors.join('; ')}`);
-      if(collapsed&&await surface.locator('.wtc-collection-card').evaluate(node=>node.open))throw Error('An action expanded the collapsed collection bar');
       positions.push({phase,...sample,visualAudit});
       await writeFile(new URL('layout-positions.json',dir),JSON.stringify(positions,null,2));
-      await page.screenshot({path:fileURLToPath(new URL(phase+'.png',dir))});
+      const png=await readFile(new URL(phase+'.png',dir));
+      visualAudit.image={width,height:900,sha256:createHash('sha256').update(png).digest('hex')};
+      const svg=visualGuideSvg(visualAudit,'data:image/png;base64,'+png.toString('base64'),{width,height:900},{x:0,y:0,width,height:900});
+      await writeFile(new URL(phase+'.visual.json',dir),JSON.stringify(visualAudit,null,2));
+      await writeFile(new URL(phase+'.guides.svg',dir),svg);
+      await writeFile(new URL(phase+'.audit.html',dir),visualAuditReport(visualAudit,svg));
+      await writeFile(new URL('trace.json',dir),JSON.stringify(await page.evaluate(()=>window.calls),null,2));
+      for(const group of sample.baselines)if(group.spread>.25)throw Error(`Text baselines differ: ${view}/${mode}/${phase}/${group.name}: ${JSON.stringify(group.values)}`);
+      if(visualAudit.errors.length)throw Error(`Visual alignment: ${view}/${mode}/${phase}: ${visualAudit.errors.join('; ')}`);
+      if(collapsed&&await surface.locator('.wtc-collection-card').evaluate(node=>node.open))throw Error('An action expanded the collapsed collection bar');
       if(sample.temporary){
         if(view==='sidebar') {if(sample.services && sample.temporary.y<sample.services.y+sample.services.height-1)throw Error('Sidebar temporary content displaced Services');}
         else if(sample.header && sample.temporary.y+sample.temporary.height>sample.header.y+1)throw Error('Composer temporary content must extend above its fixed header');
@@ -214,6 +226,12 @@ const request = async (method, params) => {
       const root=document.querySelector(selector);
       return root && ![...root.querySelectorAll('.wtc-repositories button, .wtc-step-status')].some(n=>/^\d+ new on main/.test(n.title)||/Working…|Catching up…|Running…|Rechecking…|Queued/.test(n.textContent));
     },view==='sidebar'?'#panel':'#card');
+    await page.evaluate(async()=>{
+      await document.fonts.load('400 14px "Instrument Sans"');
+      await document.fonts.load('600 12px "Instrument Sans"');
+      await document.fonts.ready;
+      if(![...document.fonts].some(font=>font.family==='Instrument Sans'&&font.status==='loaded'))throw Error('Host typeface did not load');
+    });
     await page.waitForTimeout(1400);await measure('idle');
     // Track visible content on every animation frame. The whole take gets one
     // crop after capture; a moving crop would hide layout shifts.
@@ -345,6 +363,7 @@ const request = async (method, params) => {
     await writeFile(new URL('layout-positions.json',dir),JSON.stringify(positions,null,2));
     manifest.recordings.push({id,title,mode,collapsed,video:videoName,poster:id+'/poster.png',crop,captureStoppedAt:capture.stoppedAt,recordingEndedAt:stoppedAt,assertions:'passed',firstFrame,layoutPositions:positions,requests:trace});
     await runtime.assertUnchanged();
+    await hostSource.assertUnchanged();
     await writeFile(new URL('manifest.json',output),JSON.stringify(manifest,null,2));
     console.log(id+': recorded and decoded '+videoName);
   }
