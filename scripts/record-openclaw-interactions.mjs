@@ -3,9 +3,10 @@ import { chromium } from 'playwright';
 import { readFile, mkdir, writeFile, readdir } from 'node:fs/promises';
 import { createHash } from 'node:crypto';
 import { execFileSync } from 'node:child_process';
-import { resolve, join, sep } from 'node:path';
+import { resolve, sep } from 'node:path';
 import { pathToFileURL, fileURLToPath } from 'node:url';
 import { parseArgs } from 'node:util';
+import { loadControlUISource, serveControlUIAsset } from './control-ui-source.mjs';
 import { collectVisualMeasurements, inspectVisualMeasurements, visualGuideSvg, visualAuditReport, recordingCrop } from './openclaw-visual-audit.mjs';
 
 const usage = 'Usage: npm run demos:openclaw:interactions -- /path/to/wtc-cli [output-directory] [push|stale|individual|batch|collapsed-push|collapsed-catch-up|all] [--view card|chat|sidebar|split] [--width 390] [--sidebar-width 320]';
@@ -18,10 +19,8 @@ if (!Number.isInteger(sidebarWidth) || sidebarWidth < 320 || sidebarWidth > 800)
 if (view === 'split' && (width < 900 || width - sidebarWidth < 320)) throw Error('Split view needs width >= 900 and at least 320 pixels left for chat; use chat or sidebar on mobile');
 const siteRoot = new URL('../', import.meta.url);
 const upstream = resolve(positionals[0]);
-const modulePath = 'openclaw-plugin/dist/control-ui/v1/index.js';
-const revision = execFileSync('git', ['-C', upstream, 'rev-parse', 'HEAD'], { encoding: 'utf8' }).trim();
-if (execFileSync('git', ['-C', upstream, 'status', '--porcelain', '--', modulePath], { encoding: 'utf8' }).trim()) throw Error('Capture requires an unchanged upstream UI module');
-const renderer = await readFile(join(upstream, modulePath), 'utf8');
+const runtime = await loadControlUISource(upstream);
+const { modulePath, revision, entry: renderer } = runtime;
 const openKey = renderer.match(/const OPEN_KEY = "([^"]+)"/)?.[1];
 if (!openKey) throw Error('Renderer open-state contract changed; update the fixture');
 const template = await readFile(new URL('scripts/demos/openclaw.html', siteRoot), 'utf8');
@@ -44,12 +43,14 @@ const inject = (html, anchor, replacement) => {
   return html.replace(anchor, replacement);
 };
 const browser = await chromium.launch({ headless: true });
-const manifest = { created: new Date().toISOString(), kind: 'Actual upstream renderer with synthetic gateway responses; not a live gateway', repository: 'https://github.com/lcorneliussen/taba', revision, modulePath, playwright: JSON.parse(await readFile(new URL('node_modules/playwright/package.json', siteRoot), 'utf8')).version, browser: browser.version(), rendererSha256: createHash('sha256').update(renderer).digest('hex'), simulation: true, capture: 'Chromium screencast PNG frames from initialized idle; original timestamps, untrimmed', view, sidebarWidth: view === 'split' ? sidebarWidth : null, viewport: { width, height: 900 }, recordings: [] };
+const manifest = { created: new Date().toISOString(), kind: 'Actual upstream renderer with synthetic gateway responses; not a live gateway', repository: 'https://github.com/lcorneliussen/taba', revision, modulePath, modules: runtime.modules, playwright: JSON.parse(await readFile(new URL('node_modules/playwright/package.json', siteRoot), 'utf8')).version, browser: browser.version(), rendererSha256: createHash('sha256').update(renderer).digest('hex'), simulation: true, capture: 'Chromium screencast PNG frames from initialized idle; original timestamps, untrimmed', view, sidebarWidth: view === 'split' ? sidebarWidth : null, viewport: { width, height: 900 }, recordings: [] };
 manifest.recorder = {
   revision: execFileSync('git',['-C',fileURLToPath(siteRoot),'rev-parse','HEAD'],{encoding:'utf8'}).trim(),
-  dirty: !!execFileSync('git',['-C',fileURLToPath(siteRoot),'status','--porcelain','--','scripts/record-openclaw-interactions.mjs','scripts/openclaw-visual-audit.mjs'],{encoding:'utf8'}).trim(),
+  dirty: !!execFileSync('git',['-C',fileURLToPath(siteRoot),'status','--porcelain','--','scripts/record-openclaw-interactions.mjs','scripts/openclaw-visual-audit.mjs','scripts/control-ui-source.mjs','scripts/demos/openclaw.html'],{encoding:'utf8'}).trim(),
   sha256: createHash('sha256').update(await readFile(fileURLToPath(import.meta.url))).digest('hex'),
   visualAuditSha256: createHash('sha256').update(await readFile(new URL('scripts/openclaw-visual-audit.mjs',siteRoot))).digest('hex'),
+  sourceLoaderSha256: createHash('sha256').update(await readFile(new URL('scripts/control-ui-source.mjs',siteRoot))).digest('hex'),
+  fixtureSha256: createHash('sha256').update(template).digest('hex'),
 };
 try {
   for (const [id, title, mode] of scenarios.filter(s => (!selected || s[2] === selected) && !(view === 'sidebar' && s[2].startsWith('collapsed-')))) {
@@ -110,8 +111,7 @@ const request = async (method, params) => {
     await context.route('**/*', route => {
       const url=route.request().url();
       if(url==='https://demo.invalid/')return route.fulfill({contentType:'text/html',body:html});
-      if(url==='https://demo.invalid/plugin.js')return route.fulfill({contentType:'text/javascript',body:renderer});
-      errors.push('Unexpected network: '+url);return route.abort();
+      return serveControlUIAsset(route, runtime.assets, url => errors.push('Unexpected network: '+url));
     });
     const page = await context.newPage(); page.on('pageerror', e => errors.push(e.message));
     await page.goto('https://demo.invalid/'); await page.locator('#card .wtc-collection-card').waitFor({state:view==='sidebar'?'attached':'visible'});
@@ -336,6 +336,7 @@ const request = async (method, params) => {
     }
     await writeFile(new URL('layout-positions.json',dir),JSON.stringify(positions,null,2));
     manifest.recordings.push({id,title,mode,collapsed,video:videoName,poster:id+'/poster.png',crop,captureStoppedAt:capture.stoppedAt,recordingEndedAt:stoppedAt,assertions:'passed',firstFrame,layoutPositions:positions,requests:trace});
+    await runtime.assertUnchanged();
     await writeFile(new URL('manifest.json',output),JSON.stringify(manifest,null,2));
     console.log(id+': recorded and decoded '+videoName);
   }

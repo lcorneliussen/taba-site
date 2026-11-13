@@ -5,7 +5,7 @@
 </style>
 <div id="stage"><h1>One task. Every repository.</h1><p>wtc for OpenClaw · real plugin renderer, synthetic demo data</p><div id="card"></div><div id="panel" hidden></div><p id="caption">Expand the collection card to see changes, pull requests and previews.</p><footer>Isolated UI demonstration · no gateway connection or publication</footer></div>
 <script type="module">
-import plugin from '/plugin.js';
+import plugin from '/index.js';
 const mounts = {};
 const repo = (name, extra = {}) => ({repo:name,owner:'example-org',forge:'github',sessionKey:`demo:${name}`,branch:'openclaw/add-search',base:'origin/main',ahead:0,behind:0,...extra});
 const data = {

@@ -2,19 +2,17 @@
 import { chromium } from 'playwright';
 import { readFile, mkdir, writeFile, rename, rm } from 'node:fs/promises';
 import { resolve, join } from 'node:path';
-import { execFileSync } from 'node:child_process';
 import { createHash } from 'node:crypto';
+import { loadControlUISource, serveControlUIAsset } from './control-ui-source.mjs';
 import { fileURLToPath } from 'node:url';
 const root = fileURLToPath(new URL('../', import.meta.url));
 const upstream = process.argv[2];
 if (!upstream) throw new Error('Usage: npm run demos:openclaw -- /absolute/path/to/wtc-cli [output-directory]');
 const source = resolve(upstream);
 const out = resolve(process.argv[3] ?? join(root, 'public/media/openclaw'));
-const modulePath = 'openclaw-plugin/dist/control-ui/v1/index.js';
-const module = await readFile(join(source, modulePath), 'utf8');
+const runtime = await loadControlUISource(source);
+const { modulePath, revision, entry: module } = runtime;
 const html = await readFile(join(root, 'scripts/demos/openclaw.html'), 'utf8');
-const revision = execFileSync('git', ['-C', source, 'rev-parse', 'HEAD'], {encoding:'utf8'}).trim();
-if(execFileSync('git',['-C',source,'status','--porcelain','--',modulePath],{encoding:'utf8'}).trim()) throw new Error('Capture requires an unchanged upstream UI module');
 await mkdir(out,{recursive:true});
 const browser = await chromium.launch({headless:true});
 const errors=[];
@@ -24,8 +22,7 @@ try {
  await context.route('**/*',route=>{
   const url=route.request().url();
   if(url==='https://demo.invalid/') return route.fulfill({contentType:'text/html',body:html});
-  if(url==='https://demo.invalid/plugin.js') return route.fulfill({contentType:'text/javascript',body:module});
-  errors.push(`Unexpected network request: ${url}`);return route.abort();
+  return serveControlUIAsset(route, runtime.assets, url => errors.push(`Unexpected network request: ${url}`));
  });
  const page=await context.newPage();
  page.on('pageerror',error=>errors.push(error.message));
@@ -52,8 +49,7 @@ try {
  await mobile.route('**/*',route=>{
   const url=route.request().url();
   if(url==='https://demo.invalid/') return route.fulfill({contentType:'text/html',body:html});
-  if(url==='https://demo.invalid/plugin.js') return route.fulfill({contentType:'text/javascript',body:module});
-  errors.push(`Unexpected network request: ${url}`);return route.abort();
+  return serveControlUIAsset(route, runtime.assets, url => errors.push(`Unexpected network request: ${url}`));
  });
  const small=await mobile.newPage();
  small.on('pageerror',error=>errors.push(error.message));
@@ -64,6 +60,7 @@ try {
  await small.screenshot({path:join(out,'collection-mobile.png'),fullPage:true});
  await mobile.close();
  if(errors.length) throw new Error(errors.join('\n'));
- await writeFile(join(out,'provenance.json'),JSON.stringify({kind:'Real plugin renderer with synthetic host responses; not a live gateway',repository:'https://github.com/lcorneliussen/taba',revision,modulePath,sha256:createHash('sha256').update(module).digest('hex'),playwright:JSON.parse(await readFile(join(root,'node_modules/playwright/package.json'),'utf8')).version,browser:browser.version(),scenario:['Expand collection card','Open Collection panel'],limitations:['Synthetic surrounding shell, theme and data','No clone, publish, catch-up or service backend is exercised']},null,2)+'\n');
+ await runtime.assertUnchanged();
+ await writeFile(join(out,'provenance.json'),JSON.stringify({kind:'Real plugin renderer with synthetic host responses; not a live gateway',repository:'https://github.com/lcorneliussen/taba',revision,modulePath,modules:runtime.modules,sha256:createHash('sha256').update(module).digest('hex'),playwright:JSON.parse(await readFile(join(root,'node_modules/playwright/package.json'),'utf8')).version,browser:browser.version(),scenario:['Expand collection card','Open Collection panel'],limitations:['Synthetic surrounding shell, theme and data','No clone, publish, catch-up or service backend is exercised']},null,2)+'\n');
  console.log(`Captured and verified plugin UI from ${revision} in ${out}`);
 } finally {await browser.close()}
