@@ -41,6 +41,8 @@ The collection environment files, `.env.collection` and `.env.collection.local`,
 
 ## The timeline
 
+> **The stages are being revised.** The rename now moves through stages within 0.2.x before 0.3.0 and 0.4.0 retire the old names. See [Rename conventions](../docs/conventions/) for the current stages, each old name and how to migrate it, and [#375](https://github.com/lcorneliussen/taba/issues/375) for the plan.
+
 Future stages are **release targets, not announced release dates**. The [rename plan](https://github.com/lcorneliussen/taba/issues/200) tracks the work and any changes to the schedule.
 
 | Stage | Timing | What to expect |
