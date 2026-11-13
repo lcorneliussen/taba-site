@@ -87,7 +87,7 @@ test('table baseline checks ignore preview paint layers but still reject displac
   } finally { await browser.close(); }
 });
 
-test('failed desktop/mobile captures retain host provenance, raw pixels, audits and traces', { skip: !process.env.OPENCLAW_HOST_SOURCE }, async t => {
+async function displacedRenderer(t) {
   const { root, git } = await repository(t);
   const entry = 'openclaw-plugin/dist/control-ui/v1/index.js';
   await mkdir(dirname(join(root, entry)), { recursive: true });
@@ -96,6 +96,24 @@ test('failed desktop/mobile captures retain host provenance, raw pixels, audits 
       container.innerHTML = '<details class="wtc-collection-card" open><summary style="display:flex;padding:0 12px"><span class="wtc-brand-word">Collection</span><span class="wtc-header-controls" style="margin-left:auto"><button title="Deliberately displaced"><svg width="14" height="14" style="transform:translateY(12px)"><path d="M1 1L13 13"/></svg></button></span></summary><div class="wtc-repositories">Synthetic repository</div></details>';
     }})}};`);
   git('add', '.'); git('commit', '-qm', 'Synthetic displaced renderer');
+  return root;
+}
+
+test('legacy invocation remains available with explicit fixture provenance and strict rejection', async t => {
+  const root = await displacedRenderer(t);
+  const output = join(root, 'legacy-take');
+  const result = spawnSync(process.execPath, [fileURLToPath(new URL('./record-openclaw-interactions.mjs', import.meta.url)), root, output, 'push'], { encoding: 'utf8', timeout: 30000 });
+  assert.equal(result.status, 1, result.stderr);
+  const manifest = JSON.parse(await readFile(join(output, 'manifest.json')));
+  assert.match(manifest.error, /Visual alignment/);
+  assert.equal(manifest.host.sourceBacked, false);
+  assert.match(manifest.host.scope, /Legacy standalone fixture/);
+  assert.deepEqual(manifest.recordings, []);
+  assert.equal(manifest.recorder.hostSourceLoaderSha256, createHash('sha256').update(await readFile(new URL('./openclaw-host-source.mjs', import.meta.url))).digest('hex'));
+});
+
+test('failed desktop/mobile captures retain host provenance, raw pixels, audits and traces', { skip: !process.env.OPENCLAW_HOST_SOURCE }, async t => {
+  const root = await displacedRenderer(t);
   for (const width of [1120, 390]) {
     const output = join(root, `take-${width}`);
     const result = spawnSync(process.execPath, [fileURLToPath(new URL('./record-openclaw-interactions.mjs', import.meta.url)),
@@ -106,6 +124,7 @@ test('failed desktop/mobile captures retain host provenance, raw pixels, audits 
     assert.match(manifest.error, /Visual alignment/);
     assert.deepEqual(manifest.recordings, []);
     assert.equal(manifest.host.version, '2026.10.2');
+    assert.equal(manifest.host.sourceBacked, true);
     assert.equal(manifest.host.revision, 'b8952d477f0c932d8ddc6da5c89cab5a169b6ff1');
     const dir = join(output, '01-push-create-pr');
     const png = await readFile(join(dir, 'idle.png'));

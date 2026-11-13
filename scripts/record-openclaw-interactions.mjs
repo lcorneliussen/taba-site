@@ -10,10 +10,10 @@ import { loadControlUISource, serveControlUIAsset } from './control-ui-source.mj
 import { loadOpenClawHostSource, hostStyles } from './openclaw-host-source.mjs';
 import { collectVisualMeasurements, inspectVisualMeasurements, visualGuideSvg, visualAuditReport, recordingCrop } from './openclaw-visual-audit.mjs';
 
-const usage = 'Usage: npm run demos:openclaw:interactions -- /path/to/wtc-cli [output-directory] [push|stale|individual|batch|collapsed-push|collapsed-catch-up|all] --host-source /path/to/openclaw-2026.10.2 [--view card|chat|sidebar|split] [--width 390] [--sidebar-width 320]';
+const usage = 'Usage: npm run demos:openclaw:interactions -- /path/to/wtc-cli [output-directory] [push|stale|individual|batch|collapsed-push|collapsed-catch-up|all] [--host-source /path/to/openclaw-2026.10.2] [--view card|chat|sidebar|split] [--width 390] [--sidebar-width 320]\nUse --host-source for source-backed host styles/fonts; omit only to reproduce the legacy standalone fixture.';
 const { values, positionals } = parseArgs({ allowPositionals: true, options: { help: { type: 'boolean' }, 'host-source': { type: 'string' }, view: { type: 'string', default: 'card' }, width: { type: 'string', default: '1120' }, 'sidebar-width': { type: 'string', default: '420' } } });
 if (values.help) { console.log(usage); process.exit(0); }
-if (!positionals[0] || positionals.length > 3 || !values['host-source']) throw Error(usage);
+if (!positionals[0] || positionals.length > 3) throw Error(usage);
 const view = values.view, width = Number(values.width), sidebarWidth = Number(values['sidebar-width']);
 if (!['card', 'chat', 'sidebar', 'split'].includes(view) || !Number.isInteger(width) || width < 320 || width > 2560) throw Error(usage);
 if (!Number.isInteger(sidebarWidth) || sidebarWidth < 320 || sidebarWidth > 800) throw Error(usage);
@@ -21,7 +21,7 @@ if (view === 'split' && (width < 900 || width - sidebarWidth < 320)) throw Error
 const siteRoot = new URL('../', import.meta.url);
 const upstream = resolve(positionals[0]);
 const runtime = await loadControlUISource(upstream);
-const hostSource = await loadOpenClawHostSource(resolve(values['host-source']));
+const hostSource = values['host-source'] ? await loadOpenClawHostSource(resolve(values['host-source'])) : null;
 const { modulePath, revision, entry: renderer } = runtime;
 const openKey = renderer.match(/const OPEN_KEY = "([^"]+)"/)?.[1];
 if (!openKey) throw Error('Renderer open-state contract changed; update the fixture');
@@ -48,13 +48,14 @@ const browser = await chromium.launch({ headless: true });
 const manifest = { created: new Date().toISOString(), kind: 'Actual upstream renderer with synthetic gateway responses; not a live gateway', repository: 'https://github.com/lcorneliussen/taba', revision, modulePath, modules: runtime.modules, playwright: JSON.parse(await readFile(new URL('node_modules/playwright/package.json', siteRoot), 'utf8')).version, browser: browser.version(), rendererSha256: createHash('sha256').update(renderer).digest('hex'), simulation: true, capture: 'Chromium screencast PNG frames from initialized idle; original timestamps, untrimmed', view, sidebarWidth: view === 'split' ? sidebarWidth : null, viewport: { width, height: 900 }, recordings: [] };
 manifest.recorder = {
   revision: execFileSync('git',['-C',fileURLToPath(siteRoot),'rev-parse','HEAD'],{encoding:'utf8'}).trim(),
-  dirty: !!execFileSync('git',['-C',fileURLToPath(siteRoot),'status','--porcelain','--','scripts/record-openclaw-interactions.mjs','scripts/openclaw-visual-audit.mjs','scripts/control-ui-source.mjs','scripts/demos/openclaw.html'],{encoding:'utf8'}).trim(),
+  dirty: !!execFileSync('git',['-C',fileURLToPath(siteRoot),'status','--porcelain','--','scripts/record-openclaw-interactions.mjs','scripts/openclaw-visual-audit.mjs','scripts/control-ui-source.mjs','scripts/openclaw-host-source.mjs','scripts/demos/openclaw.html'],{encoding:'utf8'}).trim(),
   sha256: createHash('sha256').update(await readFile(fileURLToPath(import.meta.url))).digest('hex'),
   visualAuditSha256: createHash('sha256').update(await readFile(new URL('scripts/openclaw-visual-audit.mjs',siteRoot))).digest('hex'),
   sourceLoaderSha256: createHash('sha256').update(await readFile(new URL('scripts/control-ui-source.mjs',siteRoot))).digest('hex'),
+  hostSourceLoaderSha256: createHash('sha256').update(await readFile(new URL('scripts/openclaw-host-source.mjs',siteRoot))).digest('hex'),
   fixtureSha256: createHash('sha256').update(template).digest('hex'),
 };
-manifest.host = hostSource.provenance;
+manifest.host = hostSource?.provenance ?? { sourceBacked: false, scope: 'Legacy standalone fixture; host global CSS and self-hosted typeface are not loaded' };
 try {
   for (const [id, title, mode] of scenarios.filter(s => (!selected || s[2] === selected) && !(view === 'sidebar' && s[2].startsWith('collapsed-')))) {
     manifest.status = 'recording'; manifest.activeScenario = id;
@@ -110,14 +111,14 @@ const request = async (method, params) => {
     html = inject(html, '<div id="card">', '<div id="recording-chat"><div class="recording-bubble recording-user">Please update the collection and its pull request.</div><div class="recording-bubble recording-assistant">I’ll check the repositories and preserve your work.</div></div><div id="card">');
     if (view === 'split') html = inject(html, "document.querySelector('#card').hidden=true;", "document.body.classList.add('split');");
     if (view === 'sidebar' || view === 'split') html = inject(html, "mounts.card(document.querySelector('#card'),ctx);", "mounts.card(document.querySelector('#card'),ctx); host.ui.openPanel();");
-    html = inject(html, '</style>', '</style>' + hostStyles);
+    if(hostSource)html = inject(html, '</style>', '</style>' + hostStyles);
     const context = await browser.newContext({ locale: 'en-US', timezoneId: 'UTC', deviceScaleFactor: 1, viewport: { width, height: 900 } });
     await context.addInitScript(({ key, collapsed }) => localStorage.setItem(key, collapsed ? '0' : '1'), { key: openKey, collapsed });
     const errors=[];
     await context.route('**/*', route => {
       const url=route.request().url();
       if(url==='https://demo.invalid/')return route.fulfill({contentType:'text/html',body:html});
-      const hostAsset = hostSource.assets.get(url);
+      const hostAsset = hostSource?.assets.get(url);
       if(hostAsset)return route.fulfill(hostAsset);
       return serveControlUIAsset(route, runtime.assets, url => errors.push('Unexpected network: '+url));
     });
@@ -226,7 +227,7 @@ const request = async (method, params) => {
       const root=document.querySelector(selector);
       return root && ![...root.querySelectorAll('.wtc-repositories button, .wtc-step-status')].some(n=>/^\d+ new on main/.test(n.title)||/Working…|Catching up…|Running…|Rechecking…|Queued/.test(n.textContent));
     },view==='sidebar'?'#panel':'#card');
-    await page.evaluate(async()=>{
+    if(hostSource)await page.evaluate(async()=>{
       await document.fonts.load('400 14px "Instrument Sans"');
       await document.fonts.load('600 12px "Instrument Sans"');
       await document.fonts.ready;
@@ -363,7 +364,7 @@ const request = async (method, params) => {
     await writeFile(new URL('layout-positions.json',dir),JSON.stringify(positions,null,2));
     manifest.recordings.push({id,title,mode,collapsed,video:videoName,poster:id+'/poster.png',crop,captureStoppedAt:capture.stoppedAt,recordingEndedAt:stoppedAt,assertions:'passed',firstFrame,layoutPositions:positions,requests:trace});
     await runtime.assertUnchanged();
-    await hostSource.assertUnchanged();
+    await hostSource?.assertUnchanged();
     await writeFile(new URL('manifest.json',output),JSON.stringify(manifest,null,2));
     console.log(id+': recorded and decoded '+videoName);
   }

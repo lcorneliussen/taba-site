@@ -35,7 +35,7 @@ export async function loadOpenClawHostSource(directory) {
       contentType: name.endsWith('.css') ? 'text/css' : 'font/woff2', body: files.get(`ui/public/fonts/${name}`),
     });
   }
-  const provenance = { repository: 'https://github.com/openclaw/openclaw', revision, version,
+  const provenance = { repository: 'https://github.com/openclaw/openclaw', revision, version, sourceBacked: true,
     theme: 'claw', typeface: 'Instrument Sans', modules,
     scope: 'Host global styles and typeface; synthetic mount and gateway responses, not the running host' };
   const assertUnchanged = async () => {

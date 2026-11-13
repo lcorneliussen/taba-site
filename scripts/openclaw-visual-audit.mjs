@@ -222,7 +222,7 @@ export function compareVisualSections(audit, observations) {
   return { state: 'compared', matches, mismatches, warnings, ambiguities: observations.ambiguities ?? [] };
 }
 
-// Render after recording has stopped. The original PNG remains untouched, and
+// Generate guides outside the page. The original PNG remains untouched, and
 // no diagnostic layer ever enters the screencast or changes product geometry.
 export function visualGuideSvg(audit, imageDataUrl, viewport, crop, observations = null) {
   if (!/^data:image\/png;base64,[A-Za-z0-9+/=]+$/.test(imageDataUrl)) throw Error('Guides require an embedded PNG');
