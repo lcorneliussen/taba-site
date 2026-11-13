@@ -26,6 +26,21 @@ jobs:
       - run: npm ci --include=dev
       - run: node --test scripts/release.test.mjs
       - run: node --test scripts/control-ui-source.test.mjs
+      - run: npx playwright install --with-deps chromium
+      - uses: actions/checkout@v7
+        with:
+          repository: openclaw/openclaw
+          ref: b8952d477f0c932d8ddc6da5c89cab5a169b6ff1
+          path: .host-source
+          persist-credentials: false
+          sparse-checkout: |
+            ui/src/styles
+            ui/src/app/typography.ts
+            ui/src/plugins
+            ui/public/fonts
+      - run: node --test scripts/openclaw-host-source.test.mjs
+        env:
+          OPENCLAW_HOST_SOURCE: ${{ github.workspace }}/.host-source
       - run: npm run test:visual
       - run: npm run check
       - run: npm run test:status
