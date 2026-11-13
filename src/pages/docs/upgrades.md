@@ -5,6 +5,12 @@ description: Review the target release before changing a CLI pin or gateway plug
 source: https://github.com/lcorneliussen/taba/blob/v0.1.51/docs/release-notes.md
 ---
 
+## Moving to v0.2.4
+
+[v0.2.4](https://github.com/lcorneliussen/taba/releases/tag/v0.2.4) adds `taba-*` skills with old-name shims, new harness filenames, and convention findings in `taba doctor`. Upgrade the pinned CLI across the workspace before renaming harness files or overrides. Run `taba skills diff`, preserve patches and review their new bases; `taba doctor --all` and `taba conventions` guide the optional 0.2.x migration. Read the [exact migration order](https://github.com/lcorneliussen/taba/blob/v0.2.4/docs/conventions.md) before moving files. The historical examples below remain versioned.
+
+Gateway administrators must install the matching bundled plugin with `taba openclaw install`, then reload open Control UI tabs. The main gateway skill is `taba`; `wtc` remains its compatibility alias. Plugin IDs and existing configuration keys still use `wtc`. Review the [published gateway upgrade contract](https://github.com/lcorneliussen/taba/blob/v0.2.4/docs/openclaw.md#upgrade); this is distinct from upgrading OpenClaw itself.
+
 ## Review the target, not just the installed binary
 
 For the rename's upgrade sequence and timeline, read [wtc is now taba](../../wtc-is-now-taba/). The first taba release, 0.2.0, ships both `taba` and `wtc`; this guide's examples still use `wtc`, which keeps working.

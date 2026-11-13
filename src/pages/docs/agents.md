@@ -5,6 +5,12 @@ description: Give an agent the repositories and project context needed for a tas
 source: https://github.com/lcorneliussen/taba/blob/v0.1.51/internal/wtc/defaults/instructions/skills.md
 ---
 
+## Agent skills in v0.2.4
+
+With [v0.2.4](https://github.com/lcorneliussen/taba/releases/tag/v0.2.4), rendered skills use `taba-*`: start with `/taba-start`. Old `wtc-*` names remain compatibility shims during 0.2.x. A harness override under its old name still wins; rename its folder and `name:` together when migrating. Section patches and their base digests move with the override; review reported base drift before accepting it.
+
+`taba open` starts `taba status --tui` and `taba browse` for collections pinned at 0.2.0 or later; older pins retain the `wtc` commands. The earlier examples below keep their historical baseline. See the [published conventions](https://github.com/lcorneliussen/taba/blob/v0.2.4/docs/conventions.md) for migration order.
+
 ## Start at the collection
 
 Open your agent or editor in the collection folder, not in an unrelated checkout. That puts the repositories involved in the task in one workspace.

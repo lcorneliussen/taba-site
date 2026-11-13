@@ -3,9 +3,10 @@ import { chromium } from 'playwright';
 import { readFile, mkdir, writeFile, readdir } from 'node:fs/promises';
 import { createHash } from 'node:crypto';
 import { execFileSync } from 'node:child_process';
-import { resolve, join, sep } from 'node:path';
+import { resolve, sep } from 'node:path';
 import { pathToFileURL, fileURLToPath } from 'node:url';
 import { parseArgs } from 'node:util';
+import { loadControlUISource, serveControlUIAsset } from './control-ui-source.mjs';
 import { collectVisualMeasurements, inspectVisualMeasurements, visualGuideSvg, visualAuditReport, recordingCrop } from './openclaw-visual-audit.mjs';
 
 const usage = 'Usage: npm run demos:openclaw:interactions -- /path/to/wtc-cli [output-directory] [push|stale|individual|batch|collapsed-push|collapsed-catch-up|all] [--view card|chat|sidebar|split] [--width 390] [--sidebar-width 320]';
@@ -18,10 +19,8 @@ if (!Number.isInteger(sidebarWidth) || sidebarWidth < 320 || sidebarWidth > 800)
 if (view === 'split' && (width < 900 || width - sidebarWidth < 320)) throw Error('Split view needs width >= 900 and at least 320 pixels left for chat; use chat or sidebar on mobile');
 const siteRoot = new URL('../', import.meta.url);
 const upstream = resolve(positionals[0]);
-const modulePath = 'openclaw-plugin/dist/control-ui/v1/index.js';
-const revision = execFileSync('git', ['-C', upstream, 'rev-parse', 'HEAD'], { encoding: 'utf8' }).trim();
-if (execFileSync('git', ['-C', upstream, 'status', '--porcelain', '--', modulePath], { encoding: 'utf8' }).trim()) throw Error('Capture requires an unchanged upstream UI module');
-const renderer = await readFile(join(upstream, modulePath), 'utf8');
+const runtime = await loadControlUISource(upstream);
+const { modulePath, revision, entry: renderer } = runtime;
 const openKey = renderer.match(/const OPEN_KEY = "([^"]+)"/)?.[1];
 if (!openKey) throw Error('Renderer open-state contract changed; update the fixture');
 const template = await readFile(new URL('scripts/demos/openclaw.html', siteRoot), 'utf8');
@@ -44,20 +43,24 @@ const inject = (html, anchor, replacement) => {
   return html.replace(anchor, replacement);
 };
 const browser = await chromium.launch({ headless: true });
-const manifest = { created: new Date().toISOString(), kind: 'Actual upstream renderer with synthetic gateway responses; not a live gateway', repository: 'https://github.com/lcorneliussen/taba', revision, modulePath, playwright: JSON.parse(await readFile(new URL('node_modules/playwright/package.json', siteRoot), 'utf8')).version, browser: browser.version(), rendererSha256: createHash('sha256').update(renderer).digest('hex'), simulation: true, capture: 'Chromium screencast PNG frames from initialized idle; original timestamps, untrimmed', view, sidebarWidth: view === 'split' ? sidebarWidth : null, viewport: { width, height: 900 }, recordings: [] };
+const manifest = { created: new Date().toISOString(), kind: 'Actual upstream renderer with synthetic gateway responses; not a live gateway', repository: 'https://github.com/lcorneliussen/taba', revision, modulePath, modules: runtime.modules, playwright: JSON.parse(await readFile(new URL('node_modules/playwright/package.json', siteRoot), 'utf8')).version, browser: browser.version(), rendererSha256: createHash('sha256').update(renderer).digest('hex'), simulation: true, capture: 'Chromium screencast PNG frames from initialized idle; original timestamps, untrimmed', view, sidebarWidth: view === 'split' ? sidebarWidth : null, viewport: { width, height: 900 }, recordings: [] };
 manifest.recorder = {
   revision: execFileSync('git',['-C',fileURLToPath(siteRoot),'rev-parse','HEAD'],{encoding:'utf8'}).trim(),
-  dirty: !!execFileSync('git',['-C',fileURLToPath(siteRoot),'status','--porcelain','--','scripts/record-openclaw-interactions.mjs','scripts/openclaw-visual-audit.mjs'],{encoding:'utf8'}).trim(),
+  dirty: !!execFileSync('git',['-C',fileURLToPath(siteRoot),'status','--porcelain','--','scripts/record-openclaw-interactions.mjs','scripts/openclaw-visual-audit.mjs','scripts/control-ui-source.mjs','scripts/demos/openclaw.html'],{encoding:'utf8'}).trim(),
   sha256: createHash('sha256').update(await readFile(fileURLToPath(import.meta.url))).digest('hex'),
   visualAuditSha256: createHash('sha256').update(await readFile(new URL('scripts/openclaw-visual-audit.mjs',siteRoot))).digest('hex'),
+  sourceLoaderSha256: createHash('sha256').update(await readFile(new URL('scripts/control-ui-source.mjs',siteRoot))).digest('hex'),
+  fixtureSha256: createHash('sha256').update(template).digest('hex'),
 };
 try {
   for (const [id, title, mode] of scenarios.filter(s => (!selected || s[2] === selected) && !(view === 'sidebar' && s[2].startsWith('collapsed-')))) {
+    manifest.status = 'recording'; manifest.activeScenario = id;
+    await writeFile(new URL('manifest.json',output),JSON.stringify(manifest,null,2));
     const dir = new URL(`${id}/`, output); await mkdir(dir, { recursive: true });
     const collapsed = mode.startsWith('collapsed-');
     const isPush = mode === 'push' || mode === 'stale' || mode === 'collapsed-push';
     const rows = isPush
-      ? [{ repo: 'web', owner: 'example-org', forge: 'bitbucket', sessionKey: 'demo:web', branch: 'feature/search', base: 'origin/main', ahead: 3, behind: 0, unpublished: 3, dirty: 0, pullRequests: [{number:2,state:'merged',title:'Earlier task',url:'https://example.invalid/web/pull-requests/2'}] }]
+      ? [{ repo: 'web', owner: 'example-org', forge: 'bitbucket', sessionKey: 'demo:web', branch: 'feature/search', base: 'origin/main', ahead: 3, behind: 0, unpublished: 3, dirty: 0, proposal: {title:'Add search',body:'## Summary\nAdd a synthetic search page.\n\n- [x] Add page\n- [ ] Inspect preview'}, pullRequests: [{number:2,state:'merged',title:'Earlier task',url:'https://example.invalid/web/pull-requests/2'}] }]
       : ['api', 'web', 'docs'].map((name, i) => {
         const next = { repo: name, step: 'catch-up', by: 'wtc', reason: `${[12, 7, 3][i]} new on main`, command: ['wtc', 'catch-up'], key: `${name}:catch-up:h1` };
         return { repo: name, owner: 'example-org', forge: 'github', sessionKey: `demo:${name}`, branch: null, base: 'origin/main', ahead: 0, behind: [12, 7, 3][i], unpublished: 0, dirty: 0, next, choices: { recommended: next.key, actions: [{ ...next, available: true }] } };
@@ -80,13 +83,13 @@ const request = async (method, params) => {
  }
  if(method==='plugins.sessionAction'&&params.pluginId==='bitbucket') {
   if(params.actionId==='publish-options')return {ok:true,result:{account:{user:'demo@example.invalid',name:'Demo User'}}};
-  if(params.actionId==='publish'){trace('→ prepare publication / request confirmation');await delay(1000);trace('← personal confirmation required');return {ok:true,result:{status:'needs_confirmation',requestId:'demo-publish',confirmation:{account:'demo@example.invalid',name:'Demo User',requestDigest:'demo-digest',branch:'feature/search',head:'abcdef0123456789',dest:'main'}}};}
-  if(params.actionId==='publish-confirm'){
+  if(params.actionId==='publish'){trace('→ prepare publication / request confirmation');await delay(1000);trace('← personal confirmation required');return {ok:true,result:{status:'needs_confirmation',requestId:'demo-publish',confirmation:{title:params.payload?.title,description:params.payload?.description,account:'demo@example.invalid',name:'Demo User',requestDigest:'demo-digest',branch:'feature/search',head:'abcdef0123456789',dest:'main'}}};}
+  }
+ if(method==='wtc.bitbucket.confirm'){
    trace('→ confirmed: push commits and create draft PR');await delay(2200);
    window.published=true;window.injectStaleStatus=mode==='stale';
    Object.assign(data.repos[0],{unpublished:0,pullRequest:{number:8,url:'https://example.invalid/web/pull-requests/8',state:'open',draft:true,title:'Add search',checks:'pending',running:1}});
-   trace('← published: created draft PR #8');return {ok:true,result:{status:'published',created:true,url:'https://example.invalid/web/pull-requests/8'}};
-  }
+   trace('← published: created draft PR #8; collection tracking recorded');return {status:'published',created:true,branch:'feature/search',url:'https://example.invalid/web/pull-requests/8',tracking:{state:'recorded'}};
  }
  if(method==='plugins.sessionAction'&&['next','catch-up'].includes(params.actionId)) {
   const key=params.payload?.ownerSessionKey??params.sessionKey;
@@ -110,8 +113,7 @@ const request = async (method, params) => {
     await context.route('**/*', route => {
       const url=route.request().url();
       if(url==='https://demo.invalid/')return route.fulfill({contentType:'text/html',body:html});
-      if(url==='https://demo.invalid/plugin.js')return route.fulfill({contentType:'text/javascript',body:renderer});
-      errors.push('Unexpected network: '+url);return route.abort();
+      return serveControlUIAsset(route, runtime.assets, url => errors.push('Unexpected network: '+url));
     });
     const page = await context.newPage(); page.on('pageerror', e => errors.push(e.message));
     await page.goto('https://demo.invalid/'); await page.locator('#card .wtc-collection-card').waitFor({state:view==='sidebar'?'attached':'visible'});
@@ -126,9 +128,11 @@ const request = async (method, params) => {
       const sample=await surface.evaluate(root=>{
         const rect=selector=>{const node=root.querySelector(selector);if(!node||!node.checkVisibility())return null;const r=node.getBoundingClientRect();if(!r.width||!r.height)return null;return {x:r.x,y:r.y,width:r.width,height:r.height};};
         const grid=root.querySelector('.wtc-repositories>.wtc-table');
-        const cells=grid?[...grid.children].slice(Number(grid.getAttribute('data-columns'))).map(node=>{const r=node.checkVisibility()?node.getBoundingClientRect():{x:0,y:0,width:0,height:0};return {x:r.x,y:r.y,width:r.width,height:r.height};}):[];
+        const cells=grid?[...grid.children].filter(node=>!node.classList.contains('wtc-action-preview-wash')).slice(Number(grid.getAttribute('data-columns'))).map(node=>{const r=node.checkVisibility()?node.getBoundingClientRect():{x:0,y:0,width:0,height:0};return {x:r.x,y:r.y,width:r.width,height:r.height};}):[];
         const historySlot=rect('.wtc-repo-pr-history-slot');
-        const controls=[...root.querySelectorAll('.wtc-action-toolbar .wtc-toolbar-primary, .wtc-action-toolbar>button, .wtc-bulk-actions button')].map(node=>{const r=node.checkVisibility()?node.getBoundingClientRect():{x:0,y:0,width:0,height:0};return {x:r.x,y:r.y,width:r.width,height:r.height};});
+        // The secondary slot changes from a menu wrapper to Cancel while busy.
+        // Inline alternatives are conditional; compare the two declared slots.
+        const controls=[...[...root.querySelectorAll('.wtc-action-toolbar')].flatMap(toolbar=>[toolbar.firstElementChild,toolbar.querySelector('.wtc-toolbar-primary')]),...root.querySelectorAll('.wtc-bulk-actions button')].filter(Boolean).map(node=>{const r=node.checkVisibility()?node.getBoundingClientRect():{x:0,y:0,width:0,height:0};return {x:r.x,y:r.y,width:r.width,height:r.height};});
         const sideRect=selector=>{const node=document.querySelector('#panel '+selector);if(!node)return null;const r=node.getBoundingClientRect();return {x:r.x,y:r.y,width:r.width,height:r.height};};
         // Read the first visible glyph and its font ascent without changing
         // the DOM, including when a branch wraps onto several lines.
@@ -163,17 +167,21 @@ const request = async (method, params) => {
           const side=scope.querySelector('.wtc-collection>header>div:first-child');
           if(side)check('sidebar header',[...side.children]);
           for(const grid of scope.querySelectorAll('.wtc-table')) {
-            const cols=Number(grid.getAttribute('data-columns')),cells=[...grid.children].slice(cols);
+            const cols=Number(grid.getAttribute('data-columns')),cells=[...grid.children].filter(node=>!node.classList.contains('wtc-action-preview-wash')).slice(cols);
             for(let i=0;i<cells.length;i+=cols)check('table '+cols+' row '+i,cells.slice(i,i+cols));
           }
           for(const facts of scope.querySelectorAll('.wtc-repo-facts')) {
-            const cells=[...facts.children],separatePR=getComputedStyle(cells.at(-1)).gridColumnEnd==='-1';
-            check('repository facts',separatePR?cells.slice(0,-1):cells);
+            const cells=[...facts.children].map(cell=>cell.querySelector('.wtc-repo-pr-slots')?.firstElementChild??cell),separatePR=getComputedStyle(cells.at(-1)).gridColumnEnd==='-1';
+            // A one-column fact grid intentionally puts PR history on a new row.
+            if(getComputedStyle(facts).gridTemplateColumns.trim().split(/\s+/).length===1) cells.forEach((cell,i)=>check('repository facts row '+i,[cell]));
+            else check('repository facts',separatePR?cells.slice(0,-1):cells);
           }
           for(const all of scope.querySelectorAll('.wtc-bulk-actions'))check('all repositories',[all.querySelector('span'),...all.querySelectorAll('button')]);
         }
         return {baselines,controls,sideHeader:sideRect('.wtc-collection>header'),sideRepositories:sideRect('.wtc-repositories>.wtc-table'),sideServices:sideRect('.wtc-base-services'),historySlot,header:rect('.wtc-collection-card>summary, .wtc-collection>header'),repositories:rect('.wtc-repositories>.wtc-table'),services:rect('.wtc-base-services'),composer:rect('.composer'),temporary:rect('.wtc-transient-actions'),cells};
       });
+      await writeFile(new URL(phase+'.measurements.json',dir),JSON.stringify(sample,null,2));
+      await page.screenshot({path:fileURLToPath(new URL(phase+'.png',dir))});
       for(const group of sample.baselines)if(group.spread>.25)throw Error(`Text baselines differ: ${view}/${mode}/${phase}/${group.name}: ${JSON.stringify(group.values)}`);
       const visualAudit=inspectVisualMeasurements(await page.evaluate(collectVisualMeasurements,view==='sidebar'?'#panel':'#card'));
       if(view==='split'){
@@ -336,11 +344,18 @@ const request = async (method, params) => {
     }
     await writeFile(new URL('layout-positions.json',dir),JSON.stringify(positions,null,2));
     manifest.recordings.push({id,title,mode,collapsed,video:videoName,poster:id+'/poster.png',crop,captureStoppedAt:capture.stoppedAt,recordingEndedAt:stoppedAt,assertions:'passed',firstFrame,layoutPositions:positions,requests:trace});
+    await runtime.assertUnchanged();
     await writeFile(new URL('manifest.json',output),JSON.stringify(manifest,null,2));
     console.log(id+': recorded and decoded '+videoName);
   }
   const escape = text => String(text).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
   const cards=manifest.recordings.map(r=>`<article><h2>${escape(r.title)}</h2><video controls preload="none" playsinline poster="${r.poster}" src="${r.video}" style="max-width:${r.crop.width}px"></video><p><a href="${r.video}">Video</a> · <a href="${r.id}/trace.json">Request trace</a></p><p>${r.layoutPositions.map(p=>`<a href="${r.id}/${p.phase}.png">${escape(p.phase)}</a> / <a href="${r.id}/${p.phase}.audit.html">guides and hierarchy</a>`).join(' · ')}</p></article>`).join('');
   await writeFile(new URL('index.html',output),`<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>OpenClaw interaction recordings</title><style>:root{color-scheme:dark}body{max-width:1120px;margin:32px auto;padding:0 24px;font:16px/1.6 system-ui;background:#11161d;color:#e4eaf2}h2{font-size:20px}article{margin:32px 0;border:1px solid #354151;border-radius:12px;padding:16px}video{width:100%;height:auto}a{color:#8edbd5}</style><h1>OpenClaw interaction recordings</h1><p>View: ${escape(view)}, ${width}px. Actual renderer ${escape(revision)}; synthetic repositories and simulated gateway responses. No live gateway or publication. The stale scenario deliberately injects old status; it does not establish a live gateway defect. Raw product views have no captions or trace overlay; request traces are separate files.</p>${cards}<p><a href="manifest.json">Renderer provenance and results</a></p></html>`);
+  manifest.status = 'completed'; delete manifest.activeScenario;
+  await writeFile(new URL('manifest.json',output),JSON.stringify(manifest,null,2));
   console.log('Gallery: '+fileURLToPath(new URL('index.html',output)));
+} catch (error) {
+  manifest.status = 'failed'; manifest.error = error.message;
+  await writeFile(new URL('manifest.json',output),JSON.stringify(manifest,null,2));
+  throw error;
 } finally { await browser.close(); }

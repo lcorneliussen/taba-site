@@ -25,6 +25,8 @@ jobs:
           cache: npm
       - run: npm ci --include=dev
       - run: node --test scripts/release.test.mjs
+      - run: node --test scripts/control-ui-source.test.mjs
+      - run: npm run test:visual
       - run: npm run check
       - run: npm run test:status
       - run: npm run test:links:guards

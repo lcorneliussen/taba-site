@@ -13,7 +13,7 @@ export function inspectVisualMeasurements(measurements, tolerance = 0.75) {
   for (const edge of measurements.edges ?? []) if (Math.abs(edge.actual - edge.expected) > tolerance) errors.push(`${edge.name}: ${(edge.actual - edge.expected).toFixed(2)}px from declared edge`);
   for (const row of measurements.rows) {
     if (row.width < 400 && row.height > 66) warnings.push(`${row.name}: ${row.height.toFixed(1)}px per repository`);
-    if (row.emptyFactBand) errors.push(`${row.name}: empty fact band without a reservation`);
+    if (row.emptyFactBand && !row.factReservation) errors.push(`${row.name}: empty fact band without a reservation`);
   }
   for (const item of measurements.hierarchy) {
     if (item.clipped && !item.disclosure) warnings.push(`${item.role}: label is ellipsized (${item.text})`);
@@ -105,7 +105,7 @@ export function collectVisualMeasurements(selector) {
     const identity = row.parentElement, label = row.querySelector('.wtc-repo-label');
     group(`repository ${i + 1} baseline`, 'y', [...row.children], item => item.baseline);
     const facts = identity.querySelector('.wtc-repo-facts');
-    rows.push({ name: label?.textContent ?? `repository ${i + 1}`, ...box(identity), emptyFactBand: !!facts && !facts.textContent.trim() });
+    rows.push({ name: label?.textContent ?? `repository ${i + 1}`, ...box(identity), emptyFactBand: !!facts && !facts.textContent.trim(), factReservation: !!facts && [...facts.querySelectorAll('[role="status"][aria-label], [aria-busy="true"]')].some(visible) });
   }
   for (const [i, icon] of all('.wtc-lead-icon').entries()) {
     const grid = icon.closest('.wtc-table');

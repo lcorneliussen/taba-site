@@ -5,7 +5,7 @@ description: Work across repositories from one conversation, with worktrees and 
 source: https://github.com/lcorneliussen/taba/blob/v0.1.51/internal/wtc/defaults/instructions/openclaw.md
 ---
 
-> This guide describes the gateway-integrated WTC build. It is separate from the local-terminal quick start. Confirm the installed behavior with `wtc docs instructions/openclaw.md`.
+> The current controls and visuals below follow [v0.2.4](https://github.com/lcorneliussen/taba/releases/tag/v0.2.4). Older workflow sections retain their stated baselines. Confirm your installed behavior with `taba docs instructions/openclaw.md`.
 
 ## What the plugin adds
 
@@ -15,12 +15,12 @@ You can see changes across repositories without visiting each owner's session.
 
 <figure>
   <img src="../../media/openclaw/collection-card.png" alt="Expanded collection card showing api and web repositories, pending changes, pull request checks and a running preview" width="1120" height="760" loading="lazy" />
-  <figcaption>The actual plugin renderer with synthetic example data, in an isolated demo shell—not a screenshot of a connected gateway.</figcaption>
+  <figcaption>An example collection brings repository changes, pull requests and a preview beside your conversation. Demonstration data.</figcaption>
 </figure>
 
 | Column or control | What it tells you or does |
 | --- | --- |
-| **±** | Uncommitted files in that repository |
+| **±N / ±** | Ask the conversation to review and commit intended changes for one repository / all eligible repositories; publication is separate |
 | **↑** | Commits waiting to push; click to start the publication confirmation flow |
 | **↓** | Commits behind the base; click to catch up |
 | **PR** | Open the repository's pull request |
@@ -45,8 +45,8 @@ back to the standard composer if you do not want the collection card.
 
 [View the Collection panel screenshot](../../media/openclaw/collection-panel.png).
 The visuals use the renderer at
-[CLI commit 9da4ba3](https://github.com/lcorneliussen/taba/tree/9da4ba3057b00f1292f53b65f44bab58e1243029/openclaw-plugin),
-newer than this handbook's v0.1.51 baseline. Gateway styling and your installed
+[published v0.2.4 source](https://github.com/lcorneliussen/taba/tree/v0.2.4/openclaw-plugin),
+separately pinned from this handbook's historical v0.1.51 baseline. Gateway styling and your installed
 version may differ. These examples demonstrate the UI, not backend operations.
 
 ## Set up or diagnose the integration
@@ -60,6 +60,8 @@ wtc doctor --openclaw
 
 The install command changes the gateway's plugin configuration and reloads the
 plugin; it is an administrator setup step, not something to run for each task.
+The main agent skill is **taba**, with **wtc** as a compatibility alias. Existing skill settings and plugin/configuration IDs retain their `wtc` keys.
+
 The plugin ships inside the CLI. After upgrading the CLI, install its plugin
 again and reload open Control UI tabs. `openclaw plugins update` does not update
 this path-installed plugin. Image-managed gateways should rebuild their image
@@ -144,17 +146,19 @@ For GitHub, the gateway can commit pending files while preparing publication.
 Bitbucket publishes existing commits, leaving uncommitted files local. People
 merge. Do not run `git push` yourself in a GitHub-managed worktree.
 
-### Upcoming publication feedback
+### Publication and tracking in v0.2.4
 
-Development builds from the [publication-clarity change](https://github.com/lcorneliussen/taba/blob/24b0702c56e820314836e10b53c7df32030e6f4d/docs/openclaw.md)
-name whether a push created a draft PR or updated an existing PR. A result that
-only supplies a URL does not claim a new PR was created.
+The [published plugin](https://github.com/lcorneliussen/taba/blob/v0.2.4/docs/openclaw-publication.md) names whether a push created a draft PR or updated an existing PR. A URL-only result does not claim a new PR was created. Proposed PR text has a formatted, collapsible preview and an unchanged **Source** view. Raw HTML stays literal; images become links, so previewing text does not fetch remote images.
 
-After publication, **Review PR text** asks the conversation to compare the
-title and description with the full current PR diff and propose revisions,
-preserving useful human edits. It does not edit remote PR text or request a
-code review. Apply agreed text separately on the forge or through an authorized
-metadata operation. This control is not part of the v0.1.60 release.
+Successful publication records the PR and captured branch in collection tracking. **Tracking pending** means that metadata still needs attention: refresh retries tracking without publishing again. If a receipt could not be saved, retain the returned PR URL and ask the owning conversation to inspect tracking. An ambiguous publisher response needs inspection before retrying a push.
+
+**Review PR text** asks the conversation to compare the title and description with the full current diff, preserving useful human edits. It proposes changes; it does not edit remote PR text or request a code review.
+
+### Local changes and pending requests in v0.2.4
+
+The [fact controls](https://github.com/lcorneliussen/taba/blob/v0.2.4/docs/openclaw-fact-actions.md) keep their cells in place while hovered, pending or briefly showing success. A commit handoff stays pending until progress is observed; partial commits leave unresolved work visible. Pending cells open the Action log. After an unconfirmed result, inspect the owning conversation before using **I checked: request has finished**. Acknowledgement releases the browser reservation; it does not cancel work, verify a commit, or retry it. **Ask agent for help** sends a diagnostic request without retrying.
+
+Group **Catch up** highlights its eligible rows on hover or focus. Gateway base catch-up preserves staged, unstaged and untracked edits in a pinned recovery copy, then restores staging. An unfinished operation, unsafe incoming path or unverified restoration blocks continuation. Keep the retained backup and follow the [published recovery procedure](https://github.com/lcorneliussen/taba/blob/v0.2.4/docs/openclaw.md#gateway-catch-up-with-local-changes); do not blindly retry or discard it.
 
 ## Catch up without rewriting history
 
@@ -204,7 +208,7 @@ The command must listen on the port supplied by `PORT`; wrap the existing launch
 
 These controls are included in [v0.1.62](https://github.com/lcorneliussen/taba/releases/tag/v0.1.62).
 See the [released compact-controls contract](https://github.com/lcorneliussen/taba/blob/v0.1.62/docs/openclaw.md#select-next-actions).
-The screenshots above retain their documented historical source.
+The screenshots above use their separately labeled v0.2.4 source.
 
 The card keeps dense repository rows without visible column headers. At normal
 widths the name, branch, changes, PR and next action occupy separate fixed

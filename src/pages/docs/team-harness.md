@@ -5,6 +5,12 @@ description: Put repository registration, tool versions, and project policy unde
 source: https://github.com/lcorneliussen/taba/blob/v0.1.51/docs/harness-design.md
 ---
 
+## New harnesses in v0.2.4
+
+The [v0.2.4 scaffold](https://github.com/lcorneliussen/taba/blob/v0.2.4/docs/commands.md) writes `.taba-version` and `taba.toml`, and requires a CLI pin of 0.2.0 or later. Use `taba harness init` with your remote and the exact published version you intend to pin. A harness with only `.taba-version` seeds new collections with `SCOPE.md`; existing scope files are not moved.
+
+Existing old-name files remain supported during 0.2.x. Run `taba doctor --all` and follow the [published conventions and migration order](https://github.com/lcorneliussen/taba/blob/v0.2.4/docs/conventions.md) before renaming files or overrides. The scaffold example below deliberately keeps its v0.1.51 baseline.
+
 An ad-hoc collection is a good starting point. A **harness** makes the workspace setup reusable across a team. It is a small, project-owned repository, not a replacement for your application repositories.
 
 ## What belongs where?
