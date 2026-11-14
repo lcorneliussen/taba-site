@@ -1,12 +1,12 @@
 {
   "kind": "Real plugin renderer with synthetic host responses; not a live gateway",
   "repository": "https://github.com/lcorneliussen/taba",
-  "revision": "2191843cc2b3c28ac16fe7a09f731c992fabbc22",
+  "revision": "539a94134405195bf7b4f04d4fa24b82f632cf53",
   "modulePath": "openclaw-plugin/dist/control-ui/v1/index.js",
   "modules": [
     {
       "modulePath": "openclaw-plugin/dist/control-ui/v1/index.js",
-      "sha256": "dcb19a14122403f7204cf10a5c3e5d988d07604cb4b7b1d60f53e97026ef8b21"
+      "sha256": "b45c46d73a4eef431909425aedf744ebc86406a7f6d15ea7c222568d526d6bed"
     },
     {
       "modulePath": "openclaw-plugin/dist/control-ui/v1/pr-preview.js",
@@ -17,15 +17,22 @@
       "sha256": "162194ea902a9d6eca6011bb42b5732991ca650e017d0375b76f4204810c6c14"
     }
   ],
-  "sha256": "dcb19a14122403f7204cf10a5c3e5d988d07604cb4b7b1d60f53e97026ef8b21",
+  "sha256": "b45c46d73a4eef431909425aedf744ebc86406a7f6d15ea7c222568d526d6bed",
   "playwright": "1.64.1",
   "browser": "156.0.8078.4",
   "scenario": [
     "Expand collection card",
-    "Open Collection panel"
+    "Open Collection panel",
+    "Inspect reported public, account and unknown endpoint access",
+    "Inspect active, registered-stopped and unregistered named entries without lifecycle clicks"
   ],
+  "fixtureSha256": "2843a9b12994d8198233f6e69b90baffd692c0ab64dc1b179ee4b5d575a64a8f",
+  "recorderSha256": "db4a3ecf55b56750dd57d8516911315653908c57769ae4184774dd9be02eb408",
   "limitations": [
     "Synthetic surrounding shell, theme and data",
-    "No clone, publish, catch-up or service backend is exercised"
+    "Named entries show recorded state and controls, not provider verification",
+    "Access glyphs are rendered for existing endpoints; managed named entries have separate state controls",
+    "No clone, publish, catch-up or service backend is exercised",
+    "No tunnel lifecycle control is clicked; strict interaction geometry is not checked"
   ]
 }

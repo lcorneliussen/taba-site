@@ -2,7 +2,7 @@ const repository = 'https://github.com/lcorneliussen/taba';
 const api = 'https://api.github.com/repos/lcorneliussen/taba/releases/latest';
 
 // Verified against the published release API; this is a dated fallback, not latest.
-const fallback = { tag: 'v0.2.4', checked: '2026-11-13', live: false };
+const fallback = { tag: 'v0.2.5', checked: '2026-11-14', live: false };
 
 export async function publishedRelease(fetchRelease = fetch) {
   let release = fallback;

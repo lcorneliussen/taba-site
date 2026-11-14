@@ -91,9 +91,123 @@ Closing the terminal or agent does **not** stop services. Logs remain available 
 
 Port isolation is not data isolation. Databases and Docker Compose projects need collection-specific identities too. `down` keeps data; teardown and retirement can remove collection-owned resources. Export valuable data and follow the upstream resource ownership contract before using cleanup hooks.
 
-## Share deliberately
+## Named tunnels and receiving policy
 
-A local preview needs no tunnel. With Tailscale installed and authenticated, a private preview can use:
+[v0.2.5](https://github.com/lcorneliussen/taba/releases/tag/v0.2.5) adds named
+tunnels with desired policy in the receiving collection's
+`.config/tunnels.toml`, over defaults in the receiving project root's
+`.config/tunnels.toml`. These paths do not move with a credential-root override.
+An entry identifies a registered repository, service and tunnel name. A
+collection entry replaces the whole matching default; an entry containing only
+`enabled = false` disables it. Removing that override restores inheritance.
+Several names can expose one service, while unmatched definitions are shown
+without provisioning them. See the
+[canonical runtime contract](https://github.com/lcorneliussen/taba/blob/v0.2.5/internal/wtc/defaults/instructions/runtime.md#daily-lifecycle-and-agent-access)
+for the schema, provider inputs and complete command reference.
+
+Configure and disable write collection overrides. A native operator can
+explicitly choose `--project` for receiving project defaults from an actual
+member collection. Collection UI authority does not grant project writes or
+arbitrary definition-file selection. Snapshot-only contexts remain read-only.
+Provider setup guidance does not install a client, log in or start a tunnel.
+
+### Explicit inputs and exposure consent
+
+Built-in providers use explicitly supplied scoped credential files, executables
+or an authorized daemon socket. They do not discover a login, keychain or
+profile, or fetch packages at runtime. File references stay inside the approved
+receiving credential root; a file's existence does not prove the provider grants
+the required management, hosting or cleanup permission. See
+[Configuration and secrets](../configuration/#receiving-owned-control-roots).
+
+Provider requirements differ. Named Cloudflare tunnels need exact account/zone
+and hostname inputs, capabilities and an absolute cloudflared executable.
+Ngrok uses its bundled Go SDK and an explicit domain and hosting capability;
+an existing domain is borrowed unless reservation is explicitly requested.
+Microsoft Dev Tunnel hosting uses the shipped helper and an existing
+**Node22 or newer** runtime, selected by an absolute path. Other providers,
+registration status and pure reads need no Node. Dev Tunnel backends require an
+explicit IPv4/localhost HTTP port without a backend path.
+
+Tailscale needs an explicitly authorized socket, expected node identity and
+listener/path. It does not discover profiles, enable Funnel, reset the daemon
+or widen unrelated listeners. Start and reconcile observe that exact scope;
+pure status performs no daemon I/O. Conditional writes preserve unrelated
+handlers, but the configuration ETag cannot make an external profile switch
+atomic with the operation.
+
+`--public` approves potential public exposure for the current effective
+definition, including its target, provider inputs, receiving scope, hook code
+and reload targets. A provider name, HTTPS or a declared protected/account
+policy does not prove enforced private access. Fresh observed tailnet evidence
+can establish Tailscale access; otherwise potential-public approval is required.
+Changing the definition requires renewed approval and cleanup of retained old
+obligations. UI start/register approval identifies the exact current definition
+hash. Explicit inputs and minimal child environments do not create an OS sandbox.
+
+### Registration, running sessions and app configuration
+
+For an already configured named entry, the lifecycle commands distinguish
+registration from an active session:
+
+```sh
+taba svc tunnel web --name preview --action register --public
+taba svc tunnel web --name preview --public
+taba svc tunnel web --name preview --stop
+taba svc tunnel web --name preview --action unregister
+taba svc tunnel web --name preview --action reconcile
+```
+
+These are effectful commands: inspect the exact definition and grant its
+required consent first. Stop records start-off for this collection and retains
+stable registration. Ordinary service down stops sessions without erasing
+desired selection; up/restart restore selected or `start_with_service` entries
+only with current approval. A registration URL is separate from an active URL;
+registered-but-stopped entries are absent from active host/origin publications.
+
+Persistent modes expose registered, started, stopped and unregistered events;
+temporary modes expose started/stopped only. Event commands receive typed JSON
+with identity, stable operation/event IDs, previous/current addresses and active
+snapshots. Consumers read `tunnel-publications/current.json` once, then use both
+immutable host and origin files from that revision. Hostnames are deduplicated;
+origins retain scheme and port. Declared app reloads follow events and active-data
+publication without restarting the tunnel. Use the upstream contract rather
+than rewriting tracked application configuration or duplicating the event schema.
+
+### Cleanup and uncertain state
+
+Status and discovery read desired and recorded tunnel state without provider,
+daemon or account queries, credential reads, hooks, repair or allocation. A
+recorded active address is not a continuing readiness or access-policy check.
+`pending` and `lifecycle` retain interrupted operations. Reconcile uses supported
+exact evidence; it does not blindly replay an unknown remote effect or arbitrary
+callback. Some ambiguity needs manual restoration or confirmation and stays pending.
+
+Cleanup retains exact owned resource and callback receipts, including stopped
+registrations. Borrowed resources and unrelated listeners are preserved.
+Missing, expired or insufficient capabilities retain cleanup information;
+credential rotation cannot make another account's 404 proof of deletion.
+Callback failures retain the original pending event; arbitrary callback effects
+are not exactly once. Restore changed cleanup code before retiring and keep its
+credentials available until obligations clear.
+
+A crashed foreground host or uncertain child identity keeps its session pending.
+Stopping a process does not establish remote-resource or callback cleanup.
+Process identity is checked before signalling, but a numeric-PID fallback on
+Linux or macOS leaves a non-atomic read/signal interval; it cannot exclude every
+PID-reuse race. New retirement checks the ownership journal even without a
+manifest and validates cleanup before destructive legacy pre-hooks. Unknown or
+uncertain cleanup blocks retirement without a force bypass. Only exact verified
+tool-owned non-secret collection policy can be removed; sole credentials,
+unknown or edited files and project control data are preserved. Review the
+[old-client pre-hook limit](../upgrades/#moving-to-v025-receiving-roots-and-managed-tunnels)
+before using an older binary against managed state.
+
+## Share deliberately (v0.1.51 example)
+
+A local preview needs no tunnel. This historical v0.1.51 example used an installed,
+authenticated Tailscale client. For named tunnels, use the explicit inputs and
+consent described above rather than assuming that login is sufficient:
 
 ```sh
 wtc svc tunnel web tailscale
