@@ -7,7 +7,7 @@ source: https://github.com/lcorneliussen/taba/blob/main/docs/conventions.md
 
 wtc is now taba. A project still depends on names from the wtc days: harness and collection files, user directories, skill names, environment variables, and scripts that call `wtc`. This page lists each of these conventions, the taba name that replaces it, what 0.2.x supports, and how to migrate.
 
-> **This page describes the next 0.2.x release after 0.2.3,** which ships the `taba-*` skills ([#351](https://github.com/lcorneliussen/taba/issues/351)) and these checks ([#375](https://github.com/lcorneliussen/taba/issues/375)). On 0.2.0 to 0.2.3, `taba doctor` does not report conventions, `harness init` and `skills render` still write the old names, and a harness skill override renamed to `taba-<name>` stops applying. Check the [release notes](https://github.com/lcorneliussen/taba/releases) for that release before migrating.
+> **This page describes taba 0.2.4 and later,** which ship the `taba-*` skills ([#351](https://github.com/lcorneliussen/taba/issues/351)) and these checks ([#375](https://github.com/lcorneliussen/taba/issues/375)). On 0.2.0 to 0.2.3, `taba doctor` does not report conventions, `harness init` and `skills render` still write the old names, and a harness skill override renamed to `taba-<name>` stops applying. The check of repository files, the line numbers and the *review* marking arrive in the release after 0.2.5.
 
 > **Future taba releases drop the wtc names.** 0.2.x still supports them; later releases are planned to stop with upgrade instructions and then ignore wtc names. See [the stages of the rename](../../wtc-is-now-taba/#the-timeline).
 
@@ -31,7 +31,7 @@ Ask an agent in one of your collections:
 
 `doctor` tells the agent what to change and where. The order matters, so the agent works through it like this:
 
-1. **Upgrade the harness to the release named above, or later,** and roll it out, so every collection's pinned CLI reads both names.
+1. **Upgrade the harness to 0.2.4 or later,** and roll it out, so every collection's pinned CLI reads both names.
 2. **Harness files:** rename `wtc.toml` and `.wtc-cli-version` together, plus `wtc-*` skill folders and their base digests, in one harness change. Review, commit and merge it as usual, then roll it out.
 3. **Harness references:** replace `WTC_*` with `TABA_*`, `wtc` with `taba`, and old skill names such as `/wtc-start` in hooks, scripts, skills and instructions.
 4. **Each collection:** rename `WTC-SCOPE.md` and update `.env.collection.local`.
