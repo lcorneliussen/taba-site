@@ -35,7 +35,7 @@ During the compatibility window, the old `wtc` command ships alongside `taba`. E
 | Generated collection data | `.wtc/` | `.taba/` | Both read in 0.2.x; taba moves it (planned) |
 | Collection scope | `WTC-SCOPE.md` | `SCOPE.md` | Both read in 0.2.x |
 | Environment variables | `WTC_*` | `TABA_*` | Both emitted since 0.2.0 |
-| Agent skills | `wtc-*` | `taba-*` | From the release after 0.2.3; `wtc-*` names redirect |
+| Agent skills | `wtc-*` | `taba-*` | Since 0.2.4; `wtc-*` names redirect |
 
 The collection environment files, `.env.collection` and `.env.collection.local`, keep their names. [Rename conventions](../docs/conventions/) lists every name, what 0.2.x supports and how to migrate it.
 
@@ -47,7 +47,7 @@ A project moves through these stages at its own pace. Future stages are **releas
 | --- | --- | --- |
 | 1 | wtc `0.1.x` | Only the wtc names. |
 | 2 | taba `0.2.x`, with wtc names | Released 9 November 2026 with `0.2.0`. Both names work, and nothing has to change. |
-| 3 | taba `0.2.x`, all wtc names migrated | `taba doctor` reports nothing left to migrate. Available from the release after `0.2.3`; see [Rename conventions](../docs/conventions/). |
+| 3 | taba `0.2.x`, all wtc names migrated | `taba doctor` reports nothing left to migrate. Checked since `0.2.4`; see [Rename conventions](../docs/conventions/). |
 | 4 | taba `0.2.x`, with the project flag | The harness's `taba.toml` turns off the wtc names for the project, and `taba doctor` fails while any remain (planned). |
 | 5 | taba `0.3.x` | taba detects wtc names and stops with upgrade instructions instead of using them (planned). |
 | 6 | taba `0.4.x` | No wtc logic is left, and leftover wtc names are ignored (planned). |
@@ -88,7 +88,7 @@ At this stage, both `taba` and `wtc` work, and files keep their old names. Gener
 
 ### 2. During 0.2.x: migrate the names
 
-Upgrade the harness to the release after `0.2.3`, or later, the same way as in step 1. Then ask an agent in one of your collections:
+Upgrade the harness to `0.2.4` or later, the same way as in step 1. Then ask an agent in one of your collections:
 
 > Run `taba doctor --all` and finish the migration to taba.
 
