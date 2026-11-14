@@ -9,7 +9,52 @@ source: https://github.com/lcorneliussen/taba/blob/v0.1.51/internal/wtc/defaults
 
 In [v0.2.4](https://github.com/lcorneliussen/taba/releases/tag/v0.2.4), a new harness uses `taba.toml` and `.taba-version`; rendered skills use `taba-*`. Existing old-name files and harness overrides remain supported during 0.2.x. Where both file spellings exist, the old one wins; supported environment variables instead prefer `TABA_*`. Keep one intended file, and preserve team overrides when migrating.
 
-Use `taba doctor` for this collection or `taba doctor --all` for the workspace, including from its root. Each finding explains whether it can migrate now or must wait; findings do not fail doctor during 0.2.x. `taba conventions` lists the installed release's names. Follow the [published compatibility table and migration order](https://github.com/lcorneliussen/taba/blob/v0.2.4/docs/conventions.md); the sections below retain their labeled older baselines.
+Use `taba doctor` for this collection or `taba doctor --all` for the workspace, including from its root. Each finding explains whether it can migrate now or must wait; findings do not fail doctor during 0.2.x. `taba conventions` lists the installed release's names. Follow the [published compatibility table and migration order](https://github.com/lcorneliussen/taba/blob/v0.2.4/docs/conventions.md); historical sections below retain their labeled older baselines.
+
+## Receiving-owned control roots
+
+In [v0.2.5](https://github.com/lcorneliussen/taba/releases/tag/v0.2.5),
+a project member defaults to `<project-root>/.config`; a standalone ad-hoc
+collection defaults to its own `.config`. A standalone collection does not
+inherit the creating collection's secret root or permission to share an external
+one. A different root needs a declaration in the receiving configuration;
+sharing outside that project or standalone collection also needs its explicit
+`allow_external` opt-in. Follow the
+[receiving secrets contract](https://github.com/lcorneliussen/taba/blob/v0.2.5/internal/wtc/defaults/instructions/secrets.md#workspace-boundary)
+for the configuration and migration procedure.
+
+`TABA_CONFIG_ROOT` and `WTC_CONFIG_ROOT` must agree with that receiving policy.
+Conflicting nonempty values are refused rather than resolved by prefix
+precedence. An inherited environment, generated file or another project's
+configuration cannot grant access. Root and source-file symlinks must stay
+inside the approved source.
+
+When changing policy, first decide whether to retain the exact external source
+and declare it locally, or remove stale root assignments. If generated roots
+still reflect the old policy, preview the single-collection repair:
+
+```sh
+taba env setup --repair-generated-roots --dry-run
+```
+
+After inspecting the preview, repeat without `--dry-run`. Repair takes authority
+from receiving policy, ignores stale caller/generated root aliases, refuses
+conflicting user-local roots and nonliteral generated shell code, and preserves
+`.env.collection.local`. It updates generated roots and removes generated
+provider identity hints without reading secret directories, running hooks,
+trusting mise or linking credentials. It cannot be combined with `--all`.
+Refresh the invoking shell, then run ordinary `taba env setup` to regenerate
+provider hints. Existing panes must reload their environment; repair does not
+update live panes or user configuration, or copy, move, delete or relink credentials.
+
+Nonempty collection-local `.config` is private data: retirement refuses to
+discard it even with `--force`. Preserve it explicitly before retiring. Project
+configuration and control data remain when a member collection is retired.
+These checks prevent ambient root redirection; processes running as the same
+user still share OS permissions. Provider credential resolution and global
+credential-store locking are separate concerns. See the
+[process environment contract](https://github.com/lcorneliussen/taba/blob/v0.2.5/internal/wtc/defaults/instructions/hooks-and-env.md)
+and [named tunnel guidance](../services/#named-tunnels-and-receiving-policy).
 
 ## Environment compatibility in v0.1.60
 

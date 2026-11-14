@@ -9,6 +9,75 @@ import { createHash } from 'node:crypto';
 import { loadOpenClawHostSource } from './openclaw-host-source.mjs';
 import { chromium } from 'playwright';
 import { collectVisualMeasurements, inspectVisualMeasurements } from './openclaw-visual-audit.mjs';
+import { assertStaticDemoState } from './record-openclaw.mjs';
+
+test('static recorder reaches its entry point through a symlink', async t => {
+  const root = await mkdtemp(join(tmpdir(), 'recorder-entry-'));
+  t.after(() => rm(root, { recursive: true, force: true }));
+  const entry = join(root, 'record.mjs');
+  await symlink(fileURLToPath(new URL('./record-openclaw.mjs', import.meta.url)), entry);
+  // No source argument: direct invocation must reject usage before any capture.
+  const result = spawnSync(process.execPath, [entry], { encoding: 'utf8', timeout: 10000 });
+  assert.equal(result.status, 1, result.stderr);
+  assert.match(result.stderr, /Usage: npm run demos:openclaw/);
+});
+
+test('static capture guard requires visible access and lifecycle states and rejects misleading evidence', async () => {
+  const browser = await chromium.launch({ headless: true });
+  try {
+    const page = await browser.newPage({ viewport: { width: 1120, height: 760 } });
+    // Minimal DOM contract for the guard, not a substitute for capturing the real renderer.
+    const buttons = [
+      'Stop live; retain its registration',
+      'Start saved; approve potentially public exposure for this definition',
+      "Remove only saved's verified owned registration resources",
+      'Start new; approve potentially public exposure for this definition',
+      'Register new; approve potentially public exposure for this definition',
+    ];
+    await page.setContent(`<div id="surface">
+      ${['Public access — anyone with the link', 'Account access', 'Access unknown'].map(label => `<span role="img" aria-label="${label}"><svg width="14" height="14"><path d="M0 0h14" /></svg></span>`).join('')}
+      ${['public', 'account', 'unknown'].map(value => `<a href="https://${value}.example.invalid">${value}</a>`).join('')}
+      <span><a href="https://live.example.invalid">live</a> · ready</span>
+      <span><span title="Registered address (stopped): https://saved.example.invalid">saved</span> · idle</span>
+      ${buttons.map(title => `<button aria-label="${title}">Action</button>`).join('')}
+      </div><p id="caption">Reported endpoint access and named tunnel states beside your work.</p>
+      <footer>Synthetic host, theme and data · No backend operations</footer>
+      <script>window.demoUnexpectedRequests=[]</script>`);
+    const check = () => assertStaticDemoState(page, '#surface');
+    await check();
+    const glyph = page.locator('[role="img"][aria-label="Access unknown"]');
+    await glyph.evaluate(node => node.style.display = 'none');
+    await assert.rejects(check(), /Missing or duplicate|Hidden/);
+    await glyph.evaluate(node => node.style.display = '');
+    await page.locator('#surface').evaluate(node => node.insertAdjacentHTML('beforeend', '<a id="wrong" href="https://saved.example.invalid">saved</a>'));
+    await assert.rejects(check(), /stopped registration must not appear as an active link/);
+    await page.locator('#wrong').evaluate(node => node.remove());
+    await page.evaluate(() => window.demoUnexpectedRequests.push('Unexpected effectful request'));
+    await assert.rejects(check(), /Unexpected fixture request/);
+    await page.evaluate(() => window.demoUnexpectedRequests = []);
+    await page.locator('#surface').evaluate(node => node.style.width = '2000px');
+    await assert.rejects(check(), /overflows the viewport/);
+    await page.locator('#surface').evaluate(node => node.style.width = '');
+    await check();
+    const footer = page.locator('footer');
+    await footer.evaluate(node => node.style.visibility = 'hidden');
+    await assert.rejects(check(), /Hidden synthetic-data footer/);
+    await footer.evaluate(node => node.style.visibility = '');
+    await footer.evaluate(node => { node.style.position = 'fixed'; node.style.bottom = '-8px'; });
+    await assert.rejects(check(), /Outside capture: synthetic-data footer/);
+    await assert.rejects(assertStaticDemoState(page, '#surface', { fullPage: true }), /Outside capture: synthetic-data footer/);
+    await footer.evaluate(node => node.removeAttribute('style'));
+    await footer.evaluate(node => node.textContent = 'Demonstration');
+    await assert.rejects(check(), /Missing synthetic-data and no-backend label/);
+    await footer.evaluate(node => node.textContent = 'Synthetic host, theme and data · No backend operations');
+    await page.locator('#caption').evaluate(node => node.style.visibility = 'hidden');
+    await assert.rejects(check(), /Hidden demonstration caption/);
+    await page.locator('#caption').evaluate(node => node.style.visibility = '');
+    await footer.evaluate(node => node.style.marginTop = '900px');
+    await assert.rejects(check(), /Outside capture: synthetic-data footer/);
+    await assertStaticDemoState(page, '#surface', { fullPage: true });
+  } finally { await browser.close(); }
+});
 
 async function repository(t) {
   const root = await mkdtemp(join(tmpdir(), 'host-contract-'));
@@ -104,6 +173,7 @@ test('legacy invocation remains available with explicit fixture provenance and s
   const output = join(root, 'legacy-take');
   const result = spawnSync(process.execPath, [fileURLToPath(new URL('./record-openclaw-interactions.mjs', import.meta.url)), root, output, 'push'], { encoding: 'utf8', timeout: 30000 });
   assert.equal(result.status, 1, result.stderr);
+  assert.match(result.stderr, /Visual alignment/);
   const manifest = JSON.parse(await readFile(join(output, 'manifest.json')));
   assert.match(manifest.error, /Visual alignment/);
   assert.equal(manifest.host.sourceBacked, false);

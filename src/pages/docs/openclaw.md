@@ -5,7 +5,7 @@ description: Work across repositories from one conversation, with worktrees and 
 source: https://github.com/lcorneliussen/taba/blob/v0.1.51/internal/wtc/defaults/instructions/openclaw.md
 ---
 
-> The current controls and visuals below follow [v0.2.4](https://github.com/lcorneliussen/taba/releases/tag/v0.2.4). Older workflow sections retain their stated baselines. Confirm your installed behavior with `taba docs instructions/openclaw.md`.
+> The current tunnel guidance and walkthrough visuals follow [v0.2.5](https://github.com/lcorneliussen/taba/releases/tag/v0.2.5); older workflow sections retain their stated baselines. Confirm your installed behavior with `taba docs instructions/openclaw.md`.
 
 ## What the plugin adds
 
@@ -14,8 +14,8 @@ card above the message box**, and a **Collection panel** opened with **⤢**.
 You can see changes across repositories without visiting each owner's session.
 
 <figure>
-  <img src="../../media/openclaw/collection-card.png" alt="Expanded collection card showing api and web repositories, pending changes, pull request checks and a running preview" width="1120" height="760" loading="lazy" />
-  <figcaption>An example collection brings repository changes, pull requests and a preview beside your conversation. Demonstration data.</figcaption>
+  <img src="../../media/openclaw/collection-card.png" alt="Expanded collection card with repository changes, reported endpoint access glyphs, ready services and a stopped service with one retained registration and one unregistered named entry" width="1120" height="760" loading="lazy" />
+  <figcaption>Synthetic host, theme and data: public, account and unknown endpoint access, an active named tunnel, a stopped registration and an unregistered entry. No backend operations.</figcaption>
 </figure>
 
 | Column or control | What it tells you or does |
@@ -40,14 +40,40 @@ back to the standard composer if you do not want the collection card.
     <source src="../../media/openclaw/collection-tour.webm" type="video/webm" />
     <a href="../../media/openclaw/collection-tour.webm">Download the walkthrough</a>.
   </video>
-  <p>Transcript: the collection card expands to show api and web, their changes, a pull request and a preview. Selecting ⤢ opens the Collection panel with repository rows, pull request details, services and Add repository. No audio; no repositories are changed or published.</p>
+  <p>Transcript: the card expands to show api and web, repository changes and a pull request. Ready preview endpoints report public, account and unknown access. A ready server has an active named link; a stopped standby service shows a retained registration and an unregistered entry with lifecycle controls. Selecting ⤢ opens the Collection panel. Synthetic host, theme and data; no audio or backend operations. No tunnel lifecycle controls are clicked.</p>
 </details>
 
 [View the Collection panel screenshot](../../media/openclaw/collection-panel.png).
 The visuals use the renderer at
-[published v0.2.4 source](https://github.com/lcorneliussen/taba/tree/v0.2.4/openclaw-plugin),
+[published v0.2.5 source](https://github.com/lcorneliussen/taba/tree/v0.2.5/openclaw-plugin),
 separately pinned from this handbook's historical v0.1.51 baseline. Gateway styling and your installed
 version may differ. These examples demonstrate the UI, not backend operations.
+
+## Reported access and named tunnels
+
+The [tunnel controls contract](https://github.com/lcorneliussen/taba/blob/v0.2.5/docs/openclaw.md#the-collection-in-the-control-ui)
+uses neutral endpoint links with access glyphs: an open lock for reported public
+access, a closed lock for reported tailnet/account/protected access, and a
+question mark when access is unknown. Health errors are separate. A lock,
+provider name or HTTPS URL is not independent proof of private enforcement.
+The walkthrough shows these reported endpoint glyphs beside named entries.
+Named entries render their own state and lifecycle controls, without access glyphs.
+
+Configured named entries distinguish registration from active serving and offer
+start, register, stop, unregister and reconcile through the same CLI policy and
+ownership journal. Start/register approval names the exact current desired
+definition hash. Changing that definition requires renewed approval; stopping
+retains stable registration and records start-off for the collection.
+
+The service **+** offers an existing gateway portal and provider setup guidance.
+Setup explains receiving-local configuration and explicit credentials or an
+authorized socket; it does not install, log in, allocate resources, send an
+agent task or grant writes to project defaults. Microsoft Dev Tunnel hosting
+requires an existing Node22+ runtime and the bundled helper; other providers and
+pure reads do not. A portal's own open/close route is separate from named-provider
+policy. Follow [Services and previews](../services/#named-tunnels-and-receiving-policy)
+for consent, lifecycle and cleanup limits. Status reads do not query providers
+or run hooks, and an uncertain outcome needs inspection rather than a blind retry.
 
 ## Set up or diagnose the integration
 
@@ -208,7 +234,7 @@ The command must listen on the port supplied by `PORT`; wrap the existing launch
 
 These controls are included in [v0.1.62](https://github.com/lcorneliussen/taba/releases/tag/v0.1.62).
 See the [released compact-controls contract](https://github.com/lcorneliussen/taba/blob/v0.1.62/docs/openclaw.md#select-next-actions).
-The screenshots above use their separately labeled v0.2.4 source.
+The screenshots above use their separately labeled v0.2.5 source.
 
 The card keeps dense repository rows without visible column headers. At normal
 widths the name, branch, changes, PR and next action occupy separate fixed
