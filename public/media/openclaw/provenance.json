@@ -27,7 +27,7 @@
     "Inspect active, registered-stopped and unregistered named entries without lifecycle clicks"
   ],
   "fixtureSha256": "2843a9b12994d8198233f6e69b90baffd692c0ab64dc1b179ee4b5d575a64a8f",
-  "recorderSha256": "db4a3ecf55b56750dd57d8516911315653908c57769ae4184774dd9be02eb408",
+  "recorderSha256": "ec26f93a2db85daeca994d6744fc89b7902511cf9be40d15bd5c4c728ae59457",
   "limitations": [
     "Synthetic surrounding shell, theme and data",
     "Named entries show recorded state and controls, not provider verification",

@@ -1,7 +1,7 @@
 // Run the upstream UI module with synthetic host responses, never a live gateway.
 import { chromium } from 'playwright';
 import assert from 'node:assert/strict';
-import { readFile, mkdir, writeFile, rename, rm } from 'node:fs/promises';
+import { readFile, mkdir, writeFile, rename, rm, realpath } from 'node:fs/promises';
 import { resolve, join } from 'node:path';
 import { createHash } from 'node:crypto';
 import { loadControlUISource, serveControlUIAsset } from './control-ui-source.mjs';
@@ -129,4 +129,4 @@ try {
 
 }
 
-if (process.argv[1] && resolve(process.argv[1]) === fileURLToPath(import.meta.url)) await record();
+if (process.argv[1] && await realpath(process.argv[1]) === fileURLToPath(import.meta.url)) await record();

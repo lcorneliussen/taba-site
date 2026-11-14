@@ -11,6 +11,17 @@ import { chromium } from 'playwright';
 import { collectVisualMeasurements, inspectVisualMeasurements } from './openclaw-visual-audit.mjs';
 import { assertStaticDemoState } from './record-openclaw.mjs';
 
+test('static recorder reaches its entry point through a symlink', async t => {
+  const root = await mkdtemp(join(tmpdir(), 'recorder-entry-'));
+  t.after(() => rm(root, { recursive: true, force: true }));
+  const entry = join(root, 'record.mjs');
+  await symlink(fileURLToPath(new URL('./record-openclaw.mjs', import.meta.url)), entry);
+  // No source argument: direct invocation must reject usage before any capture.
+  const result = spawnSync(process.execPath, [entry], { encoding: 'utf8', timeout: 10000 });
+  assert.equal(result.status, 1, result.stderr);
+  assert.match(result.stderr, /Usage: npm run demos:openclaw/);
+});
+
 test('static capture guard requires visible access and lifecycle states and rejects misleading evidence', async () => {
   const browser = await chromium.launch({ headless: true });
   try {

@@ -14,8 +14,8 @@ card above the message box**, and a **Collection panel** opened with **⤢**.
 You can see changes across repositories without visiting each owner's session.
 
 <figure>
-  <img src="../../media/openclaw/collection-card.png" alt="Expanded collection card with repository changes, reported endpoint access glyphs, ready services and a stopped service with retained named registrations" width="1120" height="760" loading="lazy" />
-  <figcaption>Synthetic host, theme and data: public, account and unknown endpoint access, an active named tunnel, and stopped registrations. No backend operations.</figcaption>
+  <img src="../../media/openclaw/collection-card.png" alt="Expanded collection card with repository changes, reported endpoint access glyphs, ready services and a stopped service with one retained registration and one unregistered named entry" width="1120" height="760" loading="lazy" />
+  <figcaption>Synthetic host, theme and data: public, account and unknown endpoint access, an active named tunnel, a stopped registration and an unregistered entry. No backend operations.</figcaption>
 </figure>
 
 | Column or control | What it tells you or does |
