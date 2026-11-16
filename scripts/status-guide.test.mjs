@@ -113,3 +113,14 @@ test('local development and transient discovery preserve their separate meanings
   assert.equal(capture.release.binaryVcsModified, true);
   assert(!JSON.stringify(capture.release).includes('Path'));
 });
+
+
+test('published media and native replay share the same verified release inputs', async () => {
+  const media = JSON.parse(await readFile(new URL('../public/media/openclaw/provenance.json', import.meta.url), 'utf8'));
+  assert.deepEqual(media.release, capture.release);
+  assert.equal(media.revision, media.release.revision);
+  assert.equal(capture.sourceRevision, capture.release.revision);
+  const embedded = new Map(media.release.embeddedFiles.map(file => ['openclaw-plugin/' + file.path, file.sha256]));
+  for (const module of media.modules) assert.equal(module.sha256, embedded.get(module.modulePath));
+  assert.equal(media.release.tag, 'v0.2.6');
+});
