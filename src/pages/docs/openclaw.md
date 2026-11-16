@@ -5,7 +5,7 @@ description: Work across repositories from one conversation, with worktrees and 
 source: https://github.com/lcorneliussen/taba/blob/v0.1.51/internal/wtc/defaults/instructions/openclaw.md
 ---
 
-> The current tunnel guidance and walkthrough visuals follow [v0.2.5](https://github.com/lcorneliussen/taba/releases/tag/v0.2.5); older workflow sections retain their stated baselines. Confirm your installed behavior with `taba docs instructions/openclaw.md`.
+> The current tunnel guidance and walkthrough visuals follow [v0.2.6](https://github.com/lcorneliussen/taba/releases/tag/v0.2.6); older workflow sections retain their stated baselines. Confirm your installed behavior with `taba docs instructions/openclaw.md`.
 
 ## What the plugin adds
 
@@ -45,9 +45,35 @@ back to the standard composer if you do not want the collection card.
 
 [View the Collection panel screenshot](../../media/openclaw/collection-panel.png).
 The visuals use the renderer at
-[published v0.2.5 source](https://github.com/lcorneliussen/taba/tree/v0.2.5/openclaw-plugin),
+[published v0.2.6 source](https://github.com/lcorneliussen/taba/tree/v0.2.6/openclaw-plugin),
 separately pinned from this handbook's historical v0.1.51 baseline. Gateway styling and your installed
 version may differ. These examples demonstrate the UI, not backend operations.
+
+## Running version and observations in v0.2.6
+
+The card and sidebar headers show the running gateway CLI version beside the
+Taba mark. Hover for both CLI and loaded plugin builds; narrow cards retain the
+logo and version. This identifies running software, independently of the harness
+pin or a newer installed binary. Reinstall the matching bundled plugin after an
+upgrade and reload open tabs if those builds disagree.
+
+Click or keyboard-activate a card diagnostic to copy its full text. If clipboard
+access fails, use the manual-copy field; **Activity** opens complete details.
+Repeated manual **Refresh** clicks across the card and panel share an active read
+and activity entry. Reads after actions still request fresh status; missing or
+cancelled reads report failure. This is a bounded refresh improvement, not a
+promise of force-refresh admission or faster polling.
+
+Tunnel choices have a solid keyboard focus ring in light and dark host themes.
+Service addresses use their scheme’s default port when omitted: HTTP 80 and
+HTTPS 443; explicit nondefault ports remain distinct. Provider availability
+badges distinguish missing, unusable and unknown executables on the **gateway
+PATH**. They do not establish authentication, reachability or the runtime’s
+configured helper/socket capability. See the [v0.2.6 integration contract](https://github.com/lcorneliussen/taba/blob/v0.2.6/docs/openclaw.md).
+
+The media below and above are static renderer demonstrations with synthetic
+responses. They do not establish successful tunnel interactions or strict
+interaction geometry.
 
 ## Reported access and named tunnels
 

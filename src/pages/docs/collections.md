@@ -46,6 +46,48 @@ Each collection has its own worktrees, generated environment, and port assignmen
 
 > Under OpenClaw, ask the agent to create a named managed collection instead of running `wtc new`. See [the gateway workflow](../openclaw/).
 
+## Choose a repository’s development base in v0.2.6
+
+[Published v0.2.6](https://github.com/lcorneliussen/taba/releases/tag/v0.2.6)
+lets one collection work against a different development branch without changing
+the shared registry:
+
+```sh
+taba repo base set widget origin/beta --reason 'Staging work'
+taba repo base show widget
+taba repo base clear widget
+```
+
+Use `--collection <directory>` to select the receiving collection. Setting a base
+records intent: it does not fetch, switch, reset, merge or push existing work.
+Creation, status, catch-up, browse and review defaults resolve the receiving
+collection’s override, then the registry default, then `origin/main`. A branch
+needed by an operation must be available; missing refs are errors.
+
+Select bases before creating a new collection with:
+
+```sh
+taba new staging widget --repo-base widget=origin/beta --base-reason 'Staging work'
+```
+
+Repeat `--repo-base` for selected repositories. New collections do not inherit
+the caller’s local overrides; `add-repo` uses the receiving collection’s setting.
+Existing explicit branches and exact PR checkouts retain their checkout rules.
+
+Settings live only in the receiving collection’s `.wtc/repo-bases.toml`; do not
+commit them or copy them into the registry. A removed or renamed repository can
+leave an exact old key. `show` gives its recovery instruction: clear that exact
+old key, or explicitly set the current canonical repository. An alias does not
+transfer ownership. Clearing an exact stored orphan takes priority over a newer
+alias; use the current canonical name for the newer repository. Clear a related
+old key before clearing the new canonical override. Malformed or unsafe state
+still requires local correction; do not discard unrelated settings.
+
+An existing PR’s destination remains authoritative for comparison and catch-up.
+A base override does not retarget it, change production refs or authorize merges,
+deployments or branch deletion. Gateway publication destinations remain separately
+authorized. See the [complete v0.2.6 base contract](https://github.com/lcorneliussen/taba/blob/v0.2.6/docs/repository-bases.md).
+
 ## See where things stand
 
 ```sh
