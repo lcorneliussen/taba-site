@@ -1,12 +1,85 @@
 {
   "kind": "Real plugin renderer with synthetic host responses; not a live gateway",
   "repository": "https://github.com/lcorneliussen/taba",
-  "revision": "539a94134405195bf7b4f04d4fa24b82f632cf53",
+  "release": {
+    "tag": "v0.2.6",
+    "revision": "2b5d94dc54757bfa0743ba407ba4c42239a67133",
+    "archiveName": "taba_0.2.6_darwin_arm64.tar.gz",
+    "archiveSha256": "d2c03dfd5d770071a9946dd3295e437a204e5c2979c2a93571f6d01433de8f47",
+    "binarySha256": "ed36458075a566ee7f5faad31d251455a73a5bf7e2a73abee1a56901dbfa1a60",
+    "binaryVcsModified": true,
+    "binaryModuleVersion": "v0.2.6+dirty",
+    "embeddedFiles": [
+      {
+        "path": "dist/control-ui/v1/index.js",
+        "sha256": "a6eb06e98ce629b6fc68501aec4e14cbeacac71568eb7e0777bd3fca3b601ab4"
+      },
+      {
+        "path": "dist/control-ui/v1/pr-preview.js",
+        "sha256": "1e2b2091f9c471a8ec6f89b3f932a85e0fbc6178251f13724bc14b7c21bb2bd6"
+      },
+      {
+        "path": "dist/control-ui/v1/vendor/README.md",
+        "sha256": "043b20c14df81688f7ffaa8686391a208a0f3c20e46e77c9cb72c38e7f139a3c"
+      },
+      {
+        "path": "dist/control-ui/v1/vendor/marked.LICENSE",
+        "sha256": "8e3a3f82f59a60958f56ca08f445647c32a4733dc7ca6c2c46f6eb898471ab9c"
+      },
+      {
+        "path": "dist/control-ui/v1/vendor/marked.esm.js",
+        "sha256": "162194ea902a9d6eca6011bb42b5732991ca650e017d0375b76f4204810c6c14"
+      },
+      {
+        "path": "index.js",
+        "sha256": "2c7a721ef522c77b3a60f2fb8aaccbb8b1cc711e9b4df5575059545ee0eeed04"
+      },
+      {
+        "path": "openclaw.plugin.json",
+        "sha256": "b7a0708d4ee61534cf6437bee7de8cbafda78b84748db94ee64f7e365dbe6c9d"
+      },
+      {
+        "path": "package.json",
+        "sha256": "a7ec4badf8a56ff1f56b431c99cadd0db4dc514900bf6ee820207ea1be76227b"
+      },
+      {
+        "path": "publication.js",
+        "sha256": "bd35cf39f9fc5da8a5e979cb12c8b8c9b0dcb29de493b5a19d66dc5e45e621f2"
+      },
+      {
+        "path": "sandbox-git.js",
+        "sha256": "9401d95ec834a81ae756bd201407de6972176e179b4705fba23e141e9bf3b6f2"
+      },
+      {
+        "path": "skills/taba-catch-up/SKILL.md",
+        "sha256": "5e00e012533e525c44c10e5ac2c2fecc0a54f70ddfa76ab854177af2b6eb33ed"
+      },
+      {
+        "path": "skills/taba-follow/SKILL.md",
+        "sha256": "2a745815aec90295a5543c962b4a8f84e2db5cbbc3d0486005d0cf9b05905a1d"
+      },
+      {
+        "path": "skills/taba-pr/SKILL.md",
+        "sha256": "2cd8f8866806769c9f60ba689626b167f15d00c0e0b08eb62a786ca08e7ea722"
+      },
+      {
+        "path": "skills/taba/SKILL.md",
+        "sha256": "397ef997d6c14976edcbe0b4ff18f6f8963959a9feeb453a8188f0a616e0d91e"
+      },
+      {
+        "path": "skills/wtc/SKILL.md",
+        "sha256": "1fd77c5f32fc5795c372e61090e46ac79f073fb1f5561f4cb4763ae795f7bf02"
+      }
+    ],
+    "correspondence": "Exported released plugin and tagged renderer bytes match; native replay uses the tagged recording adapter.",
+    "limitation": "Binary VCS metadata is recorded, not a pristine-source build attestation."
+  },
+  "revision": "2b5d94dc54757bfa0743ba407ba4c42239a67133",
   "modulePath": "openclaw-plugin/dist/control-ui/v1/index.js",
   "modules": [
     {
       "modulePath": "openclaw-plugin/dist/control-ui/v1/index.js",
-      "sha256": "b45c46d73a4eef431909425aedf744ebc86406a7f6d15ea7c222568d526d6bed"
+      "sha256": "a6eb06e98ce629b6fc68501aec4e14cbeacac71568eb7e0777bd3fca3b601ab4"
     },
     {
       "modulePath": "openclaw-plugin/dist/control-ui/v1/pr-preview.js",
@@ -17,7 +90,7 @@
       "sha256": "162194ea902a9d6eca6011bb42b5732991ca650e017d0375b76f4204810c6c14"
     }
   ],
-  "sha256": "b45c46d73a4eef431909425aedf744ebc86406a7f6d15ea7c222568d526d6bed",
+  "sha256": "a6eb06e98ce629b6fc68501aec4e14cbeacac71568eb7e0777bd3fca3b601ab4",
   "playwright": "1.64.1",
   "browser": "156.0.8078.4",
   "scenario": [
@@ -26,8 +99,8 @@
     "Inspect reported public, account and unknown endpoint access",
     "Inspect active, registered-stopped and unregistered named entries without lifecycle clicks"
   ],
-  "fixtureSha256": "2843a9b12994d8198233f6e69b90baffd692c0ab64dc1b179ee4b5d575a64a8f",
-  "recorderSha256": "ec26f93a2db85daeca994d6744fc89b7902511cf9be40d15bd5c4c728ae59457",
+  "fixtureSha256": "0f618f89d47bb9945c9e8364042a6371598a8bd16610cc08fc2872ea6db37460",
+  "recorderSha256": "ce49bb9d52f4b8d3da14ce5b390527adcce929568d6c1d5353b45923815cc56d",
   "limitations": [
     "Synthetic surrounding shell, theme and data",
     "Named entries show recorded state and controls, not provider verification",

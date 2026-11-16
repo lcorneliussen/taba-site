@@ -11,6 +11,22 @@ const merged = (follow, tip, prod) => snapshot([
 
 export const scenarios = [
   {
+    id: 'local-development-base', group: 'Development bases', title: 'Local beta development, registry main production',
+    summary: 'A receiving-local override changes the development tier without rewriting the registry’s production mapping.',
+    read: [['TEST', 'T✓#106 is a beta build. The effective development base is origin/beta, chosen only for this collection.'], ['PROD', 'P✓#105 remains main, derived from registry default_ref origin/main with no explicit deployment ref.'], ['Comparison', 'development_base records the configured and effective refs separately from PR destinations. Existing PR targets remain authoritative; upstream-based ahead counts retain their own ref.']],
+    inspect: 'Use taba repo base show widget to inspect local intent. Setting or clearing a base does not move existing work or authorize a deployment.',
+    snapshot: snapshot([repo('widget', { branch_kind: 'detached', branch: 'beta', branch_display: '⌂ beta', development_base: { repository: 'widget', registry_ref: 'origin/main', effective_ref: 'origin/beta', source: 'collection', reason: 'Staging work' }, tip: build('beta', '106'), prod: build('main', '105') })]),
+    expect: ['⌂ beta', 'TEST', 'PROD', 'T✓#106', 'P✓#105'],
+  },
+  {
+    id: 'discovered-pr', group: 'Git and PRs', title: 'A branch PR discovered without enlistment',
+    summary: 'Status can discover an open or draft PR on an active branch. Discovery is a transient observation, not durable follow-up ownership.',
+    read: [['Repository', '#23 identifies the observed branch PR with passing checks and a pending review.'], ['Inventory', 'not enlisted distinguishes this observation from collection tracking; the explicit command offers a separate enlistment action.'], ['Authority', 'Discovering a PR does not write tracking, switch a branch, merge or clear retirement uncertainty.']],
+    inspect: 'Inspect the matching branch and PR before deciding whether to run the displayed enlist command.',
+    snapshot: single(pr('23', {review:'waiting'}), {}, {not_enlisted:true, enlist_command:'taba pr enlist widget 23', display_title:'not enlisted — taba pr enlist widget 23  Improve the widget'}),
+    expect: ['#23', 'not enlisted', 'pr enlist'],
+  },
+  {
     id: 'work-in-progress', group: 'Git and PRs', title: 'Local changes, checks running, review pending',
     summary: 'One row combines three independent observations: your checkout, its pull request, and builds of shared branches.',
     read: [

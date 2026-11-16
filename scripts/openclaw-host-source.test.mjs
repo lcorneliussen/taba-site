@@ -9,7 +9,7 @@ import { createHash } from 'node:crypto';
 import { loadOpenClawHostSource } from './openclaw-host-source.mjs';
 import { chromium } from 'playwright';
 import { collectVisualMeasurements, inspectVisualMeasurements } from './openclaw-visual-audit.mjs';
-import { assertStaticDemoState } from './record-openclaw.mjs';
+import { assertStaticDemoState, assertRunningVersion, loadReleaseEvidence } from './record-openclaw.mjs';
 
 test('static recorder reaches its entry point through a symlink', async t => {
   const root = await mkdtemp(join(tmpdir(), 'recorder-entry-'));
@@ -206,4 +206,49 @@ test('failed desktop/mobile captures retain host provenance, raw pixels, audits 
     assert.equal(JSON.parse(await readFile(join(dir, 'layout-positions.json'))).length, 1);
     assert(Array.isArray(JSON.parse(await readFile(join(dir, 'trace.json')))));
   }
+});
+
+
+test('running-version guard rejects absent, wrong and clipped headers', async () => {
+  const browser = await chromium.launch({ headless: true });
+  try {
+    const page = await browser.newPage({viewport:{width:390,height:844}});
+    await page.setContent('<div id="surface"></div>');
+    const check = () => assertRunningVersion(page, '#surface', 'v1.2.3');
+    await assert.rejects(check(), /Missing or duplicate/);
+    await page.locator('#surface').evaluate(node => node.innerHTML = '<span class="wtc-brand-version" title="Running gateway CLI: Taba 1.2.3&#10;Loaded plugin: 1.2.3" style="display:inline-flex"><span>v1.2.3</span></span>');
+    await check();
+    const version = page.locator('.wtc-brand-version');
+    await version.locator('span').evaluate(node => node.textContent='v1.2.4');
+    await assert.rejects(check(), /Wrong running version/);
+    await version.locator('span').evaluate(node => node.textContent='v1.2.3');
+    await version.evaluate(node => node.style.marginLeft='380px');
+    await assert.rejects(check(), /Clipped running version/);
+    await version.evaluate(node => node.style.marginLeft='');
+    await version.locator('span').evaluate(node => node.style.cssText='display:block;max-width:10px;overflow:hidden;white-space:nowrap');
+    await assert.rejects(check(), /Clipped running version text/);
+  } finally { await browser.close(); }
+});
+
+test('release evidence verifies bytes and emits no private input paths', async t => {
+  const {root,git} = await repository(t);
+  const modulePath = 'dist/control-ui/v1/index.js';
+  const renderer = 'export default {};';
+  await mkdir(join(root,'openclaw-plugin/dist/control-ui/v1'),{recursive:true});
+  await writeFile(join(root,'openclaw-plugin',modulePath),renderer);
+  git('add','.');git('commit','-qm','Synthetic renderer');git('tag','v1.2.3');
+  const hash = bytes => createHash('sha256').update(bytes).digest('hex');
+  const archivePath=join(root,'taba_1.2.3_linux_amd64.tar.gz'),binaryPath=join(root,'binary');
+  await writeFile(archivePath,'synthetic archive');await writeFile(binaryPath,'synthetic executable');
+  const data={tag:'v1.2.3',revision:git('rev-parse','HEAD'),archiveName:'taba_1.2.3_linux_amd64.tar.gz',archivePath,binaryPath,exportPath:join(root,'openclaw-plugin'),archiveSha256:hash('synthetic archive'),binarySha256:hash('synthetic executable'),binaryVcsModified:true,binaryModuleVersion:'v1.2.3+dirty',embeddedFiles:[{path:modulePath,sha256:hash(renderer)}]};
+  const input=join(root,'evidence.json');await writeFile(input,JSON.stringify(data));
+  const release=await loadReleaseEvidence(root,input);
+  assert.equal(release.binaryVcsModified,true);
+  assert(!JSON.stringify(release).includes(root));
+  assert.equal(await loadReleaseEvidence(root),null);
+  await writeFile(binaryPath,'changed');
+  await assert.rejects(loadReleaseEvidence(root,input),/binary checksum mismatch/);
+  await writeFile(binaryPath,'synthetic executable');
+  data.embeddedFiles[0].sha256='0'.repeat(64);await writeFile(input,JSON.stringify(data));
+  await assert.rejects(loadReleaseEvidence(root,input),/Embedded file checksum mismatch/);
 });

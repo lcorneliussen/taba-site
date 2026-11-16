@@ -14,7 +14,7 @@ card above the message box**, and a **Collection panel** opened with **⤢**.
 You can see changes across repositories without visiting each owner's session.
 
 <figure>
-  <img src="../../media/openclaw/collection-card.png" alt="Expanded collection card with repository changes, reported endpoint access glyphs, ready services and a stopped service with one retained registration and one unregistered named entry" width="1120" height="760" loading="lazy" />
+  <img src="../../media/openclaw/collection-card.png" alt="Expanded collection card showing running Taba v0.2.6, repository changes, reported endpoint access glyphs, ready services and a stopped service with one retained registration and one unregistered named entry" width="1120" height="760" loading="lazy" />
   <figcaption>Synthetic host, theme and data: public, account and unknown endpoint access, an active named tunnel, a stopped registration and an unregistered entry. No backend operations.</figcaption>
 </figure>
 
@@ -40,7 +40,7 @@ back to the standard composer if you do not want the collection card.
     <source src="../../media/openclaw/collection-tour.webm" type="video/webm" />
     <a href="../../media/openclaw/collection-tour.webm">Download the walkthrough</a>.
   </video>
-  <p>Transcript: the card expands to show api and web, repository changes and a pull request. Ready preview endpoints report public, account and unknown access. A ready server has an active named link; a stopped standby service shows a retained registration and an unregistered entry with lifecycle controls. Selecting ⤢ opens the Collection panel. Synthetic host, theme and data; no audio or backend operations. No tunnel lifecycle controls are clicked.</p>
+  <p>Transcript: the header shows running Taba v0.2.6. The card expands to show api and web, repository changes and a pull request. Ready preview endpoints report public, account and unknown access. A ready server has an active named link; a stopped standby service shows a retained registration and an unregistered entry with lifecycle controls. Selecting ⤢ opens the Collection panel. Synthetic host, theme and data; no audio or backend operations. No tunnel lifecycle controls are clicked.</p>
 </details>
 
 [View the Collection panel screenshot](../../media/openclaw/collection-panel.png).
