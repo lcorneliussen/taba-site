@@ -1,10 +1,83 @@
 {
-  "sourceRevision": "2191843cc2b3c28ac16fe7a09f731c992fabbc22",
-  "sourceDigest": "af87c425027267cea2ce1029fba4fedb5d1b8e68df1353ec5c994d12702b0484",
+  "release": {
+    "tag": "v0.2.6",
+    "revision": "2b5d94dc54757bfa0743ba407ba4c42239a67133",
+    "archiveName": "taba_0.2.6_darwin_arm64.tar.gz",
+    "archiveSha256": "d2c03dfd5d770071a9946dd3295e437a204e5c2979c2a93571f6d01433de8f47",
+    "binarySha256": "ed36458075a566ee7f5faad31d251455a73a5bf7e2a73abee1a56901dbfa1a60",
+    "binaryVcsModified": true,
+    "binaryModuleVersion": "v0.2.6+dirty",
+    "embeddedFiles": [
+      {
+        "path": "dist/control-ui/v1/index.js",
+        "sha256": "a6eb06e98ce629b6fc68501aec4e14cbeacac71568eb7e0777bd3fca3b601ab4"
+      },
+      {
+        "path": "dist/control-ui/v1/pr-preview.js",
+        "sha256": "1e2b2091f9c471a8ec6f89b3f932a85e0fbc6178251f13724bc14b7c21bb2bd6"
+      },
+      {
+        "path": "dist/control-ui/v1/vendor/README.md",
+        "sha256": "043b20c14df81688f7ffaa8686391a208a0f3c20e46e77c9cb72c38e7f139a3c"
+      },
+      {
+        "path": "dist/control-ui/v1/vendor/marked.LICENSE",
+        "sha256": "8e3a3f82f59a60958f56ca08f445647c32a4733dc7ca6c2c46f6eb898471ab9c"
+      },
+      {
+        "path": "dist/control-ui/v1/vendor/marked.esm.js",
+        "sha256": "162194ea902a9d6eca6011bb42b5732991ca650e017d0375b76f4204810c6c14"
+      },
+      {
+        "path": "index.js",
+        "sha256": "2c7a721ef522c77b3a60f2fb8aaccbb8b1cc711e9b4df5575059545ee0eeed04"
+      },
+      {
+        "path": "openclaw.plugin.json",
+        "sha256": "b7a0708d4ee61534cf6437bee7de8cbafda78b84748db94ee64f7e365dbe6c9d"
+      },
+      {
+        "path": "package.json",
+        "sha256": "a7ec4badf8a56ff1f56b431c99cadd0db4dc514900bf6ee820207ea1be76227b"
+      },
+      {
+        "path": "publication.js",
+        "sha256": "bd35cf39f9fc5da8a5e979cb12c8b8c9b0dcb29de493b5a19d66dc5e45e621f2"
+      },
+      {
+        "path": "sandbox-git.js",
+        "sha256": "9401d95ec834a81ae756bd201407de6972176e179b4705fba23e141e9bf3b6f2"
+      },
+      {
+        "path": "skills/taba-catch-up/SKILL.md",
+        "sha256": "5e00e012533e525c44c10e5ac2c2fecc0a54f70ddfa76ab854177af2b6eb33ed"
+      },
+      {
+        "path": "skills/taba-follow/SKILL.md",
+        "sha256": "2a745815aec90295a5543c962b4a8f84e2db5cbbc3d0486005d0cf9b05905a1d"
+      },
+      {
+        "path": "skills/taba-pr/SKILL.md",
+        "sha256": "2cd8f8866806769c9f60ba689626b167f15d00c0e0b08eb62a786ca08e7ea722"
+      },
+      {
+        "path": "skills/taba/SKILL.md",
+        "sha256": "397ef997d6c14976edcbe0b4ff18f6f8963959a9feeb453a8188f0a616e0d91e"
+      },
+      {
+        "path": "skills/wtc/SKILL.md",
+        "sha256": "1fd77c5f32fc5795c372e61090e46ac79f073fb1f5561f4cb4763ae795f7bf02"
+      }
+    ],
+    "correspondence": "Exported released plugin and tagged renderer bytes match; native replay uses the tagged recording adapter.",
+    "limitation": "Binary VCS metadata is recorded, not a pristine-source build attestation."
+  },
+  "sourceRevision": "2b5d94dc54757bfa0743ba407ba4c42239a67133",
+  "sourceDigest": "b2773648bd960f0f51c499f4a449cc38d655013b93f6ffd532cdf0c2f7a9197f",
   "sourceScope": "tracked command package, internal, go.mod and go.sum",
   "commandPackage": "cmd/taba",
   "parserDigest": "8a59c1d7483322124ee27ca7d97f5fee0fd17ba15a411b2a0b83f2df07d5637c",
-  "fixtureDigest": "57b41881b9e4da58fcf240afc61e37139ba8a456a92b6db48970ff9880a45dea",
+  "fixtureDigest": "20d74a346e001e4b5985379758f128897329c77ea427a8795e8991c1d2fe470d",
   "renderer": "statusTUIModel.View",
   "synthetic": true,
   "actionsDispatched": false,
@@ -15,6 +88,950 @@
   ],
   "rows": 24,
   "frames": {
+    "local-development-base": {
+      "39": {
+        "runs": [
+          {
+            "text": "taba/wtc status · example · 0s old",
+            "style": {
+              "fontWeight": "700"
+            }
+          },
+          {
+            "text": " · d…",
+            "style": {
+              "opacity": ".65"
+            }
+          },
+          {
+            "text": "\n                                       \n",
+            "style": {}
+          },
+          {
+            "text": "REPO     BRANCH           PR C M R ±   ",
+            "style": {
+              "fontWeight": "700"
+            }
+          },
+          {
+            "text": "\n",
+            "style": {}
+          },
+          {
+            "text": "widget  ",
+            "style": {
+              "fontWeight": "700"
+            }
+          },
+          {
+            "text": " ",
+            "style": {}
+          },
+          {
+            "text": "⌂ beta          ",
+            "style": {
+              "opacity": ".65"
+            }
+          },
+          {
+            "text": " ·        ",
+            "style": {}
+          },
+          {
+            "text": "·   ",
+            "style": {
+              "opacity": ".65"
+            }
+          },
+          {
+            "text": "\n",
+            "style": {}
+          },
+          {
+            "text": "base \"origin/beta\" (collection):       ",
+            "style": {
+              "opacity": ".65"
+            }
+          },
+          {
+            "text": "\n",
+            "style": {}
+          },
+          {
+            "text": "\"Staging work\"                         ",
+            "style": {
+              "opacity": ".65"
+            }
+          },
+          {
+            "text": "\n                                       \n",
+            "style": {}
+          },
+          {
+            "text": "PRs",
+            "style": {
+              "fontWeight": "700"
+            }
+          },
+          {
+            "text": "                                    \n",
+            "style": {}
+          },
+          {
+            "text": "PR    REPO       STATE    TITLE        ",
+            "style": {
+              "opacity": ".65"
+            }
+          },
+          {
+            "text": "\n(none enlisted)                        \n                                       \n                                       \n                                       \n                                       \n                                       \n                                       \n                                       \n                                       \n                                       \n                                       \n                                       \n                                       \n",
+            "style": {}
+          },
+          {
+            "text": "n next actions · r refresh · l log · a…",
+            "style": {
+              "opacity": ".65"
+            }
+          }
+        ],
+        "plain": "taba/wtc status · example · 0s old · d…\n                                       \nREPO     BRANCH           PR C M R ±   \nwidget   ⌂ beta           ·        ·   \nbase \"origin/beta\" (collection):       \n\"Staging work\"                         \n                                       \nPRs                                    \nPR    REPO       STATE    TITLE        \n(none enlisted)                        \n                                       \n                                       \n                                       \n                                       \n                                       \n                                       \n                                       \n                                       \n                                       \n                                       \n                                       \n                                       \nn next actions · r refresh · l log · a…"
+      },
+      "60": {
+        "runs": [
+          {
+            "text": "taba/wtc status · example · 0s old",
+            "style": {
+              "fontWeight": "700"
+            }
+          },
+          {
+            "text": " · dev",
+            "style": {
+              "opacity": ".65"
+            }
+          },
+          {
+            "text": "                    \n                                                            \n",
+            "style": {}
+          },
+          {
+            "text": "REPO             BRANCH         PR  C M R       ±    ↑   ↓  ",
+            "style": {
+              "fontWeight": "700"
+            }
+          },
+          {
+            "text": "\n",
+            "style": {}
+          },
+          {
+            "text": "widget          ",
+            "style": {
+              "fontWeight": "700"
+            }
+          },
+          {
+            "text": " ",
+            "style": {}
+          },
+          {
+            "text": "⌂ beta        ",
+            "style": {
+              "opacity": ".65"
+            }
+          },
+          {
+            "text": " ·               ",
+            "style": {}
+          },
+          {
+            "text": "·   ",
+            "style": {
+              "opacity": ".65"
+            }
+          },
+          {
+            "text": " ",
+            "style": {}
+          },
+          {
+            "text": "·  ",
+            "style": {
+              "opacity": ".65"
+            }
+          },
+          {
+            "text": " ",
+            "style": {}
+          },
+          {
+            "text": "·  ",
+            "style": {
+              "opacity": ".65"
+            }
+          },
+          {
+            "text": "\n",
+            "style": {}
+          },
+          {
+            "text": "base \"origin/beta\" (collection): \"Staging work\"             ",
+            "style": {
+              "opacity": ".65"
+            }
+          },
+          {
+            "text": "\n                                                            \n",
+            "style": {}
+          },
+          {
+            "text": "PRs",
+            "style": {
+              "fontWeight": "700"
+            }
+          },
+          {
+            "text": "                                                         \n",
+            "style": {}
+          },
+          {
+            "text": "PR    REPO             STATE      C M R TITLE               ",
+            "style": {
+              "opacity": ".65"
+            }
+          },
+          {
+            "text": "\n(none enlisted)                                             \n                                                            \n                                                            \n                                                            \n                                                            \n                                                            \n                                                            \n                                                            \n                                                            \n                                                            \n                                                            \n                                                            \n                                                            \n                                                            \n",
+            "style": {}
+          },
+          {
+            "text": "n next actions · r refresh · l log · a archived · ↗ link · …",
+            "style": {
+              "opacity": ".65"
+            }
+          }
+        ],
+        "plain": "taba/wtc status · example · 0s old · dev                    \n                                                            \nREPO             BRANCH         PR  C M R       ±    ↑   ↓  \nwidget           ⌂ beta         ·               ·    ·   ·  \nbase \"origin/beta\" (collection): \"Staging work\"             \n                                                            \nPRs                                                         \nPR    REPO             STATE      C M R TITLE               \n(none enlisted)                                             \n                                                            \n                                                            \n                                                            \n                                                            \n                                                            \n                                                            \n                                                            \n                                                            \n                                                            \n                                                            \n                                                            \n                                                            \n                                                            \nn next actions · r refresh · l log · a archived · ↗ link · …"
+      },
+      "100": {
+        "runs": [
+          {
+            "text": "taba/wtc status · example · 0s old",
+            "style": {
+              "fontWeight": "700"
+            }
+          },
+          {
+            "text": " · dev",
+            "style": {
+              "opacity": ".65"
+            }
+          },
+          {
+            "text": "                                                            \n                                                                                                    \n",
+            "style": {}
+          },
+          {
+            "text": "REPO                 BRANCH                         PR  C M R       ±    ↑   ↓   TEST     PROD    ",
+            "style": {
+              "fontWeight": "700"
+            }
+          },
+          {
+            "text": "  \n",
+            "style": {}
+          },
+          {
+            "text": "widget              ",
+            "style": {
+              "fontWeight": "700"
+            }
+          },
+          {
+            "text": " ",
+            "style": {}
+          },
+          {
+            "text": "⌂ beta                        ",
+            "style": {
+              "opacity": ".65"
+            }
+          },
+          {
+            "text": " ·               ",
+            "style": {}
+          },
+          {
+            "text": "·   ",
+            "style": {
+              "opacity": ".65"
+            }
+          },
+          {
+            "text": " ",
+            "style": {}
+          },
+          {
+            "text": "·  ",
+            "style": {
+              "opacity": ".65"
+            }
+          },
+          {
+            "text": " ",
+            "style": {}
+          },
+          {
+            "text": "·  ",
+            "style": {
+              "opacity": ".65"
+            }
+          },
+          {
+            "text": " ",
+            "style": {}
+          },
+          {
+            "text": "T✓#106",
+            "style": {
+              "color": "#98c379"
+            }
+          },
+          {
+            "text": "   ",
+            "style": {}
+          },
+          {
+            "text": "P✓#105",
+            "style": {
+              "color": "#98c379"
+            }
+          },
+          {
+            "text": "    \n",
+            "style": {}
+          },
+          {
+            "text": "base \"origin/beta\" (collection): \"Staging work\"                                                     ",
+            "style": {
+              "opacity": ".65"
+            }
+          },
+          {
+            "text": "\n                                                                                                    \n",
+            "style": {}
+          },
+          {
+            "text": "PRs",
+            "style": {
+              "fontWeight": "700"
+            }
+          },
+          {
+            "text": "                                                                                                 \n",
+            "style": {}
+          },
+          {
+            "text": "PR    REPO                 STATE      CHECKS MERGE REVIEWS TITLE                                    ",
+            "style": {
+              "opacity": ".65"
+            }
+          },
+          {
+            "text": "\n(none enlisted)                                                                                     \n                                                                                                    \n                                                                                                    \n                                                                                                    \n                                                                                                    \n                                                                                                    \n                                                                                                    \n                                                                                                    \n                                                                                                    \n                                                                                                    \n                                                                                                    \n                                                                                                    \n                                                                                                    \n                                                                                                    \n",
+            "style": {}
+          },
+          {
+            "text": "n next actions · r refresh · l log · a archived · ↗ link · ? help · q quit",
+            "style": {
+              "opacity": ".65"
+            }
+          },
+          {
+            "text": "                          ",
+            "style": {}
+          }
+        ],
+        "plain": "taba/wtc status · example · 0s old · dev                                                            \n                                                                                                    \nREPO                 BRANCH                         PR  C M R       ±    ↑   ↓   TEST     PROD      \nwidget               ⌂ beta                         ·               ·    ·   ·   T✓#106   P✓#105    \nbase \"origin/beta\" (collection): \"Staging work\"                                                     \n                                                                                                    \nPRs                                                                                                 \nPR    REPO                 STATE      CHECKS MERGE REVIEWS TITLE                                    \n(none enlisted)                                                                                     \n                                                                                                    \n                                                                                                    \n                                                                                                    \n                                                                                                    \n                                                                                                    \n                                                                                                    \n                                                                                                    \n                                                                                                    \n                                                                                                    \n                                                                                                    \n                                                                                                    \n                                                                                                    \n                                                                                                    \nn next actions · r refresh · l log · a archived · ↗ link · ? help · q quit                          "
+      }
+    },
+    "discovered-pr": {
+      "39": {
+        "runs": [
+          {
+            "text": "taba/wtc status · example · 0s old",
+            "style": {
+              "fontWeight": "700"
+            }
+          },
+          {
+            "text": " · d…",
+            "style": {
+              "opacity": ".65"
+            }
+          },
+          {
+            "text": "\n                                       \n",
+            "style": {}
+          },
+          {
+            "text": "REPO     BRANCH    PR    C M R     ±   ",
+            "style": {
+              "fontWeight": "700"
+            }
+          },
+          {
+            "text": "\n",
+            "style": {}
+          },
+          {
+            "text": "widget  ",
+            "style": {
+              "fontWeight": "700"
+            }
+          },
+          {
+            "text": " feature/… ",
+            "style": {}
+          },
+          {
+            "text": "#23 ↗",
+            "style": {
+              "color": "#56b6c2"
+            }
+          },
+          {
+            "text": " ",
+            "style": {}
+          },
+          {
+            "text": "✓",
+            "style": {
+              "color": "#98c379"
+            }
+          },
+          {
+            "text": " ",
+            "style": {}
+          },
+          {
+            "text": "✓",
+            "style": {
+              "color": "#98c379"
+            }
+          },
+          {
+            "text": " ",
+            "style": {}
+          },
+          {
+            "text": "●",
+            "style": {
+              "color": "#e5c07b"
+            }
+          },
+          {
+            "text": "     ",
+            "style": {}
+          },
+          {
+            "text": "·   ",
+            "style": {
+              "opacity": ".65"
+            }
+          },
+          {
+            "text": "\n                                       \n",
+            "style": {}
+          },
+          {
+            "text": "PRs",
+            "style": {
+              "fontWeight": "700"
+            }
+          },
+          {
+            "text": "                                    \n",
+            "style": {}
+          },
+          {
+            "text": "PR    REPO       STATE    TITLE        ",
+            "style": {
+              "opacity": ".65"
+            }
+          },
+          {
+            "text": "\n",
+            "style": {}
+          },
+          {
+            "text": "#23 ↗",
+            "style": {
+              "color": "#56b6c2"
+            }
+          },
+          {
+            "text": " ",
+            "style": {}
+          },
+          {
+            "text": "widget    ",
+            "style": {
+              "fontWeight": "700"
+            }
+          },
+          {
+            "text": " ",
+            "style": {}
+          },
+          {
+            "text": "open    ",
+            "style": {
+              "opacity": ".65"
+            }
+          },
+          {
+            "text": " ",
+            "style": {}
+          },
+          {
+            "text": "not enlisted…",
+            "style": {
+              "fontWeight": "700"
+            }
+          },
+          {
+            "text": "\n                                       \n                                       \n                                       \n                                       \n                                       \n                                       \n                                       \n                                       \n                                       \n                                       \n                                       \n                                       \n                                       \n                                       \n",
+            "style": {}
+          },
+          {
+            "text": "n next actions · r refresh · l log · a…",
+            "style": {
+              "opacity": ".65"
+            }
+          }
+        ],
+        "plain": "taba/wtc status · example · 0s old · d…\n                                       \nREPO     BRANCH    PR    C M R     ±   \nwidget   feature/… #23 ↗ ✓ ✓ ●     ·   \n                                       \nPRs                                    \nPR    REPO       STATE    TITLE        \n#23 ↗ widget     open     not enlisted…\n                                       \n                                       \n                                       \n                                       \n                                       \n                                       \n                                       \n                                       \n                                       \n                                       \n                                       \n                                       \n                                       \n                                       \nn next actions · r refresh · l log · a…"
+      },
+      "60": {
+        "runs": [
+          {
+            "text": "taba/wtc status · example · 0s old",
+            "style": {
+              "fontWeight": "700"
+            }
+          },
+          {
+            "text": " · dev",
+            "style": {
+              "opacity": ".65"
+            }
+          },
+          {
+            "text": "                    \n                                                            \n",
+            "style": {}
+          },
+          {
+            "text": "REPO             BRANCH         PR    C M R     ±    ↑   ↓  ",
+            "style": {
+              "fontWeight": "700"
+            }
+          },
+          {
+            "text": "\n",
+            "style": {}
+          },
+          {
+            "text": "widget          ",
+            "style": {
+              "fontWeight": "700"
+            }
+          },
+          {
+            "text": " feature/topic  ",
+            "style": {}
+          },
+          {
+            "text": "#23 ↗",
+            "style": {
+              "color": "#56b6c2"
+            }
+          },
+          {
+            "text": " ",
+            "style": {}
+          },
+          {
+            "text": "✓",
+            "style": {
+              "color": "#98c379"
+            }
+          },
+          {
+            "text": " ",
+            "style": {}
+          },
+          {
+            "text": "✓",
+            "style": {
+              "color": "#98c379"
+            }
+          },
+          {
+            "text": " ",
+            "style": {}
+          },
+          {
+            "text": "●",
+            "style": {
+              "color": "#e5c07b"
+            }
+          },
+          {
+            "text": "     ",
+            "style": {}
+          },
+          {
+            "text": "·   ",
+            "style": {
+              "opacity": ".65"
+            }
+          },
+          {
+            "text": " ",
+            "style": {}
+          },
+          {
+            "text": "·  ",
+            "style": {
+              "opacity": ".65"
+            }
+          },
+          {
+            "text": " ",
+            "style": {}
+          },
+          {
+            "text": "·  ",
+            "style": {
+              "opacity": ".65"
+            }
+          },
+          {
+            "text": "\n                                                            \n",
+            "style": {}
+          },
+          {
+            "text": "PRs",
+            "style": {
+              "fontWeight": "700"
+            }
+          },
+          {
+            "text": "                                                         \n",
+            "style": {}
+          },
+          {
+            "text": "PR    REPO             STATE      C M R TITLE               ",
+            "style": {
+              "opacity": ".65"
+            }
+          },
+          {
+            "text": "\n",
+            "style": {}
+          },
+          {
+            "text": "#23 ↗",
+            "style": {
+              "color": "#56b6c2"
+            }
+          },
+          {
+            "text": " ",
+            "style": {}
+          },
+          {
+            "text": "widget          ",
+            "style": {
+              "fontWeight": "700"
+            }
+          },
+          {
+            "text": " ",
+            "style": {}
+          },
+          {
+            "text": "open      ",
+            "style": {
+              "opacity": ".65"
+            }
+          },
+          {
+            "text": " ",
+            "style": {}
+          },
+          {
+            "text": "✓",
+            "style": {
+              "color": "#98c379"
+            }
+          },
+          {
+            "text": " ",
+            "style": {}
+          },
+          {
+            "text": "✓",
+            "style": {
+              "color": "#98c379"
+            }
+          },
+          {
+            "text": " ",
+            "style": {}
+          },
+          {
+            "text": "●",
+            "style": {
+              "color": "#e5c07b"
+            }
+          },
+          {
+            "text": " ",
+            "style": {}
+          },
+          {
+            "text": "not enlisted — taba…",
+            "style": {
+              "fontWeight": "700"
+            }
+          },
+          {
+            "text": "\n                                                            \n                                                            \n                                                            \n                                                            \n                                                            \n                                                            \n                                                            \n                                                            \n                                                            \n                                                            \n                                                            \n                                                            \n                                                            \n                                                            \n",
+            "style": {}
+          },
+          {
+            "text": "n next actions · r refresh · l log · a archived · ↗ link · …",
+            "style": {
+              "opacity": ".65"
+            }
+          }
+        ],
+        "plain": "taba/wtc status · example · 0s old · dev                    \n                                                            \nREPO             BRANCH         PR    C M R     ±    ↑   ↓  \nwidget           feature/topic  #23 ↗ ✓ ✓ ●     ·    ·   ·  \n                                                            \nPRs                                                         \nPR    REPO             STATE      C M R TITLE               \n#23 ↗ widget           open       ✓ ✓ ● not enlisted — taba…\n                                                            \n                                                            \n                                                            \n                                                            \n                                                            \n                                                            \n                                                            \n                                                            \n                                                            \n                                                            \n                                                            \n                                                            \n                                                            \n                                                            \nn next actions · r refresh · l log · a archived · ↗ link · …"
+      },
+      "100": {
+        "runs": [
+          {
+            "text": "taba/wtc status · example · 0s old",
+            "style": {
+              "fontWeight": "700"
+            }
+          },
+          {
+            "text": " · dev",
+            "style": {
+              "opacity": ".65"
+            }
+          },
+          {
+            "text": "                                                            \n                                                                                                    \n",
+            "style": {}
+          },
+          {
+            "text": "REPO                 BRANCH                         PR    C M R     ±    ↑   ↓  ",
+            "style": {
+              "fontWeight": "700"
+            }
+          },
+          {
+            "text": "                    \n",
+            "style": {}
+          },
+          {
+            "text": "widget              ",
+            "style": {
+              "fontWeight": "700"
+            }
+          },
+          {
+            "text": " feature/topic                  ",
+            "style": {}
+          },
+          {
+            "text": "#23 ↗",
+            "style": {
+              "color": "#56b6c2"
+            }
+          },
+          {
+            "text": " ",
+            "style": {}
+          },
+          {
+            "text": "✓",
+            "style": {
+              "color": "#98c379"
+            }
+          },
+          {
+            "text": " ",
+            "style": {}
+          },
+          {
+            "text": "✓",
+            "style": {
+              "color": "#98c379"
+            }
+          },
+          {
+            "text": " ",
+            "style": {}
+          },
+          {
+            "text": "●",
+            "style": {
+              "color": "#e5c07b"
+            }
+          },
+          {
+            "text": "     ",
+            "style": {}
+          },
+          {
+            "text": "·   ",
+            "style": {
+              "opacity": ".65"
+            }
+          },
+          {
+            "text": " ",
+            "style": {}
+          },
+          {
+            "text": "·  ",
+            "style": {
+              "opacity": ".65"
+            }
+          },
+          {
+            "text": " ",
+            "style": {}
+          },
+          {
+            "text": "·  ",
+            "style": {
+              "opacity": ".65"
+            }
+          },
+          {
+            "text": "                    \n                                                                                                    \n",
+            "style": {}
+          },
+          {
+            "text": "PRs",
+            "style": {
+              "fontWeight": "700"
+            }
+          },
+          {
+            "text": "                                                                                                 \n",
+            "style": {}
+          },
+          {
+            "text": "PR    REPO                 STATE      CHECKS MERGE REVIEWS TITLE                                    ",
+            "style": {
+              "opacity": ".65"
+            }
+          },
+          {
+            "text": "\n",
+            "style": {}
+          },
+          {
+            "text": "#23 ↗",
+            "style": {
+              "color": "#56b6c2"
+            }
+          },
+          {
+            "text": " ",
+            "style": {}
+          },
+          {
+            "text": "widget              ",
+            "style": {
+              "fontWeight": "700"
+            }
+          },
+          {
+            "text": " ",
+            "style": {}
+          },
+          {
+            "text": "open      ",
+            "style": {
+              "opacity": ".65"
+            }
+          },
+          {
+            "text": " ",
+            "style": {}
+          },
+          {
+            "text": "✓",
+            "style": {
+              "color": "#98c379"
+            }
+          },
+          {
+            "text": "      ",
+            "style": {}
+          },
+          {
+            "text": "✓",
+            "style": {
+              "color": "#98c379"
+            }
+          },
+          {
+            "text": "     ",
+            "style": {}
+          },
+          {
+            "text": "●",
+            "style": {
+              "color": "#e5c07b"
+            }
+          },
+          {
+            "text": "       ",
+            "style": {}
+          },
+          {
+            "text": "not enlisted — taba pr enlist widget 23 …",
+            "style": {
+              "fontWeight": "700"
+            }
+          },
+          {
+            "text": "\n                                                                                                    \n                                                                                                    \n                                                                                                    \n                                                                                                    \n                                                                                                    \n                                                                                                    \n                                                                                                    \n                                                                                                    \n                                                                                                    \n                                                                                                    \n                                                                                                    \n                                                                                                    \n                                                                                                    \n                                                                                                    \n",
+            "style": {}
+          },
+          {
+            "text": "n next actions · r refresh · l log · a archived · ↗ link · ? help · q quit",
+            "style": {
+              "opacity": ".65"
+            }
+          },
+          {
+            "text": "                          ",
+            "style": {}
+          }
+        ],
+        "plain": "taba/wtc status · example · 0s old · dev                                                            \n                                                                                                    \nREPO                 BRANCH                         PR    C M R     ±    ↑   ↓                      \nwidget               feature/topic                  #23 ↗ ✓ ✓ ●     ·    ·   ·                      \n                                                                                                    \nPRs                                                                                                 \nPR    REPO                 STATE      CHECKS MERGE REVIEWS TITLE                                    \n#23 ↗ widget               open       ✓      ✓     ●       not enlisted — taba pr enlist widget 23 …\n                                                                                                    \n                                                                                                    \n                                                                                                    \n                                                                                                    \n                                                                                                    \n                                                                                                    \n                                                                                                    \n                                                                                                    \n                                                                                                    \n                                                                                                    \n                                                                                                    \n                                                                                                    \n                                                                                                    \n                                                                                                    \nn next actions · r refresh · l log · a archived · ↗ link · ? help · q quit                          "
+      }
+    },
     "work-in-progress": {
       "39": {
         "runs": [

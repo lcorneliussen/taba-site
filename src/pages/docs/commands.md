@@ -25,6 +25,24 @@ their own source baseline; the release baselines below remain unchanged.
 
 Worktrees start detached. Create a branch before committing.
 
+### Collection-local development bases in v0.2.6
+
+| Command | Use it to |
+| --- | --- |
+| `taba repo base set <repo> <branch> --reason '<reason>'` | Record a receiving-local development default without moving existing work |
+| `taba repo base show <repo>` | Inspect the effective ref, source and reason |
+| `taba repo base clear <repo>` | Explicitly restore the registry default, or clear an exact retained orphan key |
+| `taba new <slug> <repo> --repo-base <repo>=origin/beta --base-reason '<reason>'` | Choose the new collection’s base before checkout creation |
+
+These commands are available in [published v0.2.6](https://github.com/lcorneliussen/taba/releases/tag/v0.2.6).
+Use `--collection <directory>` with `repo base` to choose the receiver. Overrides
+are local intent, not Git operations or shared registry changes. New collections
+do not inherit caller overrides. New PR preparation defaults to the effective
+base; an existing PR keeps its actual destination and needs inspection if it
+disagrees. TEST follows the effective development base; PROD remains registry-owned.
+See [base setup and exact orphan recovery](../collections/#choose-a-repositorys-development-base-in-v026)
+and the [tagged contract](https://github.com/lcorneliussen/taba/blob/v0.2.6/docs/repository-bases.md).
+
 ### Retirement assessment in v0.1.62
 
 [Published v0.1.62](https://github.com/lcorneliussen/taba/releases/tag/v0.1.62)
