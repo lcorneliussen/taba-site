@@ -93,3 +93,34 @@ test('native verification fails explicitly when its external capture tool is mis
     await rm(temporary, { recursive: true, force: true });
   }
 });
+
+
+test('local development and transient discovery preserve their separate meanings', () => {
+  const local = scenarios.find(scenario => scenario.id === 'local-development-base');
+  const row = local.snapshot.repos[0];
+  assert.equal(row.development_base.effective_ref, 'origin/beta');
+  assert.equal(row.development_base.registry_ref, 'origin/main');
+  assert.equal(row.tip.branch, 'beta');
+  assert.equal(row.prod.branch, 'main');
+  assert(capture.frames[local.id][100].plain.includes('T✓#106'));
+  assert(capture.frames[local.id][100].plain.includes('P✓#105'));
+  const discovered = scenarios.find(scenario => scenario.id === 'discovered-pr').snapshot.prs[0];
+  assert.equal(discovered.not_enlisted, true);
+  assert.equal(discovered.enlist_command, 'taba pr enlist widget 23');
+  assert(capture.frames['discovered-pr'][100].plain.includes('not enlisted'));
+  assert.equal(capture.release.revision, capture.sourceRevision);
+  assert.equal(capture.release.tag, 'v0.2.6');
+  assert.equal(capture.release.binaryVcsModified, true);
+  assert(!JSON.stringify(capture.release).includes('Path'));
+});
+
+
+test('published media and native replay share the same verified release inputs', async () => {
+  const media = JSON.parse(await readFile(new URL('../public/media/openclaw/provenance.json', import.meta.url), 'utf8'));
+  assert.deepEqual(media.release, capture.release);
+  assert.equal(media.revision, media.release.revision);
+  assert.equal(capture.sourceRevision, capture.release.revision);
+  const embedded = new Map(media.release.embeddedFiles.map(file => ['openclaw-plugin/' + file.path, file.sha256]));
+  for (const module of media.modules) assert.equal(module.sha256, embedded.get(module.modulePath));
+  assert.equal(media.release.tag, 'v0.2.6');
+});

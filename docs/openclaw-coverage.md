@@ -7,28 +7,6 @@ The handbook's general reviewed baseline remains v0.1.51
 of a published release. Newer plugin material is explicitly labeled and linked
 to the audited commit; this is not a full baseline upgrade.
 
-## Assessment
-
-**Good conceptual/agent workflow coverage; previously weak visual and everyday
-Control UI guidance.** The dedicated OpenClaw page already taught hidden owners,
-plans versus execution, adding repositories, project selection, publication,
-catch-up, sandbox git and previews. The homepage's OpenClaw quick-start option,
-command map, upgrades and services pages make the integration discoverable.
-It did not show the plugin or teach what its dense controls mean.
-
-| Capability / evidence in CLI | Before | Disposition in this change |
-| --- | --- | --- |
-| `docs/openclaw.md`: conversation, hidden owners, project boundaries | Good | Retain |
-| Control UI card and panel; `openclaw-plugin/dist/control-ui/v1/index.js` | Named but not demonstrated | Real-renderer screenshots, short video, column/action legend |
-| Personal publish connection and two-step confirmation | Partial | Explicit connection path, confirm step and distinction from shared CLI identity |
-| Installation, doctor, mismatched CLI/plugin, composer selection | Scattered across upgrades and upstream | Add a short setup/diagnosis path; keep admin details upstream |
-| Current parallel work and sub-session controls | Old `--worker` recommendation | Distinguish v0.1.51 from audited current guidance, explain integration/discard controls |
-| PR notifications and configuration in `openclaw.plugin.json` | Basic event mention | Add wake/queue/off and polling summary |
-| Service controls, portals, tunnels | Separate service guide | Add visual orientation and gateway-versus-laptop URL distinction |
-| Project suggestions and decision-model data flow | Already covered | Retain; model configuration remains upstream |
-| Sandbox access, forge support, contributor verification, hardened git | Partial / specialist | Keep detailed contracts upstream; do not turn learning page into admin manual |
-| End-to-end clone, push, catch-up, service lifecycle demos | Absent | Still absent: fixture demo intentionally does not claim backend coverage |
-
 ## Drift that remains
 
 The source-disposition checker reports **10 changed and 13 new inputs** at the
@@ -107,16 +85,3 @@ the same synthetic snapshot timeline using the native status TUI, with native-ke
 selection previews that stop before dispatch. Lossless RGB video, PNGs and casts
 keep terminal text sharp; this is not two live gateway captures.
 
-## Verification for this change
-
-- Astro check: 13 files, no errors, warnings or hints; static build: 13 pages.
-- Internal links/assets: 385 checked successfully.
-- Coverage tests: 7 passed; offline structural check and exact v0.1.51 source
-  snapshot check passed. Current-source drift is expected and remains unaccepted.
-- Recorder: desktop card → panel interaction, expected content, browser error
-  checks and 390px viewport check passed; screenshots visually inspected.
-- Built handbook: screenshot loaded, WebM played in Chromium (8.2 seconds), and
-  390px page width check passed. External links and other browser engines were
-  not tested.
-- Capture workflow YAML parsed and manual/read-only settings checked; hosted
-  workflow execution and live gateway/backend behavior were not verified.
