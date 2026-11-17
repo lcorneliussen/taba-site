@@ -7,7 +7,7 @@ source: https://github.com/lcorneliussen/taba/blob/main/docs/conventions.md
 
 wtc is now taba. A project still depends on names from the wtc days: harness and collection files, user directories, skill names, environment variables, and scripts that call `wtc`. This page lists each of these conventions, the taba name that replaces it, what 0.2.x supports, and how to migrate.
 
-> **This page describes taba 0.2.4 and later,** which ship the `taba-*` skills ([#351](https://github.com/lcorneliussen/taba/issues/351)) and these checks ([#375](https://github.com/lcorneliussen/taba/issues/375)). On 0.2.0 to 0.2.3, `taba doctor` does not report conventions, `harness init` and `skills render` still write the old names, and a harness skill override renamed to `taba-<name>` stops applying. The check of repository files, the line numbers and the *review* marking arrive in the release after 0.2.5.
+> **This page describes taba 0.2.4 and later,** which ship the `taba-*` skills ([#351](https://github.com/lcorneliussen/taba/issues/351)) and these checks ([#375](https://github.com/lcorneliussen/taba/issues/375)). On 0.2.0 to 0.2.3, `taba doctor` does not report conventions, `harness init` and `skills render` still write the old names, and a harness skill override renamed to `taba-<name>` stops applying. Releases 0.2.4 to 0.2.6 check the harness, the collection and your user directories. Checking repository files, line numbers and the *review* marking are **not released**: they depend on [taba#397](https://github.com/lcorneliussen/taba/pull/397), which is still in review.
 
 > **Future taba releases drop the wtc names.** 0.2.x still supports them; later releases are planned to stop with upgrade instructions and then ignore wtc names. See [the stages of the rename](../../wtc-is-now-taba/#the-timeline).
 
@@ -21,7 +21,9 @@ taba doctor --all      # every collection in the workspace; also from the worksp
 taba conventions       # this list, from the installed release
 ```
 
-`doctor` prints each convention it finds once, with its migration step, followed by the places it was found. It checks the harness, the collection, your user directories, and the docs, scripts, configuration and CI tracked in each repository; source code, changelogs and release notes are left out. For old names in files it gives the line numbers. *migrate* means you can move it now. *waiting* means taba has no new name for it yet, or taba moves it itself. *review* marks a file that only mentions wtc in prose: usually that becomes taba too, but a sentence that explains the rename can stay. During 0.2.x, findings never fail `doctor`. `--json` returns the same findings.
+`doctor` prints each convention it finds once, with its migration step, followed by the places it was found. It checks the harness, the collection and your user directories, and counts the old names in each harness file. *migrate* means you can move it now. *waiting* means taba has no new name for it yet, or taba moves it itself. During 0.2.x, findings never fail `doctor`. `--json` returns the same findings.
+
+**Not released yet** ([taba#397](https://github.com/lcorneliussen/taba/pull/397)): checking the docs, scripts, configuration and CI tracked in each repository (source code, changelogs and release notes left out), line numbers for each file, and *review* for files that only mention wtc in prose, where a sentence that explains the rename can stay. Until then, check repository files by hand.
 
 ## Migrate
 
@@ -36,7 +38,7 @@ Ask an agent in one of your collections:
 3. **Harness references:** replace `WTC_*` with `TABA_*`, `wtc` with `taba`, and old skill names such as `/wtc-start` in hooks, scripts, skills and instructions.
 4. **Each collection:** rename `WTC-SCOPE.md` and update `.env.collection.local`.
 5. **Your machine:** rename `wtc.env` in the control root and the user directories once no wtc 0.1.x client on the machine uses them.
-6. Run `taba doctor --all` again until only *waiting* items remain.
+6. Run `taba doctor --all` again until only *waiting* items remain. Released versions don't check repository files, so look through those yourself.
 
 ## The conventions
 

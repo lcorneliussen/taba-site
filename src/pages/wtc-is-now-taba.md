@@ -47,7 +47,7 @@ A project moves through these stages at its own pace. Future stages are **releas
 | --- | --- | --- |
 | 1 | wtc `0.1.x` | Only the wtc names. |
 | 2 | taba `0.2.x`, with wtc names | Released 9 November 2026 with `0.2.0`. Both names work, and nothing has to change. |
-| 3 | taba `0.2.x`, all wtc names migrated | `taba doctor` reports nothing left to migrate. Checked since `0.2.4`; see [Rename conventions](../docs/conventions/). |
+| 3 | taba `0.2.x`, all wtc names migrated | `taba doctor` reports nothing left to migrate in the harness, collections and user directories (since `0.2.4`); repository files are checked by hand for now. See [Rename conventions](../docs/conventions/). |
 | 4 | taba `0.2.x`, with the project flag | The harness's `taba.toml` turns off the wtc names for the project, and `taba doctor` fails while any remain (planned). |
 | 5 | taba `0.3.x` | taba detects wtc names and stops with upgrade instructions instead of using them (planned). |
 | 6 | taba `0.4.x` | No wtc logic is left, and leftover wtc names are ignored (planned). |
