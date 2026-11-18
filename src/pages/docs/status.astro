@@ -1,7 +1,6 @@
 ---
 import Docs from '../../layouts/Docs.astro';
 import StatusExplorer from '../../components/StatusExplorer.astro';
-import replay from '../../data/status-frames.json';
 import { readFileSync } from 'node:fs';
 let localEvidenceRevision = '';
 if (import.meta.env.DEV) {
@@ -40,7 +39,7 @@ const frontmatter = {
   <h2 id="walkthrough">Try complete situations</h2>
   <p>Choose a situation, then compare wide and compact terminals. These are outputs of the actual renderer, with synthetic facts. Optional columns yield on narrower screens; a hidden signal is not a newly unknown fact.</p>
   <StatusExplorer />
-  {localEvidenceRevision && <p><a href={`${base}status-evidence/index.html`}>Inspect the local native capture gallery →</a> {localEvidenceRevision === replay.sourceRevision ? 'These captures match the examples above.' : `These earlier captures are preserved from source ${localEvidenceRevision.slice(0, 7)}; the examples above use ${replay.sourceRevision.slice(0, 7)}.`}</p>}
+  {localEvidenceRevision && <p><a href={`${base}status-evidence/index.html`}>Inspect the local native capture gallery →</a> Source {localEvidenceRevision.slice(0, 7)}; compare each example’s source label. One gallery can cover only one provenance group.</p>}
 
   <h2 id="columns">Columns and numbers in context</h2>
   <table>

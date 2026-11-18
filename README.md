@@ -55,59 +55,47 @@ synthetic snapshots rendered by the CLI, with separate explanations of Git, PR,
 review, build and runtime observations. Its examples identify their published
 CLI source; they do not upgrade the other release-pinned handbook pages.
 
-To regenerate its selectable terminal examples from a clean CLI source checkout:
+Maintenance selects **only the group whose recorded source revision exactly matches
+CLI HEAD**. Current groups are v0.2.6 (13 situations, 39 frames) and v0.2.7
+(freshness and closed/declined PRs, six frames). Use clean checkouts at those tags
+and the existing verified release-evidence inputs (archive, binary and exported
+plugin paths/hashes consumed by the recorder):
 
 ```sh
-npm run status:capture -- /path/to/clean-cli-checkout
+for version in 0.2.6 0.2.7; do
+  npm run status:capture -- "/path/to/cli-v${version}" src/data/status-frames.json \
+    "/path/to/v${version}-release-evidence.json"
+  npm run status:verify-native -- --cli-root "/path/to/cli-v${version}" \
+    --out "/path/outside-both-repos/native-v${version}" --chrome /path/to/chrome
+done
 ```
 
-Without a checkout argument, capture uses `../wtc-cli`. It reuses the site's
-existing terminal ANSI decoder, whose digest is recorded with the examples.
+Capture preserves other groups' frames and provenance; it does not accept a new
+revision or update source, release, parser or fixture fingerprints implicitly.
+Unknown revisions, missing or inconsistent provenance, dirty/changed source,
+changed group inputs and mismatched release evidence fail. Both commands use the
+existing recording-only Go adapter at 100, 60 and 39 columns; neither runs a
+collector, action or agent handoff. Temporary binaries stay outside the sources.
 
-The source must include the status presentation described by the guide. The
-capture records its exact revision and source digest, checks the scenario's
-expected representations, and uses the existing recording-only Go adapter at
-100, 60 and 39 columns. It executes no collector, action or agent handoff. Go
-test binaries stay in a temporary directory; the site's text replay data is
-`src/data/status-frames.json`. Inspect all situations and widths in the local
-preview after regeneration. Unreleased examples stay labeled as development.
+The native verifier requires Go, Node, Chrome and the capture tool's existing
+Python dependencies (`pyte==0.8.2`, `wcwidth==0.9.4`). Each output directory must be
+empty and outside both repositories. Tool bytes are checked against the selected
+source revision; an inspected export can use `--capture-tool` and a full
+`--tool-revision`. Visible PR associations, hidden archived-row absence, native
+text, decoded styles and stable source fingerprints must all pass. Evidence stays
+outside Git. These are real renderer outputs with synthetic inputs, not live
+collector/provider tests or an interaction-geometry certificate; terminal fonts
+can differ.
 
-`npm run test:status` checks the committed replay against a digest of its
-authored snapshot inputs, all wide expectations, and compact identity/state
-invariants; CI runs it without a CLI checkout. The source digest records tracked command-package/internal inputs and Go
-module files; the parser has its own digest. Captures require a clean checkout
-and a stable source fingerprint. To repeat the
-interaction checks against an already running supervised preview:
+`npm run test:status` checks every group's fixture/parser/release metadata,
+visibility and malformed-input invariants, and builds the actual explorer in an
+isolated fixture to assert each rendered source label/link. CI needs no CLI
+checkout. For keyboard navigation, deep links, all width choices, mobile layout
+and no-JavaScript fallback against an already supervised preview:
 
 ```sh
 npm run test:status:browser -- "http://127.0.0.1:${WTC_SITE_PORT}/"
 ```
-
-This checks all scenario/width choices, navigation, direct links, mobile overflow
-and the no-JavaScript fallback. It starts no server or application action.
-
-For an independent native recording check, use the capture tool included in
-that same clean CLI checkout. The bridge verifies its bytes against the replay's
-full source revision before running it. An explicit `--capture-tool` export may
-also be supplied with its full `--tool-revision`. Missing tools, a dirty or
-mismatched source checkout, changed parser, failed assertions, changed source
-fingerprints, and mismatched replay text/styles fail explicitly.
-
-With the tool's Python dependencies (`pyte`, `wcwidth`), Go, Node and an installed
-headless Chrome available:
-
-```sh
-npm run status:verify-native -- --cli-root /path/to/the-same-clean-cli-checkout \
-  --out /path/outside-both-repos/native-status-evidence \
-  --chrome /path/to/chrome-headless-shell
-```
-
-The output directory must be empty. All 36 native frames must pass the tool's
-semantic and terminal-cell assertions and match the committed replay text and
-decoded styles. Source fingerprints must stay stable across every batch. PNG,
-ANSI and provenance files remain outside Git. These are real renderer outputs
-with synthetic inputs; they do not test live collectors or provider accounts.
-PNG fonts/styles can differ from a terminal.
 
 An optional ignored `public/status-evidence` symlink exposes inspected local
 captures in development. Its source is labeled; earlier evidence is not claimed

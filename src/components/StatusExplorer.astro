@@ -1,22 +1,10 @@
 ---
-import { scenarios } from '../data/status-scenarios.mjs';
+import { scenarios, replayGroups } from '../data/status-scenarios.mjs';
 import capture from '../data/status-frames.json';
 type TerminalRun = { text: string; style: Record<string, string | undefined> };
 const frames = capture.frames as Record<string, Record<string, { runs: TerminalRun[]; plain: string }>>;
-type Provenance = { release: { tag: string; revision: string }; sourceRevision: string };
-const replays: Record<string, Provenance> = capture.replays;
-const frameSources: Record<string, string> = capture.frameSources;
-const exampleSources = Object.fromEntries(scenarios.map(({ id }) => {
-  const tag = frameSources[id];
-  const provenance = tag === undefined ? capture : replays[tag];
-  if (!provenance || !/^v\d+\.\d+\.\d+$/.test(provenance.release?.tag)
-    || !/^[a-f0-9]{40}$/.test(provenance.sourceRevision)
-    || provenance.release.revision !== provenance.sourceRevision
-    || (tag !== undefined && tag !== provenance.release.tag)) {
-    throw new Error(`Invalid source provenance for example ${id}`);
-  }
-  return [id, provenance];
-}));
+const exampleSources = Object.fromEntries(replayGroups(capture).flatMap(group =>
+  group.scenarios.map(({ id }) => [id, group.provenance])));
 ---
 <div class="status-explorer" data-status-explorer>
   <div class="explorer-controls" data-controls hidden>

@@ -151,3 +151,66 @@ export const scenarios = [
     ] }), expect: ['SERVICES', 'ready', 'failed'],
   },
 ];
+
+// The recording adapter starts with archived entries hidden and no actions dispatched.
+export function assertFrameVisibility(scenario, plain) {
+  for (const row of scenario.snapshot.prs) {
+    const visible = new RegExp(`^#${row.number}(?:\\s|$)`, 'm').test(plain);
+    if (visible === Boolean(row.archived)) throw Error(`${scenario.id}: incorrect PR visibility for #${row.number}`);
+  }
+  if (scenario.snapshot.prs.some(row => row.archived) && !plain.includes('archived')) {
+    throw Error(`${scenario.id}: missing hidden-archive indication`);
+  }
+}
+
+export function replayGroups(capture, cases = scenarios) {
+  const fail = () => { throw Error('Missing or inconsistent replay provenance'); };
+  const ids = cases.map(s => s.id);
+  if (new Set(ids).size !== ids.length || !capture?.frames || !capture.frameSources || !capture.replays
+    || JSON.stringify(Object.keys(capture.frames).sort()) !== JSON.stringify([...ids].sort())) fail();
+  for (const [id, tag] of Object.entries(capture.frameSources)) {
+    if (!ids.includes(id) || typeof tag !== 'string' || !Object.hasOwn(capture.replays, tag)) fail();
+  }
+  const entries = [[capture.release?.tag, capture], ...Object.entries(capture.replays)];
+  const tags = new Set(), revisions = new Set();
+  const groups = entries.map(([tag, provenance], index) => {
+    const release = provenance?.release;
+    if (!/^v\d+\.\d+\.\d+$/.test(tag) || tag !== release?.tag || tags.has(tag)
+      || !/^[a-f0-9]{40}$/.test(provenance.sourceRevision) || revisions.has(provenance.sourceRevision)
+      || release.revision !== provenance.sourceRevision || provenance.commandPackage !== 'cmd/taba'
+      || provenance.renderer !== 'statusTUIModel.View' || provenance.synthetic !== true || provenance.actionsDispatched !== false
+      || JSON.stringify(provenance.columns) !== '[100,60,39]' || provenance.rows !== 24
+      || typeof release.binaryVcsModified !== 'boolean'
+      || release.binaryModuleVersion !== tag + (release.binaryVcsModified ? '+dirty' : '')
+      || !release.archiveName?.startsWith('taba_' + tag.slice(1) + '_')
+      || !/_(darwin|linux)_(amd64|arm64)\.tar\.gz$/.test(release.archiveName)
+      || !Array.isArray(release.embeddedFiles) || !release.embeddedFiles.length) fail();
+    for (const name of ['sourceDigest', 'parserDigest', 'fixtureDigest']) if (!/^[a-f0-9]{64}$/.test(provenance[name])) fail();
+    for (const name of ['archiveSha256', 'binarySha256']) if (!/^[a-f0-9]{64}$/.test(release[name])) fail();
+    if (new Set(release.embeddedFiles.map(f => f.path)).size !== release.embeddedFiles.length) fail();
+    for (const file of release.embeddedFiles) {
+      if (!/^(?:[A-Za-z0-9_.-]+\/)*[A-Za-z0-9_.-]+$/.test(file.path)
+        || file.path.split('/').some(p => p === '.' || p === '..') || !/^[a-f0-9]{64}$/.test(file.sha256)) fail();
+    }
+    tags.add(tag); revisions.add(provenance.sourceRevision);
+    const selected = cases.filter(s => index === 0 ? !Object.hasOwn(capture.frameSources, s.id) : capture.frameSources[s.id] === tag);
+    if (!selected.length) fail();
+    for (const scenario of selected) {
+      if (scenario.snapshot.prs.some(row => row.archived && row.on_branch)) fail();
+      const frames = capture.frames[scenario.id];
+      if (JSON.stringify(Object.keys(frames).sort()) !== '["100","39","60"]') fail();
+      for (const frame of Object.values(frames)) {
+        if (!Array.isArray(frame.runs) || frame.runs.map(run => run.text).join('') !== frame.plain) fail();
+        assertFrameVisibility(scenario, frame.plain);
+      }
+    }
+    return { tag, provenance, scenarios: selected };
+  });
+  return groups;
+}
+
+export function selectReplay(capture, revision, cases = scenarios) {
+  const matches = replayGroups(capture, cases).filter(group => group.provenance.sourceRevision === revision);
+  if (matches.length !== 1) throw Error('CLI revision must match exactly one recorded provenance group');
+  return matches[0];
+}

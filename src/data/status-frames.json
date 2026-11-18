@@ -77,7 +77,7 @@
   "sourceScope": "tracked command package, internal, go.mod and go.sum",
   "commandPackage": "cmd/taba",
   "parserDigest": "8a59c1d7483322124ee27ca7d97f5fee0fd17ba15a411b2a0b83f2df07d5637c",
-  "fixtureDigest": "345b5e9878ef739fe15939609758126f179e7cfceea4fc0894919e227b0f414b",
+  "fixtureDigest": "eec3eafe79199a151ad4be0ffc2ec7ee4a885c7fe051f4f0af8c6272e99a3e17",
   "renderer": "statusTUIModel.View",
   "synthetic": true,
   "actionsDispatched": false,
