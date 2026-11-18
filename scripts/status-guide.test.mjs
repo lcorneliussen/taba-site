@@ -29,7 +29,7 @@ for (const scenario of scenarios) {
       assert.equal(frame.runs.map(run => run.text).join(''), frame.plain);
       assert(!/[\x00-\x08\x0b-\x1f\x7f]/.test(frame.plain));
       assert(frame.plain.includes('taba/wtc status'));
-      for (const row of scenario.snapshot.prs) assert(frame.plain.includes('#' + row.number), `${width} columns lost PR identity`);
+      for (const row of scenario.snapshot.prs.filter(row => !row.archived)) assert(frame.plain.includes('#' + row.number), `${width} columns lost PR identity`);
       for (const run of frame.runs) for (const name of Object.keys(run.style)) assert(['color', 'backgroundColor', 'fontWeight', 'fontStyle', 'textDecoration', 'opacity'].includes(name));
     }
     for (const expected of scenario.expect) assert(frames[100].plain.includes(expected), `Wide representation lost ${expected}`);
@@ -109,18 +109,71 @@ test('local development and transient discovery preserve their separate meanings
   assert.equal(discovered.enlist_command, 'taba pr enlist widget 23');
   assert(capture.frames['discovered-pr'][100].plain.includes('not enlisted'));
   assert.equal(capture.release.revision, capture.sourceRevision);
-  assert.equal(capture.release.tag, 'v0.2.6');
-  assert.equal(capture.release.binaryVcsModified, true);
+  assert.equal(capture.release.binaryModuleVersion, capture.release.tag + (capture.release.binaryVcsModified ? '+dirty' : ''));
   assert(!JSON.stringify(capture.release).includes('Path'));
 });
 
 
-test('published media and native replay share the same verified release inputs', async () => {
+function assertRelease(release, revision) {
+  assert.match(release.tag, /^v\d+\.\d+\.\d+$/);
+  assert.match(revision, /^[a-f0-9]{40}$/);
+  assert.equal(release.revision, revision);
+  assert.match(release.archiveSha256, /^[a-f0-9]{64}$/);
+  assert.match(release.binarySha256, /^[a-f0-9]{64}$/);
+  assert.equal(typeof release.binaryVcsModified, 'boolean');
+  assert.equal(release.binaryModuleVersion, release.tag + (release.binaryVcsModified ? '+dirty' : ''));
+  assert(release.embeddedFiles.length > 0);
+  assert.equal(new Set(release.embeddedFiles.map(file => file.path)).size, release.embeddedFiles.length);
+  for (const file of release.embeddedFiles) assert.match(file.sha256, /^[a-f0-9]{64}$/);
+}
+
+test('independently versioned media and native replays retain verified release identities', async () => {
   const media = JSON.parse(await readFile(new URL('../public/media/openclaw/provenance.json', import.meta.url), 'utf8'));
-  assert.deepEqual(media.release, capture.release);
-  assert.equal(media.revision, media.release.revision);
-  assert.equal(capture.sourceRevision, capture.release.revision);
+  assertRelease(media.release, media.revision);
+  assertRelease(capture.release, capture.sourceRevision);
+  for (const provenance of Object.values(capture.replays)) {
+    assertRelease(provenance.release, provenance.sourceRevision);
+    assert.equal(provenance.release.binaryVcsModified, false);
+    const embedded = new Map(provenance.release.embeddedFiles.map(file => ['openclaw-plugin/' + file.path, file.sha256]));
+    for (const module of media.modules) assert.equal(module.sha256, embedded.get(module.modulePath), 'Retained media renderer no longer matches this replay release');
+  }
   const embedded = new Map(media.release.embeddedFiles.map(file => ['openclaw-plugin/' + file.path, file.sha256]));
   for (const module of media.modules) assert.equal(module.sha256, embedded.get(module.modulePath));
-  assert.equal(media.release.tag, 'v0.2.6');
+});
+
+test('affected frame provenance covers exactly its inputs without relabeling retained examples', () => {
+  assert.deepEqual(Object.keys(capture.frameSources).sort(), ['closed-pr', 'freshness']);
+  for (const [tag, provenance] of Object.entries(capture.replays)) {
+    assert.equal(tag, provenance.release.tag);
+    assert.deepEqual(provenance.columns, [100, 60, 39]);
+    assert.match(provenance.sourceDigest, /^[a-f0-9]{64}$/);
+    assert.equal(provenance.parserDigest, capture.parserDigest);
+    const selected = scenarios.filter(scenario => capture.frameSources[scenario.id] === tag);
+    const digest = createHash('sha256').update(JSON.stringify(selected.map(({id, snapshot}) => ({id, snapshot})))).digest('hex');
+    assert.equal(provenance.fixtureDigest, digest);
+  }
+  for (const tag of Object.values(capture.frameSources)) assert(capture.replays[tag]);
+});
+
+test('freshness retains compact age, unknown-time and landing distinctions at every width', () => {
+  for (const width of capture.columns) {
+    const plain = capture.frames.freshness[width].plain;
+    assert.match(plain, /s:\d+d/);
+    assert.match(plain, /d:\d+d/);
+    assert(plain.includes('never'));
+    assert(plain.includes('merged'));
+    assert(plain.includes('landing unknown; inspect branch'));
+  }
+});
+
+test('closed and declined rows remain distinct from merged completion and hidden archives', () => {
+  for (const width of capture.columns) {
+    const frame = capture.frames['closed-pr'][width];
+    assert(frame.plain.includes('closed'));
+    assert(frame.plain.includes('declined'));
+    assert(frame.plain.includes('archived'));
+    assert(frame.plain.includes('PR CLOSED'));
+    assert(!frame.plain.includes('#23'), 'Archived PR must be hidden until explicitly expanded');
+    assert(!frame.plain.includes('built'), 'Unmerged closure must not invent a successful build');
+  }
 });
