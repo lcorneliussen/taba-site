@@ -43,6 +43,20 @@ disagrees. TEST follows the effective development base; PROD remains registry-ow
 See [base setup and exact orphan recovery](../collections/#choose-a-repositorys-development-base-in-v026)
 and the [tagged contract](https://github.com/lcorneliussen/taba/blob/v0.2.6/docs/repository-bases.md).
 
+### Configuration requirements in v0.2.7
+
+| Command | Use it to |
+| --- | --- |
+| `taba config list --json` | Inspect declared requirements and effective presence without values |
+| `taba secrets list --requirements --json` | Explicitly select the same requirements inventory; default secrets listing remains link-state only |
+| `taba config lint --json` | Validate schemas and provided owned key names without requiring credentials |
+| `taba doctor --example web:config/dev.env.example` | Check readiness using an explicitly selected owned example |
+
+See [configuration and secrets](../configuration/#example-backed-requirements-in-v027)
+for tracked-example opt-in, source ownership, explicit process inspection and
+limits. Full options and annotation syntax are in the
+[v0.2.7 requirements contract](https://github.com/lcorneliussen/taba/blob/v0.2.7/docs/configuration-requirements.md).
+
 ### Retirement assessment in v0.1.62
 
 [Published v0.1.62](https://github.com/lcorneliussen/taba/releases/tag/v0.1.62)
