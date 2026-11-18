@@ -3,6 +3,20 @@ import { scenarios } from '../data/status-scenarios.mjs';
 import capture from '../data/status-frames.json';
 type TerminalRun = { text: string; style: Record<string, string | undefined> };
 const frames = capture.frames as Record<string, Record<string, { runs: TerminalRun[]; plain: string }>>;
+type Provenance = { release: { tag: string; revision: string }; sourceRevision: string };
+const replays: Record<string, Provenance> = capture.replays;
+const frameSources: Record<string, string> = capture.frameSources;
+const exampleSources = Object.fromEntries(scenarios.map(({ id }) => {
+  const tag = frameSources[id];
+  const provenance = tag === undefined ? capture : replays[tag];
+  if (!provenance || !/^v\d+\.\d+\.\d+$/.test(provenance.release?.tag)
+    || !/^[a-f0-9]{40}$/.test(provenance.sourceRevision)
+    || provenance.release.revision !== provenance.sourceRevision
+    || (tag !== undefined && tag !== provenance.release.tag)) {
+    throw new Error(`Invalid source provenance for example ${id}`);
+  }
+  return [id, provenance];
+}));
 ---
 <div class="status-explorer" data-status-explorer>
   <div class="explorer-controls" data-controls hidden>
@@ -22,7 +36,7 @@ const frames = capture.frames as Record<string, Record<string, { runs: TerminalR
     </fieldset>
   </div>
   {scenarios.map(scenario => <section class="status-situation" id={`example-${scenario.id}`} data-situation={scenario.id} aria-labelledby={`title-${scenario.id}`}>
-    <p class="situation-group">{scenario.group}</p>
+    <p class="situation-group">{scenario.group} · <a href={`https://github.com/lcorneliussen/taba/tree/${exampleSources[scenario.id].sourceRevision}`}>{exampleSources[scenario.id].release.tag} source</a></p>
     <h3 id={`title-${scenario.id}`}>{scenario.title}</h3>
     <p class="situation-summary">{scenario.summary}</p>
     {capture.columns.map(width => <details class="terminal-variant" data-width={width} open={width === 100}>
@@ -36,7 +50,7 @@ const frames = capture.frames as Record<string, Record<string, { runs: TerminalR
     </dl>
     <p class="inspect-next"><strong>What to inspect next</strong> {scenario.inspect}</p>
   </section>)}
-  <p class="capture-note">Read-only synthetic snapshots, captured from the actual CLI renderer at <a href={`https://github.com/lcorneliussen/taba/tree/${capture.sourceRevision}`}>{capture.sourceRevision.slice(0, 7)}</a>. Changing the example or width does not contact a forge or run an action. Terminal fonts and colors can differ.</p>
+  <p class="capture-note">Read-only synthetic snapshots from the actual CLI renderer. Changing the example or width does not contact a forge or run an action. Terminal fonts and colors can differ.</p>
 </div>
 <script>
   for (const explorer of document.querySelectorAll<HTMLElement>('[data-status-explorer]')) {
