@@ -77,7 +77,7 @@
   "sourceScope": "tracked command package, internal, go.mod and go.sum",
   "commandPackage": "cmd/taba",
   "parserDigest": "8a59c1d7483322124ee27ca7d97f5fee0fd17ba15a411b2a0b83f2df07d5637c",
-  "fixtureDigest": "20d74a346e001e4b5985379758f128897329c77ea427a8795e8991c1d2fe470d",
+  "fixtureDigest": "eec3eafe79199a151ad4be0ffc2ec7ee4a885c7fe051f4f0af8c6272e99a3e17",
   "renderer": "statusTUIModel.View",
   "synthetic": true,
   "actionsDispatched": false,
@@ -8468,7 +8468,7 @@
             }
           },
           {
-            "text": "\n                                       \n",
+            "text": "\n\n",
             "style": {}
           },
           {
@@ -8498,7 +8498,7 @@
             }
           },
           {
-            "text": "\n                                       \n",
+            "text": "\n\n",
             "style": {}
           },
           {
@@ -8508,7 +8508,7 @@
             }
           },
           {
-            "text": "                                    \n",
+            "text": "\n",
             "style": {}
           },
           {
@@ -8518,7 +8518,97 @@
             }
           },
           {
-            "text": "\n(none enlisted)                        \n",
+            "text": "\n",
+            "style": {}
+          },
+          {
+            "text": "#7  ↗",
+            "style": {
+              "color": "#56b6c2"
+            }
+          },
+          {
+            "text": " ",
+            "style": {}
+          },
+          {
+            "text": "widget    ",
+            "style": {
+              "fontWeight": "700"
+            }
+          },
+          {
+            "text": " ",
+            "style": {}
+          },
+          {
+            "text": "closed  ",
+            "style": {
+              "color": "#e5c07b"
+            }
+          },
+          {
+            "text": " ",
+            "style": {}
+          },
+          {
+            "text": "Closed widge…",
+            "style": {
+              "fontWeight": "700"
+            }
+          },
+          {
+            "text": "\n",
+            "style": {}
+          },
+          {
+            "text": "#48 ↗",
+            "style": {
+              "color": "#56b6c2"
+            }
+          },
+          {
+            "text": " ",
+            "style": {}
+          },
+          {
+            "text": "gadget    ",
+            "style": {
+              "fontWeight": "700"
+            }
+          },
+          {
+            "text": " ",
+            "style": {}
+          },
+          {
+            "text": "declined",
+            "style": {
+              "opacity": ".65"
+            }
+          },
+          {
+            "text": " ",
+            "style": {}
+          },
+          {
+            "text": "Declined gad…",
+            "style": {
+              "fontWeight": "700"
+            }
+          },
+          {
+            "text": "\n",
+            "style": {}
+          },
+          {
+            "text": "archived (1) · a                       ",
+            "style": {
+              "opacity": ".65"
+            }
+          },
+          {
+            "text": "\n",
             "style": {}
           },
           {
@@ -8528,7 +8618,7 @@
             }
           },
           {
-            "text": "\n                                       \n                                       \n                                       \n                                       \n                                       \n                                       \n                                       \n                                       \n                                       \n                                       \n                                       \n                                       \n                                       \n",
+            "text": "\n\n\n\n\n\n\n\n\n\n\n\n",
             "style": {}
           },
           {
@@ -8538,7 +8628,7 @@
             }
           }
         ],
-        "plain": "taba/wtc status · example · 0s old · d…\n                                       \nREPO     BRANCH           PR C M R ±   \nwidget   feature/topic    ·        ·   \n                                       \nPRs                                    \nPR    REPO       STATE    TITLE        \n(none enlisted)                        \n⚠ widget on feature/topic: PR CLOSED; …\n                                       \n                                       \n                                       \n                                       \n                                       \n                                       \n                                       \n                                       \n                                       \n                                       \n                                       \n                                       \n                                       \nn next actions · r refresh · l log · a…"
+        "plain": "taba/wtc status · example · 0s old · d…\n\nREPO     BRANCH           PR C M R ±   \nwidget   feature/topic    ·        ·   \n\nPRs\nPR    REPO       STATE    TITLE        \n#7  ↗ widget     closed   Closed widge…\n#48 ↗ gadget     declined Declined gad…\narchived (1) · a                       \n⚠ widget on feature/topic: PR CLOSED; …\n\n\n\n\n\n\n\n\n\n\n\nn next actions · r refresh · l log · a…"
       },
       "60": {
         "runs": [
@@ -8555,7 +8645,7 @@
             }
           },
           {
-            "text": "                    \n                                                            \n",
+            "text": "\n\n",
             "style": {}
           },
           {
@@ -8605,7 +8695,7 @@
             }
           },
           {
-            "text": "\n                                                            \n",
+            "text": "\n\n",
             "style": {}
           },
           {
@@ -8615,7 +8705,7 @@
             }
           },
           {
-            "text": "                                                         \n",
+            "text": "\n",
             "style": {}
           },
           {
@@ -8625,7 +8715,157 @@
             }
           },
           {
-            "text": "\n(none enlisted)                                             \n",
+            "text": "\n",
+            "style": {}
+          },
+          {
+            "text": "#7  ↗",
+            "style": {
+              "color": "#56b6c2"
+            }
+          },
+          {
+            "text": " ",
+            "style": {}
+          },
+          {
+            "text": "widget          ",
+            "style": {
+              "fontWeight": "700"
+            }
+          },
+          {
+            "text": " ",
+            "style": {}
+          },
+          {
+            "text": "closed    ",
+            "style": {
+              "color": "#e5c07b"
+            }
+          },
+          {
+            "text": " ",
+            "style": {}
+          },
+          {
+            "text": "✓",
+            "style": {
+              "color": "#98c379"
+            }
+          },
+          {
+            "text": " ",
+            "style": {}
+          },
+          {
+            "text": "·",
+            "style": {
+              "opacity": ".65"
+            }
+          },
+          {
+            "text": " ",
+            "style": {}
+          },
+          {
+            "text": "✓",
+            "style": {
+              "color": "#98c379"
+            }
+          },
+          {
+            "text": " ",
+            "style": {}
+          },
+          {
+            "text": "Closed widget change",
+            "style": {
+              "fontWeight": "700"
+            }
+          },
+          {
+            "text": "\n",
+            "style": {}
+          },
+          {
+            "text": "#48 ↗",
+            "style": {
+              "color": "#56b6c2"
+            }
+          },
+          {
+            "text": " ",
+            "style": {}
+          },
+          {
+            "text": "gadget          ",
+            "style": {
+              "fontWeight": "700"
+            }
+          },
+          {
+            "text": " ",
+            "style": {}
+          },
+          {
+            "text": "declined  ",
+            "style": {
+              "opacity": ".65"
+            }
+          },
+          {
+            "text": " ",
+            "style": {}
+          },
+          {
+            "text": "✓",
+            "style": {
+              "color": "#98c379"
+            }
+          },
+          {
+            "text": " ",
+            "style": {}
+          },
+          {
+            "text": "·",
+            "style": {
+              "opacity": ".65"
+            }
+          },
+          {
+            "text": " ",
+            "style": {}
+          },
+          {
+            "text": "✓",
+            "style": {
+              "color": "#98c379"
+            }
+          },
+          {
+            "text": " ",
+            "style": {}
+          },
+          {
+            "text": "Declined gadget cha…",
+            "style": {
+              "fontWeight": "700"
+            }
+          },
+          {
+            "text": "\n",
+            "style": {}
+          },
+          {
+            "text": "▸ archived (1) · a to show                                  ",
+            "style": {
+              "opacity": ".65"
+            }
+          },
+          {
+            "text": "\n",
             "style": {}
           },
           {
@@ -8635,7 +8875,7 @@
             }
           },
           {
-            "text": "\n                                                            \n                                                            \n                                                            \n                                                            \n                                                            \n                                                            \n                                                            \n                                                            \n                                                            \n                                                            \n                                                            \n                                                            \n                                                            \n",
+            "text": "\n\n\n\n\n\n\n\n\n\n\n\n",
             "style": {}
           },
           {
@@ -8645,7 +8885,7 @@
             }
           }
         ],
-        "plain": "taba/wtc status · example · 0s old · dev                    \n                                                            \nREPO             BRANCH         PR  C M R       ±    ↑   ↓  \nwidget           feature/topic  ·               ·    ·   ·  \n                                                            \nPRs                                                         \nPR    REPO             STATE      C M R TITLE               \n(none enlisted)                                             \n⚠ widget on feature/topic: PR CLOSED; catch-up              \n                                                            \n                                                            \n                                                            \n                                                            \n                                                            \n                                                            \n                                                            \n                                                            \n                                                            \n                                                            \n                                                            \n                                                            \n                                                            \nn next actions · r refresh · l log · a archived · ↗ link · …"
+        "plain": "taba/wtc status · example · 0s old · dev\n\nREPO             BRANCH         PR  C M R       ±    ↑   ↓  \nwidget           feature/topic  ·               ·    ·   ·  \n\nPRs\nPR    REPO             STATE      C M R TITLE               \n#7  ↗ widget           closed     ✓ · ✓ Closed widget change\n#48 ↗ gadget           declined   ✓ · ✓ Declined gadget cha…\n▸ archived (1) · a to show                                  \n⚠ widget on feature/topic: PR CLOSED; catch-up              \n\n\n\n\n\n\n\n\n\n\n\nn next actions · r refresh · l log · a archived · ↗ link · …"
       },
       "100": {
         "runs": [
@@ -8662,7 +8902,7 @@
             }
           },
           {
-            "text": "                                                            \n                                                                                                    \n",
+            "text": "\n\n",
             "style": {}
           },
           {
@@ -8672,7 +8912,7 @@
             }
           },
           {
-            "text": "                    \n",
+            "text": "\n",
             "style": {}
           },
           {
@@ -8712,7 +8952,7 @@
             }
           },
           {
-            "text": "                    \n                                                                                                    \n",
+            "text": "\n\n",
             "style": {}
           },
           {
@@ -8722,7 +8962,7 @@
             }
           },
           {
-            "text": "                                                                                                 \n",
+            "text": "\n",
             "style": {}
           },
           {
@@ -8732,7 +8972,157 @@
             }
           },
           {
-            "text": "\n(none enlisted)                                                                                     \n",
+            "text": "\n",
+            "style": {}
+          },
+          {
+            "text": "#7  ↗",
+            "style": {
+              "color": "#56b6c2"
+            }
+          },
+          {
+            "text": " ",
+            "style": {}
+          },
+          {
+            "text": "widget              ",
+            "style": {
+              "fontWeight": "700"
+            }
+          },
+          {
+            "text": " ",
+            "style": {}
+          },
+          {
+            "text": "closed    ",
+            "style": {
+              "color": "#e5c07b"
+            }
+          },
+          {
+            "text": " ",
+            "style": {}
+          },
+          {
+            "text": "✓",
+            "style": {
+              "color": "#98c379"
+            }
+          },
+          {
+            "text": "      ",
+            "style": {}
+          },
+          {
+            "text": "·",
+            "style": {
+              "opacity": ".65"
+            }
+          },
+          {
+            "text": "     ",
+            "style": {}
+          },
+          {
+            "text": "✓",
+            "style": {
+              "color": "#98c379"
+            }
+          },
+          {
+            "text": "       ",
+            "style": {}
+          },
+          {
+            "text": "Closed widget change                     ",
+            "style": {
+              "fontWeight": "700"
+            }
+          },
+          {
+            "text": "\n",
+            "style": {}
+          },
+          {
+            "text": "#48 ↗",
+            "style": {
+              "color": "#56b6c2"
+            }
+          },
+          {
+            "text": " ",
+            "style": {}
+          },
+          {
+            "text": "gadget              ",
+            "style": {
+              "fontWeight": "700"
+            }
+          },
+          {
+            "text": " ",
+            "style": {}
+          },
+          {
+            "text": "declined  ",
+            "style": {
+              "opacity": ".65"
+            }
+          },
+          {
+            "text": " ",
+            "style": {}
+          },
+          {
+            "text": "✓",
+            "style": {
+              "color": "#98c379"
+            }
+          },
+          {
+            "text": "      ",
+            "style": {}
+          },
+          {
+            "text": "·",
+            "style": {
+              "opacity": ".65"
+            }
+          },
+          {
+            "text": "     ",
+            "style": {}
+          },
+          {
+            "text": "✓",
+            "style": {
+              "color": "#98c379"
+            }
+          },
+          {
+            "text": "       ",
+            "style": {}
+          },
+          {
+            "text": "Declined gadget change                   ",
+            "style": {
+              "fontWeight": "700"
+            }
+          },
+          {
+            "text": "\n",
+            "style": {}
+          },
+          {
+            "text": "▸ archived (1) · a to show                                                                          ",
+            "style": {
+              "opacity": ".65"
+            }
+          },
+          {
+            "text": "\n",
             "style": {}
           },
           {
@@ -8742,7 +9132,7 @@
             }
           },
           {
-            "text": "\n                                                                                                    \n                                                                                                    \n                                                                                                    \n                                                                                                    \n                                                                                                    \n                                                                                                    \n                                                                                                    \n                                                                                                    \n                                                                                                    \n                                                                                                    \n                                                                                                    \n                                                                                                    \n                                                                                                    \n",
+            "text": "\n\n\n\n\n\n\n\n\n\n\n\n",
             "style": {}
           },
           {
@@ -8750,13 +9140,9 @@
             "style": {
               "opacity": ".65"
             }
-          },
-          {
-            "text": "                          ",
-            "style": {}
           }
         ],
-        "plain": "taba/wtc status · example · 0s old · dev                                                            \n                                                                                                    \nREPO                 BRANCH                         PR  C M R       ±    ↑   ↓                      \nwidget               feature/topic                  ·               ·    ·   ·                      \n                                                                                                    \nPRs                                                                                                 \nPR    REPO                 STATE      CHECKS MERGE REVIEWS TITLE                                    \n(none enlisted)                                                                                     \n⚠ widget on feature/topic: PR CLOSED; catch-up                                                      \n                                                                                                    \n                                                                                                    \n                                                                                                    \n                                                                                                    \n                                                                                                    \n                                                                                                    \n                                                                                                    \n                                                                                                    \n                                                                                                    \n                                                                                                    \n                                                                                                    \n                                                                                                    \n                                                                                                    \nn next actions · r refresh · l log · a archived · ↗ link · ? help · q quit                          "
+        "plain": "taba/wtc status · example · 0s old · dev\n\nREPO                 BRANCH                         PR  C M R       ±    ↑   ↓  \nwidget               feature/topic                  ·               ·    ·   ·  \n\nPRs\nPR    REPO                 STATE      CHECKS MERGE REVIEWS TITLE                                    \n#7  ↗ widget               closed     ✓      ·     ✓       Closed widget change                     \n#48 ↗ gadget               declined   ✓      ·     ✓       Declined gadget change                   \n▸ archived (1) · a to show                                                                          \n⚠ widget on feature/topic: PR CLOSED; catch-up                                                      \n\n\n\n\n\n\n\n\n\n\n\nn next actions · r refresh · l log · a archived · ↗ link · ? help · q quit"
       }
     },
     "freshness": {
@@ -8775,7 +9161,7 @@
             }
           },
           {
-            "text": "\n                                       \n",
+            "text": "\n\n",
             "style": {}
           },
           {
@@ -8805,7 +9191,7 @@
             }
           },
           {
-            "text": " stale      \n",
+            "text": " stale\n",
             "style": {}
           },
           {
@@ -8825,7 +9211,7 @@
             }
           },
           {
-            "text": " deferred   \n",
+            "text": " deferred\n",
             "style": {}
           },
           {
@@ -8855,7 +9241,7 @@
             }
           },
           {
-            "text": " feature/… ·                   \n                                       \n",
+            "text": " feature/… ·\n\n",
             "style": {}
           },
           {
@@ -8865,7 +9251,7 @@
             }
           },
           {
-            "text": "                                    \n",
+            "text": "\n",
             "style": {}
           },
           {
@@ -8899,7 +9285,7 @@
             "style": {}
           },
           {
-            "text": "stale   ",
+            "text": "s:317d  ",
             "style": {
               "opacity": ".65"
             }
@@ -8909,7 +9295,7 @@
             "style": {}
           },
           {
-            "text": "stale: la…",
+            "text": "Improve t…",
             "style": {
               "fontWeight": "700"
             }
@@ -8939,7 +9325,7 @@
             "style": {}
           },
           {
-            "text": "deferred",
+            "text": "d:317d  ",
             "style": {
               "opacity": ".65"
             }
@@ -8949,7 +9335,7 @@
             "style": {}
           },
           {
-            "text": "deferred:…",
+            "text": "Improve t…",
             "style": {
               "fontWeight": "700"
             }
@@ -8979,7 +9365,7 @@
             "style": {}
           },
           {
-            "text": "unavail…",
+            "text": "never   ",
             "style": {
               "opacity": ".65"
             }
@@ -8989,7 +9375,7 @@
             "style": {}
           },
           {
-            "text": "unavailab…",
+            "text": "Improve t…",
             "style": {
               "fontWeight": "700"
             }
@@ -9045,7 +9431,7 @@
             }
           },
           {
-            "text": "        \n                                       \n                                       \n                                       \n                                       \n                                       \n                                       \n                                       \n",
+            "text": "\n\n\n\n\n\n\n\n",
             "style": {}
           },
           {
@@ -9055,7 +9441,7 @@
             }
           }
         ],
-        "plain": "taba/wtc status · example · 0s old · d…\n                                       \nREPO     BRANCH    PR       C M R      \nwidget   feature/… #7     ↗ stale      \ngadget   feature/… #48    ↗ deferred   \ntoolkit  feature/… #12345 ↗ unavailable\nlibrary  feature/… ·                   \n                                       \nPRs                                    \nPR       REPO       STATE    TITLE     \n#7     ↗ widget     stale    stale: la…\n#48    ↗ gadget     deferred deferred:…\n#12345 ↗ toolkit    unavail… unavailab…\n#23    ↗ library    merged   Improve t…\nlanding unknown; inspect branch        \n                                       \n                                       \n                                       \n                                       \n                                       \n                                       \n                                       \nn next actions · r refresh · l log · a…"
+        "plain": "taba/wtc status · example · 0s old · d…\n\nREPO     BRANCH    PR       C M R      \nwidget   feature/… #7     ↗ stale\ngadget   feature/… #48    ↗ deferred\ntoolkit  feature/… #12345 ↗ unavailable\nlibrary  feature/… ·\n\nPRs\nPR       REPO       STATE    TITLE     \n#7     ↗ widget     s:317d   Improve t…\n#48    ↗ gadget     d:317d   Improve t…\n#12345 ↗ toolkit    never    Improve t…\n#23    ↗ library    merged   Improve t…\nlanding unknown; inspect branch\n\n\n\n\n\n\n\nn next actions · r refresh · l log · a…"
       },
       "60": {
         "runs": [
@@ -9072,7 +9458,7 @@
             }
           },
           {
-            "text": "                    \n                                                            \n",
+            "text": "\n\n",
             "style": {}
           },
           {
@@ -9272,7 +9658,7 @@
             }
           },
           {
-            "text": "\n                                                            \n",
+            "text": "\n\n",
             "style": {}
           },
           {
@@ -9282,7 +9668,7 @@
             }
           },
           {
-            "text": "                                                         \n",
+            "text": "\n",
             "style": {}
           },
           {
@@ -9316,7 +9702,7 @@
             "style": {}
           },
           {
-            "text": "stale     ",
+            "text": "s:317d    ",
             "style": {
               "opacity": ".65"
             }
@@ -9356,7 +9742,7 @@
             "style": {}
           },
           {
-            "text": "stale: last open…",
+            "text": "Improve the widg…",
             "style": {
               "fontWeight": "700"
             }
@@ -9386,7 +9772,7 @@
             "style": {}
           },
           {
-            "text": "deferred  ",
+            "text": "d:317d    ",
             "style": {
               "opacity": ".65"
             }
@@ -9426,7 +9812,7 @@
             "style": {}
           },
           {
-            "text": "deferred: last o…",
+            "text": "Improve the widg…",
             "style": {
               "fontWeight": "700"
             }
@@ -9456,7 +9842,7 @@
             "style": {}
           },
           {
-            "text": "unavailab…",
+            "text": "never     ",
             "style": {
               "opacity": ".65"
             }
@@ -9496,7 +9882,7 @@
             "style": {}
           },
           {
-            "text": "unavailable: not…",
+            "text": "Improve the widg…",
             "style": {
               "fontWeight": "700"
             }
@@ -9582,7 +9968,7 @@
             }
           },
           {
-            "text": "                             \n                                                            \n                                                            \n                                                            \n                                                            \n                                                            \n                                                            \n                                                            \n",
+            "text": "\n\n\n\n\n\n\n\n",
             "style": {}
           },
           {
@@ -9592,7 +9978,7 @@
             }
           }
         ],
-        "plain": "taba/wtc status · example · 0s old · dev                    \n                                                            \nREPO             BRANCH    PR       C M R       ±    ↑   ↓  \nwidget           feature/… #7     ↗ stale       ·    ·   ·  \ngadget           feature/… #48    ↗ deferred    ·    ·   ·  \ntoolkit          feature/… #12345 ↗ unavailable ·    ·   ·  \nlibrary          feature/… ·                    ·    ·   ·  \n                                                            \nPRs                                                         \nPR       REPO             STATE      C M R TITLE            \n#7     ↗ widget           stale      ✓ ✓ ✓ stale: last open…\n#48    ↗ gadget           deferred   ✓ ✓ ✓ deferred: last o…\n#12345 ↗ toolkit          unavailab… · · · unavailable: not…\n#23    ↗ library          merged     · · · Improve the libr…\nlanding unknown; inspect branch                             \n                                                            \n                                                            \n                                                            \n                                                            \n                                                            \n                                                            \n                                                            \nn next actions · r refresh · l log · a archived · ↗ link · …"
+        "plain": "taba/wtc status · example · 0s old · dev\n\nREPO             BRANCH    PR       C M R       ±    ↑   ↓  \nwidget           feature/… #7     ↗ stale       ·    ·   ·  \ngadget           feature/… #48    ↗ deferred    ·    ·   ·  \ntoolkit          feature/… #12345 ↗ unavailable ·    ·   ·  \nlibrary          feature/… ·                    ·    ·   ·  \n\nPRs\nPR       REPO             STATE      C M R TITLE            \n#7     ↗ widget           s:317d     ✓ ✓ ✓ Improve the widg…\n#48    ↗ gadget           d:317d     ✓ ✓ ✓ Improve the widg…\n#12345 ↗ toolkit          never      · · · Improve the widg…\n#23    ↗ library          merged     · · · Improve the libr…\nlanding unknown; inspect branch\n\n\n\n\n\n\n\nn next actions · r refresh · l log · a archived · ↗ link · …"
       },
       "100": {
         "runs": [
@@ -9609,7 +9995,7 @@
             }
           },
           {
-            "text": "                                                            \n                                                                                                    \n",
+            "text": "\n\n",
             "style": {}
           },
           {
@@ -9619,7 +10005,7 @@
             }
           },
           {
-            "text": "               \n",
+            "text": "\n",
             "style": {}
           },
           {
@@ -9669,7 +10055,7 @@
             }
           },
           {
-            "text": "               \n",
+            "text": "\n",
             "style": {}
           },
           {
@@ -9719,7 +10105,7 @@
             }
           },
           {
-            "text": "               \n",
+            "text": "\n",
             "style": {}
           },
           {
@@ -9769,7 +10155,7 @@
             }
           },
           {
-            "text": "               \n",
+            "text": "\n",
             "style": {}
           },
           {
@@ -9809,7 +10195,7 @@
             }
           },
           {
-            "text": "               \n                                                                                                    \n",
+            "text": "\n\n",
             "style": {}
           },
           {
@@ -9819,7 +10205,7 @@
             }
           },
           {
-            "text": "                                                                                                 \n",
+            "text": "\n",
             "style": {}
           },
           {
@@ -9853,7 +10239,7 @@
             "style": {}
           },
           {
-            "text": "stale     ",
+            "text": "s:317d    ",
             "style": {
               "opacity": ".65"
             }
@@ -9893,7 +10279,7 @@
             "style": {}
           },
           {
-            "text": "stale: last open; observed 2026-01-05…",
+            "text": "Improve the widget                    ",
             "style": {
               "fontWeight": "700"
             }
@@ -9923,7 +10309,7 @@
             "style": {}
           },
           {
-            "text": "deferred  ",
+            "text": "d:317d    ",
             "style": {
               "opacity": ".65"
             }
@@ -9963,7 +10349,7 @@
             "style": {}
           },
           {
-            "text": "deferred: last open; observed 2026-01…",
+            "text": "Improve the widget                    ",
             "style": {
               "fontWeight": "700"
             }
@@ -9993,7 +10379,7 @@
             "style": {}
           },
           {
-            "text": "unavailab…",
+            "text": "never     ",
             "style": {
               "opacity": ".65"
             }
@@ -10033,7 +10419,7 @@
             "style": {}
           },
           {
-            "text": "unavailable: not yet observed; Improv…",
+            "text": "Improve the widget                    ",
             "style": {
               "fontWeight": "700"
             }
@@ -10119,7 +10505,7 @@
             }
           },
           {
-            "text": "                                                                     \n                                                                                                    \n                                                                                                    \n                                                                                                    \n                                                                                                    \n                                                                                                    \n                                                                                                    \n                                                                                                    \n",
+            "text": "\n\n\n\n\n\n\n\n",
             "style": {}
           },
           {
@@ -10127,13 +10513,9 @@
             "style": {
               "opacity": ".65"
             }
-          },
-          {
-            "text": "                          ",
-            "style": {}
           }
         ],
-        "plain": "taba/wtc status · example · 0s old · dev                                                            \n                                                                                                    \nREPO                 BRANCH                         PR       C M R       ±    ↑   ↓                 \nwidget               feature/topic                  #7     ↗ stale       ·    ·   ·                 \ngadget               feature/topic                  #48    ↗ deferred    ·    ·   ·                 \ntoolkit              feature/topic                  #12345 ↗ unavailable ·    ·   ·                 \nlibrary              feature/topic                  ·                    ·    ·   ·                 \n                                                                                                    \nPRs                                                                                                 \nPR       REPO                 STATE      CHECKS MERGE REVIEWS TITLE                                 \n#7     ↗ widget               stale      ✓      ✓     ✓       stale: last open; observed 2026-01-05…\n#48    ↗ gadget               deferred   ✓      ✓     ✓       deferred: last open; observed 2026-01…\n#12345 ↗ toolkit              unavailab… ·      ·     ·       unavailable: not yet observed; Improv…\n#23    ↗ library              merged     ·      ·     ·       Improve the library                   \nlanding unknown; inspect branch                                                                     \n                                                                                                    \n                                                                                                    \n                                                                                                    \n                                                                                                    \n                                                                                                    \n                                                                                                    \n                                                                                                    \nn next actions · r refresh · l log · a archived · ↗ link · ? help · q quit                          "
+        "plain": "taba/wtc status · example · 0s old · dev\n\nREPO                 BRANCH                         PR       C M R       ±    ↑   ↓  \nwidget               feature/topic                  #7     ↗ stale       ·    ·   ·  \ngadget               feature/topic                  #48    ↗ deferred    ·    ·   ·  \ntoolkit              feature/topic                  #12345 ↗ unavailable ·    ·   ·  \nlibrary              feature/topic                  ·                    ·    ·   ·  \n\nPRs\nPR       REPO                 STATE      CHECKS MERGE REVIEWS TITLE                                 \n#7     ↗ widget               s:317d     ✓      ✓     ✓       Improve the widget                    \n#48    ↗ gadget               d:317d     ✓      ✓     ✓       Improve the widget                    \n#12345 ↗ toolkit              never      ·      ·     ·       Improve the widget                    \n#23    ↗ library              merged     ·      ·     ·       Improve the library                   \nlanding unknown; inspect branch\n\n\n\n\n\n\n\nn next actions · r refresh · l log · a archived · ↗ link · ? help · q quit"
       }
     },
     "runtime": {
@@ -10881,5 +11263,101 @@
         "plain": "taba/wtc status · example · 0s old · dev                                                            \n                                                                                                    \nREPO                 BRANCH                         LOCAL  PR  C M R       ±    ↑   ↓               \nwidget               ⌂ main                         w/T b  ·               ·    ·   ·               \n                                                                                                    \nSERVICES                                                                                            \nKEY REPO                 NAME       STATE       URL   CLOUDFLARE                                    \nw/T widget               web        ready       :3000 example [public]                              \nb   widget               background failed                                                          \n                                                                                                    \nPRs                                                                                                 \nPR    REPO                 STATE      CHECKS MERGE REVIEWS TITLE                                    \n(none enlisted)                                                                                     \n                                                                                                    \n                                                                                                    \n                                                                                                    \n                                                                                                    \n                                                                                                    \n                                                                                                    \n                                                                                                    \n                                                                                                    \n                                                                                                    \nn next actions · r refresh · l log · a archived · ↗ link · ? help · q quit                          "
       }
     }
+  },
+  "replays": {
+    "v0.2.7": {
+      "release": {
+        "tag": "v0.2.7",
+        "revision": "6ce8dda8effe667295d0e3a8bb8f7ebe8241423f",
+        "archiveName": "taba_0.2.7_darwin_arm64.tar.gz",
+        "archiveSha256": "96073f305ae6c372aa2a6f8ff67a6ec916c728e3572bd2fc12d7321f16e9f87a",
+        "binarySha256": "d883f7bdf3e532fac09a779cd485f78366a199934548cfd62386e8e2a5ca8f8e",
+        "binaryVcsModified": false,
+        "binaryModuleVersion": "v0.2.7",
+        "embeddedFiles": [
+          {
+            "path": "dist/control-ui/v1/index.js",
+            "sha256": "a6eb06e98ce629b6fc68501aec4e14cbeacac71568eb7e0777bd3fca3b601ab4"
+          },
+          {
+            "path": "dist/control-ui/v1/pr-preview.js",
+            "sha256": "1e2b2091f9c471a8ec6f89b3f932a85e0fbc6178251f13724bc14b7c21bb2bd6"
+          },
+          {
+            "path": "dist/control-ui/v1/vendor/README.md",
+            "sha256": "043b20c14df81688f7ffaa8686391a208a0f3c20e46e77c9cb72c38e7f139a3c"
+          },
+          {
+            "path": "dist/control-ui/v1/vendor/marked.LICENSE",
+            "sha256": "8e3a3f82f59a60958f56ca08f445647c32a4733dc7ca6c2c46f6eb898471ab9c"
+          },
+          {
+            "path": "dist/control-ui/v1/vendor/marked.esm.js",
+            "sha256": "162194ea902a9d6eca6011bb42b5732991ca650e017d0375b76f4204810c6c14"
+          },
+          {
+            "path": "index.js",
+            "sha256": "2c7a721ef522c77b3a60f2fb8aaccbb8b1cc711e9b4df5575059545ee0eeed04"
+          },
+          {
+            "path": "openclaw.plugin.json",
+            "sha256": "dbb3120ce1e47c29434d0d3053ca31038d936cbc49b4149871f1df3d965566fc"
+          },
+          {
+            "path": "package.json",
+            "sha256": "0092fe1893dc99dc935696b6506b731961362889ea742f52cfdb8221845a4c4e"
+          },
+          {
+            "path": "publication.js",
+            "sha256": "bd35cf39f9fc5da8a5e979cb12c8b8c9b0dcb29de493b5a19d66dc5e45e621f2"
+          },
+          {
+            "path": "sandbox-git.js",
+            "sha256": "9401d95ec834a81ae756bd201407de6972176e179b4705fba23e141e9bf3b6f2"
+          },
+          {
+            "path": "skills/taba/SKILL.md",
+            "sha256": "397ef997d6c14976edcbe0b4ff18f6f8963959a9feeb453a8188f0a616e0d91e"
+          },
+          {
+            "path": "skills/taba-catch-up/SKILL.md",
+            "sha256": "5e00e012533e525c44c10e5ac2c2fecc0a54f70ddfa76ab854177af2b6eb33ed"
+          },
+          {
+            "path": "skills/taba-follow/SKILL.md",
+            "sha256": "2a745815aec90295a5543c962b4a8f84e2db5cbbc3d0486005d0cf9b05905a1d"
+          },
+          {
+            "path": "skills/taba-pr/SKILL.md",
+            "sha256": "2cd8f8866806769c9f60ba689626b167f15d00c0e0b08eb62a786ca08e7ea722"
+          },
+          {
+            "path": "skills/wtc/SKILL.md",
+            "sha256": "1fd77c5f32fc5795c372e61090e46ac79f073fb1f5561f4cb4763ae795f7bf02"
+          }
+        ],
+        "correspondence": "Exported released plugin and tagged renderer bytes match; native replay uses the tagged recording adapter.",
+        "limitation": "Binary VCS metadata is recorded, not a pristine-source build attestation."
+      },
+      "sourceRevision": "6ce8dda8effe667295d0e3a8bb8f7ebe8241423f",
+      "sourceDigest": "5f8cacb914057d3c4dce0910a9836fc86be3e3e5ff5ddf56ae7ab5299e476260",
+      "sourceScope": "tracked command package, internal, go.mod and go.sum",
+      "commandPackage": "cmd/taba",
+      "parserDigest": "8a59c1d7483322124ee27ca7d97f5fee0fd17ba15a411b2a0b83f2df07d5637c",
+      "fixtureDigest": "09a9ad39c48c1e56d0fe1e4e3bcb36445d9ae6f0ee4a3488566c628dbb2fed09",
+      "renderer": "statusTUIModel.View",
+      "synthetic": true,
+      "actionsDispatched": false,
+      "columns": [
+        100,
+        60,
+        39
+      ],
+      "rows": 24
+    }
+  },
+  "frameSources": {
+    "closed-pr": "v0.2.7",
+    "freshness": "v0.2.7"
   }
 }

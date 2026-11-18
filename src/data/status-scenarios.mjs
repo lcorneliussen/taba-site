@@ -113,27 +113,31 @@ export const scenarios = [
   },
   {
     id: 'closed-pr', group: 'Git and PRs', title: 'PR closed, local branch still present',
-    summary: 'A closed or declined PR leaves a local checkout to inspect. It is not presented as an active open PR or as a completed build follow-up.',
-    read: [['Repository', 'The named feature branch still exists locally, but there is no active PR attached to its repository cell.'], ['Warning', 'The line below the PR table identifies the retained branch and its PR CLOSED state. Declined or superseded enlisted PRs use the same kind of branch warning.'], ['Local work', 'Closure says nothing by itself about whether the branch’s changes landed or should be discarded.']],
+    summary: 'Confirmed unmerged closures keep their state. A retained checkout still needs inspection, while an older completed entry can be hidden behind the archive toggle.',
+    read: [['Repository', 'The named feature branch still exists locally, but there is no active PR attached to its repository cell.'], ['PR rows', '#7 remains closed and #48 remains declined, separate from merged build follow-up. #23 is archived and hidden; a shows older completed entries.'], ['Warning', 'The line below the table identifies the retained branch and its PR CLOSED state. A checked-out branch keeps that warning and stays unarchived.'], ['Local work', 'Closure says nothing by itself about whether the branch’s changes landed or should be discarded.']],
     inspect: 'Inspect the branch and any remaining work before deciding how to catch up. A missing active PR row is different from a missing repository checkout.',
-    snapshot: snapshot([repo('widget')], [], { orphans: [{ repo: 'widget', branch: 'feature/topic', state: 'CLOSED' }] }), expect: ['PR CLOSED; catch-up'],
+    snapshot: snapshot([repo('widget')], [
+      enlisted(pr('7', { merge: null }), { state: 'CLOSED', freshness: 'recorded', on_branch: true, title: 'Closed widget change' }),
+      enlisted(pr('48', { merge: null }), { state: 'DECLINED', freshness: 'recorded', repo: 'gadget', title: 'Declined gadget change' }),
+      enlisted(pr('23', { merge: null }), { state: 'CLOSED', freshness: 'recorded', archived: true, repo: 'toolkit', title: 'Archived toolkit change' }),
+    ], { orphans: [{ repo: 'widget', branch: 'feature/topic', state: 'CLOSED' }] }), expect: ['closed', 'declined', 'PR CLOSED; catch-up', 'archived'],
   },
   {
     id: 'freshness', group: 'Missing facts', title: 'Deferred lookups and retained observations',
     summary: 'A lookup can be delayed or unavailable without erasing an earlier observation. PR identity, freshness and branch landing are separate facts.',
-    read: [['#7', 'stale retains the last open observation and its timestamp; it is not a current confirmation that the PR remains open.'], ['#48 and #12345', 'deferred means the lookup waited for shared request limits; unavailable means no usable state was observed. Neither permits a branch action or retirement.'], ['#23', 'The confirmed merge remains merged while landing this retained branch is unknown. A missing branch-landing result does not undo the merge.']],
-    inspect: 'Inspect freshness, observation_source and observed_at in status JSON and the refresh log. Wait for a confirmed state before a branch action; inspect branch landing separately.',
+    read: [['#7', 's:age retains an expired observation and its original timestamp; it is not a current confirmation that the PR remains open.'], ['#48 and #12345', 'd:age means a deferred lookup; this fixture records shared-budget as the reason. never means no observation time is known. A missing reason would stay unknown. Neither permits a branch action or retirement.'], ['#23', 'The confirmed merge remains merged while landing this retained branch is unknown. A missing branch-landing result does not undo the merge.']],
+    inspect: 'Use ? help or l log for original timestamps, admission reasons and retry times when known. Inspect freshness, observation_source, observed_at and observation_reason in JSON. Wait for a confirmed state before a branch action; inspect branch landing separately.',
     snapshot: snapshot([
       repo('widget', { pr_unconfirmed: true, pr: pr('7', { freshness: 'stale', observation_source: 'cache', observed_at: '2026-01-05T10:00:00Z' }) }),
-      repo('gadget', { pr_unconfirmed: true, pr: pr('48', { freshness: 'deferred', observation_source: 'cache', observed_at: '2026-01-05T10:00:00Z' }) }),
+      repo('gadget', { pr_unconfirmed: true, pr: pr('48', { freshness: 'deferred', observation_source: 'cache', observed_at: '2026-01-05T10:00:00Z', observation_reason: 'shared-budget' }) }),
       repo('toolkit', { pr_unconfirmed: true, pr: pr('12345', { freshness: 'unavailable', checks: 'UNKNOWN', merge: 'UNKNOWN', review: 'none' }) }),
       repo('library', { landing: { state: 'unknown' } }),
     ], [
       enlisted(pr('7', { freshness: 'stale', observation_source: 'cache', observed_at: '2026-01-05T10:00:00Z' })),
-      enlisted(pr('48', { freshness: 'deferred', observation_source: 'cache', observed_at: '2026-01-05T10:00:00Z' }), { repo: 'gadget' }),
+      enlisted(pr('48', { freshness: 'deferred', observation_source: 'cache', observed_at: '2026-01-05T10:00:00Z', observation_reason: 'shared-budget' }), { repo: 'gadget' }),
       enlisted(pr('12345', { freshness: 'unavailable', checks: null, merge: null, review: null }), { repo: 'toolkit', state: 'UNKNOWN' }),
       { repo: 'library', number: '23', url: url('23'), state: 'MERGED', merge: 'MERGED', on_branch: true, title: 'Improve the library', landing: { state: 'unknown' } },
-    ]), expect: ['stale', 'deferred', 'unavailable', 'merged', 'landing unknown; inspect branch'],
+    ]), expect: ['s:', 'd:', 'never', 'merged', 'landing unknown; inspect branch'],
   },
   {
     id: 'runtime', group: 'Local services', title: 'A ready service, a public tunnel, and a failed worker',
@@ -147,3 +151,66 @@ export const scenarios = [
     ] }), expect: ['SERVICES', 'ready', 'failed'],
   },
 ];
+
+// The recording adapter starts with archived entries hidden and no actions dispatched.
+export function assertFrameVisibility(scenario, plain) {
+  for (const row of scenario.snapshot.prs) {
+    const visible = new RegExp(`^#${row.number}(?:\\s|$)`, 'm').test(plain);
+    if (visible === Boolean(row.archived)) throw Error(`${scenario.id}: incorrect PR visibility for #${row.number}`);
+  }
+  if (scenario.snapshot.prs.some(row => row.archived) && !plain.includes('archived')) {
+    throw Error(`${scenario.id}: missing hidden-archive indication`);
+  }
+}
+
+export function replayGroups(capture, cases = scenarios) {
+  const fail = () => { throw Error('Missing or inconsistent replay provenance'); };
+  const ids = cases.map(s => s.id);
+  if (new Set(ids).size !== ids.length || !capture?.frames || !capture.frameSources || !capture.replays
+    || JSON.stringify(Object.keys(capture.frames).sort()) !== JSON.stringify([...ids].sort())) fail();
+  for (const [id, tag] of Object.entries(capture.frameSources)) {
+    if (!ids.includes(id) || typeof tag !== 'string' || !Object.hasOwn(capture.replays, tag)) fail();
+  }
+  const entries = [[capture.release?.tag, capture], ...Object.entries(capture.replays)];
+  const tags = new Set(), revisions = new Set();
+  const groups = entries.map(([tag, provenance], index) => {
+    const release = provenance?.release;
+    if (!/^v\d+\.\d+\.\d+$/.test(tag) || tag !== release?.tag || tags.has(tag)
+      || !/^[a-f0-9]{40}$/.test(provenance.sourceRevision) || revisions.has(provenance.sourceRevision)
+      || release.revision !== provenance.sourceRevision || provenance.commandPackage !== 'cmd/taba'
+      || provenance.renderer !== 'statusTUIModel.View' || provenance.synthetic !== true || provenance.actionsDispatched !== false
+      || JSON.stringify(provenance.columns) !== '[100,60,39]' || provenance.rows !== 24
+      || typeof release.binaryVcsModified !== 'boolean'
+      || release.binaryModuleVersion !== tag + (release.binaryVcsModified ? '+dirty' : '')
+      || !release.archiveName?.startsWith('taba_' + tag.slice(1) + '_')
+      || !/_(darwin|linux)_(amd64|arm64)\.tar\.gz$/.test(release.archiveName)
+      || !Array.isArray(release.embeddedFiles) || !release.embeddedFiles.length) fail();
+    for (const name of ['sourceDigest', 'parserDigest', 'fixtureDigest']) if (!/^[a-f0-9]{64}$/.test(provenance[name])) fail();
+    for (const name of ['archiveSha256', 'binarySha256']) if (!/^[a-f0-9]{64}$/.test(release[name])) fail();
+    if (new Set(release.embeddedFiles.map(f => f.path)).size !== release.embeddedFiles.length) fail();
+    for (const file of release.embeddedFiles) {
+      if (!/^(?:[A-Za-z0-9_.-]+\/)*[A-Za-z0-9_.-]+$/.test(file.path)
+        || file.path.split('/').some(p => p === '.' || p === '..') || !/^[a-f0-9]{64}$/.test(file.sha256)) fail();
+    }
+    tags.add(tag); revisions.add(provenance.sourceRevision);
+    const selected = cases.filter(s => index === 0 ? !Object.hasOwn(capture.frameSources, s.id) : capture.frameSources[s.id] === tag);
+    if (!selected.length) fail();
+    for (const scenario of selected) {
+      if (scenario.snapshot.prs.some(row => row.archived && row.on_branch)) fail();
+      const frames = capture.frames[scenario.id];
+      if (JSON.stringify(Object.keys(frames).sort()) !== '["100","39","60"]') fail();
+      for (const frame of Object.values(frames)) {
+        if (!Array.isArray(frame.runs) || frame.runs.map(run => run.text).join('') !== frame.plain) fail();
+        assertFrameVisibility(scenario, frame.plain);
+      }
+    }
+    return { tag, provenance, scenarios: selected };
+  });
+  return groups;
+}
+
+export function selectReplay(capture, revision, cases = scenarios) {
+  const matches = replayGroups(capture, cases).filter(group => group.provenance.sourceRevision === revision);
+  if (matches.length !== 1) throw Error('CLI revision must match exactly one recorded provenance group');
+  return matches[0];
+}

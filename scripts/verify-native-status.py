@@ -41,16 +41,28 @@ def main():
     capture = importlib.util.module_from_spec(spec)
     spec.loader.exec_module(capture)
     capture.ROOT = cli
-    scenarios = json.loads(subprocess.check_output([
-        'node', '--input-type=module', '-e',
-        'import {pathToFileURL} from "node:url"; const {scenarios}=await import(pathToFileURL(process.argv[1])); console.log(JSON.stringify(scenarios));',
-        str(SITE / 'src/data/status-scenarios.mjs'),
-    ], cwd=SITE))
     replay = json.loads((SITE / 'src/data/status-frames.json').read_text())
-    if head != replay['sourceRevision']:
-        raise ValueError('CLI revision differs from the committed replay; use the same clean source revision')
     if subprocess.check_output(['git', '-C', str(cli), 'status', '--porcelain', '--untracked-files=all']):
         raise ValueError('Native verification requires a clean CLI checkout')
+    # Share selection and all-group parser/fixture validation with the capture command.
+    selected = json.loads(subprocess.check_output([
+        'node', '--input-type=module', '-e',
+        'import {pathToFileURL} from "node:url"; let input=""; for await(const c of process.stdin) input+=c; '
+        'const replay=JSON.parse(input); '
+        'const {selectReplay}=await import(pathToFileURL(process.argv[1])); '
+        'const {validateReplay,sourceFingerprint}=await import(pathToFileURL(process.argv[2])); '
+        'await validateReplay(replay); const group=selectReplay(replay,process.argv[3]); '
+        'if(await sourceFingerprint(process.argv[4],group.provenance.commandPackage)!==group.provenance.sourceDigest) '
+        'throw Error("CLI source fingerprint differs from recorded group"); '
+        'const {frames,replays,frameSources,...provenance}=group.provenance; '
+        'console.log(JSON.stringify({tag:group.tag,provenance,scenarios:group.scenarios}));',
+        str(SITE / 'src/data/status-scenarios.mjs'), str(SITE / 'scripts/capture-status-guide.mjs'), head, str(cli),
+    ], input=json.dumps(replay).encode(), cwd=SITE))
+    scenarios = selected['scenarios']
+    replay = {**replay, **selected['provenance']}
+    tag_revision = subprocess.check_output(['git', '-C', str(cli), 'rev-parse', selected['tag'] + '^{}'], text=True).strip()
+    if tag_revision != head:
+        raise ValueError('Release tag differs from the selected source revision')
     parser_path = SITE / 'scripts/record-openclaw-tui.mjs'
     if capture.digest(parser_path) != replay['parserDigest']:
         raise ValueError('Terminal parser changed; regenerate the replay first')
@@ -65,8 +77,9 @@ def main():
     for scenario in scenarios:
         for columns in replay['columns']:
             name = scenario['id'] + '-' + str(columns)
-            contains = scenario['expect'] if columns == 100 else ['taba/wtc status'] + ['#' + row['number'] for row in scenario['snapshot']['prs']]
-            associations = [[row['repo'], '#' + row['number']] for row in scenario['snapshot']['prs']]
+            visible_prs = [row for row in scenario['snapshot']['prs'] if not row.get('archived')]
+            contains = scenario['expect'] if columns == 100 else ['taba/wtc status'] + ['#' + row['number'] for row in visible_prs]
+            associations = [[row['repo'], '#' + row['number']] for row in visible_prs]
             if columns == 100:
                 associations += [[row['dir'], row['branch_display']] for row in scenario['snapshot']['repos']]
             cases.append({'name': name, 'columns': columns, 'rows': replay['rows'], 'frames': [{
@@ -93,7 +106,8 @@ def main():
             if capture.main() != 0:
                 raise ValueError(f'{batch}: native capture failed; inspect its retained diagnostics')
             manifest = json.loads((out / batch / 'manifest.json').read_text())
-            if not manifest['passed'] or manifest['source_sha256'] != manifest['source_after_sha256']:
+            if (not manifest['passed'] or manifest['source_sha256'] != manifest['source_after_sha256']
+                    or manifest['head'] != head):
                 raise ValueError(f'{batch}: source or capture verification failed')
             identity = (manifest['head'], manifest['source_sha256'])
             if source is not None and identity != source:
@@ -103,6 +117,13 @@ def main():
                 case_id, width = mapping[scenario['name']]
                 native = json.loads((out / batch / (scenario['name'] + '.native.json')).read_text())
                 visible = capture.ANSI.sub('', native['frames'][0]['content'])
+                snapshot = next(case['snapshot'] for case in scenarios if case['id'] == case_id)
+                for row in snapshot['prs']:
+                    present = re.search(r'^#' + re.escape(row['number']) + r'(?:\s|$)', visible, re.MULTILINE) is not None
+                    if present == bool(row.get('archived')):
+                        raise ValueError(f'{case_id}: incorrect PR visibility for #{row["number"]}')
+                if any(row.get('archived') for row in snapshot['prs']) and 'archived' not in visible:
+                    raise ValueError(f'{case_id}: missing hidden-archive indication')
                 if visible != replay['frames'][case_id][width]['plain']:
                     raise ValueError(f'{scenario["name"]}: captured output differs from the guide replay')
                 captured_styles.append({'case': case_id, 'width': width, 'content': native['frames'][0]['content']})
@@ -119,6 +140,8 @@ def main():
     for frame in decoded:
         if frame['runs'] != replay['frames'][frame['case']][frame['width']]['runs']:
             raise ValueError('Native ANSI styles differ from the committed replay')
+    if subprocess.check_output(['git', '-C', str(cli), 'rev-parse', 'HEAD'], text=True).strip() != head or subprocess.check_output(['git', '-C', str(cli), 'status', '--porcelain', '--untracked-files=all']):
+        raise ValueError('CLI source changed during verification')
     report['styles_match'] = True
     report['passed'] = True
     report['source_revision'], report['source_sha256'] = source

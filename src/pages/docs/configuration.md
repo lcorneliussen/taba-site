@@ -56,6 +56,51 @@ credential-store locking are separate concerns. See the
 [process environment contract](https://github.com/lcorneliussen/taba/blob/v0.2.5/internal/wtc/defaults/instructions/hooks-and-env.md)
 and [named tunnel guidance](../services/#named-tunnels-and-receiving-policy).
 
+## Example-backed requirements in v0.2.7
+
+Use a tracked canonical dotenv example to describe configuration without storing
+actual values in it. In [v0.2.7](https://github.com/lcorneliussen/taba/releases/tag/v0.2.7),
+`doctor`, `config list` and explicit `secrets list --requirements` share a
+value-free requirements inventory:
+
+```sh
+taba doctor
+taba config list --json
+taba secrets list --requirements --json
+taba config lint --json
+taba config list --example web:config/dev.env.example
+```
+
+Default discovery considers only Git-tracked root `.env.example` and
+`.env.local.example` files. The `# taba:requirements v1` header opts an example
+into the declarative schema; unannotated examples remain hints. Use repeatable
+`--example repo:path` to select other owned dotenv examples instead. See the
+[tagged annotation format and example](https://github.com/lcorneliussen/taba/blob/v0.2.7/docs/configuration-requirements.md)
+for source precedence, key ownership, conditions and presence-only file requirements.
+Example assignments document inputs; they never supply actual configuration.
+
+`config lint` checks declarations, references, dotenv syntax and provided owned
+key names without requiring credentials or actual files. It can run in CI; in a
+standalone Git checkout, use `taba config lint --example .env.example`.
+`doctor` instead diagnoses mandatory readiness, including missing, empty,
+placeholder, malformed or unverified requirements. Optional missing and
+inapplicable inputs do not fail readiness; unknown selection stays unknown.
+Neither command proves authentication or starts a service. Choosing a local
+connection can remove a conditional remote credential requirement without
+proving the local service is ready.
+
+Inventory output reports names, purpose, scope, applicability, state and
+provenance without printing actual values. Process input inspection requires
+explicit `--process-environment` and is limited to declared owned names or
+prefixes; standalone lint does not inspect process inputs. Project sources stay
+inside the receiving control-root policy; collection sources stay in the selected
+repository. Inspection does not create, link or migrate configuration.
+
+Supported dotenv input is bounded and literal: no shell expansion, interpolation,
+multiline assignments, executable checks or permissions probes. This does not
+prove that dynamic application code uses only declared inputs. The default
+`secrets list` still reports filenames and link states without inspecting contents.
+
 ## Environment compatibility in v0.1.60
 
 Starting with v0.1.60, WTC accepts the `TABA_` prefix alongside `WTC_` for supported
