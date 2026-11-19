@@ -1,0 +1,114 @@
+---
+const base = import.meta.env.BASE_URL;
+---
+<div class="site-search" data-index={`${base}search-index.json`}>
+  <form role="search" onsubmit="return false">
+    <label class="sr-only" for="site-search-input">Search the docs</label>
+    <input id="site-search-input" type="search" placeholder="Search the docs" autocomplete="off" spellcheck="false"
+      role="combobox" aria-expanded="false" aria-controls="site-search-results" aria-autocomplete="list">
+    <kbd aria-hidden="true">/</kbd>
+  </form>
+  <ul id="site-search-results" role="listbox" aria-label="Search results" hidden></ul>
+  <p class="site-search-status sr-only" role="status" aria-live="polite"></p>
+</div>
+<script>
+  type Entry = { title: string; description: string; heading: string; url: string; text: string };
+
+  const root = document.querySelector<HTMLElement>('.site-search')!;
+  const input = root.querySelector<HTMLInputElement>('input')!;
+  const list = root.querySelector<HTMLUListElement>('ul')!;
+  const status = root.querySelector<HTMLElement>('.site-search-status')!;
+  let index: Promise<Entry[]> | undefined;
+  let active = -1;
+
+  const load = (): Promise<Entry[]> => (index ??= fetch(root.dataset.index!)
+    .then(r => (r.ok ? r.json() : Promise.reject(r.status)))
+    .catch(() => { index = undefined; return [] as Entry[]; }));
+  const escape = (s: string) => s.replace(/[&<>"']/g, c => `&#${c.charCodeAt(0)};`);
+  const terms = (q: string) => q.toLowerCase().split(/\s+/).filter(Boolean);
+
+  function score(entry: Entry, words: string[]) {
+    const title = entry.title.toLowerCase(), heading = entry.heading.toLowerCase();
+    const body = `${entry.description} ${entry.text}`.toLowerCase();
+    let total = 0;
+    for (const w of words) {
+      const s = (title.includes(w) ? 8 : 0) + (heading.includes(w) ? 6 : 0) + (body.includes(w) ? 1 + Math.min(body.split(w).length - 2, 4) * 0.25 : 0);
+      if (!s) return 0;
+      total += s;
+    }
+    return total + (entry.heading ? 0 : 0.5);
+  }
+
+  function highlight(text: string, words: string[]) {
+    let html = escape(text);
+    for (const w of words) html = html.replace(new RegExp(`(${escape(w).replace(/[.*+?^${}()|[\]\\]/g, '\\$&')})`, 'gi'), '<mark>$1</mark>');
+    return html;
+  }
+
+  function snippet(entry: Entry, words: string[]) {
+    const text = entry.text || entry.description;
+    const at = Math.max(0, Math.min(...words.map(w => text.toLowerCase().indexOf(w)).filter(i => i >= 0), text.length) - 40);
+    const cut = text.slice(at, at + 150);
+    return highlight((at ? '…' : '') + cut + (at + 150 < text.length ? '…' : ''), words);
+  }
+
+  function select(i: number) {
+    const items = [...list.children] as HTMLElement[];
+    items.forEach((el, n) => el.setAttribute('aria-selected', String(n === i)));
+    active = i;
+    if (items[i]) { input.setAttribute('aria-activedescendant', items[i].id); items[i].scrollIntoView({ block: 'nearest' }); }
+    else input.removeAttribute('aria-activedescendant');
+  }
+
+  function close() { list.hidden = true; input.setAttribute('aria-expanded', 'false'); select(-1); }
+
+  async function render() {
+    const words = terms(input.value);
+    if (!words.length) { list.innerHTML = ''; status.textContent = ''; close(); return; }
+    const query = input.value;
+    const results = (await load())
+      .map(entry => ({ entry, s: score(entry, words) }))
+      .filter(r => r.s > 0)
+      .sort((a, b) => b.s - a.s)
+      .slice(0, 8);
+    if (query !== input.value) return;
+    list.replaceChildren(...(results.length ? results.map(({ entry }, n) => {
+      const item = document.createElement('li');
+      item.id = `site-search-${n}`;
+      item.setAttribute('role', 'option');
+      item.setAttribute('aria-selected', 'false');
+      const link = document.createElement('a');
+      link.href = entry.url;
+      link.tabIndex = -1;
+      const where = entry.heading ? `${highlight(entry.title, words)} <span aria-hidden="true">›</span> ${highlight(entry.heading, words)}` : highlight(entry.title, words);
+      link.innerHTML = `<span class="site-search-where">${where}</span><span class="site-search-snippet">${snippet(entry, words)}</span>`;
+      item.append(link);
+      return item;
+    }) : [Object.assign(document.createElement('li'), { className: 'site-search-empty', textContent: 'No matches in the docs.' })]));
+    status.textContent = results.length ? `${results.length} result${results.length === 1 ? '' : 's'}` : 'No results';
+    list.hidden = false;
+    input.setAttribute('aria-expanded', 'true');
+    select(results.length ? 0 : -1);
+  }
+
+  input.addEventListener('focus', () => { load(); if (input.value) render(); });
+  input.addEventListener('input', render);
+  input.addEventListener('keydown', event => {
+    const count = list.querySelectorAll('[role=option]').length;
+    if (event.key === 'ArrowDown' && count) { event.preventDefault(); select((active + 1) % count); }
+    else if (event.key === 'ArrowUp' && count) { event.preventDefault(); select((active - 1 + count) % count); }
+    else if (event.key === 'Enter') {
+      const link = list.querySelector<HTMLAnchorElement>(`#site-search-${active} a`);
+      if (link) { event.preventDefault(); location.href = link.href; }
+    } else if (event.key === 'Escape') { if (!list.hidden) close(); else input.blur(); }
+  });
+  list.addEventListener('mousedown', event => event.preventDefault());
+  input.addEventListener('blur', close);
+  document.addEventListener('keydown', event => {
+    const target = event.target as HTMLElement;
+    if (event.key === '/' && !event.metaKey && !event.ctrlKey && !event.altKey && !target.closest('input, textarea, select, [contenteditable]')) {
+      event.preventDefault();
+      input.focus();
+    }
+  });
+</script>

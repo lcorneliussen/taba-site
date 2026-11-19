@@ -59,9 +59,23 @@ for (const file of files) {
     } catch { errors.push(`${pagePath}: missing target ${url.pathname}`); }
   }
 }
+// Every search result must land on a real page and heading.
+let searchTargets = 0;
+try {
+  const index = JSON.parse(await readFile(resolve(root, 'search-index.json'), 'utf8'));
+  for (const entry of index) {
+    const url = new URL(entry.url, origin);
+    searchTargets++;
+    try {
+      const body = await readFile(resolve(root, decodeURIComponent(url.pathname.slice(base.length)), 'index.html'), 'utf8');
+      if (url.hash && !body.includes(`id="${decodeURIComponent(url.hash.slice(1))}"`)) errors.push(`search-index.json: missing anchor ${entry.url}`);
+    } catch { errors.push(`search-index.json: missing target ${entry.url}`); }
+  }
+  if (!searchTargets) errors.push('search-index.json: empty search index');
+} catch { errors.push('search-index.json: missing or unreadable search index'); }
 if (errors.length) {
   console.error(errors.join('\n'));
   process.exitCode = 1;
 } else {
-  console.log(`Verified ${checked} internal links and assets across ${files.length} pages under ${base}`);
+  console.log(`Verified ${checked} internal links and assets across ${files.length} pages under ${base}, and ${searchTargets} search targets`);
 }

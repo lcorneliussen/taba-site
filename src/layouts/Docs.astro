@@ -1,6 +1,7 @@
 ---
 import Base from './Base.astro';
 import DocsNav from '../components/DocsNav.astro';
+import SiteSearch from '../components/SiteSearch.astro';
 interface Props {
   frontmatter: { title: string; description: string; source: string; sourceLabel?: string };
 }
@@ -10,6 +11,7 @@ const base = import.meta.env.BASE_URL;
 <Base title={`${frontmatter.title} — taba docs`} description={frontmatter.description}>
   <main class="docs-shell wrap" id="main">
     <aside class="docs-sidebar">
+      <SiteSearch />
       <div class="docs-desktop-nav"><p class="eyebrow">THE TABA HANDBOOK</p><DocsNav /><a class="upstream" href="https://github.com/lcorneliussen/taba">taba on GitHub ↗</a></div>
       <details class="docs-mobile-nav"><summary>Browse the handbook</summary><DocsNav /></details>
     </aside>
