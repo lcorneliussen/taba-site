@@ -111,6 +111,17 @@ member collection. Collection UI authority does not grant project writes or
 arbitrary definition-file selection. Snapshot-only contexts remain read-only.
 Provider setup guidance does not install a client, log in or start a tunnel.
 
+### Collection-env targets in v0.2.8
+
+From v0.2.5 through v0.2.7, `taba svc tunnel --name` and `start_with_service`
+accepted only a literal `x-wtc.url` and failed with "needs an explicit local
+URL/port". In [v0.2.8](https://github.com/lcorneliussen/taba/releases/tag/v0.2.8)
+a named tunnel also resolves its target from `x-wtc.port_env` or `x-wtc.url_env`,
+reading the collection env as `taba svc up` does. When the target still cannot
+be resolved, the error names the missing variable or declaration. See the
+[v0.2.8 runtime contract](https://github.com/lcorneliussen/taba/blob/v0.2.8/internal/wtc/defaults/instructions/runtime.md)
+for the `x-wtc` keys.
+
 ### Explicit inputs and exposure consent
 
 Built-in providers use explicitly supplied scoped credential files, executables

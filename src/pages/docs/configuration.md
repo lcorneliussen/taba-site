@@ -56,6 +56,33 @@ credential-store locking are separate concerns. See the
 [process environment contract](https://github.com/lcorneliussen/taba/blob/v0.2.5/internal/wtc/defaults/instructions/hooks-and-env.md)
 and [named tunnel guidance](../services/#named-tunnels-and-receiving-policy).
 
+## Bitbucket client selection in v0.2.8
+
+In [v0.2.8](https://github.com/lcorneliussen/taba/releases/tag/v0.2.8),
+`TABA_BITBUCKET_TRANSPORT` (legacy alias `WTC_BITBUCKET_TRANSPORT`) selects the
+client for migrated Bitbucket operations. Today that is only catch-up's read of
+enlisted PR state. It resolves when each operation runs:
+
+1. the process environment, when set, even to an empty value;
+2. otherwise `taba.env` (or legacy `wtc.env`) in the control root, which must
+   be a regular file inside that root;
+3. otherwise the default, `bb`.
+
+```sh
+# $TABA_CONFIG_ROOT/taba.env
+TABA_BITBUCKET_TRANSPORT=twg
+```
+
+Unset, empty or `bb` keeps the `bb` client. `twg` requires TWG 1.x at 1.4.4 or
+later, which acts as your own TWG profile, a possibly different account from
+`bb`. Any other value fails the operation as unavailable. A defaults file that
+cannot be read safely also fails the operation instead of falling back to `bb`.
+An installed `twg` alone changes nothing, and GitHub operations never consult
+the setting. `taba doctor` shows the selected client and its source and, for
+TWG, whether the installed version is supported; that row is advisory and never
+fails doctor. See the
+[v0.2.8 forge operations contract](https://github.com/lcorneliussen/taba/blob/v0.2.8/docs/forges.md#selecting-the-client).
+
 ## Example-backed requirements in v0.2.7
 
 Use a tracked canonical dotenv example to describe configuration without storing
