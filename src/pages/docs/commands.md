@@ -57,6 +57,24 @@ for tracked-example opt-in, source ownership, explicit process inspection and
 limits. Full options and annotation syntax are in the
 [v0.2.7 requirements contract](https://github.com/lcorneliussen/taba/blob/v0.2.7/docs/configuration-requirements.md).
 
+### Bitbucket review and catch-up in v0.2.8
+
+| Command | Use it to |
+| --- | --- |
+| `taba review post <bundle-dir>` | Post a review on Bitbucket; the comment id is read from the `bb` JSON envelope |
+| `taba review status` | See whether a current posted review, including `#comment-<n>` links, opens `review ready` |
+| `TABA_BITBUCKET_TRANSPORT=twg taba catch-up` | Read enlisted Bitbucket PR state through TWG instead of `bb` for catch-up only |
+| `taba doctor` | Inspect the advisory `bitbucket-client` row: selected client, its source and TWG support |
+
+In [v0.2.8](https://github.com/lcorneliussen/taba/releases/tag/v0.2.8), a
+missing, conflicting or malformed comment id keeps the review pending. The TWG
+selection applies only to catch-up's enlisted PR read; status, review and other
+Bitbucket operations keep their current clients. A TWG failure is reported as
+unavailable and never falls back to `bb`. See
+[configuration](../configuration/#bitbucket-client-selection-in-v028) for the
+per-machine default and the
+[v0.2.8 forge operations contract](https://github.com/lcorneliussen/taba/blob/v0.2.8/docs/forges.md).
+
 ### Retirement assessment in v0.1.62
 
 [Published v0.1.62](https://github.com/lcorneliussen/taba/releases/tag/v0.1.62)
