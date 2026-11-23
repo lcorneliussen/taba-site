@@ -5,24 +5,22 @@ description: Install wtc, bring two repositories together, and start your first 
 source: https://github.com/lcorneliussen/taba/blob/v0.1.51/docs/getting-started.md
 ---
 
-A **worktree collection** is a folder containing the repositories you need for one task. Each repository has its own Git worktree. Your build tools and development commands stay the same.
+A **worktree collection** is a folder with a Git worktree for each repository in a task. Your build tools and dev commands stay the same.
 
-> Running inside OpenClaw? Use the [OpenClaw guide](../openclaw/) instead. The gateway manages worktrees there; the local `init` and `new` commands below do not apply.
+> Running inside OpenClaw? Use the [OpenClaw guide](../openclaw/) instead. The gateway manages worktrees there; local `init` and `new` do not apply.
 
 ## 1. Install the CLI
 
-You need **Git** and a macOS or Linux development environment. Download a binary for your platform from [GitHub Releases](https://github.com/lcorneliussen/taba/releases), put it on your `PATH`, and verify it with `wtc --version`.
+Requires **Git** on macOS or Linux. Download a binary from [GitHub Releases](https://github.com/lcorneliussen/taba/releases), put it on `PATH`, and verify with `wtc --version`. For the published stable release and install command, see [Install wtc](../../#install).
 
-For the published stable release and its installation command, see [Install wtc](../../#install).
-
-To reproduce the **v0.1.51 handbook baseline** with [mise](https://mise.jdx.dev/):
+Or install this guide’s pinned **v0.1.51 handbook baseline** with [mise](https://mise.jdx.dev/):
 
 ```sh
 mise use -g github:lcorneliussen/taba@0.1.51
 wtc --version
 ```
 
-This guide pins a documented version, not a claim about the latest release. Mise, an agent CLI, and a special editor are all optional.
+Mise, an agent CLI, and a special editor are all optional.
 
 ## 2. Make a home for the task
 
@@ -34,20 +32,20 @@ cd fix-login
 wtc init
 ```
 
-The folder is now an **ad-hoc collection**. Its local repository registry lives in `.wtc/config/repos.yml`. You do not need a shared harness to get started.
+This creates an **ad-hoc collection** with its local repository registry in `.wtc/config/repos.yml`. No shared harness is needed to get started.
 
 ## 3. Bring in your repositories
 
-Use a Git clone URL or an existing checkout. Replace these examples with repositories you can access:
+Pass a Git clone URL or existing checkout; replace the examples with repositories you can access:
 
 ```sh
 wtc add-repo git@github.com:example-org/api.git
 wtc add-repo ~/code/web
 ```
 
-WTC asks which branch new worktrees and pull requests should be based on, suggesting the remote’s default. Use `--target main` to answer non-interactively when `main` is the correct target for your repository.
+`wtc add-repo` asks which branch to base new worktrees and pull requests on, suggesting the remote’s default. Pass `--target main` to set it non-interactively when `main` is the target.
 
-Each worktree starts **detached at its target branch**, not at whatever branch an existing checkout happens to have open.
+Each worktree starts **detached at its target branch**, regardless of what branch an existing checkout has open.
 
 ## 4. Look around, then make a branch
 
@@ -57,11 +55,11 @@ cd api
 git switch -c fix-login
 ```
 
-Create a branch in each repository you change before committing. Open the collection folder in your editor or agent to work across repositories. Run the project’s usual build, test, and development commands inside its worktree.
+Create a branch in each repository you change before committing. Open the collection folder in your editor or agent to work across repositories. Run each project’s build, test, and dev commands inside its worktree.
 
 ## 5. Keep the next task separate
 
-From the collection folder, create a sibling collection using repositories you have already registered:
+From the collection folder, create a sibling collection from registered repositories:
 
 ```sh
 wtc new new-checkout api web
@@ -71,4 +69,4 @@ wtc status
 
 The previous collection stays in place. Each task has its own worktrees and environment.
 
-**Next:** learn the [collection lifecycle](../collections/), explore [the commands](../commands/), or introduce a [team-owned harness](../team-harness/).
+**Next:** [collection lifecycle](../collections/), [the commands](../commands/), or a [team-owned harness](../team-harness/).
