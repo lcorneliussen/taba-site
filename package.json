@@ -24,7 +24,9 @@
     "test:status": "node --test scripts/status-guide.test.mjs",
     "test:status:browser": "node scripts/status-guide-browser.mjs",
     "status:verify-native": "python3 -B scripts/verify-native-status.py",
-    "test:links:guards": "node --test scripts/check-links.test.mjs"
+    "test:links:guards": "node --test scripts/check-links.test.mjs",
+    "test:search": "node --test scripts/search-index.test.mjs",
+    "test:search:browser": "node scripts/search-browser.mjs"
   },
   "dependencies": {
     "astro": "^7.3.8"
