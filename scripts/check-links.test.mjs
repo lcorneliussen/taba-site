@@ -11,7 +11,7 @@ const page = '<link rel="canonical" href="https://taba.sh/"><main id="usage">A n
 async function check(files) {
   const temporary = await mkdtemp(join(tmpdir(), 'site-output-'));
   try {
-    for (const [name, content] of Object.entries({ 'index.html': page, ...files })) {
+    for (const [name, content] of Object.entries({ 'index.html': page, 'search-index.json': JSON.stringify([{ url: '/#usage' }]), ...files })) {
       const path = join(temporary, 'dist', name);
       await mkdir(join(path, '..'), { recursive: true });
       await writeFile(path, content);
@@ -41,4 +41,17 @@ test('the existing missing-link guard remains active', async () => {
   const result = await check({ 'index.html': page + '<a href="/missing/">Missing</a>' });
   assert.equal(result.status, 1);
   assert.match(result.stderr, /missing target/);
+});
+test('search results must point at an existing page and anchor id', async () => {
+  const missingAnchor = await check({ 'search-index.json': JSON.stringify([{ url: '/#renamed' }]) });
+  assert.equal(missingAnchor.status, 1);
+  assert.match(missingAnchor.stderr, /search-index\.json: missing anchor \/#renamed/);
+  const missingPage = await check({ 'search-index.json': JSON.stringify([{ url: '/gone/' }]) });
+  assert.equal(missingPage.status, 1);
+  assert.match(missingPage.stderr, /search-index\.json: missing target \/gone\//);
+});
+test('a missing search index fails', async () => {
+  const result = await check({ 'search-index.json': '' });
+  assert.equal(result.status, 1);
+  assert.match(result.stderr, /search index/);
 });

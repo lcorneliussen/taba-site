@@ -1,0 +1,144 @@
+---
+const base = import.meta.env.BASE_URL;
+---
+<div class="site-search" data-index={`${base}search-index.json`} hidden>
+  <form role="search" onsubmit="return false">
+    <label class="sr-only" for="site-search-input">Search the docs</label>
+    <input id="site-search-input" type="search" placeholder="Search the docs" autocomplete="off" spellcheck="false"
+      role="combobox" aria-expanded="false" aria-controls="site-search-results" aria-autocomplete="list">
+    <kbd aria-hidden="true">/</kbd>
+  </form>
+  <ul id="site-search-results" role="listbox" aria-label="Search results" hidden></ul>
+  <p class="site-search-status" role="status" aria-live="polite"></p>
+</div>
+<script>
+  type Entry = { title: string; description: string; heading: string; url: string; text: string };
+
+  const root = document.querySelector<HTMLElement>('.site-search')!;
+  const input = root.querySelector<HTMLInputElement>('input')!;
+  const list = root.querySelector<HTMLUListElement>('ul')!;
+  const status = root.querySelector<HTMLElement>('.site-search-status')!;
+  let index: Promise<Entry[] | null> | undefined;
+  let active = -1;
+
+  // The index is fetched once, on first use. A failure is reported and retried on the next query.
+  const load = (): Promise<Entry[] | null> => (index ??= fetch(root.dataset.index!)
+    .then(r => (r.ok ? r.json() : Promise.reject(r.status)))
+    .catch(() => { index = undefined; return null; }));
+  const escape = (s: string) => s.replace(/[&<>"']/g, c => `&#${c.charCodeAt(0)};`);
+  // Case-fold without changing string length (e.g. "İ" lowercases to two code units), so match
+  // offsets found in the folded text stay valid in the original.
+  const fold = (s: string) => Array.from(s, c => { const l = c.toLowerCase(); return l.length === c.length ? l : c; }).join('');
+  const terms = (q: string) => [...new Set(fold(q).split(/\s+/).filter(Boolean))];
+
+  function score(entry: Entry, words: string[]) {
+    const title = fold(entry.title), heading = fold(entry.heading);
+    const body = fold(`${entry.description} ${entry.text}`);
+    let total = 0;
+    for (const w of words) {
+      const s = (title.includes(w) ? 8 : 0) + (heading.includes(w) ? 6 : 0) + (body.includes(w) ? 1 + Math.min(body.split(w).length - 2, 4) * 0.25 : 0);
+      if (!s) return 0;
+      total += s;
+    }
+    return total + (entry.heading ? 0 : 0.5);
+  }
+
+  /** Mark matches in plain text, escaping every segment (matching happens before escaping). */
+  function highlight(text: string, words: string[]) {
+    const lower = fold(text), marked = new Array<boolean>(text.length).fill(false);
+    for (const w of words) for (let i = lower.indexOf(w); i >= 0; i = lower.indexOf(w, i + 1)) marked.fill(true, i, i + w.length);
+    let html = '', open = false;
+    for (let i = 0; i < text.length; i++) {
+      if (marked[i] !== open) { html += open ? '</mark>' : '<mark>'; open = marked[i]; }
+      html += escape(text[i]);
+    }
+    return open ? html + '</mark>' : html;
+  }
+
+  function snippet(entry: Entry, words: string[]) {
+    const text = entry.text || entry.description;
+    const lower = fold(text);
+    const first = Math.min(...words.map(w => lower.indexOf(w)).filter(i => i >= 0), text.length);
+    const at = first >= text.length ? 0 : Math.max(0, first - 40);
+    const cut = text.slice(at, at + 150);
+    return (at ? '…' : '') + highlight(cut, words) + (at + 150 < text.length ? '…' : '');
+  }
+
+  function select(i: number) {
+    const items = [...list.children] as HTMLElement[];
+    items.forEach((el, n) => el.setAttribute('aria-selected', String(n === i)));
+    active = i;
+    if (items[i]) { input.setAttribute('aria-activedescendant', items[i].id); items[i].scrollIntoView({ block: 'nearest' }); }
+    else input.removeAttribute('aria-activedescendant');
+  }
+
+  function close() { list.hidden = true; input.setAttribute('aria-expanded', 'false'); select(-1); }
+
+  /** Announce a result count, or show a visible message (no matches, unavailable). */
+  function report(text: string, visible = false) {
+    status.textContent = text;
+    status.classList.toggle('site-search-message', visible);
+  }
+
+  async function render() {
+    const words = terms(input.value);
+    if (!words.length) { list.replaceChildren(); report(''); close(); return; }
+    const query = input.value;
+    const loaded = await load();
+    // A newer query, or leaving the box, cancels this render; focusing again re-renders.
+    if (query !== input.value || document.activeElement !== input) return;
+    if (!loaded) { list.replaceChildren(); close(); report('Search is unavailable right now. Try again in a moment.', true); return; }
+    const results = loaded
+      .map(entry => ({ entry, s: score(entry, words) }))
+      .filter(r => r.s > 0)
+      .sort((a, b) => b.s - a.s)
+      .slice(0, 8);
+    list.replaceChildren(...results.map(({ entry }, n) => {
+      const item = document.createElement('li');
+      item.id = `site-search-${n}`;
+      item.setAttribute('role', 'option');
+      item.setAttribute('aria-selected', 'false');
+      const link = document.createElement('a');
+      link.href = entry.url;
+      link.tabIndex = -1;
+      const where = entry.heading ? `${highlight(entry.title, words)} <span aria-hidden="true">›</span> ${highlight(entry.heading, words)}` : highlight(entry.title, words);
+      link.innerHTML = `<span class="site-search-where">${where}</span><span class="site-search-snippet">${snippet(entry, words)}</span>`;
+      item.append(link);
+      return item;
+    }));
+    if (!results.length) { close(); report('No matches in the docs.', true); return; }
+    report(`${results.length} result${results.length === 1 ? '' : 's'}`);
+    list.hidden = false;
+    input.setAttribute('aria-expanded', 'true');
+    select(0);
+  }
+
+  root.hidden = false;
+  input.addEventListener('focus', () => { load(); if (input.value) render(); });
+  input.addEventListener('input', render);
+  input.addEventListener('keydown', event => {
+    // A closed list keeps its options in the DOM; only an open list can be navigated or chosen from.
+    if (list.hidden) {
+      if (event.key === 'ArrowDown' && terms(input.value).length) { event.preventDefault(); render(); }
+      else if (event.key === 'Escape') input.blur();
+      return;
+    }
+    const count = list.querySelectorAll('[role=option]').length;
+    if (event.key === 'ArrowDown' && count) { event.preventDefault(); select((active + 1) % count); }
+    else if (event.key === 'ArrowUp' && count) { event.preventDefault(); select((active - 1 + count) % count); }
+    else if (event.key === 'Enter') {
+      const link = list.querySelector<HTMLAnchorElement>(`#site-search-${active} a`);
+      if (link) { event.preventDefault(); close(); location.href = link.href; }
+    } else if (event.key === 'Escape') close();
+  });
+  list.addEventListener('mousedown', event => event.preventDefault());
+  list.addEventListener('click', close);
+  input.addEventListener('blur', close);
+  document.addEventListener('keydown', event => {
+    const target = event.target as HTMLElement;
+    if (event.key === '/' && !event.metaKey && !event.ctrlKey && !event.altKey && !target.closest('input, textarea, select, [contenteditable]')) {
+      event.preventDefault();
+      input.focus();
+    }
+  });
+</script>
