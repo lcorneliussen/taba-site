@@ -16,6 +16,17 @@ test('plain text keeps identifiers and code verbatim while stripping emphasis', 
   assert.doesNotMatch(text, /```|\*\*/);
 });
 
+test('list markers are not indexed as text', () => {
+  assert.equal(plainText('* one\n  * two\n- three\n+ four\n1. five'), 'one two three four 1. five');
+});
+
+test('a fence closes only on its own marker', () => {
+  const raw = '## Real\n\n```md\n~~~\n## Not a heading\n~~~\n```\n\nAfter.';
+  const sections = splitSections(raw, [heading(2, 'Real', 'real')]);
+  assert.deepEqual(sections.map(s => s.anchor), ['real']);
+  assert.match(sections[0].text, /Not a heading/);
+});
+
 test('sections pair source headings with rendered anchors, ignoring fenced lines', () => {
   const raw = 'Intro text.\n\n## First `step`\n\nBody one.\n\n```sh\n## not a heading\n```\n\n### Don\'t stop\n\nBody two.\n\n#### Deep\n\nStill two.';
   const sections = splitSections(raw, [

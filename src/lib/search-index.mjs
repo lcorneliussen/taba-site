@@ -10,8 +10,10 @@ const CODE = /^[ \t]*(```|~~~)[^\n]*\n([\s\S]*?)^[ \t]*\1[^\n]*$|`([^`\n]+)`/gm;
 
 /**
  * Reduce Markdown to searchable plain text. Code stays verbatim, because commands and
- * identifiers such as `TABA_CONFIG_ROOT` or `taba-*` are worth finding as written; in prose,
- * `*` and `_` are removed only where they delimit emphasis, so `allow_external` survives.
+ * identifiers such as `TABA_CONFIG_ROOT` or `taba-*` are worth finding as written. In prose,
+ * list markers are dropped and runs of `*` or `_` at a word edge are removed (emphasis), while
+ * those inside a word survive (`allow_external`); an identifier that starts or ends with `*`
+ * or `_` stays searchable only in a code span.
  */
 export function plainText(markdown) {
   const code = [];
@@ -23,6 +25,7 @@ export function plainText(markdown) {
     .replace(/\[([^\]]+)\]\([^)]*\)/g, '$1')
     .replace(/<[^>]+>/g, ' ')
     .replace(/^\s*\|?\s*:?-{3,}.*$/gm, ' ')
+    .replace(/^[ \t]*[*+-][ \t]+/gm, '')
     .replace(/(^|[^\p{L}\p{N}])[*_]+(?=\S)/gmu, '$1')
     .replace(/(?<=\S)[*_]+(?=$|[^\p{L}\p{N}])/gmu, '')
     .replace(/[|>#]+/g, ' ')
@@ -49,7 +52,9 @@ export function splitSections(raw, headings, page = 'page') {
   let fenced = false;
   let next = 0;
   for (const line of raw.split('\n')) {
-    if (FENCE.test(line)) fenced = !fenced;
+    // A fence closes only on the marker that opened it.
+    const marker = line.match(FENCE)?.[1];
+    if (marker && (!fenced || marker === fenced)) fenced = fenced ? false : marker;
     const match = !fenced && line.match(SECTION);
     if (match) {
       const anchor = anchors[next++];
