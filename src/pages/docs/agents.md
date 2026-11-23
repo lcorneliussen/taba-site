@@ -9,7 +9,7 @@ source: https://github.com/lcorneliussen/taba/blob/v0.1.51/internal/wtc/defaults
 
 In [v0.2.4](https://github.com/lcorneliussen/taba/releases/tag/v0.2.4), rendered skills use `taba-*`: start with `/taba-start`. Old `wtc-*` names remain compatibility shims during 0.2.x. A harness override under an old name still wins: rename its folder and `name:` together when migrating. Section patches and base digests move with the override; review reported base drift before accepting.
 
-`taba open` starts `taba status --tui` and `taba browse` for collections pinned at 0.2.0 or later. Older pins keep the `wtc` commands shown below. See [published conventions](https://github.com/lcorneliussen/taba/blob/v0.2.4/docs/conventions.md) for migration order.
+`taba open` starts `taba status --tui` and `taba browse` for collections pinned at 0.2.0 or later. Older pins keep the `wtc` commands. The examples below keep their historical baseline. See [published conventions](https://github.com/lcorneliussen/taba/blob/v0.2.4/docs/conventions.md) for migration order.
 
 ## Start at the collection
 
