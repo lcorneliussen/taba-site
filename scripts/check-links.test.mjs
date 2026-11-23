@@ -42,7 +42,7 @@ test('the existing missing-link guard remains active', async () => {
   assert.equal(result.status, 1);
   assert.match(result.stderr, /missing target/);
 });
-test('search results must point at an existing page and heading', async () => {
+test('search results must point at an existing page and anchor id', async () => {
   const missingAnchor = await check({ 'search-index.json': JSON.stringify([{ url: '/#renamed' }]) });
   assert.equal(missingAnchor.status, 1);
   assert.match(missingAnchor.stderr, /search-index\.json: missing anchor \/#renamed/);

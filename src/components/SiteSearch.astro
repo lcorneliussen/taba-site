@@ -116,13 +116,19 @@ const base = import.meta.env.BASE_URL;
   input.addEventListener('focus', () => { load(); if (input.value) render(); });
   input.addEventListener('input', render);
   input.addEventListener('keydown', event => {
+    // A closed list keeps its options in the DOM; only an open list can be navigated or chosen from.
+    if (list.hidden) {
+      if (event.key === 'ArrowDown' && terms(input.value).length) { event.preventDefault(); render(); }
+      else if (event.key === 'Escape') input.blur();
+      return;
+    }
     const count = list.querySelectorAll('[role=option]').length;
     if (event.key === 'ArrowDown' && count) { event.preventDefault(); select((active + 1) % count); }
     else if (event.key === 'ArrowUp' && count) { event.preventDefault(); select((active - 1 + count) % count); }
     else if (event.key === 'Enter') {
       const link = list.querySelector<HTMLAnchorElement>(`#site-search-${active} a`);
       if (link) { event.preventDefault(); close(); location.href = link.href; }
-    } else if (event.key === 'Escape') { if (!list.hidden) close(); else input.blur(); }
+    } else if (event.key === 'Escape') close();
   });
   list.addEventListener('mousedown', event => event.preventDefault());
   list.addEventListener('click', close);

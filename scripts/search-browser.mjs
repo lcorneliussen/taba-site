@@ -71,6 +71,25 @@ try {
     assert(await page.locator('#site-search-results').isHidden());
     assert.equal(await box.getAttribute('aria-activedescendant'), null);
 
+    // A closed list cannot be chosen from: Enter stays put, ArrowUp does nothing, ArrowDown reopens it.
+    // Chrome clears a search field on a real Escape, so close with a synthetic one that keeps the
+    // query, as browsers that do not clear the field (or closing by other means) would.
+    await search(page, 'add-repo');
+    await box.evaluate(el => el.dispatchEvent(new KeyboardEvent('keydown', { key: 'Escape', bubbles: true })));
+    assert(await page.locator('#site-search-results').isHidden());
+    assert.equal(await box.inputValue(), 'add-repo');
+    const before = page.url();
+    await page.keyboard.press('ArrowUp');
+    await page.keyboard.press('Enter');
+    await page.waitForTimeout(300);
+    assert.equal(page.url(), before, 'Enter navigated from a closed result list');
+    assert.equal(await box.getAttribute('aria-activedescendant'), null);
+    await page.keyboard.press('ArrowDown');
+    await page.waitForFunction(() => !document.querySelector('#site-search-results').hidden);
+    assert.equal(await box.getAttribute('aria-expanded'), 'true');
+    assert.equal(await box.getAttribute('aria-activedescendant'), 'site-search-0');
+    await page.keyboard.press('Escape');
+
     // Enter opens the selected result on another page and lands on its heading.
     await search(page, 'secrets example-backed');
     const href = await page.locator('#site-search-0 a').getAttribute('href');
