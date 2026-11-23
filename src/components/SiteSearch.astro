@@ -1,21 +1,33 @@
 ---
+// One search box per page. In the docs it starts scoped to the docs, with a switch to the whole
+// site; elsewhere (the site header) it searches the whole site.
+interface Props { scope?: 'docs' | 'site'; placement?: 'sidebar' | 'header'; }
+const { scope = 'site', placement = 'sidebar' } = Astro.props;
 const base = import.meta.env.BASE_URL;
+const label = scope === 'docs' ? 'Search the docs' : 'Search the site';
 ---
-<div class="site-search" data-index={`${base}search-index.json`} hidden>
+<div class={`site-search site-search-${placement}`} data-index={`${base}search-index.json`} data-scope={scope} hidden>
   <form role="search" onsubmit="return false">
-    <label class="sr-only" for="site-search-input">Search the docs</label>
-    <input id="site-search-input" type="search" placeholder="Search the docs" autocomplete="off" spellcheck="false"
+    <label class="sr-only" for="site-search-input">{label}</label>
+    <input id="site-search-input" type="search" placeholder={label} autocomplete="off" spellcheck="false"
       role="combobox" aria-expanded="false" aria-controls="site-search-results" aria-autocomplete="list">
     <kbd aria-hidden="true">/</kbd>
   </form>
+  {scope === 'docs' && <fieldset class="site-search-scope">
+    <legend class="sr-only">Search in</legend>
+    <label><input type="radio" name="site-search-scope" value="docs" checked> Docs</label>
+    <label><input type="radio" name="site-search-scope" value="site"> Whole site</label>
+  </fieldset>}
   <ul id="site-search-results" role="listbox" aria-label="Search results" hidden></ul>
   <p class="site-search-status" role="status" aria-live="polite"></p>
 </div>
 <script>
-  type Entry = { title: string; description: string; heading: string; url: string; text: string };
+  type Entry = { title: string; description: string; heading: string; url: string; text: string; scope: 'docs' | 'site' };
 
   const root = document.querySelector<HTMLElement>('.site-search')!;
-  const input = root.querySelector<HTMLInputElement>('input')!;
+  const input = root.querySelector<HTMLInputElement>('#site-search-input')!;
+  const label = root.querySelector<HTMLLabelElement>('label[for="site-search-input"]')!;
+  let scope = root.dataset.scope as 'docs' | 'site';
   const list = root.querySelector<HTMLUListElement>('ul')!;
   const status = root.querySelector<HTMLElement>('.site-search-status')!;
   let index: Promise<Entry[] | null> | undefined;
@@ -89,6 +101,7 @@ const base = import.meta.env.BASE_URL;
     if (query !== input.value || document.activeElement !== input) return;
     if (!loaded) { list.replaceChildren(); close(); report('Search is unavailable right now. Try again in a moment.', true); return; }
     const results = loaded
+      .filter(entry => scope === 'site' || entry.scope === 'docs')
       .map(entry => ({ entry, s: score(entry, words) }))
       .filter(r => r.s > 0)
       .sort((a, b) => b.s - a.s)
@@ -106,7 +119,7 @@ const base = import.meta.env.BASE_URL;
       item.append(link);
       return item;
     }));
-    if (!results.length) { close(); report('No matches in the docs.', true); return; }
+    if (!results.length) { close(); report(scope === 'docs' ? 'No matches in the docs.' : 'No matches on this site.', true); return; }
     report(`${results.length} result${results.length === 1 ? '' : 's'}`);
     list.hidden = false;
     input.setAttribute('aria-expanded', 'true');
@@ -130,6 +143,12 @@ const base = import.meta.env.BASE_URL;
       const link = list.querySelector<HTMLAnchorElement>(`#site-search-${active} a`);
       if (link) { event.preventDefault(); close(); location.href = link.href; }
     } else if (event.key === 'Escape') close();
+  });
+  // Switching scope updates the label and returns to the box, which re-renders the query.
+  root.querySelector('.site-search-scope')?.addEventListener('change', event => {
+    scope = (event.target as HTMLInputElement).value as 'docs' | 'site';
+    label.textContent = input.placeholder = scope === 'docs' ? 'Search the docs' : 'Search the site';
+    input.focus();
   });
   list.addEventListener('mousedown', event => event.preventDefault());
   list.addEventListener('click', close);

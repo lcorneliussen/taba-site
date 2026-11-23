@@ -38,6 +38,60 @@ try {
     await context.close();
   }
 
+  // Outside the docs the header searches the whole site, also without JavaScript falling back gracefully.
+  {
+    const noJs = await open({ ...phone, javaScriptEnabled: false }, '');
+    assert.equal(await noJs.page.locator('.site-search').isVisible(), false);
+    assert(await noJs.page.locator('.site-header nav').isVisible());
+    await noJs.context.close();
+
+    for (const options of [desktop, phone]) {
+      const { context, page, errors } = await open(options, '');
+      const box = input(page);
+      assert.equal(await page.locator('.site-header .site-search').count(), 1, 'search box is not in the header');
+      assert.equal(await page.locator('.site-search-scope').count(), 0, 'scope switch offered outside the docs');
+      assert.equal(await page.locator('label[for="site-search-input"]').textContent(), 'Search the site');
+      await box.focus();
+      await search(page, 'monorepo');
+      const where = await page.locator('#site-search-results .site-search-where').allTextContents();
+      assert(where.some(w => w.startsWith('Home ›')), `no homepage result: ${where}`);
+      const list = await page.locator('#site-search-results').boundingBox();
+      const width = options.viewport.width;
+      assert(list.x >= 0 && list.x + list.width <= width, `results overflow the viewport: ${JSON.stringify(list)}`);
+      await noHorizontalScroll(page);
+      // A homepage section lands on its own anchor.
+      const index = where.findIndex(w => w.startsWith('Home ›'));
+      const href = await page.locator(`#site-search-${index} a`).getAttribute('href');
+      for (let i = 0; i < index; i++) await page.keyboard.press('ArrowDown');
+      await Promise.all([page.waitForURL(url(href)), page.keyboard.press('Enter')]);
+      const id = decodeURIComponent(new URL(page.url()).hash.slice(1));
+      if (id) assert.equal(await page.locator(`[id="${id}"]`).count(), 1, `missing anchor ${id}`);
+      assert.deepEqual(errors, []);
+      await context.close();
+    }
+  }
+
+  // In the docs, search starts scoped to the docs and can switch to the whole site.
+  {
+    const { context, page, errors } = await open(desktop);
+    const box = input(page);
+    assert.equal(await page.locator('.site-header .site-search').count(), 0, 'docs pages also show a header search');
+    assert(await page.locator('input[name="site-search-scope"][value="docs"]').isChecked());
+    await box.focus();
+    await search(page, 'monorepo');
+    assert.equal(await page.locator('.site-search-message').textContent(), 'No matches in the docs.');
+    await page.locator('input[name="site-search-scope"][value="site"]').check();
+    await page.waitForFunction(() => !document.querySelector('#site-search-results').hidden);
+    assert.equal(await page.evaluate(() => document.activeElement?.id), 'site-search-input', 'focus did not return to the search box');
+    assert.equal(await page.locator('label[for="site-search-input"]').textContent(), 'Search the site');
+    const where = await page.locator('#site-search-results .site-search-where').allTextContents();
+    assert(where.some(w => w.startsWith('Home ›')), `no homepage result in whole-site scope: ${where}`);
+    await page.locator('input[name="site-search-scope"][value="docs"]').check();
+    await page.waitForFunction(() => document.querySelector('.site-search-message')?.textContent === 'No matches in the docs.');
+    assert.deepEqual(errors, []);
+    await context.close();
+  }
+
   // Phone width: ARIA wiring, results within the viewport, keyboard selection and anchor landing.
   {
     const { context, page, errors } = await open(phone);
@@ -174,7 +228,7 @@ try {
   // Characters whose lowercase form is longer ("İ") must not shift highlights onto the wrong text.
   {
     const { context, page, errors } = await open(desktop);
-    const entry = { title: 'İİİ guide', description: '', heading: 'Setup', url: '/docs/collections/', text: 'İİİİ before the target word' };
+    const entry = { title: 'İİİ guide', description: '', heading: 'Setup', url: '/docs/collections/', scope: 'docs', text: 'İİİİ before the target word' };
     await page.route('**/search-index.json', route => route.fulfill({ json: [entry] }));
     await input(page).focus();
     await search(page, 'target');
@@ -184,7 +238,7 @@ try {
     assert.deepEqual(errors, []);
     await context.close();
   }
-  console.log('Search browser checks passed: no-JS, phone width, ARIA, keyboard, anchors, highlighting, empty and error states');
+  console.log('Search browser checks passed: header and docs scopes, no-JS, phone width, ARIA, keyboard, anchors, highlighting, empty and error states');
 } finally {
   await browser.close();
 }

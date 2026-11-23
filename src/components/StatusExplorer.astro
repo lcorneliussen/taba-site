@@ -27,7 +27,7 @@ const exampleSources = Object.fromEntries(replayGroups(capture).flatMap(group =>
     <p class="situation-group">{scenario.group} · <a href={`https://github.com/lcorneliussen/taba/tree/${exampleSources[scenario.id].sourceRevision}`}>{exampleSources[scenario.id].release.tag} source</a></p>
     <h3 id={`title-${scenario.id}`}>{scenario.title}</h3>
     <p class="situation-summary">{scenario.summary}</p>
-    {capture.columns.map(width => <details class="terminal-variant" data-width={width} open={width === 100}>
+    {capture.columns.map(width => <details class="terminal-variant" data-width={width} open={width === 100} data-search-skip>
       <summary>{width}-column native terminal example</summary>
       <div class="terminal-scroll" tabindex="0" role="region" aria-label={`${scenario.title}, ${width} columns. Scroll horizontally if needed.`}>
         <pre class="native-terminal" aria-label="Actual terminal text">{frames[scenario.id][String(width)].runs.map(run => <span style={Object.entries(run.style).filter(([, value]) => value !== undefined).map(([key, value]) => `${key.replace(/[A-Z]/g, letter => `-${letter.toLowerCase()}`)}:${value}`).join(';')}>{run.text}</span>)}</pre>

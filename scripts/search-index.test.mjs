@@ -1,55 +1,91 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { buildIndex, plainText, splitSections } from '../src/lib/search-index.mjs';
+import { createServer } from 'node:http';
+import { mkdtemp, mkdir, writeFile, rm } from 'node:fs/promises';
+import { tmpdir } from 'node:os';
+import { join } from 'node:path';
+import { indexDirectory, indexPage, indexSite, pagePath } from '../src/lib/search-index.mjs';
 
-const heading = (depth, text, slug) => ({ depth, text, slug });
+const page = (main, head = '') => `<!doctype html><html><head><title>T — taba docs</title><meta name="description" content="About it.">${head}</head>
+<body><header><nav><a href="/docs/a/">Nav link</a></nav></header><main id="main">${main}</main><footer>Footer text</footer></body></html>`;
 
-test('plain text keeps link labels and code, drops Markdown syntax', () => {
-  assert.equal(plainText('Run **`taba add-repo shared`** — see [the guide](../x/).'), 'Run taba add-repo shared — see the guide.');
-  assert.equal(plainText('| a | b |\n|---|---|\n| c | d |'), 'a b c d');
-});
-
-test('plain text keeps identifiers and code verbatim while stripping emphasis', () => {
-  const text = plainText('Set `TABA_CONFIG_ROOT` and allow_external; skills are `taba-*`, see **bold**, _em_ and *it*.\n\n```sh\nexport WTC_CONFIG_ROOT=x | grep a_b\n```');
-  for (const kept of ['TABA_CONFIG_ROOT', 'allow_external', 'taba-*', 'WTC_CONFIG_ROOT=x | grep a_b']) assert(text.includes(kept), `missing ${kept} in: ${text}`);
-  assert.match(text, /see bold, em and it\./);
-  assert.doesNotMatch(text, /```|\*\*/);
-});
-
-test('list markers are not indexed as text', () => {
-  assert.equal(plainText('* one\n  * two\n- three\n+ four\n1. five'), 'one two three four 1. five');
-});
-
-test('a fence closes only on its own marker', () => {
-  const raw = '## Real\n\n```md\n~~~\n## Not a heading\n~~~\n```\n\nAfter.';
-  const sections = splitSections(raw, [heading(2, 'Real', 'real')]);
-  assert.deepEqual(sections.map(s => s.anchor), ['real']);
-  assert.match(sections[0].text, /Not a heading/);
-});
-
-test('sections pair source headings with rendered anchors, ignoring fenced lines', () => {
-  const raw = 'Intro text.\n\n## First `step`\n\nBody one.\n\n```sh\n## not a heading\n```\n\n### Don\'t stop\n\nBody two.\n\n#### Deep\n\nStill two.';
-  const sections = splitSections(raw, [
-    heading(2, 'First step', 'first-step'),
-    heading(3, 'Don’t stop', 'dont-stop'),
-    heading(4, 'Deep', 'deep'),
+test('a page becomes an introduction plus one entry per h2/h3, linked to heading ids', () => {
+  const entries = indexPage(page(`<h1>Guide<span class="brand-dot">.</span></h1><p>Lead text.</p>
+    <h2 id="first">First <code>step</code></h2><p>Body one.</p>
+    <h3 id="deeper">Deeper</h3><p>Body two.</p><h4>Minor</h4><p>Still two.</p>`), '/docs/guide/');
+  assert.deepEqual(entries.map(e => [e.heading, e.url, e.text]), [
+    ['', '/docs/guide/', 'Lead text.'],
+    ['First step', '/docs/guide/#first', 'Body one.'],
+    ['Deeper', '/docs/guide/#deeper', 'Body two. Minor Still two.'],
   ]);
-  assert.deepEqual(sections.map(s => [s.heading, s.anchor]), [['', ''], ['First step', 'first-step'], ['Don’t stop', 'dont-stop']]);
-  assert.match(sections[1].text, /not a heading/);
-  assert.match(sections[2].text, /Deep Still two/);
+  assert(entries.every(e => e.title === 'Guide' && e.description === 'About it.' && e.scope === 'docs'));
 });
 
-test('a heading that disagrees with the rendered page fails the build', () => {
-  assert.throws(() => splitSections('## One\n\n## Two', [heading(2, 'One', 'one'), heading(2, 'Three', 'three')], 'docs/x'), /docs\/x: search heading "Two"/);
-  assert.throws(() => splitSections('## One', [heading(2, 'One', 'one'), heading(2, 'Two', 'two')], 'docs/x'), /missing from the search index/);
-  assert.throws(() => splitSections('### One', [heading(2, 'One', 'one')]), /does not match/);
+test('headings without an id link to the nearest enclosing id, or to the page', () => {
+  const entries = indexPage(page(`<section id="how"><h2>How</h2><article><h3>Card</h3><p>Card text.</p></article></section>
+    <div><h2>Loose</h2><p>Loose text.</p></div>`), '/');
+  assert.deepEqual(entries.map(e => [e.title, e.heading, e.url, e.scope]), [
+    ['Home', 'How', '/#how', 'site'],
+    ['Home', 'Card', '/#how', 'site'],
+    ['Home', 'Loose', '/', 'site'],
+  ]);
 });
 
-test('index entries deep-link each section and skip pages without a title', () => {
-  const page = (url, title, raw, headings) => ({ url, frontmatter: { title, description: 'd' }, rawContent: () => raw, getHeadings: () => headings });
-  const index = buildIndex({
-    a: page('/docs/a', 'A', 'Lead.\n\n## Part', [heading(2, 'Part', 'part')]),
-    b: page('/docs/b', undefined, '## X', [heading(2, 'X', 'x')]),
-  }, [{ title: 'Extra', description: '', heading: '', url: '/extra/', text: 'e' }]);
-  assert.deepEqual(index.map(e => e.url), ['/docs/a/', '/docs/a/#part', '/extra/']);
+test('navigation, controls, hidden and marked content are not indexed; code and identifiers are', () => {
+  const [entry] = indexPage(page(`<h1>P</h1><p>Set <code>TABA_CONFIG_ROOT</code> and allow_external; skills are <code>taba-*</code>.</p>
+    <pre><code>export WTC_CONFIG_ROOT=x | grep a_b</code></pre>
+    <nav>inner nav</nav><aside>aside</aside><script>var secret</script><style>.x{}</style><svg><text>svg</text></svg>
+    <button>Copy</button><form><input value="v"><label>form label</label></form><select><option>opt</option></select>
+    <p hidden>hidden</p><span aria-hidden="true">decor</span><div data-search-skip>terminal frame</div>
+    <div class="site-search">search box</div><p>line<br>break</p>`), '/p/');
+  for (const kept of ['TABA_CONFIG_ROOT', 'allow_external', 'taba-*', 'WTC_CONFIG_ROOT=x | grep a_b', 'line break']) assert(entry.text.includes(kept), `missing ${kept} in ${entry.text}`);
+  for (const dropped of ['nav', 'aside', 'secret', '.x', 'svg', 'Copy', 'form label', 'opt', 'hidden', 'decor', 'terminal frame', 'search box', 'Nav link', 'Footer']) {
+    assert(!entry.text.includes(dropped), `indexed ${dropped}: ${entry.text}`);
+  }
+});
+
+test('redirect pages and pages without a main region are not indexed', () => {
+  assert.deepEqual(indexPage(page('<h1>X</h1><p>Y</p>', '<meta http-equiv="refresh" content="0; url=/">'), '/old/'), []);
+  assert.deepEqual(indexPage('<html><body><p>No main</p></body></html>', '/x/'), []);
+});
+
+test('built files map to page URLs; 404 and non-HTML files are skipped', () => {
+  assert.equal(pagePath('/out/index.html', '/out'), '/');
+  assert.equal(pagePath('/out/docs/a/index.html', '/out'), '/docs/a/');
+  assert.equal(pagePath('/out/404.html', '/out'), undefined);
+  assert.equal(pagePath('/out/search-index.json', '/out'), undefined);
+});
+
+test('a build directory is indexed page by page', async () => {
+  const root = await mkdtemp(join(tmpdir(), 'search-index-'));
+  try {
+    await mkdir(join(root, 'docs', 'a'), { recursive: true });
+    await writeFile(join(root, 'index.html'), page('<h1>Welcome</h1><p>Home text.</p>'));
+    await writeFile(join(root, 'docs', 'a', 'index.html'), page('<h1>A</h1><h2 id="s">S</h2><p>Doc text.</p>'));
+    await writeFile(join(root, '404.html'), page('<h1>Missing</h1>'));
+    const entries = await indexDirectory(root);
+    // Pages in URL order; a page whose introduction is empty contributes only its sections.
+    assert.deepEqual(entries.map(e => [e.url, e.scope]), [['/', 'site'], ['/docs/a/#s', 'docs']]);
+  } finally {
+    await rm(root, { recursive: true, force: true });
+  }
+});
+
+test('a running site is indexed by following its internal page links', async () => {
+  const pages = {
+    '/': page('<h1>Welcome</h1><p><a href="/docs/a/">A</a> <a href="https://example.test/">out</a> <a href="/logo.svg">logo</a> <a href="/docs/a/#s">again</a></p>'),
+    '/docs/a/': page('<h1>A</h1><h2 id="s">S</h2><p>Doc text <a href="/">home</a>.</p>'),
+  };
+  const server = createServer((request, response) => {
+    const html = pages[request.url];
+    response.writeHead(html ? 200 : 404, { 'Content-Type': html ? 'text/html' : 'text/plain' });
+    response.end(html ?? 'missing');
+  });
+  await new Promise(resolve => server.listen(0, '127.0.0.1', resolve));
+  try {
+    const entries = await indexSite(`http://127.0.0.1:${server.address().port}`);
+    assert.deepEqual(entries.map(e => e.url), ['/', '/docs/a/#s']);
+  } finally {
+    server.close();
+  }
 });
