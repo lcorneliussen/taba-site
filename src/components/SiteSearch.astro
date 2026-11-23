@@ -85,7 +85,8 @@ const base = import.meta.env.BASE_URL;
     if (!words.length) { list.replaceChildren(); report(''); close(); return; }
     const query = input.value;
     const loaded = await load();
-    if (query !== input.value) return;
+    // A newer query, or leaving the box, cancels this render; focusing again re-renders.
+    if (query !== input.value || document.activeElement !== input) return;
     if (!loaded) { list.replaceChildren(); close(); report('Search is unavailable right now. Try again in a moment.', true); return; }
     const results = loaded
       .map(entry => ({ entry, s: score(entry, words) }))

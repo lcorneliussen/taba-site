@@ -9,6 +9,13 @@ test('plain text keeps link labels and code, drops Markdown syntax', () => {
   assert.equal(plainText('| a | b |\n|---|---|\n| c | d |'), 'a b c d');
 });
 
+test('plain text keeps identifiers and code verbatim while stripping emphasis', () => {
+  const text = plainText('Set `TABA_CONFIG_ROOT` and allow_external; skills are `taba-*`, see **bold**, _em_ and *it*.\n\n```sh\nexport WTC_CONFIG_ROOT=x | grep a_b\n```');
+  for (const kept of ['TABA_CONFIG_ROOT', 'allow_external', 'taba-*', 'WTC_CONFIG_ROOT=x | grep a_b']) assert(text.includes(kept), `missing ${kept} in: ${text}`);
+  assert.match(text, /see bold, em and it\./);
+  assert.doesNotMatch(text, /```|\*\*/);
+});
+
 test('sections pair source headings with rendered anchors, ignoring fenced lines', () => {
   const raw = 'Intro text.\n\n## First `step`\n\nBody one.\n\n```sh\n## not a heading\n```\n\n### Don\'t stop\n\nBody two.\n\n#### Deep\n\nStill two.';
   const sections = splitSections(raw, [

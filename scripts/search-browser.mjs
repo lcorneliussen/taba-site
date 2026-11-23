@@ -111,6 +111,11 @@ try {
       await search(page, query);
       assert.doesNotMatch(await page.locator('#site-search-results').textContent(), /&#?\w+;/, `entity text for "${query}"`);
     }
+    // Identifiers with underscores and wildcards are searchable as written.
+    for (const query of ['TABA_CONFIG_ROOT', 'allow_external', 'taba-*']) {
+      await search(page, query);
+      assert(await options(page).count() > 0, `no results for ${query}`);
+    }
     await search(page, 'zzqxwv');
     assert.equal(await page.locator('.site-search-message').textContent(), 'No matches in the docs.');
     assert(await page.locator('#site-search-results').isHidden());
@@ -144,6 +149,28 @@ try {
     assert.deepEqual(errors, []);
     await context.close();
   }
+  // An index that arrives after the user has left the search box does not reopen the results.
+  {
+    const { context, page, errors } = await open(desktop);
+    let release;
+    const held = new Promise(resolve => { release = resolve; });
+    await page.route('**/search-index.json', async route => { await held; await route.continue(); });
+    await input(page).focus();
+    await input(page).fill('status');
+    await input(page).blur();
+    release();
+    await page.waitForResponse('**/search-index.json');
+    await page.waitForTimeout(300);
+    assert(await page.locator('#site-search-results').isHidden(), 'results opened after blur');
+    assert.equal(await input(page).getAttribute('aria-expanded'), 'false');
+    // Returning to the box shows the results for the query it still holds.
+    await input(page).focus();
+    await page.waitForFunction(() => !document.querySelector('#site-search-results').hidden);
+    assert.equal(await input(page).getAttribute('aria-expanded'), 'true');
+    assert.deepEqual(errors, []);
+    await context.close();
+  }
+
   // Characters whose lowercase form is longer ("İ") must not shift highlights onto the wrong text.
   {
     const { context, page, errors } = await open(desktop);

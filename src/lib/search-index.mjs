@@ -5,18 +5,33 @@
 const SECTION = /^(#{2,3})\s+(.+?)\s*#*\s*$/;
 const FENCE = /^\s*(```|~~~)/;
 
-/** Reduce Markdown to searchable plain text. Code stays: commands are worth finding. */
+// Fenced blocks (closed by the same marker) and inline code spans.
+const CODE = /^[ \t]*(```|~~~)[^\n]*\n([\s\S]*?)^[ \t]*\1[^\n]*$|`([^`\n]+)`/gm;
+
+/**
+ * Reduce Markdown to searchable plain text. Code stays verbatim, because commands and
+ * identifiers such as `TABA_CONFIG_ROOT` or `taba-*` are worth finding as written; in prose,
+ * `*` and `_` are removed only where they delimit emphasis, so `allow_external` survives.
+ */
 export function plainText(markdown) {
-  return markdown
+  const code = [];
+  const prose = markdown
     .replace(/<!--[\s\S]*?-->/g, ' ')
+    .replace(CODE, (_, _fence, block, span) => `\uE000${code.push(block ?? span) - 1}\uE001`)
     .replace(/^\s*(```|~~~).*$/gm, ' ')
     .replace(/!\[([^\]]*)\]\([^)]*\)/g, '$1')
     .replace(/\[([^\]]+)\]\([^)]*\)/g, '$1')
     .replace(/<[^>]+>/g, ' ')
     .replace(/^\s*\|?\s*:?-{3,}.*$/gm, ' ')
-    .replace(/[*_`|>#]+/g, ' ')
-    .replace(/&[a-z]+;/g, ' ')
+    .replace(/(^|[^\p{L}\p{N}])[*_]+(?=\S)/gmu, '$1')
+    .replace(/(?<=\S)[*_]+(?=$|[^\p{L}\p{N}])/gmu, '')
+    .replace(/[|>#]+/g, ' ')
+    .replace(/&[a-z]+;/g, ' ');
+  return prose
+    .replace(/\uE000(\d+)\uE001/g, (_, i) => ` ${code[i]} `)
     .replace(/\s+/g, ' ')
+    .replace(/ ([.,;:!?)])/g, '$1')
+    .replace(/\( /g, '(')
     .trim();
 }
 
