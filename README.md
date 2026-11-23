@@ -36,7 +36,7 @@ npm run test:links
 npm run preview
 ```
 
-The link check validates every generated HTML page’s internal links, fragments, assets, and GitHub Pages base path, and that every docs search result points at an existing page and heading. It does not check external website availability. The interactive homepage also needs browser checks for collection switching, quick-start selection, clipboard behavior, and narrow viewports.
+The link check validates every generated HTML page’s internal links, fragments, assets, and GitHub Pages base path, and that every docs search result points at a generated page and an existing anchor id on it. It does not check external website availability. The interactive homepage also needs browser checks for collection switching, quick-start selection, clipboard behavior, and narrow viewports.
 
 ## Content and layout
 

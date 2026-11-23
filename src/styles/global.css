@@ -45,7 +45,7 @@ footer .brand-mark { width: 28px; height: 28px; border-radius: 8px; }
 /* Docs search: a static index fetched on first focus, results as a listbox. */
 .site-search { position: relative; margin-bottom: 26px; }
 .site-search form { position: relative; }
-.site-search input { width: 100%; font: 13px/1.4 inherit; font-family: inherit; color: var(--ink); background: #fcfdf7; border: 1px solid var(--line); border-radius: 6px; padding: 9px 30px 9px 11px; -webkit-appearance: none; appearance: none; }
+.site-search input { width: 100%; font-family: inherit; font-size: 13px; line-height: 1.4; color: var(--ink); background: #fcfdf7; border: 1px solid var(--line); border-radius: 6px; padding: 9px 30px 9px 11px; -webkit-appearance: none; appearance: none; }
 .site-search input::placeholder { color: var(--muted); }
 .site-search input:focus-visible { outline: 3px solid #b0642f; outline-offset: 2px; }
 .site-search input::-webkit-search-cancel-button { display: none; }

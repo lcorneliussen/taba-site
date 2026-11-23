@@ -1,5 +1,5 @@
 // Builds the site search index at build time from the Markdown pages.
-// Each page becomes one entry per h2/h3 section so results can deep-link.
+// Each page becomes one entry for its introduction plus one per h2/h3 section, so results can deep-link.
 
 const SECTION = /^(#{2,3})\s+(.+?)\s*#*\s*$/;
 const FENCE = /^\s*(```|~~~)/;

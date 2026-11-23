@@ -26,11 +26,14 @@ const base = import.meta.env.BASE_URL;
     .then(r => (r.ok ? r.json() : Promise.reject(r.status)))
     .catch(() => { index = undefined; return null; }));
   const escape = (s: string) => s.replace(/[&<>"']/g, c => `&#${c.charCodeAt(0)};`);
-  const terms = (q: string) => [...new Set(q.toLowerCase().split(/\s+/).filter(Boolean))];
+  // Case-fold without changing string length (e.g. "İ" lowercases to two code units), so match
+  // offsets found in the folded text stay valid in the original.
+  const fold = (s: string) => Array.from(s, c => { const l = c.toLowerCase(); return l.length === c.length ? l : c; }).join('');
+  const terms = (q: string) => [...new Set(fold(q).split(/\s+/).filter(Boolean))];
 
   function score(entry: Entry, words: string[]) {
-    const title = entry.title.toLowerCase(), heading = entry.heading.toLowerCase();
-    const body = `${entry.description} ${entry.text}`.toLowerCase();
+    const title = fold(entry.title), heading = fold(entry.heading);
+    const body = fold(`${entry.description} ${entry.text}`);
     let total = 0;
     for (const w of words) {
       const s = (title.includes(w) ? 8 : 0) + (heading.includes(w) ? 6 : 0) + (body.includes(w) ? 1 + Math.min(body.split(w).length - 2, 4) * 0.25 : 0);
@@ -42,7 +45,7 @@ const base = import.meta.env.BASE_URL;
 
   /** Mark matches in plain text, escaping every segment (matching happens before escaping). */
   function highlight(text: string, words: string[]) {
-    const lower = text.toLowerCase(), marked = new Array<boolean>(text.length).fill(false);
+    const lower = fold(text), marked = new Array<boolean>(text.length).fill(false);
     for (const w of words) for (let i = lower.indexOf(w); i >= 0; i = lower.indexOf(w, i + 1)) marked.fill(true, i, i + w.length);
     let html = '', open = false;
     for (let i = 0; i < text.length; i++) {
@@ -54,7 +57,7 @@ const base = import.meta.env.BASE_URL;
 
   function snippet(entry: Entry, words: string[]) {
     const text = entry.text || entry.description;
-    const lower = text.toLowerCase();
+    const lower = fold(text);
     const first = Math.min(...words.map(w => lower.indexOf(w)).filter(i => i >= 0), text.length);
     const at = first >= text.length ? 0 : Math.max(0, first - 40);
     const cut = text.slice(at, at + 150);

@@ -59,7 +59,8 @@ for (const file of files) {
     } catch { errors.push(`${pagePath}: missing target ${url.pathname}`); }
   }
 }
-// Every search result must land on a real page and heading.
+// Every search result must point at a generated page and, for section results, an element id on it.
+// (That the id belongs to the intended heading is enforced when the index is built.)
 let searchTargets = 0;
 try {
   const index = JSON.parse(await readFile(resolve(root, 'search-index.json'), 'utf8'));

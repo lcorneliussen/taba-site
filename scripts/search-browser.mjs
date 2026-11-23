@@ -125,6 +125,19 @@ try {
     assert.deepEqual(errors, []);
     await context.close();
   }
+  // Characters whose lowercase form is longer ("İ") must not shift highlights onto the wrong text.
+  {
+    const { context, page, errors } = await open(desktop);
+    const entry = { title: 'İİİ guide', description: '', heading: 'Setup', url: '/docs/collections/', text: 'İİİİ before the target word' };
+    await page.route('**/search-index.json', route => route.fulfill({ json: [entry] }));
+    await input(page).focus();
+    await search(page, 'target');
+    assert.deepEqual(await page.locator('#site-search-results mark').allTextContents(), ['target']);
+    await search(page, 'guide');
+    assert.deepEqual(await page.locator('#site-search-results mark').allTextContents(), ['guide']);
+    assert.deepEqual(errors, []);
+    await context.close();
+  }
   console.log('Search browser checks passed: no-JS, phone width, ARIA, keyboard, anchors, highlighting, empty and error states');
 } finally {
   await browser.close();
