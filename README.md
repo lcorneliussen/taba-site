@@ -36,7 +36,7 @@ npm run test:links
 npm run preview
 ```
 
-The link check validates every generated HTML page’s internal links, fragments, assets, and GitHub Pages base path, and that every docs search result points at a generated page and an existing anchor id on it. It does not check external website availability. The interactive homepage also needs browser checks for collection switching, quick-start selection, clipboard behavior, and narrow viewports.
+The link check validates every generated HTML page’s internal links, fragments, assets, and GitHub Pages base path, and that every search result points at a generated page and an existing anchor id on it. It does not check external website availability. The interactive homepage also needs browser checks for collection switching, quick-start selection, clipboard behavior, and narrow viewports.
 
 ## Content and layout
 
@@ -45,7 +45,7 @@ The link check validates every generated HTML page’s internal links, fragments
 - `src/layouts/Docs.astro` and `src/components/DocsNav.astro`: documentation shell and navigation.
 - `src/styles/global.css`: shared responsive design and reduced-motion support.
 - `src/scripts/home.js`: collection example and quick-start controls.
-- `src/lib/search-index.mjs`, `src/pages/search-index.json.ts` and `src/components/SiteSearch.astro`: docs search. The build writes one index entry per h2/h3 section of the Markdown pages and fails if a source heading disagrees with its rendered anchor; Astro pages such as Reading status are described by hand in the endpoint. `npm run test:search` covers the index; with a preview running, `npm run test:search:browser -- http://127.0.0.1:<port>/` checks phone width, keyboard, ARIA, no-JS, index failure and anchor landing.
+- `src/lib/search-index.mjs` and `src/components/SiteSearch.astro`: site search. An Astro integration indexes the rendered HTML of every page (`<main id="main">`, one entry per h2/h3 section, each linked to its nearest real id or to the page) into `search-index.json` after each build, and serves the same index live from the dev server. Navigation, scripts, hidden content and anything marked `data-search-skip` (such as the status terminal frames) are left out; redirect pages and 404 are skipped. Docs pages search the docs by default from the sidebar, with a switch to the whole site; every other page has a site-wide search box in the header. `npm run test:search` covers the indexer; with a preview running, `npm run test:search:browser -- http://127.0.0.1:<port>/` checks both placements and scopes, phone width, keyboard, ARIA, no-JS, index failure and anchor landing.
 
 Local-terminal examples follow the upstream CLI getting-started guide and explicitly pin v0.1.51. OpenClaw guidance is separately labeled for the gateway-integrated build; it must not suggest `wtc init` or `wtc new` on a gateway. Reconcile both with their upstream instructions when updating commands.
 

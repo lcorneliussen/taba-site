@@ -60,7 +60,7 @@ for (const file of files) {
   }
 }
 // Every search result must point at a generated page and, for section results, an element id on it.
-// (That the id belongs to the intended heading is enforced when the index is built.)
+// (Ids are read from the rendered headings when the index is built, so they match by construction.)
 let searchTargets = 0;
 try {
   const index = JSON.parse(await readFile(resolve(root, 'search-index.json'), 'utf8'));

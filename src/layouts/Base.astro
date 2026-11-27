@@ -1,9 +1,11 @@
 ---
 import '../styles/global.css';
 import BrandMark from '../components/BrandMark.astro';
+import SiteSearch from '../components/SiteSearch.astro';
 import { protectCode } from '../lib/protect-code.mjs';
-interface Props { title?: string; description?: string; }
-const { title = 'taba — Make room for the whole task.', description = 'Git worktree collections for working across repositories, with agents or your favorite editor. A little structure. A lot more room to work. Formerly wtc.' } = Astro.props;
+// `search`: the site-wide search box in the header; the docs layout has its own in the sidebar.
+interface Props { title?: string; description?: string; search?: boolean; }
+const { search = true, title = 'taba — Make room for the whole task.', description = 'Git worktree collections for working across repositories, with agents or your favorite editor. A little structure. A lot more room to work. Formerly wtc.' } = Astro.props;
 const base = import.meta.env.BASE_URL;
 const content = protectCode(await Astro.slots.render('default'));
 ---
@@ -23,7 +25,7 @@ const content = protectCode(await Astro.slots.render('default'));
 </head>
 <body>
   <a class="skip-link" href="#main">Skip to content</a>
-  <header class="site-header wrap">
+  <header class={`site-header wrap${search ? ' has-search' : ''}`}>
     <a class="brand" href={base} aria-label="taba home"><BrandMark /> <span>taba<span class="brand-dot">.</span></span></a>
     <nav aria-label="Main navigation">
       <a href={`${base}#how-it-works`}>How it works</a>
@@ -31,6 +33,7 @@ const content = protectCode(await Astro.slots.render('default'));
       <a href={`${base}docs/getting-started/`}>Docs</a>
       <a class="github-link" href="https://github.com/lcorneliussen/taba">GitHub <span aria-hidden="true">↗</span></a>
     </nav>
+    {search && <SiteSearch placement="header" />}
     <a class="button button-small header-cta" href={`${base}docs/getting-started/`}>Get started <span aria-hidden="true">↗</span></a>
   </header>
   <Fragment set:html={content} />

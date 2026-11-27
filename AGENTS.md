@@ -42,8 +42,8 @@ by step. Write for them:
 
 - frontmatter keys other than `title`, `description` and `lede`;
 - code blocks, command lines, file paths, URLs and version numbers;
-- heading text without updating every link to its anchor (search and
-  `npm run test:links` fail on mismatches);
+- heading text without updating every link to its anchor (`npm run test:links`
+  fails on mismatches; search reads the rendered ids, so it follows the change);
 - HTML structure, classes, ids and component props in `.astro` files.
 
 ## Verify before committing

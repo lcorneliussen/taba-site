@@ -1,7 +1,8 @@
 import assert from 'node:assert/strict';
 import { chromium } from 'playwright';
 
-// Browser checks for docs search: phone width, keyboard, ARIA, no-JS, index failure and anchors.
+// Browser checks for site search: header and docs placement and scopes, phone width, keyboard, ARIA,
+// no-JS, index failure and anchors.
 const target = process.argv[2];
 if (!target) throw Error('Pass an already running local preview URL; this command starts no server');
 const site = target.endsWith('/') ? target : target + '/';
@@ -35,6 +36,63 @@ try {
     const { context, page } = await open({ ...phone, javaScriptEnabled: false });
     assert.equal(await page.locator('.site-search').isVisible(), false);
     assert(await page.getByText('Browse the handbook').isVisible());
+    await context.close();
+  }
+
+  // Outside the docs the header searches the whole site. Without JavaScript the box is hidden and the
+  // navigation stays usable.
+  {
+    const noJs = await open({ ...phone, javaScriptEnabled: false }, '');
+    assert.equal(await noJs.page.locator('.site-search').isVisible(), false);
+    assert(await noJs.page.locator('.site-header nav').isVisible());
+    await noJs.context.close();
+
+    for (const options of [desktop, phone]) {
+      const { context, page, errors } = await open(options, '');
+      const box = input(page);
+      assert.equal(await page.locator('.site-header .site-search').count(), 1, 'search box is not in the header');
+      assert.equal(await page.locator('.site-search-scope').count(), 0, 'scope switch offered outside the docs');
+      assert.equal(await page.locator('label[for="site-search-input"]').textContent(), 'Search the site');
+      await box.focus();
+      await search(page, 'monorepo');
+      const where = await page.locator('#site-search-results .site-search-where').allTextContents();
+      assert(where.some(w => w.startsWith('Home ›')), `no homepage result: ${where}`);
+      const list = await page.locator('#site-search-results').boundingBox();
+      const width = options.viewport.width;
+      assert(list.x >= 0 && list.x + list.width <= width, `results overflow the viewport: ${JSON.stringify(list)}`);
+      await noHorizontalScroll(page);
+      // A homepage section result with an anchor lands on that anchor.
+      const hrefs = await page.locator('#site-search-results [role=option] a').evaluateAll(links => links.map(a => a.getAttribute('href')));
+      const index = hrefs.findIndex((href, n) => where[n].startsWith('Home ›') && href.includes('#'));
+      assert(index >= 0, `no homepage result with an anchor: ${JSON.stringify(hrefs)}`);
+      for (let i = 0; i < index; i++) await page.keyboard.press('ArrowDown');
+      await Promise.all([page.waitForURL(url(hrefs[index])), page.keyboard.press('Enter')]);
+      const id = decodeURIComponent(new URL(page.url()).hash.slice(1));
+      assert.equal(id, decodeURIComponent(new URL(hrefs[index], page.url()).hash.slice(1)));
+      assert.equal(await page.locator(`[id="${id}"]`).count(), 1, `missing anchor ${id}`);
+      assert.deepEqual(errors, []);
+      await context.close();
+    }
+  }
+
+  // In the docs, search starts scoped to the docs and can switch to the whole site.
+  {
+    const { context, page, errors } = await open(desktop);
+    const box = input(page);
+    assert.equal(await page.locator('.site-header .site-search').count(), 0, 'docs pages also show a header search');
+    assert(await page.locator('input[name="site-search-scope"][value="docs"]').isChecked());
+    await box.focus();
+    await search(page, 'monorepo');
+    assert.equal(await page.locator('.site-search-message').textContent(), 'No matches in the docs.');
+    await page.locator('input[name="site-search-scope"][value="site"]').check();
+    await page.waitForFunction(() => !document.querySelector('#site-search-results').hidden);
+    assert.equal(await page.evaluate(() => document.activeElement?.id), 'site-search-input', 'focus did not return to the search box');
+    assert.equal(await page.locator('label[for="site-search-input"]').textContent(), 'Search the site');
+    const where = await page.locator('#site-search-results .site-search-where').allTextContents();
+    assert(where.some(w => w.startsWith('Home ›')), `no homepage result in whole-site scope: ${where}`);
+    await page.locator('input[name="site-search-scope"][value="docs"]').check();
+    await page.waitForFunction(() => document.querySelector('.site-search-message')?.textContent === 'No matches in the docs.');
+    assert.deepEqual(errors, []);
     await context.close();
   }
 
@@ -174,7 +232,7 @@ try {
   // Characters whose lowercase form is longer ("İ") must not shift highlights onto the wrong text.
   {
     const { context, page, errors } = await open(desktop);
-    const entry = { title: 'İİİ guide', description: '', heading: 'Setup', url: '/docs/collections/', text: 'İİİİ before the target word' };
+    const entry = { title: 'İİİ guide', description: '', heading: 'Setup', url: '/docs/collections/', scope: 'docs', text: 'İİİİ before the target word' };
     await page.route('**/search-index.json', route => route.fulfill({ json: [entry] }));
     await input(page).focus();
     await search(page, 'target');
@@ -184,7 +242,7 @@ try {
     assert.deepEqual(errors, []);
     await context.close();
   }
-  console.log('Search browser checks passed: no-JS, phone width, ARIA, keyboard, anchors, highlighting, empty and error states');
+  console.log('Search browser checks passed: header and docs scopes, no-JS, phone width, ARIA, keyboard, anchors, highlighting, empty and error states');
 } finally {
   await browser.close();
 }
