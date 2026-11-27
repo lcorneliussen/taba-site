@@ -25,6 +25,13 @@ async function search(page, query) {
   await page.waitForFunction(() => document.querySelector('#site-search-results').hidden === false
     || document.querySelector('.site-search-status').classList.contains('site-search-message'));
 }
+// Waits briefly for (smooth) scrolling to settle, then reports whether the element's top is on screen.
+async function inViewport(page, selector) {
+  await page.waitForFunction(s => { const r = document.querySelector(s)?.getBoundingClientRect(); return r && r.top >= 0 && r.top < innerHeight; }, selector, { timeout: 3000 }).catch(() => {});
+  const box = await page.locator(selector).boundingBox();
+  const height = page.viewportSize().height;
+  return box !== null && box.y >= 0 && box.y < height;
+}
 async function noHorizontalScroll(page) {
   const [scroll, width] = await page.evaluate(() => [document.documentElement.scrollWidth, innerWidth]);
   assert(scroll <= width, `horizontal scroll: ${scroll} > ${width}`);
@@ -114,10 +121,12 @@ try {
     await page.waitForFunction(id => !document.getElementById(id)?.closest('[data-situation]')?.hidden, id, { timeout: 3000 })
       .catch(() => assert.fail(`situation for #${id} stayed hidden`));
     assert(await page.locator(`[id="${id}"]`).isVisible());
-    // Loading the same link directly also opens it.
+    assert(await inViewport(page, `[id="${id}"]`), 'search result did not scroll to the situation');
+    // Loading the same link directly also opens it and scrolls to it.
     await page.goto('about:blank');
     await page.goto(url(target.url));
     assert(await page.locator(`[id="${id}"]`).isVisible(), 'direct link to a situation heading stays hidden');
+    assert(await inViewport(page, `[id="${id}"]`), 'direct link did not scroll to the situation');
     assert.deepEqual(errors, []);
     await context.close();
   }
