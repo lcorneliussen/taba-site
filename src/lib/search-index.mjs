@@ -1,5 +1,5 @@
 // Site search index, built from rendered HTML so every page (Markdown or Astro) is searchable
-// and every result links to an id that really exists on the page.
+// and every result links to its nearest real id on the page, or to the page when it has none.
 //
 // Each page's <main id="main"> becomes an introduction entry plus one entry per h2/h3 section.
 // Navigation, scripts, hidden content, the search box itself and anything marked
