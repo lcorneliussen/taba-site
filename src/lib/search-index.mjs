@@ -62,7 +62,7 @@ export function indexPage(html, url, { base = '/' } = {}) {
   const walk = (node, ancestorId) => {
     if (node.nodeName === '#text') { sections.at(-1).parts.push(node.value); return; }
     if (node.nodeName === 'br') { sections.at(-1).parts.push(' '); return; }
-    if (node.nodeName === '#comment' || (node.tagName && skipped(node)) || node === h1) return;
+    if (node.nodeName === '#comment' || (node.tagName && skipped(node))) return;
     const id = attr(node, 'id');
     if (SECTION_HEADING.has(node.nodeName)) {
       sections.push({ heading: clean(textOf(node)), anchor: id ?? ancestorId ?? '', parts: [] });

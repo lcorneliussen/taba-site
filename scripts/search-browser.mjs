@@ -25,6 +25,13 @@ async function search(page, query) {
   await page.waitForFunction(() => document.querySelector('#site-search-results').hidden === false
     || document.querySelector('.site-search-status').classList.contains('site-search-message'));
 }
+// Waits briefly for (smooth) scrolling to settle, then reports whether the element's top is on screen.
+async function inViewport(page, selector) {
+  await page.waitForFunction(s => { const r = document.querySelector(s)?.getBoundingClientRect(); return r && r.top >= 0 && r.top < innerHeight; }, selector, { timeout: 3000 }).catch(() => {});
+  const box = await page.locator(selector).boundingBox();
+  const height = page.viewportSize().height;
+  return box !== null && box.y >= 0 && box.y < height;
+}
 async function noHorizontalScroll(page) {
   const [scroll, width] = await page.evaluate(() => [document.documentElement.scrollWidth, innerWidth]);
   assert(scroll <= width, `horizontal scroll: ${scroll} > ${width}`);
@@ -92,6 +99,34 @@ try {
     assert(where.some(w => w.startsWith('Home ›')), `no homepage result in whole-site scope: ${where}`);
     await page.locator('input[name="site-search-scope"][value="docs"]').check();
     await page.waitForFunction(() => document.querySelector('.site-search-message')?.textContent === 'No matches in the docs.');
+    assert.deepEqual(errors, []);
+    await context.close();
+  }
+
+  // A Reading status situation result opens that situation, which the explorer otherwise keeps hidden.
+  {
+    const { context, page, errors } = await open(desktop, 'docs/status/');
+    const index = await (await page.request.get(url('search-index.json'))).json();
+    const situations = index.filter(e => /^\/docs\/status\/#title-/.test(new URL(e.url, site).pathname + new URL(e.url, site).hash));
+    assert(situations.length > 1, 'no Reading status situation entries in the index');
+    const target = situations.at(-1);
+    await input(page).focus();
+    await search(page, target.heading);
+    const where = await page.locator('#site-search-results [role=option] a').evaluateAll(links => links.map(a => a.getAttribute('href')));
+    const at = where.indexOf(target.url);
+    assert(at >= 0, `situation ${target.url} not among results ${JSON.stringify(where)}`);
+    for (let i = 0; i < at; i++) await page.keyboard.press('ArrowDown');
+    await Promise.all([page.waitForURL(url(target.url)), page.keyboard.press('Enter')]);
+    const id = decodeURIComponent(new URL(target.url, site).hash.slice(1));
+    await page.waitForFunction(id => !document.getElementById(id)?.closest('[data-situation]')?.hidden, id, { timeout: 3000 })
+      .catch(() => assert.fail(`situation for #${id} stayed hidden`));
+    assert(await page.locator(`[id="${id}"]`).isVisible());
+    assert(await inViewport(page, `[id="${id}"]`), 'search result did not scroll to the situation');
+    // Loading the same link directly also opens it and scrolls to it.
+    await page.goto('about:blank');
+    await page.goto(url(target.url));
+    assert(await page.locator(`[id="${id}"]`).isVisible(), 'direct link to a situation heading stays hidden');
+    assert(await inViewport(page, `[id="${id}"]`), 'direct link did not scroll to the situation');
     assert.deepEqual(errors, []);
     await context.close();
   }
