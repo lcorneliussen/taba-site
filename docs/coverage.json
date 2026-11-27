@@ -74,7 +74,8 @@
       "status": "covered",
       "pages": [
         "src/pages/docs/upgrades.md",
-        "src/pages/docs/conventions.md"
+        "src/pages/docs/conventions.md",
+        "src/pages/docs/versions.md"
       ],
       "reason": "Handbook summarizes the user workflow; full versioned contract remains upstream. Rename conventions follows the unreleased docs/conventions.md (#375) until the baseline includes it."
     },

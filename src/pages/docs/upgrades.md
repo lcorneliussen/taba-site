@@ -5,6 +5,9 @@ description: Review the target release before changing a CLI pin or gateway plug
 source: https://github.com/lcorneliussen/taba/blob/v0.1.51/docs/release-notes.md
 ---
 
+For local release candidate tests, dev builds, and version checks, see
+[Taba versions and release channels](../versions/).
+
 ## Moving to v0.2.5: receiving roots and managed tunnels
 
 [v0.2.5](https://github.com/lcorneliussen/taba/releases/tag/v0.2.5) adds receiving-owned control roots, named tunnel policy and lifecycle controls, and reported tunnel access glyphs. Read its [numbered release notes](https://github.com/lcorneliussen/taba/blob/v0.2.5/internal/wtc/release-notes/0.2.5.md) before changing a pin or gateway plugin.
