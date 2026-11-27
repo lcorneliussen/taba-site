@@ -61,10 +61,7 @@ normally to return to the collection's usual selection. If source following
 is enabled and you want to run the installed pin, use
 `TABA_DEV_BUILD=off taba status --tui`.
 
-For status changes, check a newly opened PR, a known merged or declined PR,
-and a manual refresh. Compare results across the projects and forges you care
-about, and record which version each test pane ran. Track permission or
-rate-limit failures separately from stale PR data.
+Confirm the RC version in the new pane's header before recording test results.
 
 ## Use a local source build
 
