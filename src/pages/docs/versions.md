@@ -1,7 +1,7 @@
 ---
 layout: ../../layouts/Docs.astro
 title: Taba versions and release channels
-description: Find the version a project selects, try a release candidate locally, and return to the project pin.
+description: Find the version a project selects, try an edge build or release candidate locally, and return to the project pin.
 ---
 
 ## Check which version you are using
@@ -62,6 +62,42 @@ is enabled and you want to run the installed pin, use
 `TABA_DEV_BUILD=off taba status --tui`.
 
 Confirm the RC version in the new pane's header before recording test results.
+
+## Try an edge build in one collection
+
+Edge builds package an exact green commit from `main`. Choose a published tag
+containing `-edge.` from [GitHub Releases](https://github.com/lcorneliussen/taba/releases).
+Copy the exact tag to `edge_version`; edge tags have no leading `v`. If no edge
+tag is listed, there is no published edge build available.
+
+From the collection you want to test, confirm the selected binary and launch
+a separate status session:
+
+```sh
+mise exec "github:lcorneliussen/taba@${edge_version:?Set a published edge tag}" -- \
+  env TABA_DEV_BUILD=off WTC_DEV_BUILD=off taba --version
+mise exec "github:lcorneliussen/taba@${edge_version:?Set a published edge tag}" -- \
+  env TABA_DEV_BUILD=off WTC_DEV_BUILD=off taba status --tui
+```
+
+To keep testing that version in the collection, add its exact tag under
+`[tools]` in the collection root's `mise.local.toml`. Preserve any other entries
+in the file. Use the Taba tool key from the generated `mise.toml`.
+
+```toml
+[tools]
+"github:lcorneliussen/taba" = "<published edge tag>"
+```
+
+Run `mise trust mise.local.toml`, `mise install`, and
+`taba agent-env --write`. Verify the executable with `taba --version`.
+If source following is active, use both bypass variables as above or turn it
+off with `taba dev mode off`. Restart the status pane to use the new selection.
+
+To return to the project pin, remove the edge entry, run
+`taba agent-env --write`, and restart the pane. This selection is local to the
+collection. See the [edge build reference](https://github.com/lcorneliussen/taba/blob/f8d88c75c99d5e59aa2bcc18a56583f1e9a6dacd/docs/edge-builds.md)
+for provenance verification and maintainer publishing instructions.
 
 ## Use a local source build
 
