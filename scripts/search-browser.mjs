@@ -1,7 +1,8 @@
 import assert from 'node:assert/strict';
 import { chromium } from 'playwright';
 
-// Browser checks for docs search: phone width, keyboard, ARIA, no-JS, index failure and anchors.
+// Browser checks for site search: header and docs placement and scopes, phone width, keyboard, ARIA,
+// no-JS, index failure and anchors.
 const target = process.argv[2];
 if (!target) throw Error('Pass an already running local preview URL; this command starts no server');
 const site = target.endsWith('/') ? target : target + '/';
@@ -38,7 +39,8 @@ try {
     await context.close();
   }
 
-  // Outside the docs the header searches the whole site, also without JavaScript falling back gracefully.
+  // Outside the docs the header searches the whole site. Without JavaScript the box is hidden and the
+  // navigation stays usable.
   {
     const noJs = await open({ ...phone, javaScriptEnabled: false }, '');
     assert.equal(await noJs.page.locator('.site-search').isVisible(), false);
@@ -59,13 +61,15 @@ try {
       const width = options.viewport.width;
       assert(list.x >= 0 && list.x + list.width <= width, `results overflow the viewport: ${JSON.stringify(list)}`);
       await noHorizontalScroll(page);
-      // A homepage section lands on its own anchor.
-      const index = where.findIndex(w => w.startsWith('Home ›'));
-      const href = await page.locator(`#site-search-${index} a`).getAttribute('href');
+      // A homepage section result with an anchor lands on that anchor.
+      const hrefs = await page.locator('#site-search-results [role=option] a').evaluateAll(links => links.map(a => a.getAttribute('href')));
+      const index = hrefs.findIndex((href, n) => where[n].startsWith('Home ›') && href.includes('#'));
+      assert(index >= 0, `no homepage result with an anchor: ${JSON.stringify(hrefs)}`);
       for (let i = 0; i < index; i++) await page.keyboard.press('ArrowDown');
-      await Promise.all([page.waitForURL(url(href)), page.keyboard.press('Enter')]);
+      await Promise.all([page.waitForURL(url(hrefs[index])), page.keyboard.press('Enter')]);
       const id = decodeURIComponent(new URL(page.url()).hash.slice(1));
-      if (id) assert.equal(await page.locator(`[id="${id}"]`).count(), 1, `missing anchor ${id}`);
+      assert.equal(id, decodeURIComponent(new URL(hrefs[index], page.url()).hash.slice(1)));
+      assert.equal(await page.locator(`[id="${id}"]`).count(), 1, `missing anchor ${id}`);
       assert.deepEqual(errors, []);
       await context.close();
     }

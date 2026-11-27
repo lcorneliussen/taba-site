@@ -4,7 +4,7 @@ import { createServer } from 'node:http';
 import { mkdtemp, mkdir, writeFile, rm } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
-import { indexDirectory, indexPage, indexSite, pagePath } from '../src/lib/search-index.mjs';
+import { indexDirectory, indexPage, indexSite, pagePath, searchIndex } from '../src/lib/search-index.mjs';
 
 const page = (main, head = '') => `<!doctype html><html><head><title>T — taba docs</title><meta name="description" content="About it.">${head}</head>
 <body><header><nav><a href="/docs/a/">Nav link</a></nav></header><main id="main">${main}</main><footer>Footer text</footer></body></html>`;
@@ -88,4 +88,19 @@ test('a running site is indexed by following its internal page links', async () 
   } finally {
     server.close();
   }
+});
+
+test('the dev index crawls the server it was requested from, never the Host header', async () => {
+  const integration = searchIndex();
+  integration.hooks['astro:config:done']({ config: { base: '/' } });
+  let handler, crawled;
+  const server = {
+    middlewares: { use: fn => { handler = fn; } },
+    ssrLoadModule: async () => ({ indexSite: async origin => { crawled = origin; return []; } }),
+  };
+  integration.hooks['astro:server:setup']({ server });
+  const request = { url: '/search-index.json', headers: { host: 'attacker.example:80' }, socket: { localAddress: '127.0.0.1', localPort: 4321 } };
+  const response = { setHeader() {}, end() {} };
+  await handler(request, response, error => { throw error ?? new Error('not handled'); });
+  assert.equal(crawled, 'http://127.0.0.1:4321');
 });

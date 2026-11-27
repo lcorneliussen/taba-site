@@ -137,7 +137,11 @@ export function searchIndex() {
           if (request.url?.split('?')[0] !== `${base}search-index.json`) return next();
           try {
             const { indexSite: current } = await server.ssrLoadModule(self);
-            const entries = await current(`http://${request.headers.host}`, base);
+            // Crawl the address this request arrived on, never the client-controlled Host header:
+            // Vite's host check only limits it to the allowed hosts, which a tunnel may widen.
+            const { localAddress, localPort } = request.socket;
+            const host = localAddress.includes(':') ? `[${localAddress}]` : localAddress;
+            const entries = await current(`http://${host}:${localPort}`, base);
             response.setHeader('Content-Type', 'application/json');
             response.end(JSON.stringify(entries));
           } catch (error) {
