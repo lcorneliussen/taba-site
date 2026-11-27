@@ -76,7 +76,7 @@ a separate status session:
 ```sh
 mise exec "github:lcorneliussen/taba@${edge_version:?Set a published edge tag}" -- \
   env TABA_DEV_BUILD=off WTC_DEV_BUILD=off taba --version
-mise exec "github:lcorneliussen/taba@$edge_version" -- \
+mise exec "github:lcorneliussen/taba@${edge_version:?Set a published edge tag}" -- \
   env TABA_DEV_BUILD=off WTC_DEV_BUILD=off taba status --tui
 ```
 
