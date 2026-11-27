@@ -73,7 +73,9 @@ with `taba dev status` and start a new status pane if the existing one still
 shows the old build.
 
 Use `taba dev mode off` to turn off local source selection persistently. Use
-`TABA_DEV_BUILD=off` to bypass it for a single command.
+`TABA_DEV_BUILD=off` to bypass it for a single command. See the
+[tagged dev-mode implementation](https://github.com/lcorneliussen/taba/blob/v0.2.11/cmd/taba/dev.go)
+for the source-selection and bypass rules.
 
 ## Adopt a stable release
 
