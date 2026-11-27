@@ -65,9 +65,14 @@ const exampleSources = Object.fromEntries(replayGroups(capture).flatMap(group =>
       position.textContent = `${index + 1} of ${situations.length}`;
       if (updateHash) history.replaceState(null, '', `#example-${select.value}`);
     };
+    // Any link into a situation (its #example- section or an id inside it, such as a search result's
+    // heading) opens that situation and scrolls to the target once it is visible.
     const fromHash = () => {
-      const id = location.hash.replace(/^#example-/, '');
-      if (situations.some(situation => situation.dataset.situation === id)) show(id);
+      const target = location.hash.length > 1 ? document.getElementById(decodeURIComponent(location.hash.slice(1))) : null;
+      const situation = target?.closest<HTMLElement>('[data-situation]');
+      if (!target || !situation || !explorer.contains(situation)) return;
+      show(situation.dataset.situation!);
+      target.scrollIntoView();
     };
     select.addEventListener('change', () => show(select.value, true));
     previous.addEventListener('click', () => show(situations[select.selectedIndex - 1].dataset.situation!, true));

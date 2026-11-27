@@ -96,6 +96,32 @@ try {
     await context.close();
   }
 
+  // A Reading status situation result opens that situation, which the explorer otherwise keeps hidden.
+  {
+    const { context, page, errors } = await open(desktop, 'docs/status/');
+    const index = await (await page.request.get(url('search-index.json'))).json();
+    const situations = index.filter(e => /^\/docs\/status\/#title-/.test(new URL(e.url, site).pathname + new URL(e.url, site).hash));
+    assert(situations.length > 1, 'no Reading status situation entries in the index');
+    const target = situations.at(-1);
+    await input(page).focus();
+    await search(page, target.heading);
+    const where = await page.locator('#site-search-results [role=option] a').evaluateAll(links => links.map(a => a.getAttribute('href')));
+    const at = where.indexOf(target.url);
+    assert(at >= 0, `situation ${target.url} not among results ${JSON.stringify(where)}`);
+    for (let i = 0; i < at; i++) await page.keyboard.press('ArrowDown');
+    await Promise.all([page.waitForURL(url(target.url)), page.keyboard.press('Enter')]);
+    const id = decodeURIComponent(new URL(target.url, site).hash.slice(1));
+    await page.waitForFunction(id => !document.getElementById(id)?.closest('[data-situation]')?.hidden, id, { timeout: 3000 })
+      .catch(() => assert.fail(`situation for #${id} stayed hidden`));
+    assert(await page.locator(`[id="${id}"]`).isVisible());
+    // Loading the same link directly also opens it.
+    await page.goto('about:blank');
+    await page.goto(url(target.url));
+    assert(await page.locator(`[id="${id}"]`).isVisible(), 'direct link to a situation heading stays hidden');
+    assert.deepEqual(errors, []);
+    await context.close();
+  }
+
   // Phone width: ARIA wiring, results within the viewport, keyboard selection and anchor landing.
   {
     const { context, page, errors } = await open(phone);

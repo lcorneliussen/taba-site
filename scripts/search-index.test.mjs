@@ -14,11 +14,17 @@ test('a page becomes an introduction plus one entry per h2/h3, linked to heading
     <h2 id="first">First <code>step</code></h2><p>Body one.</p>
     <h3 id="deeper">Deeper</h3><p>Body two.</p><h4>Minor</h4><p>Still two.</p>`), '/docs/guide/');
   assert.deepEqual(entries.map(e => [e.heading, e.url, e.text]), [
-    ['', '/docs/guide/', 'Lead text.'],
+    ['', '/docs/guide/', 'Guide Lead text.'],
     ['First step', '/docs/guide/#first', 'Body one.'],
     ['Deeper', '/docs/guide/#deeper', 'Body two. Minor Still two.'],
   ]);
   assert(entries.every(e => e.title === 'Guide' && e.description === 'About it.' && e.scope === 'docs'));
+});
+
+test('the page headline is searchable from its introduction, even when the title is replaced', () => {
+  const [intro] = indexPage(page('<h1>Make room for <em>the whole task</em><span class="brand-dot">.</span></h1><p>Lead.</p>'), '/');
+  assert.equal(intro.title, 'Home');
+  assert.equal(intro.text, 'Make room for the whole task Lead.');
 });
 
 test('headings without an id link to the nearest enclosing id, or to the page', () => {
@@ -64,8 +70,8 @@ test('a build directory is indexed page by page', async () => {
     await writeFile(join(root, 'docs', 'a', 'index.html'), page('<h1>A</h1><h2 id="s">S</h2><p>Doc text.</p>'));
     await writeFile(join(root, '404.html'), page('<h1>Missing</h1>'));
     const entries = await indexDirectory(root);
-    // Pages in URL order; a page whose introduction is empty contributes only its sections.
-    assert.deepEqual(entries.map(e => [e.url, e.scope]), [['/', 'site'], ['/docs/a/#s', 'docs']]);
+    // Pages in URL order; every page's introduction carries at least its headline.
+    assert.deepEqual(entries.map(e => [e.url, e.scope]), [['/', 'site'], ['/docs/a/', 'docs'], ['/docs/a/#s', 'docs']]);
   } finally {
     await rm(root, { recursive: true, force: true });
   }
@@ -84,7 +90,7 @@ test('a running site is indexed by following its internal page links', async () 
   await new Promise(resolve => server.listen(0, '127.0.0.1', resolve));
   try {
     const entries = await indexSite(`http://127.0.0.1:${server.address().port}`);
-    assert.deepEqual(entries.map(e => e.url), ['/', '/docs/a/#s']);
+    assert.deepEqual(entries.map(e => e.url), ['/', '/docs/a/', '/docs/a/#s']);
   } finally {
     server.close();
   }
